@@ -1,5 +1,7 @@
-CREATE TABLE [EmployeePosition] ([OwnerPositionId] int, [Title] varchar);
-CREATE TABLE [EmployeeStatus] ([OwnerStatusId] int, [Title] varchar);
+CREATE DATABASE PotionShoppe;
+USE PotionShoppe;
+CREATE TABLE [EmployeePosition] ([EmployeePositionId] int, [Title] varchar);
+CREATE TABLE [EmployeeStatus] ([EmployeeStatusId] int, [Title] varchar);
 CREATE TABLE [Employee] (
     [EmployeeId] int,
     [Username] varchar,
@@ -7,8 +9,8 @@ CREATE TABLE [Employee] (
     [Name] varchar,
     [EmployeeStatusId] int,
     [PositionId] int,
-    CONSTRAINT [FK_Employee.PositionId] FOREIGN KEY ([PositionId]) REFERENCES [EmployeePosition]([OwnerPositionId]),
-    CONSTRAINT [FK_Employee.EmployeeStatusId] FOREIGN KEY ([EmployeeStatusId]) REFERENCES [EmployeeStatus]([OwnerStatusId])
+    CONSTRAINT [FK_Employee.PositionId] FOREIGN KEY ([PositionId]) REFERENCES [EmployeePosition]([EmployeePositionId]),
+    CONSTRAINT [FK_Employee.EmployeeStatusId] FOREIGN KEY ([EmployeeStatusId]) REFERENCES [EmployeeStatus]([EmployeeStatusId])
 );
 CREATE TABLE [Customer] (
     [CustomerId] int,
@@ -66,6 +68,6 @@ CREATE TABLE [Potion] (
     [Cost] int,
     [CurrentStock] int,
     [Image] varchar,
-    [OwnerId] int,
-    CONSTRAINT [FK_Potion.OwnerId] FOREIGN KEY ([OwnerId]) REFERENCES [Employee]([EmployeeId])
+    [EmployeeId] int,
+    CONSTRAINT [FK_Potion.EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee]([EmployeeId])
 );
