@@ -29,6 +29,8 @@ services:
       - sqlserver
     volumes:
       - ./Api:/api
+      - /api/bin
+      - /api/obj
       - ~/.aspnet/https:/https:ro
     working_dir: /api
     command: dotnet watch --launch-profile https
