@@ -1,3 +1,5 @@
+CREATE DATABASE PotionShoppe;
+USE PotionShoppe;
 CREATE TABLE [EmployeePosition] ([EmployeePositionId] int, [Title] varchar);
 CREATE TABLE [EmployeeStatus] ([EmployeeStatusId] int, [Title] varchar);
 CREATE TABLE [Employee] (
