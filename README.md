@@ -8,3 +8,5 @@ Mock Potion Shop Website
 -   [GitHub](https://github.com/devMichaelREdwards/PotionShoppe)
 
 TODO: Write more on the Readme
+
+dotnet dev-certs https --trust
