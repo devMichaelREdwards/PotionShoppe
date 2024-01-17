@@ -1,3 +1,5 @@
+USE master;
+DROP DATABASE IF EXISTS PotionShoppe;
 CREATE DATABASE PotionShoppe;
 USE PotionShoppe;
 CREATE TABLE [EmployeePosition] ([EmployeePositionId] int, [Title] varchar);

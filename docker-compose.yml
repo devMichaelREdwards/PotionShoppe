@@ -1,0 +1,16 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Password123!
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - '1433:1433'
+    volumes:
+      - potionshoppe_data:/var/opt/mssql
+      - ./Database/install:/docker-entrypoint-initdb.d/
+    restart: always
+
+volumes:
+  potionshoppe_data:
