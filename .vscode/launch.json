@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Docker .NET Attach (Preview)",
+            "type": "docker",
+            "request": "attach",
+            "platform": "netCore",
+            "processName": "/api/bin/Debug/net8.0/Api",
+            "sourceFileMap": {
+                "/api": "${workspaceFolder}/Api"
+            }
+        }
+    ]
+}
