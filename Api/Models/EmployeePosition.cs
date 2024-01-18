@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Api.Models;
 
@@ -8,6 +9,5 @@ public partial class EmployeePosition
 
     public string? Title { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 }

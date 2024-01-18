@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Api.Models;
 
@@ -22,14 +23,9 @@ public partial class Potion
 
     public virtual Employee? Employee { get; set; }
 
-    [JsonIgnore]
-    public virtual ICollection<OrderPotion> OrderPotionOrders { get; set; } =
-        new List<OrderPotion>();
+    public virtual ICollection<OrderPotion> OrderPotionOrders { get; set; } = new List<OrderPotion>();
 
-    [JsonIgnore]
-    public virtual ICollection<OrderPotion> OrderPotionPotions { get; set; } =
-        new List<OrderPotion>();
+    public virtual ICollection<OrderPotion> OrderPotionPotions { get; set; } = new List<OrderPotion>();
 
-    [JsonIgnore]
     public virtual ICollection<PotionEffect> PotionEffects { get; set; } = new List<PotionEffect>();
 }

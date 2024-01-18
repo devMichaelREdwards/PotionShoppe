@@ -21,7 +21,7 @@ public class EmployeeController : ControllerBase
         return Ok(
             await context.Employees
                 .Include(e => e.EmployeeStatus)
-                .Include(e => e.Position)
+                .Include(e => e.EmployeePosition)
                 .ToListAsync()
         );
     }
