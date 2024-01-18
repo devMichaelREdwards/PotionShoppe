@@ -10,3 +10,5 @@ Mock Potion Shop Website
 TODO: Write more on the Readme
 
 dotnet dev-certs https --trust
+docker compose up -d --build
+Run SQL install script
