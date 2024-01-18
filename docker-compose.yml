@@ -9,7 +9,6 @@ services:
       - '1433:1433'
     volumes:
       - potionshoppe_data:/var/opt/mssql
-      - ./Database/install:/docker-entrypoint-initdb.d/
     restart: always
 
   api:

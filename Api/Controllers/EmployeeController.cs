@@ -1,4 +1,4 @@
-using Api.Models;
+//using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -10,7 +10,8 @@ public class EmployeeController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllEmployees()
     {
-        var employees = new List<Employee>
+        var test = "test";
+        /*var employees = new List<Employee>
         {
             new Employee()
             {
@@ -24,6 +25,8 @@ public class EmployeeController : ControllerBase
             }
         };
 
-        return Ok(employees);
+        return Ok(employees);*/
+
+        return null;
     }
 }

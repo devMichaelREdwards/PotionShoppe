@@ -1,11 +1,24 @@
-namespace Api.Models;
+﻿namespace Api.Models;
 
-public class Employee
+public partial class Employee
 {
     public int EmployeeId { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public required EmployeeStatus EmployeeStatusId { get; set; }
-    public required EmployeePosition EmployeePositionId { get; set; }
+
+    public string? Username { get; set; }
+
+    public string? Password { get; set; }
+
+    public string? Name { get; set; }
+
+    public int? EmployeeStatusId { get; set; }
+
+    public int? PositionId { get; set; }
+
+    public virtual EmployeeStatus? EmployeeStatus { get; set; }
+
+    public virtual EmployeePosition? Position { get; set; }
+
+    public virtual ICollection<Potion> Potions { get; set; } = new List<Potion>();
+
+    public virtual ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
 }

@@ -1,7 +1,10 @@
-namespace Api.Models;
+﻿namespace Api.Models;
 
-public class EmployeeStatus
+public partial class EmployeeStatus
 {
     public int EmployeeStatusId { get; set; }
-    public string Title { get; set; } = string.Empty;
+
+    public string? Title { get; set; }
+
+    public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 }
