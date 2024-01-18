@@ -1,0 +1,39 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Password123!
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - '1433:1433'
+    volumes:
+      - potionshoppe_data:/var/opt/mssql
+    restart: always
+
+  api:
+    container_name: api
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+      - ASPNETCORE_URLS=http://:80/;https://.443
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password123!
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - 7211:7211
+      - 5239:5239
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./Api:/api
+      - /api/bin
+      - /api/obj
+      - ~/.aspnet/https:/https:ro
+    working_dir: /api
+    command: dotnet watch --launch-profile https
+
+volumes:
+  potionshoppe_data:

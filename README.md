@@ -8,3 +8,18 @@ Mock Potion Shop Website
 -   [GitHub](https://github.com/devMichaelREdwards/PotionShoppe)
 
 TODO: Write more on the Readme
+
+Have installed ->
+WSL2
+Docker
+
+Dev environment info ->
+Database: localhost:1433 (sqlserver if inside container)
+API: localhost:7211 (api if inside container)
+
+Dev environment setup ->
+dotnet dev-certs https --trust
+docker compose up -d --build
+Run SQL user script
+Log in as new SQL user
+Run SQL install script

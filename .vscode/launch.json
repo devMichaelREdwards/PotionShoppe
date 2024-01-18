@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Docker Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processName": "/api/bin/Debug/net8.0/Api",
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}/api",
+                "pipeProgram": "docker",
+                "pipeArgs": ["exec", "-i", "api"],
+                "debuggerPath": "/root/vsdbg/vsdbg",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/api": "${workspaceRoot}/Api"
+            }
+        }
+    ]
+}
