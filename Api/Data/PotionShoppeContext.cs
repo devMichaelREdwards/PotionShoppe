@@ -7,7 +7,7 @@ namespace Api.Data;
 
 public partial class PotionShoppeContext : DbContext
 {
-    private string connectionString;
+    private readonly string? connectionString;
 
     public PotionShoppeContext() { }
 
