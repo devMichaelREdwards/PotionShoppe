@@ -1,4 +1,6 @@
-﻿namespace Api.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Api.Models;
 
 public partial class Customer
 {
@@ -10,5 +12,6 @@ public partial class Customer
 
     public string? Name { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

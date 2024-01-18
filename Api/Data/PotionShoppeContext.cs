@@ -1,13 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Api.Models;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Api.Data;
 
 public partial class PotionShoppeContext : DbContext
 {
+    private string connectionString;
+
     public PotionShoppeContext() { }
 
-    public PotionShoppeContext(DbContextOptions<PotionShoppeContext> options) : base(options) { }
+    public PotionShoppeContext(DbContextOptions<PotionShoppeContext> options) : base(options)
+    {
+        foreach (IDbContextOptionsExtension extension in options.Extensions)
+        {
+            if (extension is SqlServerOptionsExtension)
+            {
+                connectionString = ((SqlServerOptionsExtension)extension).ConnectionString;
+                break;
+            }
+        }
+    }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -36,9 +50,7 @@ public partial class PotionShoppeContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         =>
-        optionsBuilder.UseSqlServer(
-            "Server=localhost;Database=PotionShoppe;User Id=PotionShoppe;Password=PotionPassword1!;Trusted_Connection=False;TrustServerCertificate=True;"
-        );
+        optionsBuilder.UseSqlServer(connectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,4 +1,6 @@
-﻿namespace Api.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Api.Models;
 
 public partial class Order
 {
@@ -18,5 +20,6 @@ public partial class Order
 
     public virtual OrderStatus? OrderStatus { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
 }

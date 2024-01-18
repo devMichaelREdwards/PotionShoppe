@@ -1,5 +1,6 @@
-using Api.Models;
+using Api.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
@@ -7,27 +8,21 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetAllEmployees()
-    {
-        var employees = new List<Employee>
-        {
-            new Employee()
-            {
-                EmployeeId = 1,
-                EmployeeStatusId = new EmployeeStatus()
-                {
-                    EmployeeStatusId = 1,
-                    Title = "Active"
-                }.EmployeeStatusId,
-                PositionId = new EmployeePosition()
-                {
-                    EmployeePositionId = 1,
-                    Title = "Owner"
-                }.EmployeePositionId
-            }
-        };
+    private readonly PotionShoppeContext context;
 
-        return Ok(employees);
+    public EmployeeController(PotionShoppeContext _context)
+    {
+        context = _context;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetEmployees()
+    {
+        return Ok(
+            await context.Employees
+                .Include(e => e.EmployeeStatus)
+                .Include(e => e.Position)
+                .ToListAsync()
+        );
     }
 }
