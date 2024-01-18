@@ -12,6 +12,8 @@ RUN apt-get update
 RUN apt-get install -y procps
 RUN apt-get install -y unzip
 RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 COPY ["./Api/Api.csproj", "Api/"]
 COPY . .
 WORKDIR "/src/Api"

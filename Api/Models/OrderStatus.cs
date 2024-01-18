@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Api.Models;
 
@@ -8,6 +9,5 @@ public partial class OrderStatus
 
     public string? Title { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Api.Models;
 
@@ -12,9 +13,7 @@ public partial class Effect
 
     public string? Description { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
-    [JsonIgnore]
     public virtual ICollection<PotionEffect> PotionEffects { get; set; } = new List<PotionEffect>();
 }

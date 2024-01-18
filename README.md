@@ -23,3 +23,10 @@ docker compose up -d --build
 Run SQL user script
 Log in as new SQL user
 Run SQL install script
+
+Creating the database
+In docker container, run dotnet ef database update(figure out how to do not in docker???)
+
+Updating the database
+dotnet ef migrations add NameOfMigration
+In docker container, run dotnet ef database update(figure out how to do not in docker???)
