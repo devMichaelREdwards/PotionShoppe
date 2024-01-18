@@ -16,7 +16,7 @@ CREATE TABLE [Employee] (
     [Password] VARCHAR(1024),
     [Name] VARCHAR(1024),
     [EmployeeStatusId] INT REFERENCES [EmployeeStatus]([EmployeeStatusId]),
-    [PositionId] INT REFERENCES [EmployeePosition]([EmployeePositionId]),
+    [EmployeePositionId] INT REFERENCES [EmployeePosition]([EmployeePositionId]),
 );
 CREATE TABLE [Customer] (
     [CustomerId] INT IDENTITY(1, 1) PRIMARY KEY,

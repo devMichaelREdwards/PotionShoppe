@@ -93,7 +93,7 @@ public partial class PotionShoppeContext : DbContext
             entity
                 .HasOne(d => d.Position)
                 .WithMany(p => p.Employees)
-                .HasForeignKey(d => d.PositionId)
+                .HasForeignKey(d => d.EmployeePositionId)
                 .HasConstraintName("FK__Employee__Positi__3B75D760");
         });
 

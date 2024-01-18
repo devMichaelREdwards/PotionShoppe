@@ -14,7 +14,7 @@ public partial class Employee
 
     public int? EmployeeStatusId { get; set; }
 
-    public int? PositionId { get; set; }
+    public int? EmployeePositionId { get; set; }
 
     public virtual EmployeeStatus? EmployeeStatus { get; set; }
 
