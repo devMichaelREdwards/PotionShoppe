@@ -1,12 +1,13 @@
 using System.Text.Json.Serialization;
 using Api.Data;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
 
 builder.Services
     .AddControllers()
