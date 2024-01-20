@@ -10,12 +10,12 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
-    private readonly EmployeeRepository employees;
+    private readonly IRepository<Employee> employees;
     private readonly IMapper mapper;
 
     public EmployeeController(IRepository<Employee> _employees, IMapper _mapper)
     {
-        employees = (EmployeeRepository?)_employees;
+        employees = _employees;
         mapper = _mapper;
     }
 
