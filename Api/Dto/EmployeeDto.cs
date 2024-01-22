@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace Api.Models;
 
 public partial class EmployeeDto
 {
-    public int EmployeeId { get; set; }
+    public int? EmployeeId { get; set; }
 
     public string? Username { get; set; }
 

@@ -24,20 +24,24 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
         return context.Employees.Find(id);
     }
 
-    public void Insert(Employee entity)
+    public Employee Insert(Employee entity)
     {
         context.Employees.Add(entity);
+        Save();
+        return entity;
     }
 
     public void Update(Employee entity)
     {
         context.Entry(entity).State = EntityState.Modified;
+        Save();
     }
 
     public void Delete(int id)
     {
         Employee employee = context.Employees.Find(id);
         context.Employees.Remove(employee);
+        Save();
     }
 
     public void Save()

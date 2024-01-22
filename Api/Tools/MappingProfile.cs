@@ -8,5 +8,7 @@ public class MappingProfile : Profile
         CreateMap<Employee, EmployeeDto>();
         CreateMap<EmployeePosition, string>().ConvertUsing(p => p.Title);
         CreateMap<EmployeeStatus, string>().ConvertUsing(p => p.Title);
+        CreateMap<EmployeeStatus, EmployeeStatusDto>();
+        CreateMap<EmployeeStatusDto, EmployeeStatus>();
     }
 }
