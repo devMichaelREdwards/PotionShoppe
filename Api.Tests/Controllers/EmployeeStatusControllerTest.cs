@@ -44,4 +44,18 @@ public class EmployeeStatusControllerTest
         // Assert
         Assert.True(newStatus.Equals(testStatus));
     }
+
+    [Fact]
+    public async void PutEmployeeStatus_Returns_Employee_Status_With_Updated_Data()
+    {
+        EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
+        gotten.Title = "Test 2";
+        // Execute
+        await controller.PutEmployeeStatus(gotten);
+        EmployeeStatusDto updated = mapper.Map<EmployeeStatusDto>(
+            employeeStatuses.GetById((int)gotten.EmployeeStatusId)
+        );
+        // Assert
+        Assert.True(updated.Equals(gotten));
+    }
 }

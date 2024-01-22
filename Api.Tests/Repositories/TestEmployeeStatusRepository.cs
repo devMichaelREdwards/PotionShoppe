@@ -6,26 +6,47 @@ namespace Api.Tests;
 
 public class TestEmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
 {
+    private List<EmployeeStatus> employeeStatuses = new();
+
+    public TestEmployeeStatusRepository()
+    {
+        employeeStatuses = DataFaker.FakeEmployeeStatuses();
+    }
+
     public IEnumerable<EmployeeStatus> Get()
     {
-        return DataFaker.FakeEmployeeStatuses();
+        return employeeStatuses;
     }
 
     public EmployeeStatus GetById(int id)
     {
-        return new EmployeeStatus() { EmployeeStatusId = id, Title = "Test" };
+        return employeeStatuses.Find(s => s.EmployeeStatusId == id);
     }
 
     public EmployeeStatus Insert(EmployeeStatus entity)
     {
+        employeeStatuses.Add(entity);
         return entity;
     }
 
-    public void Update(EmployeeStatus entity) { }
+    public void Update(EmployeeStatus entity)
+    {
+        EmployeeStatus selected = employeeStatuses.FirstOrDefault(
+            s => s.EmployeeStatusId == entity.EmployeeStatusId
+        );
+        if (selected is not null)
+        {
+            selected.Title = entity.Title;
+        }
+        var test = "test";
+    }
 
     public void Delete(int id) { }
 
-    public void Save() { }
+    public void Save()
+    {
+        // Not needed for testing
+    }
 
     #region Dispose
     private bool disposed = false;
