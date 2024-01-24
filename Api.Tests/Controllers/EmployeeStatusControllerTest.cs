@@ -58,4 +58,16 @@ public class EmployeeStatusControllerTest
         // Assert
         Assert.True(updated.Equals(gotten));
     }
+
+    [Fact]
+    public async void DeleteEmployeeStatus_Removes_Employee_From_Context()
+    {
+        EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
+        // Execute
+        await controller.DeleteEmployeeStatus(gotten);
+        EmployeeStatusDto deleted = mapper.Map<EmployeeStatusDto>(
+            employeeStatuses.GetById((int)gotten.EmployeeStatusId)
+        );
+        Assert.Null(deleted);
+    }
 }

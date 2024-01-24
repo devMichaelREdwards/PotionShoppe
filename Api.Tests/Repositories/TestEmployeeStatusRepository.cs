@@ -34,14 +34,16 @@ public class TestEmployeeStatusRepository : IRepository<EmployeeStatus>, IDispos
         EmployeeStatus selected = employeeStatuses.FirstOrDefault(
             s => s.EmployeeStatusId == entity.EmployeeStatusId
         );
-        if (selected is not null)
+        if (selected != null)
         {
             selected.Title = entity.Title;
         }
-        var test = "test";
     }
 
-    public void Delete(int id) { }
+    public void Delete(int id)
+    {
+        employeeStatuses = employeeStatuses.Where(s => s.EmployeeStatusId != id).ToList();
+    }
 
     public void Save()
     {
