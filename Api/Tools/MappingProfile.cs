@@ -13,6 +13,7 @@ public class MappingProfile : Profile
         Map<EmployeePosition, EmployeePositionDto>();
         Map<Effect, EffectDto>();
         Map<OrderStatus, OrderStatusDto>();
+        Map<CustomerStatus, CustomerStatusDto>();
     }
 
     private void Map<T1, T2>()
