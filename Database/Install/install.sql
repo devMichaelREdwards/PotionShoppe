@@ -18,11 +18,16 @@ CREATE TABLE [Employee] (
     [EmployeeStatusId] INT REFERENCES [EmployeeStatus]([EmployeeStatusId]),
     [EmployeePositionId] INT REFERENCES [EmployeePosition]([EmployeePositionId]),
 );
+CREATE TABLE [CustomerStatus] (
+    [CustomerStatusId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Title] VARCHAR(1024)
+);
 CREATE TABLE [Customer] (
     [CustomerId] INT IDENTITY(1, 1) PRIMARY KEY,
     [Username] VARCHAR(1024),
     [Password] VARCHAR(1024),
-    [Name] VARCHAR(1024)
+    [Name] VARCHAR(1024),
+    [CustomerStatusId] INT REFERENCES [CustomerStatus]([CustomerStatusId]),
 );
 CREATE TABLE [Effect] (
     [EffectId] INT IDENTITY(1, 1) PRIMARY KEY,

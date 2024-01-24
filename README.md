@@ -30,3 +30,11 @@ In docker container, run dotnet ef database update(figure out how to do not in d
 Updating the database
 dotnet ef migrations add NameOfMigration
 In docker container, run dotnet ef database update(figure out how to do not in docker???)
+
+Adding a table to database
+Create SQL patch file
+Update install file
+Add the table to docker database
+
+(The below command will autogenerate the file but also overwrite all models and context. Better way later maybe?)
+dotnet ef dbcontext scaffold "Server=localhost;Database=PotionShoppe;User Id=PotionShoppe;Password=PotionPassword1!;Trusted_Connection=False;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
