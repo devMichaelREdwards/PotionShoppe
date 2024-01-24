@@ -32,7 +32,7 @@ public class EmployeePositionControllerTest
     }
 
     [Fact]
-    public async void PostEmployeePosition_Returns_Employee_Position_Data_With_Given_Id()
+    public async void PostEmployeePosition_Returns_EmployeePosition_Data_With_Given_Id()
     {
         int testId = 1000;
         EmployeePositionDto testPosition = new() { EmployeePositionId = testId, Title = "Test" };
@@ -46,7 +46,7 @@ public class EmployeePositionControllerTest
     }
 
     [Fact]
-    public async void PutEmployeePosition_Returns_Employee_Position_With_Updated_Data()
+    public async void PutEmployeePosition_Returns_EmployeePosition_With_Updated_Data()
     {
         EmployeePositionDto gotten = mapper.Map<List<EmployeePositionDto>>(employeePositions.Get())[
             0
@@ -62,7 +62,7 @@ public class EmployeePositionControllerTest
     }
 
     [Fact]
-    public async void DeleteEmployeePosition_Removes_Employee_From_Context()
+    public async void DeleteEmployeePosition_Removes_EmployeePosition_From_Context()
     {
         EmployeePositionDto gotten = mapper.Map<List<EmployeePositionDto>>(employeePositions.Get())[
             0

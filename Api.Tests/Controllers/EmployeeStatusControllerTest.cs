@@ -32,7 +32,7 @@ public class EmployeeStatusControllerTest
     }
 
     [Fact]
-    public async void PostEmployeeStatus_Returns_Employee_Status_Data_With_Given_Id()
+    public async void PostEmployeeStatus_Returns_EmployeeStatus_Data_With_Given_Id()
     {
         int testId = 1000;
         EmployeeStatusDto testStatus = new() { EmployeeStatusId = testId, Title = "Test" };
@@ -46,7 +46,7 @@ public class EmployeeStatusControllerTest
     }
 
     [Fact]
-    public async void PutEmployeeStatus_Returns_Employee_Status_With_Updated_Data()
+    public async void PutEmployeeStatus_Returns_EmployeeStatus_With_Updated_Data()
     {
         EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
         gotten.Title = "Test 2";
@@ -60,7 +60,7 @@ public class EmployeeStatusControllerTest
     }
 
     [Fact]
-    public async void DeleteEmployeeStatus_Removes_Employee_From_Context()
+    public async void DeleteEmployeeStatus_Removes_EmployeeStatus_From_Context()
     {
         EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
         // Execute
