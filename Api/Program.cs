@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
 builder.Services.AddScoped<IRepository<EmployeePosition>, EmployeePositionRepository>();
 builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
+builder.Services.AddScoped<IRepository<Effect>, EffectRepository>();
 
 builder.Services
     .AddControllers()

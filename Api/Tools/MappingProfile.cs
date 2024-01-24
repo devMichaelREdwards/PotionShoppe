@@ -12,5 +12,7 @@ public class MappingProfile : Profile
         CreateMap<EmployeeStatusDto, EmployeeStatus>();
         CreateMap<EmployeePosition, EmployeePositionDto>();
         CreateMap<EmployeePositionDto, EmployeePosition>();
+        CreateMap<Effect, EffectDto>();
+        CreateMap<EffectDto, Effect>();
     }
 }
