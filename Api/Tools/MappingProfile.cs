@@ -5,14 +5,18 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Employee, EmployeeDto>();
         CreateMap<EmployeePosition, string>().ConvertUsing(p => p.Title);
         CreateMap<EmployeeStatus, string>().ConvertUsing(p => p.Title);
-        CreateMap<EmployeeStatus, EmployeeStatusDto>();
-        CreateMap<EmployeeStatusDto, EmployeeStatus>();
-        CreateMap<EmployeePosition, EmployeePositionDto>();
-        CreateMap<EmployeePositionDto, EmployeePosition>();
-        CreateMap<Effect, EffectDto>();
-        CreateMap<EffectDto, Effect>();
+
+        Map<Employee, EmployeeDto>();
+        Map<EmployeeStatus, EmployeeStatusDto>();
+        Map<EmployeePosition, EmployeePositionDto>();
+        Map<Effect, EffectDto>();
+        Map<OrderStatus, OrderStatusDto>();
+    }
+
+    private void Map<T1, T2>()
+    {
+        CreateMap<T1, T2>().ReverseMap();
     }
 }
