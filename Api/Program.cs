@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
+builder.Services.AddScoped<IRepository<EmployeePosition>, EmployeePositionRepository>();
 builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
 
 builder.Services

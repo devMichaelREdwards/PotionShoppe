@@ -7,14 +7,29 @@ public static class DataFaker
     public static List<EmployeeStatus> FakeEmployeeStatuses()
     {
         List<EmployeeStatus> statuses = [];
-                for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 10; i++)
         {
-            statuses.Add(new () {
+            statuses.Add(new()
+            {
                 EmployeeStatusId = i,
                 Title = $"Status {i}"
             });
         }
         return statuses;
+    }
+
+    public static List<EmployeePosition> FakeEmployeePositions()
+    {
+        List<EmployeePosition> positions = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            positions.Add(new()
+            {
+                EmployeePositionId = i,
+                Title = $"Position {i}"
+            });
+        }
+        return positions;
     }
 
     public static List<Employee> FakeEmployees()
