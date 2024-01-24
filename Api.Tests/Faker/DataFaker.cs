@@ -57,7 +57,7 @@ public static class DataFaker
         return employees;
     }
 
-        public static List<Effect> FakeEffects()
+    public static List<Effect> FakeEffects()
     {
         List<Effect> effects = [];
         for (int i = 1; i <= 10; i++)
@@ -67,6 +67,20 @@ public static class DataFaker
                 EffectId = i,
                 Duration = i * 10,
                 Description = $"Effect {i}"
+            });
+        }
+        return effects;
+    }
+
+    public static List<OrderStatus> FakeOrderStatuses()
+    {
+        List<OrderStatus> effects = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            effects.Add(new()
+            {
+                OrderStatusId = i,
+                Title = $"OrderS Status {i}"
             });
         }
         return effects;
