@@ -85,4 +85,18 @@ public static class DataFaker
         }
         return effects;
     }
+
+        public static List<CustomerStatus> FakeCustomerStatuses()
+    {
+        List<CustomerStatus> statuses = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            statuses.Add(new()
+            {
+                CustomerStatusId = i,
+                Title = $"Status {i}"
+            });
+        }
+        return statuses;
+    }
 }
