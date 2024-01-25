@@ -174,25 +174,38 @@ public partial class PotionShoppeContext : DbContext
                 .HasConstraintName("FK__Order__OrderStat__628FA481");
         });
 
-        modelBuilder.Entity<OrderPotion>(entity =>
+        modelBuilder.Entity<OrderIngredient>(entity =>
         {
-            entity.HasKey(e => e.OrderPotionId).HasName("PK__OrderPot__492115791E886E61");
+            entity.HasKey(e => e.OrderIngredientId).HasName("PK__OrderIng__A3146CFA17935308");
 
-            entity.HasIndex(e => e.OrderId, "IX_OrderPotions_OrderId");
-
-            entity.HasIndex(e => e.PotionId, "IX_OrderPotions_PotionId");
+            entity
+                .HasOne(d => d.Ingredient)
+                .WithMany(p => p.OrderIngredients)
+                .HasForeignKey(d => d.IngredientId)
+                .HasConstraintName("FK__OrderIngr__Ingre__76969D2E");
 
             entity
                 .HasOne(d => d.Order)
-                .WithMany(p => p.OrderPotionOrders)
+                .WithMany(p => p.OrderIngredients)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__OrderPoti__Order__5629CD9C");
+                .HasConstraintName("FK__OrderIngr__Order__778AC167");
+        });
+
+        modelBuilder.Entity<OrderPotion>(entity =>
+        {
+            entity.HasKey(e => e.OrderPotionId).HasName("PK__OrderPot__4921157927AA3FED");
+
+            entity
+                .HasOne(d => d.Order)
+                .WithMany(p => p.OrderPotions)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK__OrderPoti__Order__73BA3083");
 
             entity
                 .HasOne(d => d.Potion)
-                .WithMany(p => p.OrderPotionPotions)
+                .WithMany(p => p.OrderPotions)
                 .HasForeignKey(d => d.PotionId)
-                .HasConstraintName("FK__OrderPoti__Potio__5535A963");
+                .HasConstraintName("FK__OrderPoti__Potio__72C60C4A");
         });
 
         modelBuilder.Entity<OrderStatus>(entity =>

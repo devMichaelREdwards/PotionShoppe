@@ -23,9 +23,7 @@ public partial class Potion
 
     public virtual Employee? Employee { get; set; }
 
-    public virtual ICollection<OrderPotion> OrderPotionOrders { get; set; } = new List<OrderPotion>();
-
-    public virtual ICollection<OrderPotion> OrderPotionPotions { get; set; } = new List<OrderPotion>();
+    public virtual ICollection<OrderPotion> OrderPotions { get; set; } = new List<OrderPotion>();
 
     public virtual ICollection<PotionEffect> PotionEffects { get; set; } = new List<PotionEffect>();
 }

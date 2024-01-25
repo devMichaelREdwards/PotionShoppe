@@ -82,5 +82,10 @@ CREATE TABLE [PotionEffect] (
 CREATE TABLE [OrderPotions] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,
     [PotionId] INT REFERENCES [Potion]([PotionId]),
-    [OrderId] INT REFERENCES [Potion]([PotionId])
+    [OrderId] INT REFERENCES [Order]([OrderId])
+);
+CREATE TABLE [OrderIngredients] (
+    [OrderIngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
+    [OrderId] INT REFERENCES [Order]([OrderId])
 );
