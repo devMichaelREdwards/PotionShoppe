@@ -21,7 +21,7 @@ public partial class IngredientDto : IDto<Ingredient>
 
     public int? EffectId { get; set; }
 
-    public virtual string? Effect { get; set; }
+    public string? Effect { get; set; }
 
     public bool Equals(Ingredient? other)
     {
