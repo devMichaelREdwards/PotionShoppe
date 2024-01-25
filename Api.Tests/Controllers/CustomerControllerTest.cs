@@ -38,11 +38,9 @@ public class CustomerControllerTest
         CustomerDto test = new() { CustomerId = testId, Name = "Test", CustomerStatusId = 1 };
         // Execute
         await controller.PostCustomer(test);
-        CustomerDto newCustomer = mapper.Map<CustomerDto>(
-            customers.GetById(testId)
-        );
+        Customer newCustomer = customers.GetById(testId);
         // Assert
-        Assert.True(newCustomer.Equals(test));
+        Assert.True(test.Equals(newCustomer));
     }
 
     [Fact]
@@ -52,11 +50,9 @@ public class CustomerControllerTest
         gotten.Name = "Test 2";
         // Execute
         await controller.PutCustomer(gotten);
-        CustomerDto updated = mapper.Map<CustomerDto>(
-            customers.GetById((int)gotten.CustomerId)
-        );
+        Customer updated = customers.GetById((int)gotten.CustomerId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]

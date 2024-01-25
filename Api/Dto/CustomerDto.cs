@@ -14,7 +14,11 @@ public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
 
     public bool Equals(Customer? other)
     {
-        throw new NotImplementedException();
+        return CustomerId == other.CustomerId
+            && Username == other.Username
+            && Password == other.Password
+            && Name == other.Name
+            && CustomerStatusId == other.CustomerStatusId;
     }
 
     public void Update(Customer dest)
