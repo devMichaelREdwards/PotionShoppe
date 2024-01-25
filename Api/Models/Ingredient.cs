@@ -17,7 +17,7 @@ public partial class Ingredient
 
     public int? CurrentStock { get; set; }
 
-    public int? Image { get; set; }
+    public string? Image { get; set; }
 
     public int? EffectId { get; set; }
 

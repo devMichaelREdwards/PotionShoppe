@@ -138,20 +138,19 @@ public partial class PotionShoppeContext : DbContext
 
         modelBuilder.Entity<Ingredient>(entity =>
         {
-            entity.HasKey(e => e.IngredientId).HasName("PK__Ingredie__BEAEB25AD0ADB01F");
+            entity.HasKey(e => e.IngredientId).HasName("PK__Ingredie__BEAEB25AF7375E9D");
 
             entity.ToTable("Ingredient");
 
-            entity.HasIndex(e => e.EffectId, "IX_Ingredient_EffectId");
-
             entity.Property(e => e.Description).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.Image).HasMaxLength(1024).IsUnicode(false);
             entity.Property(e => e.Name).HasMaxLength(1024).IsUnicode(false);
 
             entity
                 .HasOne(d => d.Effect)
                 .WithMany(p => p.Ingredients)
                 .HasForeignKey(d => d.EffectId)
-                .HasConstraintName("FK__Ingredien__Effec__4222D4EF");
+                .HasConstraintName("FK__Ingredien__Effec__6FE99F9F");
         });
 
         modelBuilder.Entity<Order>(entity =>

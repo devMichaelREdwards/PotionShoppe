@@ -7,8 +7,9 @@ public class MappingProfile : Profile
     {
         CreateCustomerMappings();
         CreateEmployeeMappings();
-        Map<Effect, EffectDto>();
-        Map<OrderStatus, OrderStatusDto>();
+        CreateEffectMappings();
+        CreateIngredientMappings();
+        CreateOrderMappings();
     }
 
     private void Map<T1, T2>()
@@ -34,5 +35,22 @@ public class MappingProfile : Profile
         Map<EmployeeStatus, EmployeeStatusDto>();
         Map<EmployeePosition, EmployeePositionDto>();
         Map<Employee, EmployeeDto>();
+    }
+
+    private void CreateEffectMappings()
+    {
+        Map<Effect, EffectDto>();
+        CreateMap<Effect, string>()
+            .ConvertUsing(e => $"{e.Description} Do something here later? Should be in DTO");
+    }
+
+    private void CreateIngredientMappings()
+    {
+        Map<Ingredient, IngredientDto>();
+    }
+
+    private void CreateOrderMappings()
+    {
+        Map<OrderStatus, OrderStatusDto>();
     }
 }

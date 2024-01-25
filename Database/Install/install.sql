@@ -42,7 +42,7 @@ CREATE TABLE [Ingredient] (
     [Price] INT,
     [Cost] INT,
     [CurrentStock] INT,
-    [Image] INT,
+    [Image] VARCHAR(1024),
     [EffectId] INT FOREIGN KEY REFERENCES [Effect]([EffectId])
 );
 CREATE TABLE [OrderStatus] (

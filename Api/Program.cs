@@ -14,6 +14,7 @@ builder.Services.AddScoped<IRepository<Effect>, EffectRepository>();
 builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
 builder.Services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository>();
 builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
+builder.Services.AddScoped<IRepository<Ingredient>, IngredientRepository>();
 
 builder.Services
     .AddControllers()
