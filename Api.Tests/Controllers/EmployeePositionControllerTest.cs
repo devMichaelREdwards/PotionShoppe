@@ -24,7 +24,7 @@ public class EmployeePositionControllerTest
     public async void GetEmployeePosition_Returns_Correct_EmployeePosition_Data()
     {
         // Execute
-        IActionResult result = await controller.GetEmployeePositiones();
+        IActionResult result = controller.GetEmployeePositiones();
         OkObjectResult ok = result as OkObjectResult;
         List<EmployeePositionDto> statusResult = ok.Value as List<EmployeePositionDto>;
         // Assert
@@ -37,12 +37,10 @@ public class EmployeePositionControllerTest
         int testId = 1000;
         EmployeePositionDto testPosition = new() { EmployeePositionId = testId, Title = "Test" };
         // Execute
-        await controller.PostEmployeePosition(testPosition);
-        EmployeePositionDto newPosition = mapper.Map<EmployeePositionDto>(
-            employeePositions.GetById(testId)
-        );
+        controller.PostEmployeePosition(testPosition);
+        EmployeePosition newPosition = employeePositions.GetById(testId);
         // Assert
-        Assert.True(newPosition.Equals(testPosition));
+        Assert.True(testPosition.Equals(newPosition));
     }
 
     [Fact]
@@ -53,12 +51,10 @@ public class EmployeePositionControllerTest
         ];
         gotten.Title = "Test 2";
         // Execute
-        await controller.PutEmployeePosition(gotten);
-        EmployeePositionDto updated = mapper.Map<EmployeePositionDto>(
-            employeePositions.GetById((int)gotten.EmployeePositionId)
-        );
+        controller.PutEmployeePosition(gotten);
+        EmployeePosition updated = employeePositions.GetById((int)gotten.EmployeePositionId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]
@@ -68,10 +64,8 @@ public class EmployeePositionControllerTest
             0
         ];
         // Execute
-        await controller.DeleteEmployeePosition(gotten);
-        EmployeePositionDto deleted = mapper.Map<EmployeePositionDto>(
-            employeePositions.GetById((int)gotten.EmployeePositionId)
-        );
+        controller.DeleteEmployeePosition(gotten);
+        EmployeePosition deleted = employeePositions.GetById((int)gotten.EmployeePositionId);
         Assert.Null(deleted);
     }
 }

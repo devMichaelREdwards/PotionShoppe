@@ -13,6 +13,6 @@ public partial class EmployeePositionDto : IDto<EmployeePosition>
 
     public void Update(EmployeePosition dest)
     {
-        throw new NotImplementedException();
+        dest.Title = Title;
     }
 }

@@ -38,11 +38,9 @@ public class EmployeeStatusControllerTest
         EmployeeStatusDto testStatus = new() { EmployeeStatusId = testId, Title = "Test" };
         // Execute
         await controller.PostEmployeeStatus(testStatus);
-        EmployeeStatusDto newStatus = mapper.Map<EmployeeStatusDto>(
-            employeeStatuses.GetById(testId)
-        );
+        EmployeeStatus newStatus = employeeStatuses.GetById(testId);
         // Assert
-        Assert.True(newStatus.Equals(testStatus));
+        Assert.True(testStatus.Equals(newStatus));
     }
 
     [Fact]
@@ -51,12 +49,10 @@ public class EmployeeStatusControllerTest
         EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
         gotten.Title = "Test 2";
         // Execute
-        await controller.PutEmployeeStatus(gotten);
-        EmployeeStatusDto updated = mapper.Map<EmployeeStatusDto>(
-            employeeStatuses.GetById((int)gotten.EmployeeStatusId)
-        );
+        controller.PutEmployeeStatus(gotten);
+        EmployeeStatus updated = employeeStatuses.GetById((int)gotten.EmployeeStatusId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]
@@ -65,9 +61,7 @@ public class EmployeeStatusControllerTest
         EmployeeStatusDto gotten = mapper.Map<List<EmployeeStatusDto>>(employeeStatuses.Get())[0];
         // Execute
         await controller.DeleteEmployeeStatus(gotten);
-        EmployeeStatusDto deleted = mapper.Map<EmployeeStatusDto>(
-            employeeStatuses.GetById((int)gotten.EmployeeStatusId)
-        );
+        EmployeeStatus deleted = employeeStatuses.GetById((int)gotten.EmployeeStatusId);
         Assert.Null(deleted);
     }
 }

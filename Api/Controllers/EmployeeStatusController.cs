@@ -33,9 +33,13 @@ public class EmployeeStatusController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutEmployeeStatus(EmployeeStatusDto status)
+    public IActionResult PutEmployeeStatus(EmployeeStatusDto position)
     {
-        employeeStatuses.Update(mapper.Map<EmployeeStatus>(status));
+        if (position.EmployeeStatusId == null)
+            return Ok();
+        EmployeeStatus existing = employeeStatuses.GetById((int)position.EmployeeStatusId);
+        position.Update(existing);
+        employeeStatuses.Update(existing);
         return Ok();
     }
 

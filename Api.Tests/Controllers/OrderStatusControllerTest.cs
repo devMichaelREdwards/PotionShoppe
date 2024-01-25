@@ -24,7 +24,7 @@ public class OrderStatusControllerTest
     public async void GetOrderStatus_Returns_Correct_OrderStatus_Data()
     {
         // Execute
-        IActionResult result = await controller.GetOrderStatuses();
+        IActionResult result = controller.GetOrderStatuses();
         OkObjectResult ok = result as OkObjectResult;
         List<OrderStatusDto> statusResult = ok.Value as List<OrderStatusDto>;
         // Assert
@@ -37,10 +37,10 @@ public class OrderStatusControllerTest
         int testId = 1000;
         OrderStatusDto testStatus = new() { OrderStatusId = testId, Title = "Test" };
         // Execute
-        await controller.PostOrderStatus(testStatus);
-        OrderStatusDto newStatus = mapper.Map<OrderStatusDto>(employeeStatuses.GetById(testId));
+        controller.PostOrderStatus(testStatus);
+        OrderStatus newStatus = employeeStatuses.GetById(testId);
         // Assert
-        Assert.True(newStatus.Equals(testStatus));
+        Assert.True(testStatus.Equals(newStatus));
     }
 
     [Fact]
@@ -49,12 +49,10 @@ public class OrderStatusControllerTest
         OrderStatusDto gotten = mapper.Map<List<OrderStatusDto>>(employeeStatuses.Get())[0];
         gotten.Title = "Test 2";
         // Execute
-        await controller.PutOrderStatus(gotten);
-        OrderStatusDto updated = mapper.Map<OrderStatusDto>(
-            employeeStatuses.GetById((int)gotten.OrderStatusId)
-        );
+        controller.PutOrderStatus(gotten);
+        OrderStatus updated = employeeStatuses.GetById((int)gotten.OrderStatusId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]
@@ -62,10 +60,8 @@ public class OrderStatusControllerTest
     {
         OrderStatusDto gotten = mapper.Map<List<OrderStatusDto>>(employeeStatuses.Get())[0];
         // Execute
-        await controller.DeleteOrderStatus(gotten);
-        OrderStatusDto deleted = mapper.Map<OrderStatusDto>(
-            employeeStatuses.GetById((int)gotten.OrderStatusId)
-        );
+        controller.DeleteOrderStatus(gotten);
+        OrderStatus deleted = employeeStatuses.GetById((int)gotten.OrderStatusId);
         Assert.Null(deleted);
     }
 }

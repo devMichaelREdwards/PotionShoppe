@@ -35,18 +35,21 @@ public class EmployeeControllerTest
     public void PostEmployee_Returns_Employee_Data_With_Given_Id()
     {
         int testId = 1000;
-        EmployeeDto test =
+        EmployeeDto testEmployee =
             new()
             {
                 EmployeeId = testId,
+                Username = "TestUsername",
+                Password = "TestPassword",
                 Name = "Test",
-                EmployeeStatusId = 1
+                EmployeeStatusId = 1,
+                EmployeePositionId = 1
             };
         // Execute
-        controller.PostEmployee(test);
+        controller.PostEmployee(testEmployee);
         Employee newEmployee = employees.GetById(testId);
         // Assert
-        Assert.True(test.Equals(newEmployee));
+        Assert.True(testEmployee.Equals(newEmployee));
     }
 
     [Fact]
@@ -67,7 +70,7 @@ public class EmployeeControllerTest
         EmployeeDto gotten = mapper.Map<List<EmployeeDto>>(employees.Get())[0];
         // Execute
         controller.DeleteEmployee(gotten);
-        EmployeeDto deleted = mapper.Map<EmployeeDto>(employees.GetById((int)gotten.EmployeeId));
+        Employee deleted = employees.GetById((int)gotten.EmployeeId);
         Assert.Null(deleted);
     }
 }

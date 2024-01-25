@@ -9,44 +9,48 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeePositionController : ControllerBase
 {
-    private readonly IRepository<EmployeePosition> employeePositiones;
+    private readonly IRepository<EmployeePosition> employeePositions;
     private readonly IMapper mapper;
 
     public EmployeePositionController(
-        IRepository<EmployeePosition> _employeePositiones,
+        IRepository<EmployeePosition> _employeePositions,
         IMapper _mapper
     )
     {
-        employeePositiones = _employeePositiones;
+        employeePositions = _employeePositions;
         mapper = _mapper;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetEmployeePositiones()
+    public IActionResult GetEmployeePositiones()
     {
-        var result = employeePositiones.Get();
+        var result = employeePositions.Get();
         return Ok(mapper.Map<List<EmployeePositionDto>>(result));
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostEmployeePosition(EmployeePositionDto status)
+    public IActionResult PostEmployeePosition(EmployeePositionDto position)
     {
-        employeePositiones.Insert(mapper.Map<EmployeePosition>(status));
+        employeePositions.Insert(mapper.Map<EmployeePosition>(position));
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutEmployeePosition(EmployeePositionDto status)
+    public IActionResult PutEmployeePosition(EmployeePositionDto position)
     {
-        employeePositiones.Update(mapper.Map<EmployeePosition>(status));
+        if (position.EmployeePositionId == null)
+            return Ok();
+        EmployeePosition existing = employeePositions.GetById((int)position.EmployeePositionId);
+        position.Update(existing);
+        employeePositions.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteEmployeePosition(EmployeePositionDto status)
+    public IActionResult DeleteEmployeePosition(EmployeePositionDto position)
     {
-        if (status.EmployeePositionId != null)
-            employeePositiones.Delete((int)status.EmployeePositionId);
+        if (position.EmployeePositionId != null)
+            employeePositions.Delete((int)position.EmployeePositionId);
         return Ok();
     }
 }
