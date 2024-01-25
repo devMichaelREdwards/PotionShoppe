@@ -35,7 +35,13 @@ public class CustomerControllerTest
     public void PostCustomer_Returns_Customer_Data_With_Given_Id()
     {
         int testId = 1000;
-        CustomerDto test = new() { CustomerId = testId, Name = "Test", CustomerStatusId = 1 };
+        CustomerDto test =
+            new()
+            {
+                CustomerId = testId,
+                Name = "Test",
+                CustomerStatusId = 1
+            };
         // Execute
         controller.PostCustomer(test);
         Customer newCustomer = customers.GetById(testId);
@@ -61,9 +67,7 @@ public class CustomerControllerTest
         CustomerDto gotten = mapper.Map<List<CustomerDto>>(customers.Get())[0];
         // Execute
         controller.DeleteCustomer(gotten);
-        CustomerDto deleted = mapper.Map<CustomerDto>(
-            customers.GetById((int)gotten.CustomerId)
-        );
+        Customer deleted = customers.GetById((int)gotten.CustomerId);
         Assert.Null(deleted);
     }
 }

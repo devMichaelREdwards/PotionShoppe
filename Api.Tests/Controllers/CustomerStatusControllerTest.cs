@@ -62,9 +62,7 @@ public class CustomerStatusControllerTest
         CustomerStatusDto gotten = mapper.Map<List<CustomerStatusDto>>(customerStatuses.Get())[0];
         // Execute
         controller.DeleteCustomerStatus(gotten);
-        CustomerStatusDto deleted = mapper.Map<CustomerStatusDto>(
-            customerStatuses.GetById((int)gotten.CustomerStatusId)
-        );
+        CustomerStatus deleted = customerStatuses.GetById((int)gotten.CustomerStatusId);
         Assert.Null(deleted);
     }
 }
