@@ -13,6 +13,7 @@ builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddScoped<IRepository<Effect>, EffectRepository>();
 builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
 builder.Services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository>();
+builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
 
 builder.Services
     .AddControllers()

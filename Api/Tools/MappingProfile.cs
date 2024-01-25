@@ -15,6 +15,7 @@ public class MappingProfile : Profile
         Map<Effect, EffectDto>();
         Map<OrderStatus, OrderStatusDto>();
         Map<CustomerStatus, CustomerStatusDto>();
+        Map<Customer, CustomerDto>();
     }
 
     private void Map<T1, T2>()
