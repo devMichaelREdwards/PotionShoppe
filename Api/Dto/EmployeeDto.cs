@@ -9,18 +9,29 @@ public partial class EmployeeDto : IDto<Employee>
     public string? Password { get; set; }
 
     public string? Name { get; set; }
-    public string EmployeePosition { get; set; } = String.Empty;
-    public string EmployeeStatus { get; set; } = String.Empty;
+    public string? EmployeePosition { get; set; } = String.Empty;
+    public string? EmployeeStatus { get; set; } = String.Empty;
+    public int? EmployeePositionId { get; set; }
+    public int? EmployeeStatusId { get; set; }
     public DateOnly? DateHired { get; set; }
     public DateOnly? DateTerminated { get; set; }
 
     public bool Equals(Employee? other)
     {
-        throw new NotImplementedException();
+        return other != null
+            && other.EmployeeId == EmployeeId
+            && other.Username == Username
+            && other.Password == Password
+            && other.Name == Name
+            && other.EmployeeStatusId == EmployeeStatusId
+            && other.EmployeePositionId == EmployeePositionId;
     }
 
     public void Update(Employee dest)
     {
-        throw new NotImplementedException();
+        dest.Password = Password ?? dest.Password;
+        dest.Name = Name ?? dest.Name;
+        dest.EmployeeStatusId = EmployeeStatusId ?? dest.EmployeeStatusId;
+        dest.EmployeePositionId = EmployeePositionId ?? dest.EmployeePositionId;
     }
 }

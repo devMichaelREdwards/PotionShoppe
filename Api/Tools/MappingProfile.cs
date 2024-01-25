@@ -6,17 +6,9 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateCustomerMappings();
-        CreateMap<EmployeePosition, string>().ConvertUsing(p => p.Title);
-        CreateMap<EmployeeStatus, string>().ConvertUsing(p => p.Title);
-        CreateMap<string, EmployeeStatus>().ConstructUsing(p => null);
-
-
-        Map<Employee, EmployeeDto>();
-        Map<EmployeeStatus, EmployeeStatusDto>();
-        Map<EmployeePosition, EmployeePositionDto>();
+        CreateEmployeeMappings();
         Map<Effect, EffectDto>();
         Map<OrderStatus, OrderStatusDto>();
-
     }
 
     private void Map<T1, T2>()
@@ -30,5 +22,17 @@ public class MappingProfile : Profile
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
         Map<Customer, CustomerDto>();
+    }
+
+    private void CreateEmployeeMappings()
+    {
+        CreateMap<EmployeeStatus, string>().ConvertUsing(p => p.Title);
+        CreateMap<string, EmployeeStatus>().ConvertUsing(p => null);
+        CreateMap<EmployeePosition, string>().ConvertUsing(p => p.Title);
+        CreateMap<string, EmployeePosition>().ConvertUsing(p => null);
+
+        Map<EmployeeStatus, EmployeeStatusDto>();
+        Map<EmployeePosition, EmployeePositionDto>();
+        Map<Employee, EmployeeDto>();
     }
 }
