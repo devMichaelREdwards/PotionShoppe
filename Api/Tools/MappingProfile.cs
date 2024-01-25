@@ -42,6 +42,7 @@ public class MappingProfile : Profile
         Map<Effect, EffectDto>();
         CreateMap<Effect, string>()
             .ConvertUsing(e => $"{e.Description} Do something here later? Should be in DTO");
+        CreateMap<string, Effect>().ConstructUsing(e => null);
     }
 
     private void CreateIngredientMappings()

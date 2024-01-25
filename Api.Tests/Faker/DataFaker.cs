@@ -120,4 +120,28 @@ public static class DataFaker
         }
         return statuses;
     }
+
+        public static List<Ingredient> FakeIngredients()
+    {
+        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40};
+        List<Ingredient> ingredients = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            ingredients.Add(
+                new()
+                {
+                    IngredientId = i,
+                    Name = $"Ingredient {i}",
+                    Description = $"Ingredient {i}",
+                    Price = i*10,
+                    Cost = i*5,
+                    CurrentStock = i,
+                    Image = $"Image-{i}",
+                    Effect = fakeEffect
+                }
+            );
+        }
+
+        return ingredients;
+    }
 }
