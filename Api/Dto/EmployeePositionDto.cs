@@ -1,13 +1,18 @@
 namespace Api.Models;
 
-public partial class EmployeePositionDto : IDto<EmployeePositionDto>
+public partial class EmployeePositionDto : IDto<EmployeePosition>
 {
     public int? EmployeePositionId { get; set; }
 
     public string? Title { get; set; }
 
-    public bool Equals(EmployeePositionDto? other)
+    public bool Equals(EmployeePosition? other)
     {
         return other?.EmployeePositionId == EmployeePositionId && other?.Title == Title;
+    }
+
+    public void Update(EmployeePosition dest)
+    {
+        throw new NotImplementedException();
     }
 }

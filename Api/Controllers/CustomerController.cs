@@ -28,27 +28,18 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> PostCustomer(CustomerDto customer)
     {
-        Customer newCustomer = new Customer()
-        {
-            Username = customer.Username,
-            Password = customer.Password,
-            Name = customer.Name,
-            CustomerStatusId = customer.CustomerStatusId
-        };
-        customers.Insert(newCustomer);
+        customers.Insert(mapper.Map<Customer>(customer));
         return Ok();
     }
 
     [HttpPut]
     public async Task<IActionResult> PutCustomer(CustomerDto customer)
     {
-        if (customer.CustomerId != null)
-        {
-            Customer existing = customers.GetById((int)customer.CustomerId);
-            existing.Name = customer.Name ?? existing.Name;
-            existing.CustomerStatusId = customer.CustomerStatusId ?? existing.CustomerStatusId;
-            customers.Update(existing);
-        }
+        if (customer.CustomerId == null) return Ok();
+
+        Customer existing = customers.GetById((int)customer.CustomerId);
+        customer.Update(existing);
+        customers.Update(existing);
 
         return Ok();
     }

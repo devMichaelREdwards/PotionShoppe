@@ -57,6 +57,27 @@ public static class DataFaker
         return employees;
     }
 
+    public static List<Customer> FakeCustomers()
+    {
+        CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
+        List<Customer> employees = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            employees.Add(
+                new()
+                {
+                    CustomerId = i,
+                    Username = $"Username{i}",
+                    Password = $"Password{i}",
+                    Name = $"Name{i}",
+                    CustomerStatus = fakeStatus
+                }
+            );
+        }
+
+        return employees;
+    }
+
     public static List<Effect> FakeEffects()
     {
         List<Effect> effects = [];
@@ -86,7 +107,7 @@ public static class DataFaker
         return effects;
     }
 
-        public static List<CustomerStatus> FakeCustomerStatuses()
+    public static List<CustomerStatus> FakeCustomerStatuses()
     {
         List<CustomerStatus> statuses = [];
         for (int i = 1; i <= 10; i++)

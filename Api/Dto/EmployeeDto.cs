@@ -1,6 +1,6 @@
 namespace Api.Models;
 
-public partial class EmployeeDto
+public partial class EmployeeDto : IDto<Employee>
 {
     public int? EmployeeId { get; set; }
 
@@ -13,4 +13,14 @@ public partial class EmployeeDto
     public string EmployeeStatus { get; set; } = String.Empty;
     public DateOnly? DateHired { get; set; }
     public DateOnly? DateTerminated { get; set; }
+
+    public bool Equals(Employee? other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Update(Employee dest)
+    {
+        throw new NotImplementedException();
+    }
 }
