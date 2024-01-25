@@ -9,41 +9,45 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EffectController : ControllerBase
 {
-    private readonly IRepository<Effect> employeeStatuses;
+    private readonly IRepository<Effect> effects;
     private readonly IMapper mapper;
 
-    public EffectController(IRepository<Effect> _employeeStatuses, IMapper _mapper)
+    public EffectController(IRepository<Effect> _effects, IMapper _mapper)
     {
-        employeeStatuses = _employeeStatuses;
+        effects = _effects;
         mapper = _mapper;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetEffectes()
+    public IActionResult GetEffects()
     {
-        var result = employeeStatuses.Get();
+        var result = effects.Get();
         return Ok(mapper.Map<List<EffectDto>>(result));
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostEffect(EffectDto status)
+    public IActionResult PostEffect(EffectDto effect)
     {
-        employeeStatuses.Insert(mapper.Map<Effect>(status));
+        effects.Insert(mapper.Map<Effect>(effect));
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutEffect(EffectDto status)
+    public IActionResult PutEffect(EffectDto effect)
     {
-        employeeStatuses.Update(mapper.Map<Effect>(status));
+        if (effect.EffectId == null)
+            return Ok();
+        Effect existing = effects.GetById((int)effect.EffectId);
+        effect.Update(existing);
+        effects.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteEffect(EffectDto status)
+    public IActionResult DeleteEffect(EffectDto effect)
     {
-        if (status.EffectId != null)
-            employeeStatuses.Delete((int)status.EffectId);
+        if (effect.EffectId != null)
+            effects.Delete((int)effect.EffectId);
         return Ok();
     }
 }

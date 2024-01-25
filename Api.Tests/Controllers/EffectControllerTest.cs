@@ -8,23 +8,23 @@ namespace Api.Tests;
 
 public class EffectControllerTest
 {
-    TestEffectRepository employeeStatuses;
+    TestEffectRepository effects;
     IMapper mapper;
     EffectController controller;
 
     public EffectControllerTest()
     {
         // Setup
-        employeeStatuses = new TestEffectRepository();
+        effects = new TestEffectRepository();
         mapper = MapperFaker.MockMapper();
-        controller = new EffectController(employeeStatuses, mapper);
+        controller = new EffectController(effects, mapper);
     }
 
     [Fact]
-    public async void GetEffect_Returns_Correct_Effect_Data()
+    public void GetEffect_Returns_Correct_Effect_Data()
     {
         // Execute
-        IActionResult result = await controller.GetEffectes();
+        IActionResult result = controller.GetEffects();
         OkObjectResult ok = result as OkObjectResult;
         List<EffectDto> statusResult = ok.Value as List<EffectDto>;
         // Assert
@@ -32,7 +32,7 @@ public class EffectControllerTest
     }
 
     [Fact]
-    public async void PostEffect_Returns_Effect_Data_With_Given_Id()
+    public void PostEffect_Returns_Effect_Data_With_Given_Id()
     {
         int testId = 1000;
         EffectDto testStatus =
@@ -43,32 +43,32 @@ public class EffectControllerTest
                 Description = "Test"
             };
         // Execute
-        await controller.PostEffect(testStatus);
-        EffectDto newStatus = mapper.Map<EffectDto>(employeeStatuses.GetById(testId));
+        controller.PostEffect(testStatus);
+        Effect newStatus = effects.GetById(testId);
         // Assert
-        Assert.True(newStatus.Equals(testStatus));
+        Assert.True(testStatus.Equals(newStatus));
     }
 
     [Fact]
-    public async void PutEffect_Returns_Effect_With_Updated_Data()
+    public void PutEffect_Returns_Effect_With_Updated_Data()
     {
-        EffectDto gotten = mapper.Map<List<EffectDto>>(employeeStatuses.Get())[0];
+        EffectDto gotten = mapper.Map<List<EffectDto>>(effects.Get())[0];
         gotten.Duration = 1000;
         gotten.Description = "Test 2";
         // Execute
-        await controller.PutEffect(gotten);
-        EffectDto updated = mapper.Map<EffectDto>(employeeStatuses.GetById((int)gotten.EffectId));
+        controller.PutEffect(gotten);
+        Effect updated = effects.GetById((int)gotten.EffectId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]
-    public async void DeleteEffect_Removes_Effect_From_Context()
+    public void DeleteEffect_Removes_Effect_From_Context()
     {
-        EffectDto gotten = mapper.Map<List<EffectDto>>(employeeStatuses.Get())[0];
+        EffectDto gotten = mapper.Map<List<EffectDto>>(effects.Get())[0];
         // Execute
-        await controller.DeleteEffect(gotten);
-        EffectDto deleted = mapper.Map<EffectDto>(employeeStatuses.GetById((int)gotten.EffectId));
+        controller.DeleteEffect(gotten);
+        Effect deleted = effects.GetById((int)gotten.EffectId);
         Assert.Null(deleted);
     }
 }

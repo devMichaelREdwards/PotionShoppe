@@ -19,6 +19,8 @@ public partial class EffectDto : IDto<Effect>
 
     public void Update(Effect dest)
     {
-        throw new NotImplementedException();
+        dest.Value = Value ?? dest.Value;
+        dest.Duration = Duration ?? dest.Duration;
+        dest.Description = Description ?? dest.Description;
     }
 }
