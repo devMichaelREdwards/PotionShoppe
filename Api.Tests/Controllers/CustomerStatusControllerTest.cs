@@ -24,7 +24,7 @@ public class CustomerStatusControllerTest
     public async void GetCustomerStatus_Returns_Correct_CustomerStatus_Data()
     {
         // Execute
-        IActionResult result = await controller.GetCustomerStatuses();
+        IActionResult result = controller.GetCustomerStatuses();
         OkObjectResult ok = result as OkObjectResult;
         List<CustomerStatusDto> statusResult = ok.Value as List<CustomerStatusDto>;
         // Assert
@@ -37,12 +37,11 @@ public class CustomerStatusControllerTest
         int testId = 1000;
         CustomerStatusDto testStatus = new() { CustomerStatusId = testId, Title = "Test" };
         // Execute
-        await controller.PostCustomerStatus(testStatus);
-        CustomerStatusDto newStatus = mapper.Map<CustomerStatusDto>(
-            customerStatuses.GetById(testId)
-        );
+        controller.PostCustomerStatus(testStatus);
+        CustomerStatus newStatus = customerStatuses.GetById(testId);
+
         // Assert
-        Assert.True(newStatus.Equals(testStatus));
+        Assert.True(testStatus.Equals(newStatus));
     }
 
     [Fact]
@@ -51,12 +50,10 @@ public class CustomerStatusControllerTest
         CustomerStatusDto gotten = mapper.Map<List<CustomerStatusDto>>(customerStatuses.Get())[0];
         gotten.Title = "Test 2";
         // Execute
-        await controller.PutCustomerStatus(gotten);
-        CustomerStatusDto updated = mapper.Map<CustomerStatusDto>(
-            customerStatuses.GetById((int)gotten.CustomerStatusId)
-        );
+        controller.PutCustomerStatus(gotten);
+        CustomerStatus updated = customerStatuses.GetById((int)gotten.CustomerStatusId);
         // Assert
-        Assert.True(updated.Equals(gotten));
+        Assert.True(gotten.Equals(updated));
     }
 
     [Fact]
@@ -64,7 +61,7 @@ public class CustomerStatusControllerTest
     {
         CustomerStatusDto gotten = mapper.Map<List<CustomerStatusDto>>(customerStatuses.Get())[0];
         // Execute
-        await controller.DeleteCustomerStatus(gotten);
+        controller.DeleteCustomerStatus(gotten);
         CustomerStatusDto deleted = mapper.Map<CustomerStatusDto>(
             customerStatuses.GetById((int)gotten.CustomerStatusId)
         );

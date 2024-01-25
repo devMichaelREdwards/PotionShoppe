@@ -9,41 +9,45 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class CustomerStatusController : ControllerBase
 {
-    private readonly IRepository<CustomerStatus> employeeStatuses;
+    private readonly IRepository<CustomerStatus> customerStatuses;
     private readonly IMapper mapper;
 
-    public CustomerStatusController(IRepository<CustomerStatus> _employeeStatuses, IMapper _mapper)
+    public CustomerStatusController(IRepository<CustomerStatus> _customerStatuses, IMapper _mapper)
     {
-        employeeStatuses = _employeeStatuses;
+        customerStatuses = _customerStatuses;
         mapper = _mapper;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetCustomerStatuses()
+    public IActionResult GetCustomerStatuses()
     {
-        var result = employeeStatuses.Get();
+        var result = customerStatuses.Get();
         return Ok(mapper.Map<List<CustomerStatusDto>>(result));
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostCustomerStatus(CustomerStatusDto status)
+    public IActionResult PostCustomerStatus(CustomerStatusDto status)
     {
-        employeeStatuses.Insert(mapper.Map<CustomerStatus>(status));
+        customerStatuses.Insert(mapper.Map<CustomerStatus>(status));
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutCustomerStatus(CustomerStatusDto status)
+    public IActionResult PutCustomerStatus(CustomerStatusDto status)
     {
-        employeeStatuses.Update(mapper.Map<CustomerStatus>(status));
+        if (status.CustomerStatusId == null)
+            return Ok();
+        CustomerStatus existing = customerStatuses.GetById((int)status.CustomerStatusId);
+        status.Update(existing);
+        customerStatuses.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteCustomerStatus(CustomerStatusDto status)
+    public IActionResult DeleteCustomerStatus(CustomerStatusDto status)
     {
         if (status.CustomerStatusId != null)
-            employeeStatuses.Delete((int)status.CustomerStatusId);
+            customerStatuses.Delete((int)status.CustomerStatusId);
         return Ok();
     }
 }
