@@ -19,21 +19,21 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetCustomers()
+    public IActionResult GetCustomers()
     {
         var result = customers.Get();
         return Ok(mapper.Map<List<CustomerDto>>(result));
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostCustomer(CustomerDto customer)
+    public IActionResult PostCustomer(CustomerDto customer)
     {
         customers.Insert(mapper.Map<Customer>(customer));
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutCustomer(CustomerDto customer)
+    public IActionResult PutCustomer(CustomerDto customer)
     {
         if (customer.CustomerId == null) return Ok();
 
@@ -45,7 +45,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteCustomer(CustomerDto customer)
+    public IActionResult DeleteCustomer(CustomerDto customer)
     {
         if (customer.CustomerId != null)
             customers.Delete((int)customer.CustomerId);

@@ -14,11 +14,12 @@ public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
 
     public bool Equals(Customer? other)
     {
-        return CustomerId == other.CustomerId
-            && Username == other.Username
-            && Password == other.Password
-            && Name == other.Name
-            && CustomerStatusId == other.CustomerStatusId;
+        return other != null
+            && other.CustomerId == CustomerId
+            && other?.Username == Username
+            && other?.Password == Password
+            && other?.Name == Name
+            && other?.CustomerStatusId == CustomerStatusId;
     }
 
     public void Update(Customer dest)
