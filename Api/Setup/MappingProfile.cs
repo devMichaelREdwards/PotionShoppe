@@ -1,6 +1,8 @@
 using Api.Models;
 using AutoMapper;
 
+namespace Setup;
+
 public class MappingProfile : Profile
 {
     public MappingProfile()

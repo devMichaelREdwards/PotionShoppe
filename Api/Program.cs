@@ -1,23 +1,13 @@
 using System.Text.Json.Serialization;
 using Api.Data;
-using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Setup;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
-builder.Services.AddScoped<IRepository<EmployeePosition>, EmployeePositionRepository>();
-builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
-builder.Services.AddScoped<IRepository<Effect>, EffectRepository>();
-builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
-builder.Services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository>();
-builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
-builder.Services.AddScoped<IRepository<Ingredient>, IngredientRepository>();
-builder.Services.AddScoped<IRepository<Potion>, PotionRepository>();
-builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
-builder.Services.AddScoped<IRepository<Receipt>, ReceiptRepository>();
+RepositorySetup.Setup(builder.Services);
 
 builder.Services
     .AddControllers()
