@@ -1,5 +1,3 @@
-
-
 using Api.Data;
 using Api.Models;
 
@@ -7,7 +5,6 @@ namespace Setup;
 
 public static class RepositorySetup
 {
-
     public static void Setup(IServiceCollection services)
     {
         services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
@@ -22,5 +19,6 @@ public static class RepositorySetup
         services.AddScoped<IRepository<Order>, OrderRepository>();
         services.AddScoped<IRepository<Receipt>, ReceiptRepository>();
         services.AddScoped<IRepository<PotionEffect>, PotionEffectRepository>();
+        services.AddScoped<IRepository<OrderIngredient>, OrderIngredientRepository>();
     }
 }
