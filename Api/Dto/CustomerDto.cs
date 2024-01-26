@@ -24,8 +24,6 @@ public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
 
     public void Update(Customer dest)
     {
-        dest.CustomerId = CustomerId ?? dest.CustomerId;
-        dest.Username = dest.Username;
         dest.Password = Password ?? dest.Password;
         dest.Name = Name ?? dest.Name;
         dest.CustomerStatusId = CustomerStatusId ?? dest.CustomerStatusId;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Api.Models;
 
-public partial class IngredientDto : IDto<Ingredient>
+public partial class PotionDto : IDto<Potion>
 {
-    public int? IngredientId { get; set; }
+    public int? PotionId { get; set; }
 
     public string? Name { get; set; }
 
@@ -19,32 +19,33 @@ public partial class IngredientDto : IDto<Ingredient>
 
     public string? Image { get; set; }
 
-    public int? EffectId { get; set; }
+    public int? EmployeeId { get; set; }
 
-    public EffectDto? Effect { get; set; }
+    public string? Employee { get; set; }
 
-    public bool Equals(Ingredient? other)
+    public ICollection<PotionEffectDto>? PotionEffects { get; set; } = new List<PotionEffectDto>();
+
+    public bool Equals(Potion? other)
     {
         return other != null
-            && other.IngredientId == IngredientId
+            && other.PotionId == PotionId
             && other.Name == Name
             && other.Description == Description
             && other.Price == Price
             && other.Cost == Cost
             && other.CurrentStock == CurrentStock
             && other.Image == Image
-            && other.EffectId == EffectId;
+            && other.EmployeeId == EmployeeId;
     }
 
-    public void Update(Ingredient dest)
+    public void Update(Potion dest)
     {
-        dest.IngredientId = IngredientId ?? dest.IngredientId;
         dest.Name = Name ?? dest.Name;
         dest.Description = Description ?? dest.Description;
         dest.Price = Price ?? dest.Price;
         dest.Cost = Cost ?? dest.Cost;
         dest.CurrentStock = CurrentStock ?? dest.CurrentStock;
         dest.Image = Image ?? dest.Image;
-        dest.EffectId = EffectId ?? dest.EffectId;
+        dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
     }
 }

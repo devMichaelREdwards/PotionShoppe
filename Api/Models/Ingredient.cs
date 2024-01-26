@@ -23,5 +23,6 @@ public partial class Ingredient
 
     public virtual Effect? Effect { get; set; }
 
-    public virtual ICollection<OrderIngredient> OrderIngredients { get; set; } = new List<OrderIngredient>();
+    public virtual ICollection<OrderIngredient> OrderIngredients { get; set; } =
+        new List<OrderIngredient>();
 }

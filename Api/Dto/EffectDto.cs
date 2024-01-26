@@ -23,4 +23,9 @@ public partial class EffectDto : IDto<Effect>
         dest.Duration = Duration ?? dest.Duration;
         dest.Description = Description ?? dest.Description;
     }
+
+    public string BuildDescription()
+    {
+        return string.Format(Description, Value, Duration);
+    }
 }

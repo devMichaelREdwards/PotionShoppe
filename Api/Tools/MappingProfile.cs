@@ -10,6 +10,10 @@ public class MappingProfile : Profile
         CreateEffectMappings();
         CreateIngredientMappings();
         CreateOrderMappings();
+
+        Map<Potion, PotionDto>();
+        Map<PotionEffect, PotionEffectDto>();
+        CreateMap<PotionEffectDto, string>().ConvertUsing(pe => pe.EffectDescription());
     }
 
     private void Map<T1, T2>()
@@ -35,13 +39,13 @@ public class MappingProfile : Profile
         Map<EmployeeStatus, EmployeeStatusDto>();
         Map<EmployeePosition, EmployeePositionDto>();
         Map<Employee, EmployeeDto>();
+        CreateMap<Employee, string>().ConstructUsing(e => e.Name);
     }
 
     private void CreateEffectMappings()
     {
         Map<Effect, EffectDto>();
-        CreateMap<Effect, string>()
-            .ConvertUsing(e => $"{e.Description} Do something here later? Should be in DTO");
+        CreateMap<EffectDto, string>().ConvertUsing(e => e.BuildDescription());
         CreateMap<string, Effect>().ConstructUsing(e => null);
     }
 
