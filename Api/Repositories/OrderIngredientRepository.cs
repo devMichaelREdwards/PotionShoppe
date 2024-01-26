@@ -37,8 +37,8 @@ public class OrderIngredientRepository : IRepository<OrderIngredient>, IDisposab
 
     public void Delete(int id)
     {
-        OrderIngredient OrderIngredient = context.OrderIngredients.Find(id);
-        context.OrderIngredients.Remove(OrderIngredient);
+        OrderIngredient orderIngredient = context.OrderIngredients.Find(id);
+        context.OrderIngredients.Remove(orderIngredient);
         Save();
     }
 

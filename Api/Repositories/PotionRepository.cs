@@ -37,8 +37,8 @@ public class PotionRepository : IRepository<Potion>, IDisposable
 
     public void Delete(int id)
     {
-        Potion Potion = context.Potions.Find(id);
-        context.Potions.Remove(Potion);
+        Potion potion = context.Potions.Find(id);
+        context.Potions.Remove(potion);
         Save();
     }
 

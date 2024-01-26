@@ -6,32 +6,32 @@ namespace Api.Tests;
 
 public class TestPotionRepository : IRepository<Potion>, IDisposable
 {
-    private List<Potion> ingredients = new();
+    private List<Potion> potions = new();
 
     public TestPotionRepository()
     {
-        ingredients = DataFaker.FakePotions();
+        potions = DataFaker.FakePotions();
     }
 
     public IEnumerable<Potion> Get()
     {
-        return ingredients;
+        return potions;
     }
 
     public Potion GetById(int id)
     {
-        return ingredients.Find(s => s.PotionId == id);
+        return potions.Find(s => s.PotionId == id);
     }
 
     public Potion Insert(Potion entity)
     {
-        ingredients.Add(entity);
+        potions.Add(entity);
         return entity;
     }
 
     public void Update(Potion entity)
     {
-        Potion selected = ingredients.FirstOrDefault(
+        Potion selected = potions.FirstOrDefault(
             s => s.PotionId == entity.PotionId
         );
         if (selected != null)
@@ -42,7 +42,7 @@ public class TestPotionRepository : IRepository<Potion>, IDisposable
 
     public void Delete(int id)
     {
-        ingredients = ingredients.Where(s => s.PotionId != id).ToList();
+        potions = potions.Where(s => s.PotionId != id).ToList();
     }
 
     public void Save()

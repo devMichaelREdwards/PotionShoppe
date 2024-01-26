@@ -42,8 +42,8 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
 
     public void Delete(int id)
     {
-        Receipt Receipt = context.Receipts.Find(id);
-        context.Receipts.Remove(Receipt);
+        Receipt receipt = context.Receipts.Find(id);
+        context.Receipts.Remove(receipt);
         Save();
     }
 

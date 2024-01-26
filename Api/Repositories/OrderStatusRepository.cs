@@ -37,8 +37,8 @@ public class OrderStatusRepository : IRepository<OrderStatus>, IDisposable
 
     public void Delete(int id)
     {
-        OrderStatus employeeStatus = context.OrderStatuses.Find(id);
-        context.OrderStatuses.Remove(employeeStatus);
+        OrderStatus orderStatus = context.OrderStatuses.Find(id);
+        context.OrderStatuses.Remove(orderStatus);
         Save();
     }
 

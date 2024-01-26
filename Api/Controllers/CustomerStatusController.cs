@@ -26,28 +26,28 @@ public class CustomerStatusController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostCustomerStatus(CustomerStatusDto status)
+    public IActionResult PostCustomerStatus(CustomerStatusDto customerStatus)
     {
-        customerStatuses.Insert(mapper.Map<CustomerStatus>(status));
+        customerStatuses.Insert(mapper.Map<CustomerStatus>(customerStatus));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutCustomerStatus(CustomerStatusDto status)
+    public IActionResult PutCustomerStatus(CustomerStatusDto customerStatus)
     {
-        if (status.CustomerStatusId == null)
+        if (customerStatus.CustomerStatusId == null)
             return Ok();
-        CustomerStatus existing = customerStatuses.GetById((int)status.CustomerStatusId);
-        status.Update(existing);
+        CustomerStatus existing = customerStatuses.GetById((int)customerStatus.CustomerStatusId);
+        customerStatus.Update(existing);
         customerStatuses.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteCustomerStatus(CustomerStatusDto status)
+    public IActionResult DeleteCustomerStatus(CustomerStatusDto customerStatus)
     {
-        if (status.CustomerStatusId != null)
-            customerStatuses.Delete((int)status.CustomerStatusId);
+        if (customerStatus.CustomerStatusId != null)
+            customerStatuses.Delete((int)customerStatus.CustomerStatusId);
         return Ok();
     }
 }

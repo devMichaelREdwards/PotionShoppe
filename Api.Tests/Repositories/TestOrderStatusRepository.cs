@@ -6,32 +6,32 @@ namespace Api.Tests;
 
 public class TestOrderStatusRepository : IRepository<OrderStatus>, IDisposable
 {
-    private List<OrderStatus> employeeStatuses = new();
+    private List<OrderStatus> orderStatuses = new();
 
     public TestOrderStatusRepository()
     {
-        employeeStatuses = DataFaker.FakeOrderStatuses();
+        orderStatuses = DataFaker.FakeOrderStatuses();
     }
 
     public IEnumerable<OrderStatus> Get()
     {
-        return employeeStatuses;
+        return orderStatuses;
     }
 
     public OrderStatus GetById(int id)
     {
-        return employeeStatuses.Find(s => s.OrderStatusId == id);
+        return orderStatuses.Find(s => s.OrderStatusId == id);
     }
 
     public OrderStatus Insert(OrderStatus entity)
     {
-        employeeStatuses.Add(entity);
+        orderStatuses.Add(entity);
         return entity;
     }
 
     public void Update(OrderStatus entity)
     {
-        OrderStatus selected = employeeStatuses.FirstOrDefault(
+        OrderStatus selected = orderStatuses.FirstOrDefault(
             s => s.OrderStatusId == entity.OrderStatusId
         );
         if (selected != null)
@@ -42,7 +42,7 @@ public class TestOrderStatusRepository : IRepository<OrderStatus>, IDisposable
 
     public void Delete(int id)
     {
-        employeeStatuses = employeeStatuses.Where(s => s.OrderStatusId != id).ToList();
+        orderStatuses = orderStatuses.Where(s => s.OrderStatusId != id).ToList();
     }
 
     public void Save()

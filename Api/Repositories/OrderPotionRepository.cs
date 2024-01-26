@@ -37,8 +37,8 @@ public class OrderPotionRepository : IRepository<OrderPotion>, IDisposable
 
     public void Delete(int id)
     {
-        OrderPotion OrderPotion = context.OrderPotions.Find(id);
-        context.OrderPotions.Remove(OrderPotion);
+        OrderPotion orderPotion = context.OrderPotions.Find(id);
+        context.OrderPotions.Remove(orderPotion);
         Save();
     }
 

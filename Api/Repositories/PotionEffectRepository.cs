@@ -37,8 +37,8 @@ public class PotionEffectRepository : IRepository<PotionEffect>, IDisposable
 
     public void Delete(int id)
     {
-        PotionEffect PotionEffect = context.PotionEffects.Find(id);
-        context.PotionEffects.Remove(PotionEffect);
+        PotionEffect potionEffect = context.PotionEffects.Find(id);
+        context.PotionEffects.Remove(potionEffect);
         Save();
     }
 

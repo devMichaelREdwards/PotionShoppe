@@ -26,29 +26,29 @@ public class PotionController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostPotion(PotionDto customer)
+    public IActionResult PostPotion(PotionDto potion)
     {
-        potions.Insert(mapper.Map<Potion>(customer));
+        potions.Insert(mapper.Map<Potion>(potion));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutPotion(PotionDto customer)
+    public IActionResult PutPotion(PotionDto potion)
     {
-        if (customer.PotionId == null)
+        if (potion.PotionId == null)
             return Ok();
 
-        Potion existing = potions.GetById((int)customer.PotionId);
-        customer.Update(existing);
+        Potion existing = potions.GetById((int)potion.PotionId);
+        potion.Update(existing);
         potions.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeletePotion(PotionDto customer)
+    public IActionResult DeletePotion(PotionDto potion)
     {
-        if (customer.PotionId != null)
-            potions.Delete((int)customer.PotionId);
+        if (potion.PotionId != null)
+            potions.Delete((int)potion.PotionId);
         return Ok();
     }
 }

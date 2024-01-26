@@ -45,8 +45,8 @@ public class OrderRepository : IRepository<Order>, IDisposable
 
     public void Delete(int id)
     {
-        Order Order = context.Orders.Find(id);
-        context.Orders.Remove(Order);
+        Order order = context.Orders.Find(id);
+        context.Orders.Remove(order);
         Save();
     }
 

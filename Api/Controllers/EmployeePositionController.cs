@@ -29,28 +29,28 @@ public class EmployeePositionController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostEmployeePosition(EmployeePositionDto position)
+    public IActionResult PostEmployeePosition(EmployeePositionDto employeePosition)
     {
-        employeePositions.Insert(mapper.Map<EmployeePosition>(position));
+        employeePositions.Insert(mapper.Map<EmployeePosition>(employeePosition));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutEmployeePosition(EmployeePositionDto position)
+    public IActionResult PutEmployeePosition(EmployeePositionDto employeePosition)
     {
-        if (position.EmployeePositionId == null)
+        if (employeePosition.EmployeePositionId == null)
             return Ok();
-        EmployeePosition existing = employeePositions.GetById((int)position.EmployeePositionId);
-        position.Update(existing);
+        EmployeePosition existing = employeePositions.GetById((int)employeePosition.EmployeePositionId);
+        employeePosition.Update(existing);
         employeePositions.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteEmployeePosition(EmployeePositionDto position)
+    public IActionResult DeleteEmployeePosition(EmployeePositionDto employeePosition)
     {
-        if (position.EmployeePositionId != null)
-            employeePositions.Delete((int)position.EmployeePositionId);
+        if (employeePosition.EmployeePositionId != null)
+            employeePositions.Delete((int)employeePosition.EmployeePositionId);
         return Ok();
     }
 }

@@ -9,52 +9,52 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class OrderIngredientController : ControllerBase
 {
-    private readonly IRepository<OrderIngredient> potionIngredients;
+    private readonly IRepository<OrderIngredient> orderIngredients;
     private readonly IMapper mapper;
 
     public OrderIngredientController(
-        IRepository<OrderIngredient> _potionIngredients,
+        IRepository<OrderIngredient> _orderIngredients,
         IMapper _mapper
     )
     {
-        potionIngredients = _potionIngredients;
+        orderIngredients = _orderIngredients;
         mapper = _mapper;
     }
 
     [HttpGet]
     public IActionResult GetOrderIngredients()
     {
-        var result = potionIngredients.Get();
+        var result = orderIngredients.Get();
         return Ok(mapper.Map<List<OrderIngredientDto>>(result));
     }
 
     [HttpPost]
-    public IActionResult PostOrderIngredient(OrderIngredientDto potionIngredient)
+    public IActionResult PostOrderIngredient(OrderIngredientDto orderIngredient)
     {
-        potionIngredients.Insert(mapper.Map<OrderIngredient>(potionIngredient));
+        orderIngredients.Insert(mapper.Map<OrderIngredient>(orderIngredient));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutOrderIngredient(OrderIngredientDto potionIngredient)
+    public IActionResult PutOrderIngredient(OrderIngredientDto orderIngredient)
     {
-        if (potionIngredient.OrderIngredientId == null)
+        if (orderIngredient.OrderIngredientId == null)
             return Ok();
 
-        OrderIngredient existing = potionIngredients.GetById(
-            (int)potionIngredient.OrderIngredientId
+        OrderIngredient existing = orderIngredients.GetById(
+            (int)orderIngredient.OrderIngredientId
         );
-        potionIngredient.Update(existing);
-        potionIngredients.Update(existing);
+        orderIngredient.Update(existing);
+        orderIngredients.Update(existing);
 
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteOrderIngredient(OrderIngredientDto potionIngredient)
+    public IActionResult DeleteOrderIngredient(OrderIngredientDto orderIngredient)
     {
-        if (potionIngredient.OrderIngredientId != null)
-            potionIngredients.Delete((int)potionIngredient.OrderIngredientId);
+        if (orderIngredient.OrderIngredientId != null)
+            orderIngredients.Delete((int)orderIngredient.OrderIngredientId);
         return Ok();
     }
 }

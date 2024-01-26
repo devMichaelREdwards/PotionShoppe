@@ -9,52 +9,52 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class OrderPotionController : ControllerBase
 {
-    private readonly IRepository<OrderPotion> potionPotions;
+    private readonly IRepository<OrderPotion> orderPotions;
     private readonly IMapper mapper;
 
     public OrderPotionController(
-        IRepository<OrderPotion> _potionPotions,
+        IRepository<OrderPotion> _orderPotions,
         IMapper _mapper
     )
     {
-        potionPotions = _potionPotions;
+        orderPotions = _orderPotions;
         mapper = _mapper;
     }
 
     [HttpGet]
     public IActionResult GetOrderPotions()
     {
-        var result = potionPotions.Get();
+        var result = orderPotions.Get();
         return Ok(mapper.Map<List<OrderPotionDto>>(result));
     }
 
     [HttpPost]
-    public IActionResult PostOrderPotion(OrderPotionDto potionPotion)
+    public IActionResult PostOrderPotion(OrderPotionDto orderPotion)
     {
-        potionPotions.Insert(mapper.Map<OrderPotion>(potionPotion));
+        orderPotions.Insert(mapper.Map<OrderPotion>(orderPotion));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutOrderPotion(OrderPotionDto potionPotion)
+    public IActionResult PutOrderPotion(OrderPotionDto orderPotion)
     {
-        if (potionPotion.OrderPotionId == null)
+        if (orderPotion.OrderPotionId == null)
             return Ok();
 
-        OrderPotion existing = potionPotions.GetById(
-            (int)potionPotion.OrderPotionId
+        OrderPotion existing = orderPotions.GetById(
+            (int)orderPotion.OrderPotionId
         );
-        potionPotion.Update(existing);
-        potionPotions.Update(existing);
+        orderPotion.Update(existing);
+        orderPotions.Update(existing);
 
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteOrderPotion(OrderPotionDto potionPotion)
+    public IActionResult DeleteOrderPotion(OrderPotionDto orderPotion)
     {
-        if (potionPotion.OrderPotionId != null)
-            potionPotions.Delete((int)potionPotion.OrderPotionId);
+        if (orderPotion.OrderPotionId != null)
+            orderPotions.Delete((int)orderPotion.OrderPotionId);
         return Ok();
     }
 }

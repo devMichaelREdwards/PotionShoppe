@@ -6,32 +6,32 @@ namespace Api.Tests;
 
 public class TestOrderIngredientRepository : IRepository<OrderIngredient>, IDisposable
 {
-    private List<OrderIngredient> potionIngredients = new();
+    private List<OrderIngredient> orderIngredients = new();
 
     public TestOrderIngredientRepository()
     {
-        potionIngredients = DataFaker.FakeOrderIngredients();
+        orderIngredients = DataFaker.FakeOrderIngredients();
     }
 
     public IEnumerable<OrderIngredient> Get()
     {
-        return potionIngredients;
+        return orderIngredients;
     }
 
     public OrderIngredient GetById(int id)
     {
-        return potionIngredients.Find(s => s.OrderIngredientId == id);
+        return orderIngredients.Find(s => s.OrderIngredientId == id);
     }
 
     public OrderIngredient Insert(OrderIngredient entity)
     {
-        potionIngredients.Add(entity);
+        orderIngredients.Add(entity);
         return entity;
     }
 
     public void Update(OrderIngredient entity)
     {
-        OrderIngredient selected = potionIngredients.FirstOrDefault(
+        OrderIngredient selected = orderIngredients.FirstOrDefault(
             s => s.OrderIngredientId == entity.OrderIngredientId
         );
         if (selected != null)
@@ -42,7 +42,7 @@ public class TestOrderIngredientRepository : IRepository<OrderIngredient>, IDisp
 
     public void Delete(int id)
     {
-        potionIngredients = potionIngredients.Where(s => s.OrderIngredientId != id).ToList();
+        orderIngredients = orderIngredients.Where(s => s.OrderIngredientId != id).ToList();
     }
 
     public void Save()

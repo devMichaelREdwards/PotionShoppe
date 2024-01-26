@@ -26,30 +26,30 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostIngredient(IngredientDto customer)
+    public IActionResult PostIngredient(IngredientDto ingredient)
     {
-        ingredients.Insert(mapper.Map<Ingredient>(customer));
+        ingredients.Insert(mapper.Map<Ingredient>(ingredient));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutIngredient(IngredientDto customer)
+    public IActionResult PutIngredient(IngredientDto ingredient)
     {
-        if (customer.IngredientId == null)
+        if (ingredient.IngredientId == null)
             return Ok();
 
-        Ingredient existing = ingredients.GetById((int)customer.IngredientId);
-        customer.Update(existing);
+        Ingredient existing = ingredients.GetById((int)ingredient.IngredientId);
+        ingredient.Update(existing);
         ingredients.Update(existing);
 
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult DeleteIngredient(IngredientDto customer)
+    public IActionResult DeleteIngredient(IngredientDto ingredient)
     {
-        if (customer.IngredientId != null)
-            ingredients.Delete((int)customer.IngredientId);
+        if (ingredient.IngredientId != null)
+            ingredients.Delete((int)ingredient.IngredientId);
         return Ok();
     }
 }

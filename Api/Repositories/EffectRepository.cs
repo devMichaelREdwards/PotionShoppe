@@ -37,8 +37,8 @@ public class EffectRepository : IRepository<Effect>, IDisposable
 
     public void Delete(int id)
     {
-        Effect employeeStatus = context.Effects.Find(id);
-        context.Effects.Remove(employeeStatus);
+        Effect effect = context.Effects.Find(id);
+        context.Effects.Remove(effect);
         Save();
     }
 

@@ -9,33 +9,33 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class OrderStatusController : ControllerBase
 {
-    private readonly IRepository<OrderStatus> employeeStatuses;
+    private readonly IRepository<OrderStatus> orderStatuses;
     private readonly IMapper mapper;
 
-    public OrderStatusController(IRepository<OrderStatus> _employeeStatuses, IMapper _mapper)
+    public OrderStatusController(IRepository<OrderStatus> _orderStatuses, IMapper _mapper)
     {
-        employeeStatuses = _employeeStatuses;
+        orderStatuses = _orderStatuses;
         mapper = _mapper;
     }
 
     [HttpGet]
     public IActionResult GetOrderStatuses()
     {
-        var result = employeeStatuses.Get();
+        var result = orderStatuses.Get();
         return Ok(mapper.Map<List<OrderStatusDto>>(result));
     }
 
     [HttpPost]
     public IActionResult PostOrderStatus(OrderStatusDto status)
     {
-        employeeStatuses.Insert(mapper.Map<OrderStatus>(status));
+        orderStatuses.Insert(mapper.Map<OrderStatus>(status));
         return Ok();
     }
 
     [HttpPut]
     public IActionResult PutOrderStatus(OrderStatusDto status)
     {
-        employeeStatuses.Update(mapper.Map<OrderStatus>(status));
+        orderStatuses.Update(mapper.Map<OrderStatus>(status));
         return Ok();
     }
 
@@ -43,7 +43,7 @@ public class OrderStatusController : ControllerBase
     public IActionResult DeleteOrderStatus(OrderStatusDto status)
     {
         if (status.OrderStatusId != null)
-            employeeStatuses.Delete((int)status.OrderStatusId);
+            orderStatuses.Delete((int)status.OrderStatusId);
         return Ok();
     }
 }

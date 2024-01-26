@@ -26,28 +26,28 @@ public class EmployeeStatusController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostEmployeeStatus(EmployeeStatusDto status)
+    public async Task<IActionResult> PostEmployeeStatus(EmployeeStatusDto employeeStatus)
     {
-        employeeStatuses.Insert(mapper.Map<EmployeeStatus>(status));
+        employeeStatuses.Insert(mapper.Map<EmployeeStatus>(employeeStatus));
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult PutEmployeeStatus(EmployeeStatusDto position)
+    public IActionResult PutEmployeeStatus(EmployeeStatusDto employeeStatus)
     {
-        if (position.EmployeeStatusId == null)
+        if (employeeStatus.EmployeeStatusId == null)
             return Ok();
-        EmployeeStatus existing = employeeStatuses.GetById((int)position.EmployeeStatusId);
-        position.Update(existing);
+        EmployeeStatus existing = employeeStatuses.GetById((int)employeeStatus.EmployeeStatusId);
+        employeeStatus.Update(existing);
         employeeStatuses.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteEmployeeStatus(EmployeeStatusDto status)
+    public async Task<IActionResult> DeleteEmployeeStatus(EmployeeStatusDto employeeStatus)
     {
-        if (status.EmployeeStatusId != null)
-            employeeStatuses.Delete((int)status.EmployeeStatusId);
+        if (employeeStatus.EmployeeStatusId != null)
+            employeeStatuses.Delete((int)employeeStatus.EmployeeStatusId);
         return Ok();
     }
 }
