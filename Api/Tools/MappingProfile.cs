@@ -11,6 +11,7 @@ public class MappingProfile : Profile
         CreateIngredientMappings();
         CreatePotionMappings();
         CreateOrderMappings();
+        CreateReceiptMappings();
     }
 
     private void Map<T1, T2>()
@@ -24,6 +25,7 @@ public class MappingProfile : Profile
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
         Map<Customer, CustomerDto>();
+        CreateMap<Customer, string>().ConvertUsing(c => c.Name);
     }
 
     private void CreateEmployeeMappings()
@@ -35,7 +37,6 @@ public class MappingProfile : Profile
 
         Map<EmployeeStatus, EmployeeStatusDto>();
         Map<EmployeePosition, EmployeePositionDto>();
-        Map<Employee, EmployeeDto>();
         CreateMap<Employee, string>().ConstructUsing(e => e.Name);
     }
 
@@ -64,5 +65,12 @@ public class MappingProfile : Profile
         Map<Order, OrderDto>();
         Map<OrderPotion, OrderPotionDto>();
         Map<OrderIngredient, OrderIngredientDto>();
+        CreateMap<Order, string>().ConvertUsing(o => o.OrderNumber);
+        CreateMap<OrderDto, string>().ConvertUsing(o => o.OrderNumber);
+    }
+
+    private void CreateReceiptMappings()
+    {
+        Map<Receipt, ReceiptDto>();
     }
 }

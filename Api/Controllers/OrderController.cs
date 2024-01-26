@@ -29,8 +29,7 @@ public class OrderController : ControllerBase
     public IActionResult PostOrder(OrderDto order)
     {
         order.DatePlaced = DateOnly.FromDateTime(DateTime.Today);
-        Order newOrder = mapper.Map<Order>(order);
-        orders.Insert(newOrder);
+        orders.Insert(mapper.Map<Order>(order));
         return Ok();
     }
 

@@ -17,15 +17,15 @@ public partial class OrderDto : IDto<Order>
 
     public DateOnly? DatePlaced { get; set; }
 
-    public virtual CustomerDto? Customer { get; set; }
+    public string? Customer { get; set; }
 
-    public virtual ICollection<OrderIngredientDto> OrderIngredients { get; set; } =
+    public ICollection<OrderIngredientDto> OrderIngredients { get; set; } =
         new List<OrderIngredientDto>();
 
-    public virtual ICollection<OrderPotionDto> OrderPotions { get; set; } =
+    public ICollection<OrderPotionDto> OrderPotions { get; set; } =
         new List<OrderPotionDto>();
 
-    public virtual OrderStatusDto? OrderStatus { get; set; }
+    public OrderStatusDto? OrderStatus { get; set; }
 
     public bool Equals(Order? other)
     {
