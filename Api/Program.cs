@@ -1,13 +1,13 @@
 using System.Text.Json.Serialization;
 using Api.Data;
-using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Setup;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
+RepositorySetup.Setup(builder.Services);
 
 builder.Services
     .AddControllers()

@@ -1,12 +1,8 @@
 using Api.Controllers;
-using Api.Data;
 using Api.Models;
 using AutoMapper;
 using Faker;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Moq;
 
 namespace Api.Tests;
 
@@ -14,64 +10,67 @@ public class EmployeeControllerTest
 {
     TestEmployeeRepository employees;
     IMapper mapper;
+    EmployeeController controller;
 
     public EmployeeControllerTest()
     {
         // Setup
         employees = new TestEmployeeRepository();
         mapper = MapperFaker.MockMapper();
+        controller = new EmployeeController(employees, mapper);
     }
 
     [Fact]
-    public async void GetEmployees_Returns_Correct_Employee_Data()
+    public void GetEmployee_Returns_Correct_Employee_Data()
     {
         // Execute
-        EmployeeController controller = new EmployeeController(employees, mapper);
-        IActionResult result = await controller.GetEmployees();
-
+        IActionResult result = controller.GetEmployees();
         OkObjectResult ok = result as OkObjectResult;
-        List<EmployeeDto> employeesResult = ok.Value as List<EmployeeDto>;
+        List<EmployeeDto> Result = ok.Value as List<EmployeeDto>;
         // Assert
-        Assert.Equal(DataFaker.FakeEmployees().Count, employeesResult.Count);
+        Assert.Equal(DataFaker.FakeEmployees().Count, Result.Count);
     }
-}
 
-public class TestEmployeeRepository : IRepository<Employee>, IDisposable
-{
-    public IEnumerable<Employee> Get()
+    [Fact]
+    public void PostEmployee_Returns_Employee_Data_With_Given_Id()
     {
-        return DataFaker.FakeEmployees();
+        int testId = 1000;
+        EmployeeDto testEmployee =
+            new()
+            {
+                EmployeeId = testId,
+                Username = "TestUsername",
+                Password = "TestPassword",
+                Name = "Test",
+                EmployeeStatusId = 1,
+                EmployeePositionId = 1
+            };
+        // Execute
+        controller.PostEmployee(testEmployee);
+        Employee newEmployee = employees.GetById(testId);
+        // Assert
+        Assert.True(testEmployee.Equals(newEmployee));
     }
 
-    public Employee GetById(int id)
+    [Fact]
+    public void PutEmployee_Returns_Employee_With_Updated_Data()
     {
-        return null;
+        EmployeeDto gotten = mapper.Map<List<EmployeeDto>>(employees.Get())[0];
+        gotten.Name = "Test 2";
+        // Execute
+        controller.PutEmployee(gotten);
+        Employee updated = employees.GetById((int)gotten.EmployeeId);
+        // Assert
+        Assert.True(gotten.Equals(updated));
     }
 
-    public void Insert(Employee entity) { }
-
-    public void Update(Employee entity) { }
-
-    public void Delete(int id) { }
-
-    public void Save() { }
-
-    #region Dispose
-    private bool disposed = false;
-
-    protected virtual void Dispose(bool disposing)
+    [Fact]
+    public void DeleteEmployee_Removes_Employee_From_Context()
     {
-        if (!this.disposed)
-        {
-            if (disposing) { }
-        }
-        this.disposed = true;
+        EmployeeDto gotten = mapper.Map<List<EmployeeDto>>(employees.Get())[0];
+        // Execute
+        controller.DeleteEmployee(gotten);
+        Employee deleted = employees.GetById((int)gotten.EmployeeId);
+        Assert.Null(deleted);
     }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    #endregion
 }

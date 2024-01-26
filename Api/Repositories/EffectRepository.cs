@@ -3,41 +3,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public class EmployeeRepository : IRepository<Employee>, IDisposable
+public class EffectRepository : IRepository<Effect>, IDisposable
 {
     private PotionShoppeContext context;
 
-    public EmployeeRepository(PotionShoppeContext _context)
+    public EffectRepository(PotionShoppeContext _context)
     {
         context = _context;
     }
 
-    public IEnumerable<Employee> Get()
+    public IEnumerable<Effect> Get()
     {
-        return [.. context.Employees
-            .Include(e => e.EmployeeStatus)
-            .Include(e => e.EmployeePosition)];
+        return [.. context.Effects];
     }
 
-    public Employee GetById(int id)
+    public Effect GetById(int id)
     {
-        return context.Employees.Find(id);
+        return context.Effects.Find(id);
     }
 
-    public void Insert(Employee entity)
+    public Effect Insert(Effect entity)
     {
-        context.Employees.Add(entity);
+        context.Effects.Add(entity);
+        Save();
+        return entity;
     }
 
-    public void Update(Employee entity)
+    public void Update(Effect entity)
     {
         context.Entry(entity).State = EntityState.Modified;
+        Save();
     }
 
     public void Delete(int id)
     {
-        Employee employee = context.Employees.Find(id);
-        context.Employees.Remove(employee);
+        Effect effect = context.Effects.Find(id);
+        context.Effects.Remove(effect);
+        Save();
     }
 
     public void Save()

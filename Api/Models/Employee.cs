@@ -12,12 +12,14 @@ public partial class Employee
     public string? Password { get; set; }
 
     public string? Name { get; set; }
+
     public DateOnly? DateHired { get; set; }
-    public DateOnly? DateTerminated { get; set; }
 
     public int? EmployeeStatusId { get; set; }
 
     public int? EmployeePositionId { get; set; }
+
+    public DateOnly? DateTerminated { get; set; }
 
     public virtual EmployeePosition? EmployeePosition { get; set; }
 

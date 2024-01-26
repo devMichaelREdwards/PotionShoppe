@@ -11,7 +11,7 @@ public partial class OrderPotion
 
     public int? OrderId { get; set; }
 
-    public virtual Potion? Order { get; set; }
+    public virtual Order? Order { get; set; }
 
     public virtual Potion? Potion { get; set; }
 }
