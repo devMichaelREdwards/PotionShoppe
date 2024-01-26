@@ -147,8 +147,6 @@ public static class DataFaker
 
     public static List<Potion> FakePotions()
     {
-        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40 };
-        Effect fakeEffect2 = new() { EffectId = 2, Description = "Fake 2", Duration = 60, Value = 40 };
         List<Potion> potions = [];
         for (int i = 1; i <= 10; i++)
         {
@@ -167,5 +165,25 @@ public static class DataFaker
         }
 
         return potions;
+    }
+
+    public static List<Order> FakeOrders()
+    {
+        List<Order> orders = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            orders.Add(
+                new()
+                {
+                    OrderId = i,
+                    OrderNumber = $"Order {i}",
+                    CustomerId = 1,
+                    OrderStatusId = 1,
+                    Total = i * 10
+                }
+            );
+        }
+
+        return orders;
     }
 }
