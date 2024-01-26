@@ -20,5 +20,6 @@ public static class RepositorySetup
         services.AddScoped<IRepository<Receipt>, ReceiptRepository>();
         services.AddScoped<IRepository<PotionEffect>, PotionEffectRepository>();
         services.AddScoped<IRepository<OrderIngredient>, OrderIngredientRepository>();
+        services.AddScoped<IRepository<OrderPotion>, OrderPotionRepository>();
     }
 }
