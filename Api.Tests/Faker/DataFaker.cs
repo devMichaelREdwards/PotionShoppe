@@ -326,4 +326,54 @@ public static class DataFaker
 
         return orderIngredients;
     }
+
+    public static List<OrderPotion> FakeOrderPotions()
+    {
+        Potion fakePotion = new()
+        {
+            PotionId = 1,
+            Name = $"Ingredient {1}",
+            Description = $"Ingredient {1}",
+            Price = 1 * 10,
+            Cost = 1 * 5,
+            CurrentStock = 1,
+            Image = $"Image-{1}"
+        };
+
+        CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
+        Customer fakeCustomer = new()
+        {
+            CustomerId = 1,
+            Username = $"Username{1}",
+            Password = $"Password{1}",
+            Name = $"Name{1}",
+            CustomerStatus = fakeStatus
+        };
+        Order fakeOrder = new()
+        {
+            OrderId = 1,
+            OrderNumber = $"Order {1}",
+            CustomerId = fakeCustomer.CustomerId,
+            OrderStatusId = 1,
+            Total = 10,
+            Customer = fakeCustomer
+        };
+
+        List<OrderPotion> orderPotions = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            orderPotions.Add(
+                new()
+                {
+                    OrderPotionId = i,
+                    OrderId = fakeOrder.OrderId,
+                    PotionId = fakePotion.PotionId,
+                    Order = fakeOrder,
+                    Potion = fakePotion
+                }
+            );
+        }
+
+        return orderPotions;
+    }
 }
