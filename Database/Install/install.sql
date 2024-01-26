@@ -79,12 +79,12 @@ CREATE TABLE [PotionEffect] (
     [PotionId] INT REFERENCES [Potion]([PotionId]),
     [EffectId] INT REFERENCES [Effect]([EffectId])
 );
-CREATE TABLE [OrderPotions] (
+CREATE TABLE [OrderPotion] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,
     [PotionId] INT REFERENCES [Potion]([PotionId]),
     [OrderId] INT REFERENCES [Order]([OrderId])
 );
-CREATE TABLE [OrderIngredients] (
+CREATE TABLE [OrderIngredient] (
     [OrderIngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
     [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
     [OrderId] INT REFERENCES [Order]([OrderId])

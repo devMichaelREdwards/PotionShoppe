@@ -16,6 +16,7 @@ builder.Services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository
 builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
 builder.Services.AddScoped<IRepository<Ingredient>, IngredientRepository>();
 builder.Services.AddScoped<IRepository<Potion>, PotionRepository>();
+builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 
 builder.Services
     .AddControllers()

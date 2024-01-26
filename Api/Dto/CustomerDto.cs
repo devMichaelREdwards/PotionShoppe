@@ -9,8 +9,8 @@ public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
     public string? Password { get; set; }
 
     public string? Name { get; set; }
-    public string? CustomerStatus { get; set; } = String.Empty;
     public int? CustomerStatusId { get; set; }
+    public CustomerStatusDto? CustomerStatus { get; set; }
 
     public bool Equals(Customer? other)
     {
