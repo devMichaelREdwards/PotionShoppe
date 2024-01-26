@@ -46,6 +46,7 @@ public class MappingProfile : Profile
     private void CreateEffectMappings()
     {
         Map<Effect, EffectDto>();
+        CreateMap<Effect, string>().ConvertUsing(e => EffectDto.BuildDescription(e));
         CreateMap<EffectDto, string>().ConvertUsing(e => e.BuildDescription());
         CreateMap<string, Effect>().ConstructUsing(e => null);
     }
@@ -53,8 +54,10 @@ public class MappingProfile : Profile
     private void CreatePotionMappings()
     {
         Map<Potion, PotionDto>();
+        CreateMap<Potion, string>().ConvertUsing(p => p.Name);
+        CreateMap<PotionDto, string>().ConvertUsing(p => p.Name);
         Map<PotionEffect, PotionEffectDto>();
-        CreateMap<PotionEffectDto, string>().ConvertUsing(pe => pe.EffectDescription());
+        CreateMap<PotionEffectDto, string>().ConvertUsing(pe => pe.Effect);
     }
 
     private void CreateIngredientMappings()

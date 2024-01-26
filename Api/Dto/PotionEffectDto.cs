@@ -11,21 +11,20 @@ public partial class PotionEffectDto : IDto<PotionEffect>
     public int? PotionId { get; set; }
 
     public int? EffectId { get; set; }
+    public string? Potion { get; set; }
 
-    public EffectDto? Effect { get; set; }
+    public string? Effect { get; set; }
 
     public bool Equals(PotionEffect? other)
     {
-        throw new NotImplementedException();
+        return other != null
+            && other.PotionEffectId == PotionEffectId
+            && other.PotionId == PotionId
+            && other.EffectId == EffectId;
     }
 
     public void Update(PotionEffect dest)
     {
-        throw new NotImplementedException();
-    }
-
-    public string EffectDescription()
-    {
-        return Effect.BuildDescription();
+        dest.EffectId = EffectId ?? dest.EffectId;
     }
 }

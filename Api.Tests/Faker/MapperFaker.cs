@@ -1,4 +1,5 @@
 using AutoMapper;
+using Setup;
 
 namespace Faker;
 

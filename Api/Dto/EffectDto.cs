@@ -28,4 +28,13 @@ public partial class EffectDto : IDto<Effect>
     {
         return string.Format(Description, Value, Duration);
     }
+
+    public static string BuildDescription(Effect effect)
+    {
+        return string.Format(
+            effect.Description,
+            effect.Value,
+            effect.Duration
+        );
+    }
 }
