@@ -121,9 +121,9 @@ public static class DataFaker
         return statuses;
     }
 
-        public static List<Ingredient> FakeIngredients()
+    public static List<Ingredient> FakeIngredients()
     {
-        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40};
+        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40 };
         List<Ingredient> ingredients = [];
         for (int i = 1; i <= 10; i++)
         {
@@ -133,8 +133,8 @@ public static class DataFaker
                     IngredientId = i,
                     Name = $"Ingredient {i}",
                     Description = $"Ingredient {i}",
-                    Price = i*10,
-                    Cost = i*5,
+                    Price = i * 10,
+                    Cost = i * 5,
                     CurrentStock = i,
                     Image = $"Image-{i}",
                     Effect = fakeEffect
@@ -143,5 +143,29 @@ public static class DataFaker
         }
 
         return ingredients;
+    }
+
+    public static List<Potion> FakePotions()
+    {
+        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40 };
+        Effect fakeEffect2 = new() { EffectId = 2, Description = "Fake 2", Duration = 60, Value = 40 };
+        List<Potion> potions = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            potions.Add(
+                new()
+                {
+                    PotionId = i,
+                    Name = $"Ingredient {i}",
+                    Description = $"Ingredient {i}",
+                    Price = i * 10,
+                    Cost = i * 5,
+                    CurrentStock = i,
+                    Image = $"Image-{i}"
+                }
+            );
+        }
+
+        return potions;
     }
 }
