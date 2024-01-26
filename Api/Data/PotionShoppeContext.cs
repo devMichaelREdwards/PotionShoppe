@@ -41,6 +41,8 @@ public partial class PotionShoppeContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
+    public virtual DbSet<OrderIngredient> OrderIngredients { get; set; }
+
     public virtual DbSet<OrderPotion> OrderPotions { get; set; }
 
     public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
