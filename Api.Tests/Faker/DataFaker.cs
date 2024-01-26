@@ -60,10 +60,10 @@ public static class DataFaker
     public static List<Customer> FakeCustomers()
     {
         CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
-        List<Customer> employees = [];
+        List<Customer> customers = [];
         for (int i = 1; i <= 10; i++)
         {
-            employees.Add(
+            customers.Add(
                 new()
                 {
                     CustomerId = i,
@@ -75,7 +75,7 @@ public static class DataFaker
             );
         }
 
-        return employees;
+        return customers;
     }
 
     public static List<Effect> FakeEffects()
@@ -169,6 +169,15 @@ public static class DataFaker
 
     public static List<Order> FakeOrders()
     {
+        CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
+        Customer fakeCustomer = new()
+        {
+            CustomerId = 1,
+            Username = $"Username{1}",
+            Password = $"Password{1}",
+            Name = $"Name{1}",
+            CustomerStatus = fakeStatus
+        };
         List<Order> orders = [];
         for (int i = 1; i <= 10; i++)
         {
@@ -177,13 +186,56 @@ public static class DataFaker
                 {
                     OrderId = i,
                     OrderNumber = $"Order {i}",
-                    CustomerId = 1,
+                    CustomerId = fakeCustomer.CustomerId,
                     OrderStatusId = 1,
-                    Total = i * 10
+                    Total = i * 10,
+                    Customer = fakeCustomer
                 }
             );
         }
 
         return orders;
+    }
+
+    public static List<Receipt> FakeReceipts()
+    {
+        EmployeePosition fakePosition = new() { EmployeePositionId = 1, Title = "FAKE" };
+        EmployeeStatus fakeStatus = new() { EmployeeStatusId = 1, Title = "Fake" };
+        Employee fakeEmployee = new()
+        {
+            EmployeeId = 1,
+            Username = $"Username{1}",
+            Password = $"Password{1}",
+            Name = $"Name{1}",
+            DateHired = DateOnly.FromDateTime(DateTime.Now),
+            DateTerminated = DateOnly.FromDateTime(DateTime.Now),
+            EmployeeStatus = fakeStatus,
+            EmployeePosition = fakePosition
+        };
+        Order fakeOrder = new()
+        {
+            OrderId = 1,
+            OrderNumber = $"Order {1}",
+            CustomerId = 1,
+            OrderStatusId = 1,
+            Total = 10
+        };
+        List<Receipt> receipts = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            receipts.Add(
+                new()
+                {
+                    ReceiptId = i,
+                    ReceiptNumber = $"Receipt {i}",
+                    EmployeeId = 1,
+                    OrderId = fakeOrder.OrderId,
+                    Order = fakeOrder,
+                    Employee = fakeEmployee
+                }
+            );
+        }
+
+        return receipts;
     }
 }

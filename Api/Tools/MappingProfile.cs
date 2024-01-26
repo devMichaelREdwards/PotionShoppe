@@ -38,6 +38,7 @@ public class MappingProfile : Profile
         Map<EmployeeStatus, EmployeeStatusDto>();
         Map<EmployeePosition, EmployeePositionDto>();
         CreateMap<Employee, string>().ConstructUsing(e => e.Name);
+        Map<Employee, EmployeeDto>();
     }
 
     private void CreateEffectMappings()
