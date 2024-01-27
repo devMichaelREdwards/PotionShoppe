@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult GetEmployees()
     {
         var result = employees.Get();
