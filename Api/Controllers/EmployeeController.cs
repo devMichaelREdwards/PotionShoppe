@@ -20,7 +20,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetEmployees()
     {
         var result = employees.Get();

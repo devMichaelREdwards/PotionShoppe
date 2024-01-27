@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Api.Classes;
 using Api.Data;
+using Api.Setup;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -26,6 +27,7 @@ builder.Services.AddAuthorizationBuilder();
 
 builder.Services
     .AddIdentityApiEndpoints<AuthUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PotionShoppeContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -65,5 +67,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapIdentityApi<AuthUser>();
+
+using (var scope = app.Services.CreateScope())
+{
+    SeedRoles.CreateUserRoles(scope.ServiceProvider).Wait();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        SeedRoles.AssignDefaultRoles(scope.ServiceProvider).Wait();
+    }
+}
 
 app.Run();
