@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using Api.Classes;
 using Api.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Setup;
 
@@ -17,6 +19,14 @@ builder.Services
     });
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
+builder.Services.AddAuthorizationBuilder();
+
+builder.Services
+    .AddIdentityCore<AuthUser>()
+    .AddEntityFrameworkStores<PotionShoppeContext>()
+    .AddApiEndpoints();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,5 +51,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapIdentityApi<AuthUser>();
 
 app.Run();

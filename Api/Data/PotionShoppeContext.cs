@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Api.Classes;
 
 namespace Api.Data;
 
-public partial class PotionShoppeContext : DbContext
+public partial class PotionShoppeContext : IdentityDbContext<AuthUser>
 {
     private readonly string? connectionString;
 
@@ -58,6 +60,7 @@ public partial class PotionShoppeContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64D8CBE501C6");
