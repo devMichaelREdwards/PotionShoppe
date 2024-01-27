@@ -27,7 +27,7 @@ public class MappingProfile : Profile
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
         Map<Customer, CustomerDto>();
-        CreateMap<Customer, string>().ConvertUsing(c => c.Name);
+        CreateMap<Customer, string>().ConvertUsing(c => $"{c.FirstName} {c.LastName}");
     }
 
     private void CreateEmployeeMappings()
@@ -39,7 +39,7 @@ public class MappingProfile : Profile
 
         Map<EmployeeStatus, EmployeeStatusDto>();
         Map<EmployeePosition, EmployeePositionDto>();
-        CreateMap<Employee, string>().ConstructUsing(e => e.Name);
+        CreateMap<Employee, string>().ConstructUsing(e => $"{e.FirstName} {e.LastName}");
         Map<Employee, EmployeeDto>();
     }
 
