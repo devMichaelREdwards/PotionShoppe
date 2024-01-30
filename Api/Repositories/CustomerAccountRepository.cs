@@ -14,20 +14,17 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
 
     public IEnumerable<CustomerAccount> Get()
     {
-        return null;
-        //return [.. context.CustomerAccounts.Include(e => e.CustomerAccountStatus)];
+        return [.. context.CustomerAccounts.Include(ca => ca.Customer).ThenInclude(c => c.CustomerStatus)];
     }
 
     public CustomerAccount GetById(int id)
     {
-        return null;
-        //return context.CustomerAccounts.Find(id);
+        return context.CustomerAccounts.Find(id);
     }
 
     public CustomerAccount Insert(CustomerAccount entity)
     {
-        return null;
-        //context.CustomerAccounts.Add(entity);
+        context.CustomerAccounts.Add(entity);
         Save();
         return entity;
     }
@@ -40,11 +37,15 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
 
     public void Delete(int id)
     {
-        //CustomerAccount CustomerAccount = context.CustomerAccounts.Find(id);
-        //context.CustomerAccounts.Remove(CustomerAccount);
+        CustomerAccount CustomerAccount = context.CustomerAccounts.Find(id);
+        context.CustomerAccounts.Remove(CustomerAccount);
         Save();
     }
 
+    public bool CustomerExists(string accountId) {
+        return context.CustomerAccounts.FirstOrDefault(a => a.UserId == accountId) != null;
+    }
+    
     public void Save()
     {
         context.SaveChanges();

@@ -2,7 +2,7 @@ using Api.Models;
 
 public interface IAuthService
 {
-    Task<bool> RegisterCustomer(UserRegistrationDto user);
-    Task<bool> RegisterEmployee(UserRegistrationDto user);
-    Task<bool> RegisterOwner(UserRegistrationDto user);
+    Task<bool> RegisterCustomer(CustomerRegistrationDto user);
+    Task<bool> RegisterEmployee(CustomerRegistrationDto user);
+    Task<bool> RegisterOwner(CustomerRegistrationDto user);
 }

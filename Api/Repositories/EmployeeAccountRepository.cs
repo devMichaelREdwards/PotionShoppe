@@ -14,20 +14,17 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
 
     public IEnumerable<EmployeeAccount> Get()
     {
-        return [];
-        //return [.. context.EmployeeAccounts.Include(e => e.Employee).ThenInclude(e => e.EmployeeAccountStatus)];
+        return [.. context.EmployeeAccounts.Include(e => e.Employee).ThenInclude(e => e.EmployeeStatus)];
     }
 
     public EmployeeAccount GetById(int id)
     {
-        return null;
-        //return context.EmployeeAccounts.Find(id);
+        return context.EmployeeAccounts.Find(id);
     }
 
     public EmployeeAccount Insert(EmployeeAccount entity)
     {
-        return null;
-        //context.EmployeeAccounts.Add(entity);
+        context.EmployeeAccounts.Add(entity);
         Save();
         return entity;
     }
@@ -40,8 +37,8 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
 
     public void Delete(int id)
     {
-        //EmployeeAccount EmployeeAccount = context.EmployeeAccounts.Find(id);
-        //context.EmployeeAccounts.Remove(EmployeeAccount);
+        EmployeeAccount EmployeeAccount = context.EmployeeAccounts.Find(id);
+        context.EmployeeAccounts.Remove(EmployeeAccount);
         Save();
     }
 

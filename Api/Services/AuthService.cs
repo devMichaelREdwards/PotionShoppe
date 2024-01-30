@@ -10,38 +10,82 @@ namespace Api.Service;
 public class AuthService : IAuthService
 {
     private readonly UserManager<AuthUser> userManager;
+    private readonly IRepository<CustomerAccount> customerAccounts;
     private readonly IRepository<Customer> customers;
+    private readonly IRepository<CustomerStatus> customerStatuses;
 
-    public AuthService(UserManager<AuthUser> _userManager, IRepository<Customer> _customers)
+    public AuthService(
+        UserManager<AuthUser> _userManager,
+        IRepository<CustomerAccount> _customerAccounts,
+        IRepository<Customer> _customers,
+        IRepository<CustomerStatus> _customerStatuses
+    )
     {
         userManager = _userManager;
+        customerAccounts = _customerAccounts;
         customers = _customers;
+        customerStatuses = _customerStatuses;
     }
 
-    public async Task<bool> RegisterCustomer(UserRegistrationDto user)
+    public async Task<bool> RegisterCustomer(CustomerRegistrationDto userRegistration)
     {
-        AuthUser? valid = await userManager.FindByNameAsync(user.Username)!;
-        if (valid == null)
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        bool succeeded = valid != null;
+        if (!succeeded) // If the Customer does not currently exist, create it
         {
-            var authUser = new AuthUser() { UserName = user.Username, Email = user.Email, };
-            var result = await userManager.CreateAsync(authUser, user.Password);
-            // Set valid to new user
+            var authUser = new AuthUser()
+            {
+                UserName = userRegistration.Username,
+                Email = userRegistration.Email,
+            };
+            var result = await userManager.CreateAsync(authUser, userRegistration.Password);
+            succeeded = result.Succeeded;
         }
 
-        if (true) // ASP.Net account has no customer attached
+        await userManager.AddToRoleAsync(valid!, "Customer");
+
+        if (succeeded) // If the customer exists(including after creation) and does not have a customer linked
         {
-            // Create a customer and attach it to the ASP.Net account
+            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            bool customerExists = (customerAccounts as CustomerAccountRepository)!.CustomerExists(
+                valid!.Id
+            );
+
+            if (customerExists)
+                return false;
+
+            CustomerStatus activeStatus = (
+                customerStatuses as CustomerStatusRepository
+            )!.GetFirstByStatus("ACTIVE");
+
+            Customer newCustomer =
+                new()
+                {
+                    FirstName = userRegistration.FirstName,
+                    LastName = userRegistration.LastName,
+                    CustomerStatusId = activeStatus.CustomerStatusId
+                };
+
+            Customer createdCustomer = customers.Insert(newCustomer);
+
+            CustomerAccount newCustomerAccount = new CustomerAccount()
+            {
+                UserId = valid?.Id,
+                CustomerId = createdCustomer.CustomerId
+            };
+
+            customerAccounts.Insert(newCustomerAccount);
         }
 
         return true;
     }
 
-    public Task<bool> RegisterEmployee(UserRegistrationDto user)
+    public Task<bool> RegisterEmployee(CustomerRegistrationDto user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> RegisterOwner(UserRegistrationDto user)
+    public Task<bool> RegisterOwner(CustomerRegistrationDto user)
     {
         throw new NotImplementedException();
     }

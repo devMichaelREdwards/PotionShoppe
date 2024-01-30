@@ -15,6 +15,8 @@ public partial class Employee
 
     public int? EmployeePositionId { get; set; }
 
+    public virtual ICollection<EmployeeAccount> EmployeeAccounts { get; set; } = new List<EmployeeAccount>();
+
     public virtual EmployeePosition? EmployeePosition { get; set; }
 
     public virtual EmployeeStatus? EmployeeStatus { get; set; }

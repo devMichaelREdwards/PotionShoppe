@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("api")]
+[Route("api/user")]
 public class AuthController : ControllerBase
 {
     private readonly IRepository<Customer> customers;
@@ -25,27 +25,26 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(UserRegistrationDto userRegistration)
+    public async Task<IActionResult> Register(CustomerRegistrationDto userRegistration)
     {
-        // If Customer
-        await authService.RegisterCustomer(userRegistration);
-        return Ok();
+        bool success = await authService.RegisterCustomer(userRegistration);
+        return Ok(success);
     }
 
     [HttpPost("login")]
-    public IActionResult Login(UserLoginDto userLogin)
+    public async Task<IActionResult> Login(UserLoginDto userLogin)
     {
         return Ok();
     }
 
     [HttpPost("employee/register")]
-    public IActionResult EmployeeRegister(UserRegistrationDto userRegistration)
+    public async Task<IActionResult> EmployeeRegister(EmployeeRegistrationDto userRegistration)
     {
         return Ok();
     }
 
     [HttpPost("employee/login")]
-    public IActionResult EmployeeLogin(UserLoginDto userLogin)
+    public async Task<IActionResult> EmployeeLogin(UserLoginDto userLogin)
     {
         return Ok();
     }

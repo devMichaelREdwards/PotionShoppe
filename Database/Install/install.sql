@@ -88,10 +88,12 @@ CREATE TABLE [OrderIngredient] (
     [OrderId] INT REFERENCES [Order]([OrderId])
 );
 CREATE TABLE [CustomerAccount] (
-    [CustomerAccountId] NVARCHAR(450) PRIMARY KEY REFERENCES [AspNetUsers]([Id]),
+    [CustomerAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [UserId] NVARCHAR(450) REFERENCES [AspNetUsers]([Id]),
     [CustomerId] INT REFERENCES [Customer]([CustomerId])
 );
 CREATE TABLE [EmployeeAccount] (
-    [EmployeeAccountId] NVARCHAR(450) PRIMARY KEY REFERENCES [AspNetUsers]([Id]),
+    [EmployeeAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [UserId] NVARCHAR(450) REFERENCES [AspNetUsers]([Id]),
     [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
 );
