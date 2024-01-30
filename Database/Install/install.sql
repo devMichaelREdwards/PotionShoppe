@@ -87,3 +87,11 @@ CREATE TABLE [OrderIngredient] (
     [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
     [OrderId] INT REFERENCES [Order]([OrderId])
 );
+CREATE TABLE [CustomerAccount] (
+    [CustomerAccountId] NVARCHAR(450) PRIMARY KEY REFERENCES [AspNetUsers]([Id]),
+    [CustomerId] INT REFERENCES [Customer]([CustomerId])
+);
+CREATE TABLE [EmployeeAccount] (
+    [EmployeeAccountId] NVARCHAR(450) PRIMARY KEY REFERENCES [AspNetUsers]([Id]),
+    [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
+);

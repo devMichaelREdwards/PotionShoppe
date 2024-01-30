@@ -38,10 +38,12 @@ public static class SeedRoles
         if (await userManager.FindByEmailAsync(ownerEmail) == null)
         {
             string ownerPassword = "potionPassword1!"; // This is a development thing. Remove this.
-            var user = new AuthUser();
-            user.UserName = ownerUsername;
-            user.Email = ownerEmail;
-            user.EmailConfirmed = true;
+            var user = new AuthUser
+            {
+                UserName = ownerUsername,
+                Email = ownerEmail,
+                EmailConfirmed = true
+            };
 
             await userManager.CreateAsync(user, ownerPassword);
 

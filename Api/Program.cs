@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Api.Classes;
 using Api.Data;
+using Api.Service;
 using Api.Setup;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,13 @@ builder.Services
     .AddIdentityApiEndpoints<AuthUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PotionShoppeContext>();
+
+builder.Services.AddTransient<IAuthService, AuthService>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
