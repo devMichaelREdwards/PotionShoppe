@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult GetOrders()
     {
         var result = orders.Get();

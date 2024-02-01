@@ -1,10 +1,13 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using Api.Classes;
 using Api.Data;
 using Api.Service;
 using Api.Setup;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Setup;
 using Swashbuckle.AspNetCore.Filters;
@@ -24,12 +27,33 @@ builder.Services
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddAuthorizationBuilder();
-
 builder.Services
     .AddIdentityApiEndpoints<AuthUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PotionShoppeContext>();
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateActor = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            RequireExpirationTime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
+            ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Jwt:SecretKey").Value!)
+            )
+        };
+    });
 
 builder.Services.AddTransient<IAuthService, AuthService>();
 
@@ -70,6 +94,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,3 +1,4 @@
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -28,13 +29,19 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register(CustomerRegistrationDto userRegistration)
     {
         bool success = await authService.RegisterCustomer(userRegistration);
-        return Ok(success);
+        return success ? Ok(success) : BadRequest("Something went wrong");
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(UserLoginDto userLogin)
     {
-        return Ok();
+        var result = await authService.LoginCustomer(userLogin);
+        if (result)
+        {
+            Jwt token = authService.GenerateJwt(userLogin, "Customer");
+            return Ok(token);
+        }
+        return BadRequest("Login Failed");
     }
 
     [HttpPost("employee/register")]
