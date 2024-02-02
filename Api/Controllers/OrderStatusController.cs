@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class OrderStatusController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult GetOrderStatuses()
     {
         var result = orderStatuses.Get();
@@ -26,6 +28,7 @@ public class OrderStatusController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostOrderStatus(OrderStatusDto status)
     {
         orderStatuses.Insert(mapper.Map<OrderStatus>(status));
@@ -33,6 +36,7 @@ public class OrderStatusController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PutOrderStatus(OrderStatusDto status)
     {
         orderStatuses.Update(mapper.Map<OrderStatus>(status));
@@ -40,6 +44,7 @@ public class OrderStatusController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult DeleteOrderStatus(OrderStatusDto status)
     {
         if (status.OrderStatusId != null)

@@ -2,6 +2,7 @@ using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -39,6 +40,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("employee/register")]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> EmployeeRegister(EmployeeRegistrationDto userRegistration)
     {
         bool success = await authService.RegisterEmployee(userRegistration);
@@ -46,6 +48,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("owner/register")]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> OwnerRegister(EmployeeRegistrationDto userRegistration)
     {
         bool success = await authService.RegisterOwner(userRegistration);

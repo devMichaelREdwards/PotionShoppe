@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class ReceiptController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult GetReceipts()
     {
         var result = receipts.Get();
@@ -26,6 +28,7 @@ public class ReceiptController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostReceipt(ReceiptDto receipt)
     {
         receipt.DateFulfilled = DateOnly.FromDateTime(DateTime.Today);
@@ -34,6 +37,7 @@ public class ReceiptController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PutReceipt(ReceiptDto receipt)
     {
         if (receipt.ReceiptId == null)

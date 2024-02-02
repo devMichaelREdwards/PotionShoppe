@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -22,6 +23,7 @@ public class OrderPotionController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult GetOrderPotions()
     {
         var result = orderPotions.Get();
@@ -29,6 +31,7 @@ public class OrderPotionController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult PostOrderPotion(OrderPotionDto orderPotion)
     {
         orderPotions.Insert(mapper.Map<OrderPotion>(orderPotion));
@@ -36,6 +39,7 @@ public class OrderPotionController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult PutOrderPotion(OrderPotionDto orderPotion)
     {
         if (orderPotion.OrderPotionId == null)
@@ -51,6 +55,7 @@ public class OrderPotionController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult DeleteOrderPotion(OrderPotionDto orderPotion)
     {
         if (orderPotion.OrderPotionId != null)
