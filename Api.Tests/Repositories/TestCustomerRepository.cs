@@ -31,12 +31,11 @@ public class TestCustomerRepository : IRepository<Customer>, IDisposable
 
     public void Update(Customer entity)
     {
-        Customer selected = customers.FirstOrDefault(
-            s => s.CustomerId == entity.CustomerId
-        );
+        Customer selected = customers.FirstOrDefault(s => s.CustomerId == entity.CustomerId);
         if (selected != null)
         {
-            selected.Name = entity.Name;
+            selected.FirstName = entity.FirstName;
+            selected.LastName = entity.LastName;
         }
     }
 

@@ -39,7 +39,8 @@ public class CustomerControllerTest
             new()
             {
                 CustomerId = testId,
-                Name = "Test",
+                FirstName = "TestFirst",
+                LastName = "TestLast",
                 CustomerStatusId = 1
             };
         // Execute
@@ -53,7 +54,8 @@ public class CustomerControllerTest
     public void PutCustomer_Returns_Customer_With_Updated_Data()
     {
         CustomerDto gotten = mapper.Map<List<CustomerDto>>(customers.Get())[0];
-        gotten.Name = "Test 2";
+        gotten.FirstName = "TestFirst2";
+        gotten.LastName = "TestLast2";
         // Execute
         controller.PutCustomer(gotten);
         Customer updated = customers.GetById((int)gotten.CustomerId);

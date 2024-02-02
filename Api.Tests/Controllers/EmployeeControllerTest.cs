@@ -39,9 +39,8 @@ public class EmployeeControllerTest
             new()
             {
                 EmployeeId = testId,
-                Username = "TestUsername",
-                Password = "TestPassword",
-                Name = "Test",
+                FirstName = "TestFirst",
+                LastName = "TestLast",
                 EmployeeStatusId = 1,
                 EmployeePositionId = 1
             };
@@ -56,7 +55,8 @@ public class EmployeeControllerTest
     public void PutEmployee_Returns_Employee_With_Updated_Data()
     {
         EmployeeDto gotten = mapper.Map<List<EmployeeDto>>(employees.Get())[0];
-        gotten.Name = "Test 2";
+        gotten.FirstName = "TestFirst2";
+        gotten.LastName = "TestLast2";
         // Execute
         controller.PutEmployee(gotten);
         Employee updated = employees.GetById((int)gotten.EmployeeId);

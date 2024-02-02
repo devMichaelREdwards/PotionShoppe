@@ -12,6 +12,7 @@ public partial class OrderPotionDto : IDto<OrderPotion>
     public int? OrderId { get; set; }
 
     public int? PotionId { get; set; }
+    public int? Quantity { get; set; }
 
     public PotionDto? Potion { get; set; }
 
@@ -20,11 +21,13 @@ public partial class OrderPotionDto : IDto<OrderPotion>
         return other != null
             && other.OrderPotionId == OrderPotionId
             && other.OrderId == OrderId
-            && other.PotionId == PotionId;
+            && other.PotionId == PotionId
+            && other.Quantity == Quantity;
     }
 
     public void Update(OrderPotion dest)
     {
         dest.PotionId = PotionId ?? dest.PotionId;
+        dest.Quantity = Quantity ?? dest.Quantity;
     }
 }

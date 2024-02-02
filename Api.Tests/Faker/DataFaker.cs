@@ -43,11 +43,8 @@ public static class DataFaker
                 new()
                 {
                     EmployeeId = i,
-                    Username = $"Username{i}",
-                    Password = $"Password{i}",
-                    Name = $"Name{i}",
-                    DateHired = DateOnly.FromDateTime(DateTime.Now),
-                    DateTerminated = DateOnly.FromDateTime(DateTime.Now),
+                    FirstName = $"FirstName{i}",
+                    LastName = $"LastName{i}",
                     EmployeeStatus = fakeStatus,
                     EmployeePosition = fakePosition
                 }
@@ -67,9 +64,8 @@ public static class DataFaker
                 new()
                 {
                     CustomerId = i,
-                    Username = $"Username{i}",
-                    Password = $"Password{i}",
-                    Name = $"Name{i}",
+                    FirstName = $"FirstName{i}",
+                    LastName = $"LastName{i}",
                     CustomerStatus = fakeStatus
                 }
             );
@@ -173,9 +169,8 @@ public static class DataFaker
         Customer fakeCustomer = new()
         {
             CustomerId = 1,
-            Username = $"Username{1}",
-            Password = $"Password{1}",
-            Name = $"Name{1}",
+            FirstName = $"FirstName{1}",
+            LastName = $"LastName{1}",
             CustomerStatus = fakeStatus
         };
         List<Order> orders = [];
@@ -204,11 +199,8 @@ public static class DataFaker
         Employee fakeEmployee = new()
         {
             EmployeeId = 1,
-            Username = $"Username{1}",
-            Password = $"Password{1}",
-            Name = $"Name{1}",
-            DateHired = DateOnly.FromDateTime(DateTime.Now),
-            DateTerminated = DateOnly.FromDateTime(DateTime.Now),
+            FirstName = $"FirstName{1}",
+            LastName = $"LastName{1}",                                                  
             EmployeeStatus = fakeStatus,
             EmployeePosition = fakePosition
         };
@@ -226,7 +218,7 @@ public static class DataFaker
             receipts.Add(
                 new()
                 {
-                    ReceiptId = i,
+                    ReceiptId = i,     
                     ReceiptNumber = $"Receipt {i}",
                     EmployeeId = 1,
                     OrderId = fakeOrder.OrderId,
@@ -294,9 +286,8 @@ public static class DataFaker
         Customer fakeCustomer = new()
         {
             CustomerId = 1,
-            Username = $"Username{1}",
-            Password = $"Password{1}",
-            Name = $"Name{1}",
+            FirstName = $"FirstName{1}",
+            LastName = $"LastName{1}",
             CustomerStatus = fakeStatus
         };
         Order fakeOrder = new()
@@ -319,7 +310,8 @@ public static class DataFaker
                     OrderId = fakeOrder.OrderId,
                     IngredientId = fakeIngredient.IngredientId,
                     Order = fakeOrder,
-                    Ingredient = fakeIngredient
+                    Ingredient = fakeIngredient,
+                    Quantity = i
                 }
             );
         }
@@ -344,9 +336,8 @@ public static class DataFaker
         Customer fakeCustomer = new()
         {
             CustomerId = 1,
-            Username = $"Username{1}",
-            Password = $"Password{1}",
-            Name = $"Name{1}",
+            FirstName = $"FirstName{1}",
+            LastName = $"LastName{1}",
             CustomerStatus = fakeStatus
         };
         Order fakeOrder = new()
@@ -369,7 +360,8 @@ public static class DataFaker
                     OrderId = fakeOrder.OrderId,
                     PotionId = fakePotion.PotionId,
                     Order = fakeOrder,
-                    Potion = fakePotion
+                    Potion = fakePotion,
+                    Quantity = i
                 }
             );
         }

@@ -12,6 +12,7 @@ public partial class EffectDto : IDto<Effect>
     public bool Equals(Effect? other)
     {
         return other?.EffectId == EffectId
+            && other?.Name == Name
             && other?.Value == Value
             && other?.Duration == Duration
             && other?.Description == Description;

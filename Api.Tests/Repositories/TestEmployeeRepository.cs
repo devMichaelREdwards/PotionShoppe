@@ -34,7 +34,8 @@ public class TestEmployeeRepository : IRepository<Employee>, IDisposable
         Employee selected = employees.FirstOrDefault(s => s.EmployeeId == entity.EmployeeId);
         if (selected != null)
         {
-            selected.Name = entity.Name;
+            selected.FirstName = entity.FirstName;
+            selected.LastName = entity.LastName;
         }
     }
 
