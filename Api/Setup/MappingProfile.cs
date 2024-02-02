@@ -63,6 +63,8 @@ public class MappingProfile : Profile
     private void CreateIngredientMappings()
     {
         Map<Ingredient, IngredientDto>();
+        Map<IngredientCategory, IngredientCategoryDto>();
+        CreateMap<IngredientCategoryDto, string>().ConvertUsing(c => c.Title);
     }
 
     private void CreateOrderMappings()

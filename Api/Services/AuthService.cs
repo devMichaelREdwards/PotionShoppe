@@ -177,6 +177,7 @@ public class AuthService : IAuthService
         {
             valid = await userManager.FindByNameAsync(userRegistration.Username)!;
             await userManager.AddToRoleAsync(valid!, "Owner");
+            await userManager.AddToRoleAsync(valid!, "Employee");
             bool employeeExists = (employeeAccounts as EmployeeAccountRepository)!.EmployeeExists(
                 valid!.UserName!
             );

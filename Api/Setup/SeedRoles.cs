@@ -1,6 +1,7 @@
 using Api.Classes;
 using Api.Data;
 using Api.Models;
+using Api.Service;
 using Microsoft.AspNetCore.Identity;
 
 namespace Api.Setup;
@@ -29,25 +30,28 @@ public static class SeedRoles
         }
     }
 
-    public static async Task AssignDefaultRoles(IServiceProvider serviceProvider)
+    public static async Task AssignDefaultRoles(IServiceProvider serviceProvider) // This is only ran in development builds
     {
-        var userManager = serviceProvider.GetRequiredService<UserManager<AuthUser>>();
+        var authService = serviceProvider.GetRequiredService<IAuthService>();
+        IRepository<EmployeeStatus> repository = serviceProvider.GetRequiredService<
+            IRepository<EmployeeStatus>
+        >();
 
+        EmployeeStatus status = (repository as EmployeeStatusRepository).GetFirstByStatus("ACTIVE");
         string ownerUsername = "potionShoppe";
         string ownerEmail = "potionShoppe@potionShoppe.com";
-        if (await userManager.FindByEmailAsync(ownerEmail) == null)
+        EmployeeRegistrationDto ownerRegister = new EmployeeRegistrationDto()
         {
-            string ownerPassword = "potionPassword1!"; // This is a development thing. Remove this.
-            var user = new AuthUser
-            {
-                UserName = ownerUsername,
-                Email = ownerEmail,
-                EmailConfirmed = true
-            };
+            Username = "potionShoppe",
+            Password = "potionPassword1!",
+            FirstName = "Potion",
+            LastName = "Shoppe",
+            Email = "owner@potionshoppe.com",
+            EmployeeStatusId = status.EmployeeStatusId
+        };
+        bool success = await authService.RegisterOwner(ownerRegister);
 
-            await userManager.CreateAsync(user, ownerPassword);
-
-            await userManager.AddToRoleAsync(user, "Owner");
-        }
+        if (!success)
+            throw new Exception("Test Owner Account Failed To Create");
     }
 }

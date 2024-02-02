@@ -34,6 +34,10 @@ CREATE TABLE [Effect] (
     [Duration] INT,
     [Description] VARCHAR(1024),
 );
+CREATE TABLE [IngredientCategory] (
+    [IngredientCategoryId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Title] VARCHAR(1024)
+);
 CREATE TABLE [Ingredient] (
     [IngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
     [Name] VARCHAR(1024),
@@ -42,7 +46,8 @@ CREATE TABLE [Ingredient] (
     [Cost] INT,
     [CurrentStock] INT,
     [Image] VARCHAR(1024),
-    [EffectId] INT FOREIGN KEY REFERENCES [Effect]([EffectId])
+    [EffectId] INT FOREIGN KEY REFERENCES [Effect]([EffectId]),
+    [IngredientCategoryId] INT FOREIGN KEY REFERENCES [IngredientCategory]([IngredientCategoryId])
 );
 CREATE TABLE [OrderStatus] (
     [OrderStatusId] INT IDENTITY(1, 1) PRIMARY KEY,

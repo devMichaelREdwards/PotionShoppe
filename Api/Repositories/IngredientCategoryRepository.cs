@@ -3,37 +3,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public class EmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
+public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDisposable
 {
     private PotionShoppeContext context;
 
-    public EmployeeStatusRepository(PotionShoppeContext _context)
+    public IngredientCategoryRepository(PotionShoppeContext _context)
     {
         context = _context;
     }
 
-    public IEnumerable<EmployeeStatus> Get()
+    public IEnumerable<IngredientCategory> Get()
     {
-        return [.. context.EmployeeStatuses];
+        return [.. context.IngredientCategories];
     }
 
-    public EmployeeStatus GetById(int id)
+    public IngredientCategory GetById(int id)
     {
-        return context.EmployeeStatuses.Find(id);
-    }
-    public EmployeeStatus GetFirstByStatus(string status)
-    {
-        return context.EmployeeStatuses.First(s => s.Title == status);
+        return context.IngredientCategories.Find(id)!;
     }
 
-    public EmployeeStatus Insert(EmployeeStatus entity)
+    public IngredientCategory Insert(IngredientCategory entity)
     {
-        context.EmployeeStatuses.Add(entity);
+        context.IngredientCategories.Add(entity);
         Save();
         return entity;
     }
 
-    public void Update(EmployeeStatus entity)
+    public void Update(IngredientCategory entity)
     {
         context.Entry(entity).State = EntityState.Modified;
         Save();
@@ -41,8 +37,8 @@ public class EmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
 
     public void Delete(int id)
     {
-        EmployeeStatus employeeStatus = context.EmployeeStatuses.Find(id);
-        context.EmployeeStatuses.Remove(employeeStatus);
+        IngredientCategory ingredientCategory = context.IngredientCategories.Find(id);
+        context.IngredientCategories.Remove(ingredientCategory);
         Save();
     }
 
