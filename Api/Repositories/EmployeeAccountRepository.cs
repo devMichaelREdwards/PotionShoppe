@@ -22,6 +22,11 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         return context.EmployeeAccounts.Find(id);
     }
 
+    public EmployeeAccount GetByUserName(string userName)
+    {
+        return context.EmployeeAccounts.First(a => a.UserName == userName);
+    }
+
     public EmployeeAccount Insert(EmployeeAccount entity)
     {
         context.EmployeeAccounts.Add(entity);
@@ -40,6 +45,11 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         EmployeeAccount EmployeeAccount = context.EmployeeAccounts.Find(id);
         context.EmployeeAccounts.Remove(EmployeeAccount);
         Save();
+    }
+
+    public bool EmployeeExists(string userName)
+    {
+        return context.EmployeeAccounts.FirstOrDefault(a => a.UserName == userName) != null;
     }
 
     public void Save()

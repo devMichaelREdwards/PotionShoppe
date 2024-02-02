@@ -10,18 +10,12 @@ namespace Api.Controllers;
 [Route("api/user")]
 public class AuthController : ControllerBase
 {
-    private readonly IRepository<Customer> customers;
-    private readonly IMapper mapper;
     private readonly IAuthService authService;
 
     public AuthController(
-        IRepository<Customer> _customers,
-        IMapper _mapper,
         IAuthService _authService
     )
     {
-        customers = _customers;
-        mapper = _mapper;
         authService = _authService;
     }
 
@@ -33,9 +27,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(UserLoginDto userLogin)
+    public async Task<IActionResult> LoginCustomer(UserLoginDto userLogin)
     {
-        var result = await authService.LoginCustomer(userLogin);
+        var result = await authService.Login(userLogin);
         if (result)
         {
             Jwt token = authService.GenerateJwt(userLogin, "Customer");
@@ -47,12 +41,27 @@ public class AuthController : ControllerBase
     [HttpPost("employee/register")]
     public async Task<IActionResult> EmployeeRegister(EmployeeRegistrationDto userRegistration)
     {
-        return Ok();
+        bool success = await authService.RegisterEmployee(userRegistration);
+        return success ? Ok(success) : BadRequest("Something went wrong");
+    }
+
+    [HttpPost("owner/register")]
+    public async Task<IActionResult> OwnerRegister(EmployeeRegistrationDto userRegistration)
+    {
+        bool success = await authService.RegisterOwner(userRegistration);
+        return success ? Ok(success) : BadRequest("Something went wrong");
     }
 
     [HttpPost("employee/login")]
     public async Task<IActionResult> EmployeeLogin(UserLoginDto userLogin)
     {
-        return Ok();
+        var result = await authService.Login(userLogin);
+        if (result)
+        {
+            string position = authService.GetEmployeePositionString(userLogin.Username);
+            Jwt token = authService.GenerateJwt(userLogin, position);
+            return Ok(token);
+        }
+        return BadRequest("Login Failed");
     }
 }

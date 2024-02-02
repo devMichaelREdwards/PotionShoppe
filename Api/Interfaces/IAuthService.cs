@@ -5,9 +5,10 @@ using Api.Models;
 public interface IAuthService
 {
     Task<bool> RegisterCustomer(CustomerRegistrationDto user);
-    Task<bool> LoginCustomer(UserLoginDto user);
-    Task<bool> RegisterEmployee(CustomerRegistrationDto user);
-    Task<bool> RegisterOwner(CustomerRegistrationDto user);
+    Task<bool> RegisterEmployee(EmployeeRegistrationDto user);
+    Task<bool> RegisterOwner(EmployeeRegistrationDto user);
+    Task<bool> Login(UserLoginDto user);
     Jwt GenerateJwt(UserLoginDto user, string role);
     CustomerUser GetCustomerUser(ClaimsPrincipal userClaims);
+    string GetEmployeePositionString(string userName);
 }

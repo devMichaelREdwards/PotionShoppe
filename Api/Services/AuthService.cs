@@ -1,8 +1,6 @@
-using System.Diagnostics.Eventing.Reader;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks.Sources;
 using Api.Classes;
 using Api.Data;
 using Api.Models;
@@ -18,6 +16,9 @@ public class AuthService : IAuthService
     private readonly IRepository<CustomerAccount> customerAccounts;
     private readonly IRepository<Customer> customers;
     private readonly IRepository<CustomerStatus> customerStatuses;
+    private readonly IRepository<EmployeeAccount> employeeAccounts;
+    private readonly IRepository<EmployeePosition> employeePositions;
+    private readonly IRepository<Employee> employees;
     private readonly IConfiguration config;
     private readonly IMapper mapper;
 
@@ -26,6 +27,9 @@ public class AuthService : IAuthService
         IRepository<CustomerAccount> _customerAccounts,
         IRepository<Customer> _customers,
         IRepository<CustomerStatus> _customerStatuses,
+        IRepository<Employee> _employees,
+        IRepository<EmployeeAccount> _employeeAccounts,
+        IRepository<EmployeePosition> _employeePositions,
         IConfiguration _config,
         IMapper _mapper
     )
@@ -34,6 +38,9 @@ public class AuthService : IAuthService
         customerAccounts = _customerAccounts;
         customers = _customers;
         customerStatuses = _customerStatuses;
+        employees = _employees;
+        employeeAccounts = _employeeAccounts;
+        employeePositions = _employeePositions;
         config = _config;
         mapper = _mapper;
     }
@@ -44,7 +51,7 @@ public class AuthService : IAuthService
     {
         AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
         bool succeeded = valid != null;
-        if (!succeeded) // If the Customer does not currently exist, create it
+        if (!succeeded) // If the User does not currently exist, create it
         {
             var authUser = new AuthUser()
             {
@@ -90,7 +97,7 @@ public class AuthService : IAuthService
         return true;
     }
 
-    public async Task<bool> LoginCustomer(UserLoginDto user)
+    public async Task<bool> Login(UserLoginDto user)
     {
         var userAccount = await userManager.FindByNameAsync(user.Username);
         if (userAccount is null)
@@ -103,14 +110,100 @@ public class AuthService : IAuthService
 
     #region Employee
 
-    public Task<bool> RegisterEmployee(CustomerRegistrationDto user)
+    public async Task<bool> RegisterEmployee(EmployeeRegistrationDto userRegistration)
     {
-        throw new NotImplementedException();
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        bool succeeded = valid != null;
+        if (!succeeded) // If the User does not currently exist, create it
+        {
+            var authUser = new AuthUser()
+            {
+                UserName = userRegistration.Username,
+                Email = userRegistration.Email,
+            };
+            var result = await userManager.CreateAsync(authUser, userRegistration.Password);
+            succeeded = result.Succeeded;
+        }
+
+        if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
+        {
+            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            await userManager.AddToRoleAsync(valid!, "Employee");
+            bool employeeExists = (employeeAccounts as EmployeeAccountRepository)!.EmployeeExists(
+                valid!.UserName!
+            );
+
+            if (employeeExists)
+                return false;
+
+            EmployeePosition position = (employeePositions as EmployeePositionRepository).GetFirstByPosition("Employee");
+
+            Employee newEmployee =
+                new()
+                {
+                    FirstName = userRegistration.FirstName,
+                    LastName = userRegistration.LastName,
+                    EmployeeStatusId = userRegistration.EmployeeStatusId,
+                    EmployeePositionId = position.EmployeePositionId
+                };
+
+            Employee createdEmployee = employees.Insert(newEmployee);
+
+            EmployeeAccount newEmployeeAccount =
+                new() { UserName = valid?.UserName, EmployeeId = createdEmployee.EmployeeId };
+
+            employeeAccounts.Insert(newEmployeeAccount);
+        }
+
+        return true;
     }
 
-    public Task<bool> RegisterOwner(CustomerRegistrationDto user)
+    public async Task<bool> RegisterOwner(EmployeeRegistrationDto userRegistration)
     {
-        throw new NotImplementedException();
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        bool succeeded = valid != null;
+        if (!succeeded) // If the User does not currently exist, create it
+        {
+            var authUser = new AuthUser()
+            {
+                UserName = userRegistration.Username,
+                Email = userRegistration.Email,
+            };
+            var result = await userManager.CreateAsync(authUser, userRegistration.Password);
+            succeeded = result.Succeeded;
+        }
+
+        if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
+        {
+            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            await userManager.AddToRoleAsync(valid!, "Owner");
+            bool employeeExists = (employeeAccounts as EmployeeAccountRepository)!.EmployeeExists(
+                valid!.UserName!
+            );
+
+            if (employeeExists)
+                return false;
+
+            EmployeePosition position = (employeePositions as EmployeePositionRepository).GetFirstByPosition("Owner");
+
+            Employee newEmployee =
+                new()
+                {
+                    FirstName = userRegistration.FirstName,
+                    LastName = userRegistration.LastName,
+                    EmployeeStatusId = userRegistration.EmployeeStatusId,
+                    EmployeePositionId = position.EmployeePositionId
+                };
+
+            Employee createdEmployee = employees.Insert(newEmployee);
+
+            EmployeeAccount newEmployeeAccount =
+                new() { UserName = valid?.UserName, EmployeeId = createdEmployee.EmployeeId };
+
+            employeeAccounts.Insert(newEmployeeAccount);
+        }
+
+        return true;
     }
     #endregion
 
@@ -136,7 +229,7 @@ public class AuthService : IAuthService
             signingCredentials: signingCred
         )
         {
-            };
+        };
         string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
         Jwt token = new() { Token = tokenString };
@@ -144,7 +237,14 @@ public class AuthService : IAuthService
         return token;
     }
 
-    public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims) {
+    public string GetEmployeePositionString(string userName)
+    {
+        EmployeeAccount account = (employeeAccounts as EmployeeAccountRepository).GetByUserName(userName);
+        return (employees as EmployeeRepository).GetEmployeePositionByEmployeeId((int)account.EmployeeId).Title;
+    }
+
+    public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims)
+    {
         string userName = userClaims.FindFirst(ClaimTypes.Email)!.Value;
 
         CustomerAccount account = (customerAccounts as CustomerAccountRepository)!.GetByUserName(
