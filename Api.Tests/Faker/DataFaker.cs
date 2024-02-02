@@ -77,8 +77,10 @@ public static class DataFaker
     public static List<CustomerAccount> FakeCustomerAccounts(List<Customer> customers)
     {
         List<CustomerAccount> accounts = new();
-        for(int i = 0; i < customers.Count; i++) {
-            accounts.Add(new CustomerAccount() {
+        for (int i = 0; i < customers.Count; i++)
+        {
+            accounts.Add(new CustomerAccount()
+            {
                 CustomerAccountId = i,
                 CustomerId = customers[i].CustomerId,
                 Customer = customers[i]
@@ -154,6 +156,20 @@ public static class DataFaker
         return ingredients;
     }
 
+    public static List<IngredientCategory> FakeIngredientCategories()
+    {
+        List<IngredientCategory> categories = [];
+        for (int i = 1; i <= 10; i++)
+        {
+            categories.Add(new()
+            {
+                IngredientCategoryId = i,
+                Title = $"Category {i}"
+            });
+        }
+        return categories;
+    }
+
     public static List<Potion> FakePotions()
     {
         List<Potion> potions = [];
@@ -213,7 +229,7 @@ public static class DataFaker
         {
             EmployeeId = 1,
             FirstName = $"FirstName{1}",
-            LastName = $"LastName{1}",                                                  
+            LastName = $"LastName{1}",
             EmployeeStatus = fakeStatus,
             EmployeePosition = fakePosition
         };
@@ -231,7 +247,7 @@ public static class DataFaker
             receipts.Add(
                 new()
                 {
-                    ReceiptId = i,     
+                    ReceiptId = i,
                     ReceiptNumber = $"Receipt {i}",
                     EmployeeId = 1,
                     OrderId = fakeOrder.OrderId,

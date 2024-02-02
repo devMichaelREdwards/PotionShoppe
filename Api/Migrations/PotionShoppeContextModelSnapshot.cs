@@ -109,7 +109,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("CustomerId")
-                        .HasName("PK__Customer__A4AE64D8BE7FB649");
+                        .HasName("PK__Customer__A4AE64D857D633FE");
 
                     b.HasIndex("CustomerStatusId");
 
@@ -132,7 +132,7 @@ namespace Api.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CustomerAccountId")
-                        .HasName("PK__Customer__4212CD8A5D4AC18E");
+                        .HasName("PK__Customer__4212CD8AC8D20F4D");
 
                     b.HasIndex("CustomerId");
 
@@ -153,7 +153,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("CustomerStatusId")
-                        .HasName("PK__Customer__7981F9747AE72C81");
+                        .HasName("PK__Customer__7981F9748147915C");
 
                     b.ToTable("CustomerStatus", (string)null);
                 });
@@ -183,7 +183,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("EffectId")
-                        .HasName("PK__Effect__6B859F23BBB9FCE8");
+                        .HasName("PK__Effect__6B859F23198BA708");
 
                     b.ToTable("Effect", (string)null);
                 });
@@ -213,7 +213,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeeId")
-                        .HasName("PK__Employee__7AD04F1178DC1195");
+                        .HasName("PK__Employee__7AD04F11D075E280");
 
                     b.HasIndex("EmployeePositionId");
 
@@ -238,7 +238,7 @@ namespace Api.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EmployeeAccountId")
-                        .HasName("PK__Employee__32B35D66AB103277");
+                        .HasName("PK__Employee__32B35D6673E30950");
 
                     b.HasIndex("EmployeeId");
 
@@ -259,7 +259,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeePositionId")
-                        .HasName("PK__Employee__6FDE9060FFFD29C4");
+                        .HasName("PK__Employee__6FDE90603BFD241C");
 
                     b.ToTable("EmployeePosition", (string)null);
                 });
@@ -278,7 +278,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeeStatusId")
-                        .HasName("PK__Employee__3609932C6EDD2896");
+                        .HasName("PK__Employee__3609932C839B699C");
 
                     b.ToTable("EmployeeStatus", (string)null);
                 });
@@ -310,6 +310,9 @@ namespace Api.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(1024)");
 
+                    b.Property<int?>("IngredientCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
@@ -319,11 +322,32 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IngredientId")
-                        .HasName("PK__Ingredie__BEAEB25A92BFC93A");
+                        .HasName("PK__Ingredie__BEAEB25A914F277A");
 
                     b.HasIndex("EffectId");
 
+                    b.HasIndex("IngredientCategoryId");
+
                     b.ToTable("Ingredient", (string)null);
+                });
+
+            modelBuilder.Entity("Api.Models.IngredientCategory", b =>
+                {
+                    b.Property<int>("IngredientCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientCategoryId"));
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(1024)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(1024)");
+
+                    b.HasKey("IngredientCategoryId")
+                        .HasName("PK__Ingredie__EC1553CA0FCE8665");
+
+                    b.ToTable("IngredientCategory", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Order", b =>
@@ -352,7 +376,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId")
-                        .HasName("PK__Order__C3905BCF632BEE2F");
+                        .HasName("PK__Order__C3905BCF1519EF42");
 
                     b.HasIndex("CustomerId");
 
@@ -379,7 +403,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderIngredientId")
-                        .HasName("PK__OrderIng__A3146CFAA55E605C");
+                        .HasName("PK__OrderIng__A3146CFAADCF21F6");
 
                     b.HasIndex("IngredientId");
 
@@ -406,7 +430,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderPotionId")
-                        .HasName("PK__OrderPot__49211579E27314FA");
+                        .HasName("PK__OrderPot__4921157906DCA956");
 
                     b.HasIndex("OrderId");
 
@@ -429,7 +453,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("OrderStatusId")
-                        .HasName("PK__OrderSta__BC674CA12EEFAFEB");
+                        .HasName("PK__OrderSta__BC674CA13BD5CB5D");
 
                     b.ToTable("OrderStatus", (string)null);
                 });
@@ -470,7 +494,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PotionId")
-                        .HasName("PK__Potion__37C41B073DA6DAC1");
+                        .HasName("PK__Potion__37C41B077A6AB4A5");
 
                     b.HasIndex("EmployeeId");
 
@@ -492,7 +516,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PotionEffectId")
-                        .HasName("PK__PotionEf__57036DA84C1A306E");
+                        .HasName("PK__PotionEf__57036DA82D1B01AC");
 
                     b.HasIndex("EffectId");
 
@@ -524,7 +548,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("ReceiptId")
-                        .HasName("PK__Receipt__CC08C420A92B4C56");
+                        .HasName("PK__Receipt__CC08C4201AB3478F");
 
                     b.HasIndex("EmployeeId");
 
@@ -681,7 +705,7 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Customer", "Customer")
                         .WithMany("CustomerAccounts")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__CustomerA__Custo__5FB337D6");
+                        .HasConstraintName("FK__CustomerA__Custo__628FA481");
 
                     b.Navigation("Customer");
                 });
@@ -708,7 +732,7 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Employee", "Employee")
                         .WithMany("EmployeeAccounts")
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("FK__EmployeeA__Emplo__628FA481");
+                        .HasConstraintName("FK__EmployeeA__Emplo__656C112C");
 
                     b.Navigation("Employee");
                 });
@@ -718,9 +742,16 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Effect", "Effect")
                         .WithMany("Ingredients")
                         .HasForeignKey("EffectId")
-                        .HasConstraintName("FK__Ingredien__Effec__44FF419A");
+                        .HasConstraintName("FK__Ingredien__Effec__46E78A0C");
+
+                    b.HasOne("Api.Models.IngredientCategory", "IngredientCategory")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("IngredientCategoryId")
+                        .HasConstraintName("FK__Ingredien__Ingre__47DBAE45");
 
                     b.Navigation("Effect");
+
+                    b.Navigation("IngredientCategory");
                 });
 
             modelBuilder.Entity("Api.Models.Order", b =>
@@ -728,12 +759,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__Order__CustomerI__49C3F6B7");
+                        .HasConstraintName("FK__Order__CustomerI__4CA06362");
 
                     b.HasOne("Api.Models.OrderStatus", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
-                        .HasConstraintName("FK__Order__OrderStat__4AB81AF0");
+                        .HasConstraintName("FK__Order__OrderStat__4D94879B");
 
                     b.Navigation("Customer");
 
@@ -745,12 +776,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Ingredient", "Ingredient")
                         .WithMany("OrderIngredients")
                         .HasForeignKey("IngredientId")
-                        .HasConstraintName("FK__OrderIngr__Ingre__5BE2A6F2");
+                        .HasConstraintName("FK__OrderIngr__Ingre__5EBF139D");
 
                     b.HasOne("Api.Models.Order", "Order")
                         .WithMany("OrderIngredients")
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("FK__OrderIngr__Order__5CD6CB2B");
+                        .HasConstraintName("FK__OrderIngr__Order__5FB337D6");
 
                     b.Navigation("Ingredient");
 
@@ -762,12 +793,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Order", "Order")
                         .WithMany("OrderPotions")
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("FK__OrderPoti__Order__59063A47");
+                        .HasConstraintName("FK__OrderPoti__Order__5BE2A6F2");
 
                     b.HasOne("Api.Models.Potion", "Potion")
                         .WithMany("OrderPotions")
                         .HasForeignKey("PotionId")
-                        .HasConstraintName("FK__OrderPoti__Potio__5812160E");
+                        .HasConstraintName("FK__OrderPoti__Potio__5AEE82B9");
 
                     b.Navigation("Order");
 
@@ -779,7 +810,7 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Employee", "Employee")
                         .WithMany("Potions")
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("FK__Potion__Employee__5165187F");
+                        .HasConstraintName("FK__Potion__Employee__5441852A");
 
                     b.Navigation("Employee");
                 });
@@ -789,12 +820,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Effect", "Effect")
                         .WithMany("PotionEffects")
                         .HasForeignKey("EffectId")
-                        .HasConstraintName("FK__PotionEff__Effec__5535A963");
+                        .HasConstraintName("FK__PotionEff__Effec__5812160E");
 
                     b.HasOne("Api.Models.Potion", "Potion")
                         .WithMany("PotionEffects")
                         .HasForeignKey("PotionId")
-                        .HasConstraintName("FK__PotionEff__Potio__5441852A");
+                        .HasConstraintName("FK__PotionEff__Potio__571DF1D5");
 
                     b.Navigation("Effect");
 
@@ -806,12 +837,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Employee", "Employee")
                         .WithMany("Receipts")
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("FK__Receipt__Employe__4D94879B");
+                        .HasConstraintName("FK__Receipt__Employe__5070F446");
 
                     b.HasOne("Api.Models.Order", "Order")
                         .WithMany("Receipts")
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("FK__Receipt__OrderId__4E88ABD4");
+                        .HasConstraintName("FK__Receipt__OrderId__5165187F");
 
                     b.Navigation("Employee");
 
@@ -910,6 +941,11 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Ingredient", b =>
                 {
                     b.Navigation("OrderIngredients");
+                });
+
+            modelBuilder.Entity("Api.Models.IngredientCategory", b =>
+                {
+                    b.Navigation("Ingredients");
                 });
 
             modelBuilder.Entity("Api.Models.Order", b =>
