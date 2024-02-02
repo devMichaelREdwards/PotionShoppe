@@ -24,7 +24,7 @@ public class EmployeePositionControllerTest
     public async void GetEmployeePosition_Returns_Correct_EmployeePosition_Data()
     {
         // Execute
-        IActionResult result = controller.GetEmployeePositiones();
+        IActionResult result = controller.GetEmployeePositions();
         OkObjectResult ok = result as OkObjectResult;
         List<EmployeePositionDto> statusResult = ok.Value as List<EmployeePositionDto>;
         // Assert
