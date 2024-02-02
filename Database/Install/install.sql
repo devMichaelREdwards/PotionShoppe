@@ -29,6 +29,7 @@ CREATE TABLE [Customer] (
 );
 CREATE TABLE [Effect] (
     [EffectId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Name] VARCHAR(1024),
     [Value] INT,
     [Duration] INT,
     [Description] VARCHAR(1024),
@@ -80,20 +81,22 @@ CREATE TABLE [PotionEffect] (
 CREATE TABLE [OrderPotion] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,
     [PotionId] INT REFERENCES [Potion]([PotionId]),
-    [OrderId] INT REFERENCES [Order]([OrderId])
+    [OrderId] INT REFERENCES [Order]([OrderId]),
+    [Quantity] INT
 );
 CREATE TABLE [OrderIngredient] (
     [OrderIngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
     [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
-    [OrderId] INT REFERENCES [Order]([OrderId])
+    [OrderId] INT REFERENCES [Order]([OrderId]),
+    [Quantity] INT
 );
 CREATE TABLE [CustomerAccount] (
     [CustomerAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [UserId] NVARCHAR(450) REFERENCES [AspNetUsers]([Id]),
+    [UserName] NVARCHAR(450),
     [CustomerId] INT REFERENCES [Customer]([CustomerId])
 );
 CREATE TABLE [EmployeeAccount] (
     [EmployeeAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [UserId] NVARCHAR(450) REFERENCES [AspNetUsers]([Id]),
+    [UserName] NVARCHAR(450),
     [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
 );

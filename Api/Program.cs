@@ -103,14 +103,14 @@ app.MapIdentityApi<AuthUser>();
 
 using (var scope = app.Services.CreateScope())
 {
-    //SeedRoles.CreateUserRoles(scope.ServiceProvider).Wait();
+    SeedRoles.CreateUserRoles(scope.ServiceProvider).Wait();
 }
 
 if (app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
     {
-        //SeedRoles.AssignDefaultRoles(scope.ServiceProvider).Wait();
+        SeedRoles.AssignDefaultRoles(scope.ServiceProvider).Wait();
     }
 }
 

@@ -51,13 +51,13 @@ public class AuthService : IAuthService
             succeeded = result.Succeeded;
         }
 
-        await userManager.AddToRoleAsync(valid!, "Customer");
 
-        if (succeeded)
+        if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
         {
             valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            await userManager.AddToRoleAsync(valid!, "Customer");
             bool customerExists = (customerAccounts as CustomerAccountRepository)!.CustomerExists(
-                valid!.Id
+                valid!.UserName!
             );
 
             if (customerExists)
@@ -78,7 +78,7 @@ public class AuthService : IAuthService
             Customer createdCustomer = customers.Insert(newCustomer);
 
             CustomerAccount newCustomerAccount =
-                new() { UserId = valid?.Id, CustomerId = createdCustomer.CustomerId };
+                new() { UserName = valid?.UserName, CustomerId = createdCustomer.CustomerId };
 
             customerAccounts.Insert(newCustomerAccount);
         }

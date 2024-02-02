@@ -60,7 +60,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Customer__7981F974B86BA1EE", x => x.CustomerStatusId);
+                    table.PrimaryKey("PK__Customer__7981F9747AE72C81", x => x.CustomerStatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,13 +69,14 @@ namespace Api.Migrations
                 {
                     EffectId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "varchar(1024)", unicode: false, maxLength: 1024, nullable: true),
                     Value = table.Column<int>(type: "int", nullable: true),
                     Duration = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "varchar(1024)", unicode: false, maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Effect__6B859F23BED7B681", x => x.EffectId);
+                    table.PrimaryKey("PK__Effect__6B859F23BBB9FCE8", x => x.EffectId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +89,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Employee__6FDE9060D9FF1EAD", x => x.EmployeePositionId);
+                    table.PrimaryKey("PK__Employee__6FDE9060FFFD29C4", x => x.EmployeePositionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,7 +102,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Employee__3609932CB65FC2EC", x => x.EmployeeStatusId);
+                    table.PrimaryKey("PK__Employee__3609932C6EDD2896", x => x.EmployeeStatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,7 +115,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__OrderSta__BC674CA1510AA2EE", x => x.OrderStatusId);
+                    table.PrimaryKey("PK__OrderSta__BC674CA12EEFAFEB", x => x.OrderStatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,7 +236,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Customer__A4AE64D8CBE501C6", x => x.CustomerId);
+                    table.PrimaryKey("PK__Customer__A4AE64D8BE7FB649", x => x.CustomerId);
                     table.ForeignKey(
                         name: "FK__Customer__Custom__403A8C7D",
                         column: x => x.CustomerStatusId,
@@ -259,7 +260,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Ingredie__BEAEB25AA64D6969", x => x.IngredientId);
+                    table.PrimaryKey("PK__Ingredie__BEAEB25A92BFC93A", x => x.IngredientId);
                     table.ForeignKey(
                         name: "FK__Ingredien__Effec__44FF419A",
                         column: x => x.EffectId,
@@ -280,7 +281,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Employee__7AD04F115D99E99C", x => x.EmployeeId);
+                    table.PrimaryKey("PK__Employee__7AD04F1178DC1195", x => x.EmployeeId);
                     table.ForeignKey(
                         name: "FK__Employee__Employ__3A81B327",
                         column: x => x.EmployeeStatusId,
@@ -291,6 +292,25 @@ namespace Api.Migrations
                         column: x => x.EmployeePositionId,
                         principalTable: "EmployeePosition",
                         principalColumn: "EmployeePositionId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerAccount",
+                columns: table => new
+                {
+                    CustomerAccountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Customer__4212CD8A5D4AC18E", x => x.CustomerAccountId);
+                    table.ForeignKey(
+                        name: "FK__CustomerA__Custo__5FB337D6",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "CustomerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -307,7 +327,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Order__C3905BCF1D790DE4", x => x.OrderId);
+                    table.PrimaryKey("PK__Order__C3905BCF632BEE2F", x => x.OrderId);
                     table.ForeignKey(
                         name: "FK__Order__CustomerI__49C3F6B7",
                         column: x => x.CustomerId,
@@ -318,6 +338,25 @@ namespace Api.Migrations
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatus",
                         principalColumn: "OrderStatusId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeAccount",
+                columns: table => new
+                {
+                    EmployeeAccountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Employee__32B35D66AB103277", x => x.EmployeeAccountId);
+                    table.ForeignKey(
+                        name: "FK__EmployeeA__Emplo__628FA481",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId");
                 });
 
             migrationBuilder.CreateTable(
@@ -336,7 +375,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Potion__37C41B078A21A008", x => x.PotionId);
+                    table.PrimaryKey("PK__Potion__37C41B073DA6DAC1", x => x.PotionId);
                     table.ForeignKey(
                         name: "FK__Potion__Employee__5165187F",
                         column: x => x.EmployeeId,
@@ -351,11 +390,12 @@ namespace Api.Migrations
                     OrderIngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IngredientId = table.Column<int>(type: "int", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__OrderIng__A3146CFA636D3C59", x => x.OrderIngredientId);
+                    table.PrimaryKey("PK__OrderIng__A3146CFAA55E605C", x => x.OrderIngredientId);
                     table.ForeignKey(
                         name: "FK__OrderIngr__Ingre__5BE2A6F2",
                         column: x => x.IngredientId,
@@ -381,7 +421,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Receipt__CC08C420FACD8524", x => x.ReceiptId);
+                    table.PrimaryKey("PK__Receipt__CC08C420A92B4C56", x => x.ReceiptId);
                     table.ForeignKey(
                         name: "FK__Receipt__Employe__4D94879B",
                         column: x => x.EmployeeId,
@@ -401,11 +441,12 @@ namespace Api.Migrations
                     OrderPotionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PotionId = table.Column<int>(type: "int", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__OrderPot__49211579C8B701A8", x => x.OrderPotionId);
+                    table.PrimaryKey("PK__OrderPot__49211579E27314FA", x => x.OrderPotionId);
                     table.ForeignKey(
                         name: "FK__OrderPoti__Order__59063A47",
                         column: x => x.OrderId,
@@ -429,7 +470,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__PotionEf__57036DA8465B70FF", x => x.PotionEffectId);
+                    table.PrimaryKey("PK__PotionEf__57036DA84C1A306E", x => x.PotionEffectId);
                     table.ForeignKey(
                         name: "FK__PotionEff__Effec__5535A963",
                         column: x => x.EffectId,
@@ -487,6 +528,11 @@ namespace Api.Migrations
                 column: "CustomerStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomerAccount_CustomerId",
+                table: "CustomerAccount",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employee_EmployeePositionId",
                 table: "Employee",
                 column: "EmployeePositionId");
@@ -495,6 +541,11 @@ namespace Api.Migrations
                 name: "IX_Employee_EmployeeStatusId",
                 table: "Employee",
                 column: "EmployeeStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeAccount_EmployeeId",
+                table: "EmployeeAccount",
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredient_EffectId",
@@ -574,6 +625,12 @@ namespace Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CustomerAccount");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeAccount");
 
             migrationBuilder.DropTable(
                 name: "OrderIngredient");

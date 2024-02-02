@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(PotionShoppeContext))]
-    [Migration("20240127071901_Initial")]
+    [Migration("20240202092225_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -112,11 +112,34 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("CustomerId")
-                        .HasName("PK__Customer__A4AE64D8CBE501C6");
+                        .HasName("PK__Customer__A4AE64D8BE7FB649");
 
                     b.HasIndex("CustomerStatusId");
 
                     b.ToTable("Customer", (string)null);
+                });
+
+            modelBuilder.Entity("Api.Models.CustomerAccount", b =>
+                {
+                    b.Property<int>("CustomerAccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerAccountId"));
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CustomerAccountId")
+                        .HasName("PK__Customer__4212CD8A5D4AC18E");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerAccount", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.CustomerStatus", b =>
@@ -133,7 +156,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("CustomerStatusId")
-                        .HasName("PK__Customer__7981F974B86BA1EE");
+                        .HasName("PK__Customer__7981F9747AE72C81");
 
                     b.ToTable("CustomerStatus", (string)null);
                 });
@@ -154,11 +177,16 @@ namespace Api.Migrations
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasMaxLength(1024)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(1024)");
+
                     b.Property<int?>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("EffectId")
-                        .HasName("PK__Effect__6B859F23BED7B681");
+                        .HasName("PK__Effect__6B859F23BBB9FCE8");
 
                     b.ToTable("Effect", (string)null);
                 });
@@ -188,13 +216,36 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeeId")
-                        .HasName("PK__Employee__7AD04F115D99E99C");
+                        .HasName("PK__Employee__7AD04F1178DC1195");
 
                     b.HasIndex("EmployeePositionId");
 
                     b.HasIndex("EmployeeStatusId");
 
                     b.ToTable("Employee", (string)null);
+                });
+
+            modelBuilder.Entity("Api.Models.EmployeeAccount", b =>
+                {
+                    b.Property<int>("EmployeeAccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeAccountId"));
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EmployeeAccountId")
+                        .HasName("PK__Employee__32B35D66AB103277");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeAccount", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.EmployeePosition", b =>
@@ -211,7 +262,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeePositionId")
-                        .HasName("PK__Employee__6FDE9060D9FF1EAD");
+                        .HasName("PK__Employee__6FDE9060FFFD29C4");
 
                     b.ToTable("EmployeePosition", (string)null);
                 });
@@ -230,7 +281,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("EmployeeStatusId")
-                        .HasName("PK__Employee__3609932CB65FC2EC");
+                        .HasName("PK__Employee__3609932C6EDD2896");
 
                     b.ToTable("EmployeeStatus", (string)null);
                 });
@@ -271,7 +322,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IngredientId")
-                        .HasName("PK__Ingredie__BEAEB25AA64D6969");
+                        .HasName("PK__Ingredie__BEAEB25A92BFC93A");
 
                     b.HasIndex("EffectId");
 
@@ -304,7 +355,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId")
-                        .HasName("PK__Order__C3905BCF1D790DE4");
+                        .HasName("PK__Order__C3905BCF632BEE2F");
 
                     b.HasIndex("CustomerId");
 
@@ -327,8 +378,11 @@ namespace Api.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderIngredientId")
-                        .HasName("PK__OrderIng__A3146CFA636D3C59");
+                        .HasName("PK__OrderIng__A3146CFAA55E605C");
 
                     b.HasIndex("IngredientId");
 
@@ -351,8 +405,11 @@ namespace Api.Migrations
                     b.Property<int?>("PotionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderPotionId")
-                        .HasName("PK__OrderPot__49211579C8B701A8");
+                        .HasName("PK__OrderPot__49211579E27314FA");
 
                     b.HasIndex("OrderId");
 
@@ -375,7 +432,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("OrderStatusId")
-                        .HasName("PK__OrderSta__BC674CA1510AA2EE");
+                        .HasName("PK__OrderSta__BC674CA12EEFAFEB");
 
                     b.ToTable("OrderStatus", (string)null);
                 });
@@ -416,7 +473,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PotionId")
-                        .HasName("PK__Potion__37C41B078A21A008");
+                        .HasName("PK__Potion__37C41B073DA6DAC1");
 
                     b.HasIndex("EmployeeId");
 
@@ -438,7 +495,7 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PotionEffectId")
-                        .HasName("PK__PotionEf__57036DA8465B70FF");
+                        .HasName("PK__PotionEf__57036DA84C1A306E");
 
                     b.HasIndex("EffectId");
 
@@ -470,7 +527,7 @@ namespace Api.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.HasKey("ReceiptId")
-                        .HasName("PK__Receipt__CC08C420FACD8524");
+                        .HasName("PK__Receipt__CC08C420A92B4C56");
 
                     b.HasIndex("EmployeeId");
 
@@ -622,6 +679,16 @@ namespace Api.Migrations
                     b.Navigation("CustomerStatus");
                 });
 
+            modelBuilder.Entity("Api.Models.CustomerAccount", b =>
+                {
+                    b.HasOne("Api.Models.Customer", "Customer")
+                        .WithMany("CustomerAccounts")
+                        .HasForeignKey("CustomerId")
+                        .HasConstraintName("FK__CustomerA__Custo__5FB337D6");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Api.Models.Employee", b =>
                 {
                     b.HasOne("Api.Models.EmployeePosition", "EmployeePosition")
@@ -637,6 +704,16 @@ namespace Api.Migrations
                     b.Navigation("EmployeePosition");
 
                     b.Navigation("EmployeeStatus");
+                });
+
+            modelBuilder.Entity("Api.Models.EmployeeAccount", b =>
+                {
+                    b.HasOne("Api.Models.Employee", "Employee")
+                        .WithMany("EmployeeAccounts")
+                        .HasForeignKey("EmployeeId")
+                        .HasConstraintName("FK__EmployeeA__Emplo__628FA481");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Api.Models.Ingredient", b =>
@@ -797,6 +874,8 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Customer", b =>
                 {
+                    b.Navigation("CustomerAccounts");
+
                     b.Navigation("Orders");
                 });
 
@@ -814,6 +893,8 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Employee", b =>
                 {
+                    b.Navigation("EmployeeAccounts");
+
                     b.Navigation("Potions");
 
                     b.Navigation("Receipts");

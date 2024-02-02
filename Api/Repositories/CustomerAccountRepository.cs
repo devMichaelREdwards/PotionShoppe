@@ -42,8 +42,8 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
         Save();
     }
 
-    public bool CustomerExists(string accountId) {
-        return context.CustomerAccounts.FirstOrDefault(a => a.UserId == accountId) != null;
+    public bool CustomerExists(string userName) {
+        return context.CustomerAccounts.FirstOrDefault(a => a.UserName == userName) != null;
     }
     
     public void Save()
