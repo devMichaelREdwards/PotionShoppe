@@ -6,6 +6,7 @@ using System.Threading.Tasks.Sources;
 using Api.Classes;
 using Api.Data;
 using Api.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,13 +19,15 @@ public class AuthService : IAuthService
     private readonly IRepository<Customer> customers;
     private readonly IRepository<CustomerStatus> customerStatuses;
     private readonly IConfiguration config;
+    private readonly IMapper mapper;
 
     public AuthService(
         UserManager<AuthUser> _userManager,
         IRepository<CustomerAccount> _customerAccounts,
         IRepository<Customer> _customers,
         IRepository<CustomerStatus> _customerStatuses,
-        IConfiguration _config
+        IConfiguration _config,
+        IMapper _mapper
     )
     {
         userManager = _userManager;
@@ -32,6 +35,7 @@ public class AuthService : IAuthService
         customers = _customers;
         customerStatuses = _customerStatuses;
         config = _config;
+        mapper = _mapper;
     }
 
     #region Customer
@@ -138,5 +142,27 @@ public class AuthService : IAuthService
         Jwt token = new() { Token = tokenString };
 
         return token;
+    }
+
+    public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims) {
+        string userName = userClaims.FindFirst(ClaimTypes.Email)!.Value;
+
+        CustomerAccount account = (customerAccounts as CustomerAccountRepository)!.GetByUserName(
+            userName
+        );
+
+        if (account?.CustomerId is null)
+            return null;
+
+        int customerId = (int)account.CustomerId;
+        Customer customerData = customers.GetById(customerId);
+
+        CustomerUser user = new CustomerUser()
+        {
+            UserName = userName,
+            Customer = mapper.Map<CustomerDto>(customerData)
+        };
+
+        return user;
     }
 }

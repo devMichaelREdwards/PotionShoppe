@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -13,20 +14,19 @@ public class OrderController : ControllerBase
 {
     private readonly IRepository<Order> orders;
     private readonly IMapper mapper;
+    private readonly IAuthService authService;
 
-    public OrderController(IRepository<Order> _orders, IMapper _mapper)
+    public OrderController(IRepository<Order> _orders, IMapper _mapper, IAuthService _authService)
     {
         orders = _orders;
         mapper = _mapper;
+        authService = _authService;
     }
 
     [HttpGet]
-    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult GetOrders()
     {
         var result = orders.Get();
-        // User => customer/employee/owner needs to be username, not account id I think?
-        string username = User.FindFirst(ClaimTypes.Email).Value; // Create a dependency that injects the user with loaded user data into a controller on request
         return Ok(mapper.Map<List<OrderDto>>(result));
     }
 

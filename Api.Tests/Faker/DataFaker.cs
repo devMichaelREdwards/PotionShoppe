@@ -74,6 +74,19 @@ public static class DataFaker
         return customers;
     }
 
+    public static List<CustomerAccount> FakeCustomerAccounts(List<Customer> customers)
+    {
+        List<CustomerAccount> accounts = new();
+        for(int i = 0; i < customers.Count; i++) {
+            accounts.Add(new CustomerAccount() {
+                CustomerAccountId = i,
+                CustomerId = customers[i].CustomerId,
+                Customer = customers[i]
+            });
+        }
+        return accounts;
+    }
+
     public static List<Effect> FakeEffects()
     {
         List<Effect> effects = [];

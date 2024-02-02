@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
+public interface ICustomerAccountRepository :IRepository<CustomerAccount> {
+    CustomerAccount GetByUserName();
+} 
+
 public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposable
 {
     private PotionShoppeContext context;
@@ -20,6 +24,11 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
     public CustomerAccount GetById(int id)
     {
         return context.CustomerAccounts.Find(id);
+    }
+
+    public CustomerAccount GetByUserName(string userName)
+    {
+        return context.CustomerAccounts.First(ca => ca.UserName == userName);
     }
 
     public CustomerAccount Insert(CustomerAccount entity)
