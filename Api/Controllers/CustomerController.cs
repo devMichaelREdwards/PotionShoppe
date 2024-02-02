@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult GetCustomers()
     {
         var result = customers.Get();

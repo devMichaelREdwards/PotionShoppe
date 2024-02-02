@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Api.Classes;
 
 namespace Api.Data;
 
-public partial class PotionShoppeContext : DbContext
+public partial class PotionShoppeContext : IdentityDbContext<AuthUser>
 {
     private readonly string? connectionString;
 
@@ -26,12 +28,14 @@ public partial class PotionShoppeContext : DbContext
     }
 
     public virtual DbSet<Customer> Customers { get; set; }
+    public virtual DbSet<CustomerAccount> CustomerAccounts { get; set; }
 
     public virtual DbSet<CustomerStatus> CustomerStatuses { get; set; }
 
     public virtual DbSet<Effect> Effects { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
+    public virtual DbSet<EmployeeAccount> EmployeeAccounts { get; set; }
 
     public virtual DbSet<EmployeePosition> EmployeePositions { get; set; }
 
@@ -58,26 +62,41 @@ public partial class PotionShoppeContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64D886D2B2B2");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64D8BE7FB649");
 
             entity.ToTable("Customer");
 
-            entity.Property(e => e.Name).HasMaxLength(1024).IsUnicode(false);
-            entity.Property(e => e.Password).HasMaxLength(1024).IsUnicode(false);
-            entity.Property(e => e.Username).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.FirstName).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.LastName).HasMaxLength(1024).IsUnicode(false);
 
             entity
                 .HasOne(d => d.CustomerStatus)
                 .WithMany(p => p.Customers)
                 .HasForeignKey(d => d.CustomerStatusId)
-                .HasConstraintName("FK__Customer__Custom__5EBF139D");
+                .HasConstraintName("FK__Customer__Custom__403A8C7D");
+        });
+
+        modelBuilder.Entity<CustomerAccount>(entity =>
+        {
+            entity.HasKey(e => e.CustomerAccountId).HasName("PK__Customer__4212CD8A5D4AC18E");
+
+            entity.ToTable("CustomerAccount");
+
+            entity.Property(e => e.UserName).HasMaxLength(450);
+
+            entity
+                .HasOne(d => d.Customer)
+                .WithMany(p => p.CustomerAccounts)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK__CustomerA__Custo__5FB337D6");
         });
 
         modelBuilder.Entity<CustomerStatus>(entity =>
         {
-            entity.HasKey(e => e.CustomerStatusId).HasName("PK__Customer__7981F974F0CD2871");
+            entity.HasKey(e => e.CustomerStatusId).HasName("PK__Customer__7981F9747AE72C81");
 
             entity.ToTable("CustomerStatus");
 
@@ -86,32 +105,28 @@ public partial class PotionShoppeContext : DbContext
 
         modelBuilder.Entity<Effect>(entity =>
         {
-            entity.HasKey(e => e.EffectId).HasName("PK__Effect__6B859F23B4842032");
+            entity.HasKey(e => e.EffectId).HasName("PK__Effect__6B859F23BBB9FCE8");
 
             entity.ToTable("Effect");
 
             entity.Property(e => e.Description).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(1024).IsUnicode(false);
         });
 
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F111E192696");
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F1178DC1195");
 
             entity.ToTable("Employee");
 
-            entity.HasIndex(e => e.EmployeePositionId, "IX_Employee_EmployeePositionId");
-
-            entity.HasIndex(e => e.EmployeeStatusId, "IX_Employee_EmployeeStatusId");
-
-            entity.Property(e => e.Name).HasMaxLength(1024).IsUnicode(false);
-            entity.Property(e => e.Password).HasMaxLength(1024).IsUnicode(false);
-            entity.Property(e => e.Username).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.FirstName).HasMaxLength(1024).IsUnicode(false);
+            entity.Property(e => e.LastName).HasMaxLength(1024).IsUnicode(false);
 
             entity
                 .HasOne(d => d.EmployeePosition)
                 .WithMany(p => p.Employees)
                 .HasForeignKey(d => d.EmployeePositionId)
-                .HasConstraintName("FK__Employee__Positi__3B75D760");
+                .HasConstraintName("FK__Employee__Employ__3B75D760");
 
             entity
                 .HasOne(d => d.EmployeeStatus)
@@ -120,9 +135,24 @@ public partial class PotionShoppeContext : DbContext
                 .HasConstraintName("FK__Employee__Employ__3A81B327");
         });
 
+        modelBuilder.Entity<EmployeeAccount>(entity =>
+        {
+            entity.HasKey(e => e.EmployeeAccountId).HasName("PK__Employee__32B35D66AB103277");
+
+            entity.ToTable("EmployeeAccount");
+
+            entity.Property(e => e.UserName).HasMaxLength(450);
+
+            entity
+                .HasOne(d => d.Employee)
+                .WithMany(p => p.EmployeeAccounts)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK__EmployeeA__Emplo__628FA481");
+        });
+
         modelBuilder.Entity<EmployeePosition>(entity =>
         {
-            entity.HasKey(e => e.EmployeePositionId).HasName("PK__Employee__6FDE90608211D274");
+            entity.HasKey(e => e.EmployeePositionId).HasName("PK__Employee__6FDE9060FFFD29C4");
 
             entity.ToTable("EmployeePosition");
 
@@ -131,7 +161,7 @@ public partial class PotionShoppeContext : DbContext
 
         modelBuilder.Entity<EmployeeStatus>(entity =>
         {
-            entity.HasKey(e => e.EmployeeStatusId).HasName("PK__Employee__3609932CFFE47B28");
+            entity.HasKey(e => e.EmployeeStatusId).HasName("PK__Employee__3609932C6EDD2896");
 
             entity.ToTable("EmployeeStatus");
 
@@ -140,7 +170,7 @@ public partial class PotionShoppeContext : DbContext
 
         modelBuilder.Entity<Ingredient>(entity =>
         {
-            entity.HasKey(e => e.IngredientId).HasName("PK__Ingredie__BEAEB25AF7375E9D");
+            entity.HasKey(e => e.IngredientId).HasName("PK__Ingredie__BEAEB25A92BFC93A");
 
             entity.ToTable("Ingredient");
 
@@ -152,12 +182,12 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Effect)
                 .WithMany(p => p.Ingredients)
                 .HasForeignKey(d => d.EffectId)
-                .HasConstraintName("FK__Ingredien__Effec__6FE99F9F");
+                .HasConstraintName("FK__Ingredien__Effec__44FF419A");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BCF83ECF446");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BCF632BEE2F");
 
             entity.ToTable("Order");
 
@@ -167,18 +197,18 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Customer)
                 .WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__Order__CustomerI__619B8048");
+                .HasConstraintName("FK__Order__CustomerI__49C3F6B7");
 
             entity
                 .HasOne(d => d.OrderStatus)
                 .WithMany(p => p.Orders)
                 .HasForeignKey(d => d.OrderStatusId)
-                .HasConstraintName("FK__Order__OrderStat__628FA481");
+                .HasConstraintName("FK__Order__OrderStat__4AB81AF0");
         });
 
         modelBuilder.Entity<OrderIngredient>(entity =>
         {
-            entity.HasKey(e => e.OrderIngredientId).HasName("PK__OrderIng__A3146CFAFE93B5E3");
+            entity.HasKey(e => e.OrderIngredientId).HasName("PK__OrderIng__A3146CFAA55E605C");
 
             entity.ToTable("OrderIngredient");
 
@@ -186,18 +216,18 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Ingredient)
                 .WithMany(p => p.OrderIngredients)
                 .HasForeignKey(d => d.IngredientId)
-                .HasConstraintName("FK__OrderIngr__Ingre__06CD04F7");
+                .HasConstraintName("FK__OrderIngr__Ingre__5BE2A6F2");
 
             entity
                 .HasOne(d => d.Order)
                 .WithMany(p => p.OrderIngredients)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__OrderIngr__Order__07C12930");
+                .HasConstraintName("FK__OrderIngr__Order__5CD6CB2B");
         });
 
         modelBuilder.Entity<OrderPotion>(entity =>
         {
-            entity.HasKey(e => e.OrderPotionId).HasName("PK__OrderPot__49211579A05C96F4");
+            entity.HasKey(e => e.OrderPotionId).HasName("PK__OrderPot__49211579E27314FA");
 
             entity.ToTable("OrderPotion");
 
@@ -205,18 +235,18 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Order)
                 .WithMany(p => p.OrderPotions)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__OrderPoti__Order__03F0984C");
+                .HasConstraintName("FK__OrderPoti__Order__59063A47");
 
             entity
                 .HasOne(d => d.Potion)
                 .WithMany(p => p.OrderPotions)
                 .HasForeignKey(d => d.PotionId)
-                .HasConstraintName("FK__OrderPoti__Potio__02FC7413");
+                .HasConstraintName("FK__OrderPoti__Potio__5812160E");
         });
 
         modelBuilder.Entity<OrderStatus>(entity =>
         {
-            entity.HasKey(e => e.OrderStatusId).HasName("PK__OrderSta__BC674CA10766E817");
+            entity.HasKey(e => e.OrderStatusId).HasName("PK__OrderSta__BC674CA12EEFAFEB");
 
             entity.ToTable("OrderStatus");
 
@@ -225,11 +255,9 @@ public partial class PotionShoppeContext : DbContext
 
         modelBuilder.Entity<Potion>(entity =>
         {
-            entity.HasKey(e => e.PotionId).HasName("PK__Potion__37C41B07D900FFC5");
+            entity.HasKey(e => e.PotionId).HasName("PK__Potion__37C41B073DA6DAC1");
 
             entity.ToTable("Potion");
-
-            entity.HasIndex(e => e.EmployeeId, "IX_Potion_EmployeeId");
 
             entity.Property(e => e.Description).HasMaxLength(1024).IsUnicode(false);
             entity.Property(e => e.Image).HasMaxLength(1024).IsUnicode(false);
@@ -239,35 +267,31 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Employee)
                 .WithMany(p => p.Potions)
                 .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Potion__Employee__4E88ABD4");
+                .HasConstraintName("FK__Potion__Employee__5165187F");
         });
 
         modelBuilder.Entity<PotionEffect>(entity =>
         {
-            entity.HasKey(e => e.PotionEffectId).HasName("PK__PotionEf__57036DA83F8897E4");
+            entity.HasKey(e => e.PotionEffectId).HasName("PK__PotionEf__57036DA84C1A306E");
 
             entity.ToTable("PotionEffect");
-
-            entity.HasIndex(e => e.EffectId, "IX_PotionEffect_EffectId");
-
-            entity.HasIndex(e => e.PotionId, "IX_PotionEffect_PotionId");
 
             entity
                 .HasOne(d => d.Effect)
                 .WithMany(p => p.PotionEffects)
                 .HasForeignKey(d => d.EffectId)
-                .HasConstraintName("FK__PotionEff__Effec__52593CB8");
+                .HasConstraintName("FK__PotionEff__Effec__5535A963");
 
             entity
                 .HasOne(d => d.Potion)
                 .WithMany(p => p.PotionEffects)
                 .HasForeignKey(d => d.PotionId)
-                .HasConstraintName("FK__PotionEff__Potio__5165187F");
+                .HasConstraintName("FK__PotionEff__Potio__5441852A");
         });
 
         modelBuilder.Entity<Receipt>(entity =>
         {
-            entity.HasKey(e => e.ReceiptId).HasName("PK__Receipt__CC08C420DB8611F0");
+            entity.HasKey(e => e.ReceiptId).HasName("PK__Receipt__CC08C420A92B4C56");
 
             entity.ToTable("Receipt");
 
@@ -277,13 +301,13 @@ public partial class PotionShoppeContext : DbContext
                 .HasOne(d => d.Employee)
                 .WithMany(p => p.Receipts)
                 .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Receipt__Employe__656C112C");
+                .HasConstraintName("FK__Receipt__Employe__4D94879B");
 
             entity
                 .HasOne(d => d.Order)
                 .WithMany(p => p.Receipts)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__Receipt__OrderId__66603565");
+                .HasConstraintName("FK__Receipt__OrderId__4E88ABD4");
         });
 
         OnModelCreatingPartial(modelBuilder);

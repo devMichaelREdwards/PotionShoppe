@@ -7,19 +7,15 @@ public partial class Employee
 {
     public int EmployeeId { get; set; }
 
-    public string? Username { get; set; }
+    public string? FirstName { get; set; }
 
-    public string? Password { get; set; }
-
-    public string? Name { get; set; }
-
-    public DateOnly? DateHired { get; set; }
+    public string? LastName { get; set; }
 
     public int? EmployeeStatusId { get; set; }
 
     public int? EmployeePositionId { get; set; }
 
-    public DateOnly? DateTerminated { get; set; }
+    public virtual ICollection<EmployeeAccount> EmployeeAccounts { get; set; } = new List<EmployeeAccount>();
 
     public virtual EmployeePosition? EmployeePosition { get; set; }
 

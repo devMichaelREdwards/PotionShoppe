@@ -12,9 +12,8 @@ CREATE TABLE [EmployeeStatus] (
 );
 CREATE TABLE [Employee] (
     [EmployeeId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [Username] VARCHAR(1024),
-    [Password] VARCHAR(1024),
-    [Name] VARCHAR(1024),
+    [FirstName] VARCHAR(1024),
+    [LastName] VARCHAR(1024),
     [EmployeeStatusId] INT REFERENCES [EmployeeStatus]([EmployeeStatusId]),
     [EmployeePositionId] INT REFERENCES [EmployeePosition]([EmployeePositionId]),
 );
@@ -24,13 +23,13 @@ CREATE TABLE [CustomerStatus] (
 );
 CREATE TABLE [Customer] (
     [CustomerId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [Username] VARCHAR(1024),
-    [Password] VARCHAR(1024),
-    [Name] VARCHAR(1024),
+    [FirstName] VARCHAR(1024),
+    [LastName] VARCHAR(1024),
     [CustomerStatusId] INT REFERENCES [CustomerStatus]([CustomerStatusId]),
 );
 CREATE TABLE [Effect] (
     [EffectId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Name] VARCHAR(1024),
     [Value] INT,
     [Duration] INT,
     [Description] VARCHAR(1024),
@@ -82,10 +81,22 @@ CREATE TABLE [PotionEffect] (
 CREATE TABLE [OrderPotion] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,
     [PotionId] INT REFERENCES [Potion]([PotionId]),
-    [OrderId] INT REFERENCES [Order]([OrderId])
+    [OrderId] INT REFERENCES [Order]([OrderId]),
+    [Quantity] INT
 );
 CREATE TABLE [OrderIngredient] (
     [OrderIngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
     [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
-    [OrderId] INT REFERENCES [Order]([OrderId])
+    [OrderId] INT REFERENCES [Order]([OrderId]),
+    [Quantity] INT
+);
+CREATE TABLE [CustomerAccount] (
+    [CustomerAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [UserName] NVARCHAR(450),
+    [CustomerId] INT REFERENCES [Customer]([CustomerId])
+);
+CREATE TABLE [EmployeeAccount] (
+    [EmployeeAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [UserName] NVARCHAR(450),
+    [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
 );

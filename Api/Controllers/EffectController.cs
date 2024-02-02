@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -26,6 +27,7 @@ public class EffectController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostEffect(EffectDto effect)
     {
         effects.Insert(mapper.Map<Effect>(effect));
@@ -33,6 +35,7 @@ public class EffectController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PutEffect(EffectDto effect)
     {
         if (effect.EffectId == null)
@@ -44,6 +47,7 @@ public class EffectController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult DeleteEffect(EffectDto effect)
     {
         if (effect.EffectId != null)

@@ -17,7 +17,7 @@ public class OrderControllerTest
         // Setup
         potions = new TestOrderRepository();
         mapper = MapperFaker.MockMapper();
-        controller = new OrderController(potions, mapper);
+        controller = new OrderController(potions, mapper, null);
     }
 
     [Fact]
@@ -35,12 +35,7 @@ public class OrderControllerTest
     public void PostOrder_Returns_Order_Data_With_Given_Id()
     {
         int testId = 1000;
-        OrderDto test =
-            new()
-            {
-                OrderId = testId,
-                OrderStatusId = 2
-            };
+        OrderDto test = new() { OrderId = testId, OrderStatusId = 2 };
         // Execute
         controller.PostOrder(test);
         Order newOrder = potions.GetById(testId);

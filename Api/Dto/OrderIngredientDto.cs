@@ -12,6 +12,7 @@ public partial class OrderIngredientDto : IDto<OrderIngredient>
     public int? OrderId { get; set; }
 
     public int? IngredientId { get; set; }
+    public int? Quantity { get; set; }
 
     public IngredientDto? Ingredient { get; set; }
 
@@ -20,11 +21,13 @@ public partial class OrderIngredientDto : IDto<OrderIngredient>
         return other != null
             && other.OrderIngredientId == OrderIngredientId
             && other.OrderId == OrderId
-            && other.IngredientId == IngredientId;
+            && other.IngredientId == IngredientId
+            && other.Quantity == Quantity;
     }
 
     public void Update(OrderIngredient dest)
     {
         dest.IngredientId = IngredientId ?? dest.IngredientId;
+        dest.Quantity = Quantity ?? dest.Quantity;
     }
 }

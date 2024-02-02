@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -26,6 +27,7 @@ public class PotionEffectController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostPotionEffect(PotionEffectDto potionEffect)
     {
         potionEffects.Insert(mapper.Map<PotionEffect>(potionEffect));
@@ -33,6 +35,7 @@ public class PotionEffectController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PutPotionEffect(PotionEffectDto potionEffect)
     {
         if (potionEffect.PotionEffectId == null)
@@ -46,6 +49,7 @@ public class PotionEffectController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult DeletePotionEffect(PotionEffectDto potionEffect)
     {
         if (potionEffect.PotionEffectId != null)

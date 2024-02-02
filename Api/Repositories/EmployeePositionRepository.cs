@@ -22,6 +22,11 @@ public class EmployeePositionRepository : IRepository<EmployeePosition>, IDispos
         return context.EmployeePositions.Find(id);
     }
 
+    public EmployeePosition GetFirstByPosition(string position)
+    {
+        return context.EmployeePositions.First(s => s.Title == position);
+    }
+
     public EmployeePosition Insert(EmployeePosition entity)
     {
         context.EmployeePositions.Add(entity);

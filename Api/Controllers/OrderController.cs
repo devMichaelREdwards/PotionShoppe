@@ -1,6 +1,9 @@
+using System.Security.Claims;
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -11,14 +14,17 @@ public class OrderController : ControllerBase
 {
     private readonly IRepository<Order> orders;
     private readonly IMapper mapper;
+    private readonly IAuthService authService;
 
-    public OrderController(IRepository<Order> _orders, IMapper _mapper)
+    public OrderController(IRepository<Order> _orders, IMapper _mapper, IAuthService _authService)
     {
         orders = _orders;
         mapper = _mapper;
+        authService = _authService;
     }
 
     [HttpGet]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult GetOrders()
     {
         var result = orders.Get();
@@ -26,6 +32,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Customer,Employee,Owner")]
     public IActionResult PostOrder(OrderDto order)
     {
         order.DatePlaced = DateOnly.FromDateTime(DateTime.Today);
@@ -34,6 +41,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Owner")]
     public IActionResult PutOrder(OrderDto order)
     {
         if (order.OrderId == null)
@@ -46,6 +54,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Owner")]
     public IActionResult DeleteOrder(OrderDto order)
     {
         if (order.OrderId != null)

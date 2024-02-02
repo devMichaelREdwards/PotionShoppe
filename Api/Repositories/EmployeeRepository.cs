@@ -24,6 +24,11 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
         return context.Employees.Find(id);
     }
 
+    public EmployeePosition GetEmployeePositionByEmployeeId(int id)
+    {
+        return context.Employees.Include(e => e.EmployeePosition).First(e => e.EmployeeId == id).EmployeePosition!;
+    }
+
     public Employee Insert(Employee entity)
     {
         context.Employees.Add(entity);

@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetEmployees()
     {
         var result = employees.Get();
@@ -26,6 +28,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Owner")]
     public IActionResult PostEmployee(EmployeeDto employee)
     {
         employees.Insert(mapper.Map<Employee>(employee));
@@ -33,6 +36,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Owner")]
     public IActionResult PutEmployee(EmployeeDto employee)
     {
         if (employee.EmployeeId == null)
@@ -46,6 +50,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Owner")]
     public IActionResult DeleteEmployee(EmployeeDto employee)
     {
         if (employee.EmployeeId != null)

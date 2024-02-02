@@ -19,7 +19,11 @@ public class CustomerStatusRepository : IRepository<CustomerStatus>, IDisposable
 
     public CustomerStatus GetById(int id)
     {
-        return context.CustomerStatuses.Find(id);
+        return context.CustomerStatuses.Find(id)!;
+    }
+
+    public CustomerStatus GetFirstByStatus(string status) {
+        return context.CustomerStatuses.First(s => s.Title == status);
     }
 
     public CustomerStatus Insert(CustomerStatus entity)

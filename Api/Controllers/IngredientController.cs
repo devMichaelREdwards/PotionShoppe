@@ -1,6 +1,7 @@
 using Api.Data;
 using Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -26,6 +27,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostIngredient(IngredientDto ingredient)
     {
         ingredients.Insert(mapper.Map<Ingredient>(ingredient));
@@ -33,6 +35,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult PutIngredient(IngredientDto ingredient)
     {
         if (ingredient.IngredientId == null)
@@ -46,6 +49,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Employee,Owner")]
     public IActionResult DeleteIngredient(IngredientDto ingredient)
     {
         if (ingredient.IngredientId != null)
