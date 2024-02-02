@@ -7,7 +7,7 @@ public partial class EmployeeAccount
 {
     public int EmployeeAccountId { get; set; }
 
-    public string? UserId { get; set; }
+    public string? UserName { get; set; }
 
     public int? EmployeeId { get; set; }
 

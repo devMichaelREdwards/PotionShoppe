@@ -11,6 +11,8 @@ public partial class OrderIngredient
 
     public int? OrderId { get; set; }
 
+    public int? Quantity { get; set; }
+
     public virtual Ingredient? Ingredient { get; set; }
 
     public virtual Order? Order { get; set; }

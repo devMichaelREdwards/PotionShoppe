@@ -7,6 +7,8 @@ public partial class Effect
 {
     public int EffectId { get; set; }
 
+    public string? Name { get; set; }
+
     public int? Value { get; set; }
 
     public int? Duration { get; set; }
