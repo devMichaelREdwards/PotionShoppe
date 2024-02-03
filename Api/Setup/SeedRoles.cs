@@ -50,8 +50,5 @@ public static class SeedRoles
             EmployeeStatusId = status.EmployeeStatusId
         };
         bool success = await authService.RegisterOwner(ownerRegister);
-
-        if (!success)
-            throw new Exception("Test Owner Account Failed To Create");
     }
 }
