@@ -20,8 +20,10 @@ public partial class IngredientDto : IDto<Ingredient>
     public string? Image { get; set; }
 
     public int? EffectId { get; set; }
+    public int? IngredientCategoryId { get; set; }
 
     public EffectDto? Effect { get; set; }
+    public IngredientCategoryDto? IngredientCategory { get; set; }
 
     public bool Equals(Ingredient? other)
     {
