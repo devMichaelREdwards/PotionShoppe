@@ -17,5 +17,3 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 COPY ["./Api/Api.csproj", "Api/"]
 COPY . .
 WORKDIR "/src/Api"
-
-

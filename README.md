@@ -40,5 +40,25 @@ DO NOT OVERWRITE Api.Data.PotionShoppeContext, Make needed changes from autogene
 (The below command will autogenerate the file but also overwrite all models and context. Better way later maybe?)
 dotnet ef dbcontext scaffold "Server=localhost;Database=PotionShoppe;User Id=PotionShoppe;Password=PotionPassword1!;Trusted_Connection=False;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
 
-Docker Client:
-http://Localhost:8000
+Setup:
+Clone the repo
+
+-   Database Setup
+    docker compose up -d --build sqlserver
+    In HeidiSQL ->
+    Connect to localhost:1433
+    user: sa
+    password: Password123!
+    run the create_db_user.sql file
+    disconnect from the db as sa
+    reconnect as:
+    user: PotionShoppe
+    password: potionPassword1!
+
+-   Api Setup
+    docker compose up -d --build api
+    In Heidi SQL as PotionShoppe, run the data.sql in Database/install(needed) as well as .docker(optional)
+    restart the api container(or save Program.cs)
+
+-   Client Setup
+    docker compose up -d --build potionshoppe
