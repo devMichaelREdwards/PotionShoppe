@@ -37,9 +37,7 @@ public static class SeedRoles
             IRepository<EmployeeStatus>
         >();
 
-        EmployeeStatus status = (repository as EmployeeStatusRepository).GetFirstByStatus("ACTIVE");
-        string ownerUsername = "potionShoppe";
-        string ownerEmail = "potionShoppe@potionShoppe.com";
+        EmployeeStatus status = (repository as EmployeeStatusRepository)!.GetFirstByStatus("ACTIVE");
         EmployeeRegistrationDto ownerRegister = new EmployeeRegistrationDto()
         {
             Username = "potionShoppe",
@@ -49,6 +47,6 @@ public static class SeedRoles
             Email = "owner@potionshoppe.com",
             EmployeeStatusId = status.EmployeeStatusId
         };
-        bool success = await authService.RegisterOwner(ownerRegister);
+        await authService.RegisterOwner(ownerRegister);
     }
 }

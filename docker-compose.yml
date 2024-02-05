@@ -33,7 +33,7 @@ services:
       - /api/obj
       - ~/.aspnet/https:/https:ro
     working_dir: /api
-    command: dotnet watch --launch-profile https
+    command: dotnet watch --launch-profile https | dotnet ef database update
 
   potionshoppe:
     container_name: potionshoppe
@@ -49,6 +49,6 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-
+    command: npm run dev
 volumes:
   potionshoppe_data:
