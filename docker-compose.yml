@@ -49,6 +49,6 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-
+    command: npm run dev
 volumes:
   potionshoppe_data:

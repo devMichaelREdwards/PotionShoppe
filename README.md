@@ -12,17 +12,12 @@ TODO: Write more on the Readme
 Have installed ->
 WSL2
 Docker
+Node.js
+.Net 8
 
 Dev environment info ->
 Database: localhost:1433 (sqlserver if inside container)
 API: localhost:7211 (api if inside container)
-
-Dev environment setup ->
-dotnet dev-certs https --trust
-docker compose up -d --build
-Run SQL user script
-Log in as new SQL user
-Run SQL install script
 
 Creating the database
 In docker container, run dotnet ef database update(figure out how to do not in docker???)
@@ -40,8 +35,9 @@ DO NOT OVERWRITE Api.Data.PotionShoppeContext, Make needed changes from autogene
 (The below command will autogenerate the file but also overwrite all models and context. Better way later maybe?)
 dotnet ef dbcontext scaffold "Server=localhost;Database=PotionShoppe;User Id=PotionShoppe;Password=PotionPassword1!;Trusted_Connection=False;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
 
-Setup:
+Dev Setup(This whole thing could be better...):
 Clone the repo
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p Password123! --trust
 
 -   Database Setup
     docker compose up -d --build sqlserver
@@ -61,4 +57,10 @@ Clone the repo
     restart the api container(or save Program.cs)
 
 -   Client Setup
+    run npm install in client folder
+    comment out the command in docker-compose.yml
     docker compose up -d --build potionshoppe
+    inside docker command line run npm install
+    stop the potionshoppe container, delete it, then build again with the command uncommented
+
+    Everything works now
