@@ -40,7 +40,7 @@ Clone the repo
 dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p Password123! --trust
 
 -   Database Setup
-    docker compose up -d --build sqlserver
+    `docker compose up -d --build sqlserver`
     In HeidiSQL ->
     Connect to localhost:1433
     user: sa
@@ -52,15 +52,16 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p Password
     password: potionPassword1!
 
 -   Api Setup
-    docker compose up -d --build api
+    `docker compose up -d --build api`
+    inside the api container on command line, run `dotnet ef database update`
     In Heidi SQL as PotionShoppe, run the data.sql in Database/install(needed) as well as .docker(optional)
     restart the api container(or save Program.cs)
 
 -   Client Setup
-    run npm install in client folder
-    comment out the command in docker-compose.yml
-    docker compose up -d --build potionshoppe
-    inside docker command line run npm install
-    stop the potionshoppe container, delete it, then build again with the command uncommented
+    run `npm install` in client folder
+    `docker compose up -d --build potionshoppe`
+    inside docker command line run `npm install`
+    uncomment out the command in docker-compose.yml
+    stop and remove the container then rebuild it
 
     Everything works now
