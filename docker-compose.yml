@@ -35,5 +35,20 @@ services:
     working_dir: /api
     command: dotnet watch --launch-profile https
 
+  potionshoppe:
+    container_name: potionshoppe
+    build:
+      context: ./client
+      dockerfile: Dockerfile.node
+    volumes:
+      - './Client:/app'
+      - './Client/public:/app/public'
+    ports:
+      - 8000:8000
+    stdin_open: true
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+
 volumes:
   potionshoppe_data:

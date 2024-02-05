@@ -39,3 +39,6 @@ DO NOT OVERWRITE Api.Data.PotionShoppeContext, Make needed changes from autogene
 
 (The below command will autogenerate the file but also overwrite all models and context. Better way later maybe?)
 dotnet ef dbcontext scaffold "Server=localhost;Database=PotionShoppe;User Id=PotionShoppe;Password=PotionPassword1!;Trusted_Connection=False;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
+
+Docker Client:
+http://Localhost:8000
