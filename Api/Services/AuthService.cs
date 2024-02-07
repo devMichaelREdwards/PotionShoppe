@@ -233,15 +233,30 @@ public class AuthService : IAuthService
         };
         string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-        Jwt token = new() { Token = tokenString };
+        Jwt token = new()
+        {
+            Success = tokenString != null,
+            Token = tokenString ?? "",
+            Roles = GetEmployeeRoles(user.Username)
+        };
 
         return token;
     }
 
     public string GetEmployeePositionString(string userName)
     {
-        EmployeeAccount account = (employeeAccounts as EmployeeAccountRepository).GetByUserName(userName);
-        return (employees as EmployeeRepository).GetEmployeePositionByEmployeeId((int)account.EmployeeId).Title;
+        EmployeeAccount account = (employeeAccounts as EmployeeAccountRepository)!.GetByUserName(userName);
+        return (employees as EmployeeRepository)!.GetEmployeePositionByEmployeeId((int)account.EmployeeId!).Title!;
+    }
+
+    private string[] GetEmployeeRoles(string userName)
+    {
+        // Think of better way to do this. Possible to do something with ASP.Net roles?
+        string position = GetEmployeePositionString(userName);
+        if (position == "Owner") return ["Employee", "Owner"];
+        if (position == "Employee") return ["Employee"];
+        return [];
+
     }
 
     public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims)

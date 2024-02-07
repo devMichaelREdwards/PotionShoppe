@@ -32,6 +32,8 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PotionShoppeContext>();
 
+builder.Services.AddCors();
+
 builder.Services
     .AddAuthentication(options =>
     {
@@ -90,9 +92,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:8000"));
 }
 
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
