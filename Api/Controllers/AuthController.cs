@@ -67,4 +67,12 @@ public class AuthController : ControllerBase
         }
         return BadRequest("Login Failed");
     }
+
+    [HttpPost("employee/authenticate")]
+    [Authorize(Roles = "Employee,Owner")]
+    public IActionResult Authorize()
+    {
+        bool authorized = true;
+        return Ok(authorized);
+    }
 }
