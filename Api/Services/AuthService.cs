@@ -49,13 +49,13 @@ public class AuthService : IAuthService
 
     public async Task<bool> RegisterCustomer(CustomerRegistrationDto userRegistration)
     {
-        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
         bool succeeded = valid != null;
         if (!succeeded) // If the User does not currently exist, create it
         {
             var authUser = new AuthUser()
             {
-                UserName = userRegistration.Username,
+                UserName = userRegistration.UserName,
                 Email = userRegistration.Email,
             };
             var result = await userManager.CreateAsync(authUser, userRegistration.Password);
@@ -65,7 +65,7 @@ public class AuthService : IAuthService
 
         if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
         {
-            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
             await userManager.AddToRoleAsync(valid!, "Customer");
             bool customerExists = (customerAccounts as CustomerAccountRepository)!.CustomerExists(
                 valid!.UserName!
@@ -99,7 +99,7 @@ public class AuthService : IAuthService
 
     public async Task<bool> Login(UserLoginDto user)
     {
-        var userAccount = await userManager.FindByNameAsync(user.Username);
+        var userAccount = await userManager.FindByNameAsync(user.UserName);
         if (userAccount is null)
             return false;
 
@@ -112,13 +112,13 @@ public class AuthService : IAuthService
 
     public async Task<bool> RegisterEmployee(EmployeeRegistrationDto userRegistration)
     {
-        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
         bool succeeded = valid != null;
         if (!succeeded) // If the User does not currently exist, create it
         {
             var authUser = new AuthUser()
             {
-                UserName = userRegistration.Username,
+                UserName = userRegistration.UserName,
                 Email = userRegistration.Email,
             };
             var result = await userManager.CreateAsync(authUser, userRegistration.Password);
@@ -127,7 +127,7 @@ public class AuthService : IAuthService
 
         if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
         {
-            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
             await userManager.AddToRoleAsync(valid!, "Employee");
             bool employeeExists = (employeeAccounts as EmployeeAccountRepository)!.EmployeeExists(
                 valid!.UserName!
@@ -136,7 +136,7 @@ public class AuthService : IAuthService
             if (employeeExists)
                 return false;
 
-            EmployeePosition position = (employeePositions as EmployeePositionRepository).GetFirstByPosition("Employee");
+            EmployeePosition position = (employeePositions as EmployeePositionRepository)!.GetFirstByPosition("Employee");
 
             Employee newEmployee =
                 new()
@@ -160,13 +160,13 @@ public class AuthService : IAuthService
 
     public async Task<bool> RegisterOwner(EmployeeRegistrationDto userRegistration)
     {
-        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+        AuthUser? valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
         bool succeeded = valid != null;
         if (!succeeded) // If the User does not currently exist, create it
         {
             var authUser = new AuthUser()
             {
-                UserName = userRegistration.Username,
+                UserName = userRegistration.UserName,
                 Email = userRegistration.Email,
             };
             var result = await userManager.CreateAsync(authUser, userRegistration.Password);
@@ -175,7 +175,7 @@ public class AuthService : IAuthService
 
         if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
         {
-            valid = await userManager.FindByNameAsync(userRegistration.Username)!;
+            valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
             await userManager.AddToRoleAsync(valid!, "Owner");
             await userManager.AddToRoleAsync(valid!, "Employee");
             bool employeeExists = (employeeAccounts as EmployeeAccountRepository)!.EmployeeExists(
@@ -185,7 +185,7 @@ public class AuthService : IAuthService
             if (employeeExists)
                 return false;
 
-            EmployeePosition position = (employeePositions as EmployeePositionRepository).GetFirstByPosition("Owner");
+            EmployeePosition position = (employeePositions as EmployeePositionRepository)!.GetFirstByPosition("Owner");
 
             Employee newEmployee =
                 new()
@@ -208,11 +208,11 @@ public class AuthService : IAuthService
     }
     #endregion
 
-    public Jwt GenerateJwt(UserLoginDto user, string role)
+    public Jwt GenerateJwt(string userName, string role)
     {
         IEnumerable<Claim> claims =
         [
-            new(ClaimTypes.Email, user.Username),
+            new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role)
         ];
         SymmetricSecurityKey securityKey = new(
@@ -231,16 +231,31 @@ public class AuthService : IAuthService
         )
         {
         };
-        string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
+        string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
         Jwt token = new()
         {
             Success = tokenString != null,
             Token = tokenString ?? "",
-            Roles = GetEmployeeRoles(user.Username)
+            UserName = userName,
+            Roles = GetEmployeeRoles(userName)
         };
-
         return token;
+    }
+
+    public string UpdateRefreshToken(UserLoginDto user)
+    {
+        DateTime expire = DateTime.Now.AddMinutes(1440);
+        SecurityToken refreshToken = new JwtSecurityToken(
+            expires: expire,
+            issuer: config.GetSection("Jwt:Issuer").Value,
+            audience: config.GetSection("Jwt:Audience").Value
+        )
+        {
+        };
+        string refreshString = new JwtSecurityTokenHandler().WriteToken(refreshToken);
+        (employeeAccounts as EmployeeAccountRepository)!.UpdateRefreshToken(user.UserName, refreshString, DateOnly.FromDateTime(expire));
+        return refreshString;
     }
 
     public string GetEmployeePositionString(string userName)
@@ -280,5 +295,22 @@ public class AuthService : IAuthService
         };
 
         return user;
+    }
+
+    public bool CheckEmployeeRefreshToken(string userName, string refreshToken)
+    {
+        RefreshToken? token = (employeeAccounts as EmployeeAccountRepository)!.GetRefreshTokenForUser(userName);
+        if (token is null || token.Token != refreshToken)
+        {
+            return false;
+        }
+
+        if (DateOnly.FromDateTime(DateTime.UtcNow).CompareTo(token.Expire) > 0)
+        {
+            (employeeAccounts as EmployeeAccountRepository)!.UpdateRefreshToken(userName, null, null);
+            return false;
+        }
+
+        return true;
     }
 }

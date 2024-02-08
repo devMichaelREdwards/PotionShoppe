@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { authenticateEmployee } from '../../helpers/authenticate';
+import { authenticateEmployee, refreshEmployee } from '../../helpers/authenticate';
 import AdminLayout from '../layout/AdminLayout';
 import useAuth from '../../hooks/useAuth';
 
@@ -14,7 +14,8 @@ const AdminRedirect: React.FC<IRedirectProps> = ({ allowedRoles }: IRedirectProp
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const askServer = async () => {
-            const authorized = user && user.roles.find((role) => allowedRoles?.includes(role)) && (await authenticateEmployee(user));
+            const authorized =
+                user && user.roles.find((role) => allowedRoles?.includes(role)) && ((await authenticateEmployee(user)) || (await refreshEmployee()));
             setLoading(false);
             setAuthorized(authorized);
         };

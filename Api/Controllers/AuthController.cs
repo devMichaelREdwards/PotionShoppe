@@ -1,7 +1,5 @@
 using Api.Classes;
-using Api.Data;
 using Api.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,12 +26,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginCustomer(UserLoginDto userLogin)
+    public async Task<IActionResult> CustomerLogin(UserLoginDto userLogin)
     {
         var result = await authService.Login(userLogin);
         if (result)
         {
-            Jwt token = authService.GenerateJwt(userLogin, "Customer");
+            Jwt token = authService.GenerateJwt(userLogin.UserName, "Customer");
             return Ok(token);
         }
         return BadRequest("Login Failed");
@@ -61,12 +59,36 @@ public class AuthController : ControllerBase
         var result = await authService.Login(userLogin);
         if (result)
         {
-            string position = authService.GetEmployeePositionString(userLogin.Username);
-            Jwt token = authService.GenerateJwt(userLogin, position);
+            string position = authService.GetEmployeePositionString(userLogin.UserName);
+            Jwt token = authService.GenerateJwt(userLogin.UserName, position);
+            string refresh = authService.UpdateRefreshToken(userLogin);
+            Response.Cookies.Append("potionShoppeUserName", userLogin.UserName, Cookie.GetOptions());
+            Response.Cookies.Append("potionShoppe", refresh, Cookie.GetOptions());
             return Ok(token);
         }
+
         return BadRequest("Login Failed");
     }
+
+    [HttpGet("employee/refresh")]
+    public IActionResult EmployeeRefresh()
+    {
+        if (Request.Cookies["potionShoppeUserName"] == null || Request.Cookies["potionShoppe"] == null)
+            return BadRequest();
+
+        string userName = Request.Cookies["potionShoppeUserName"]!;
+        string refreshToken = Request.Cookies["potionShoppe"]!;
+        bool tokenIsValid = authService.CheckEmployeeRefreshToken(userName, refreshToken);
+        if (tokenIsValid)
+        {
+            string position = authService.GetEmployeePositionString(userName);
+            Jwt token = authService.GenerateJwt(userName, position);
+            return Ok(token);
+        }
+        string message = "No Token Found";
+        return Ok(message);
+    }
+
 
     [HttpPost("employee/authenticate")]
     [Authorize(Roles = "Employee,Owner")]

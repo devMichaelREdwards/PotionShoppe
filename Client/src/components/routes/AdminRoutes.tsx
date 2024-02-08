@@ -17,6 +17,7 @@ const AdminRoutes = () => {
                 </Route>
                 <Route path='admin' element={<AdminRedirect allowedRoles={['Owner']} />}>
                     <Route path='' element={<AdminDashboardPage />} />
+                    <Route path='other' element={<>Test</>} />
                 </Route>
             </Routes>
         </AuthProvider>

@@ -98,10 +98,14 @@ CREATE TABLE [OrderIngredient] (
 CREATE TABLE [CustomerAccount] (
     [CustomerAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
     [UserName] NVARCHAR(450),
-    [CustomerId] INT REFERENCES [Customer]([CustomerId])
+    [CustomerId] INT REFERENCES [Customer]([CustomerId]),
+    [RefreshToken] VARCHAR(1024),
+    [TokenExpire] DATE
 );
 CREATE TABLE [EmployeeAccount] (
     [EmployeeAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
     [UserName] NVARCHAR(450),
-    [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
+    [EmployeeId] INT REFERENCES [Employee]([EmployeeId]),
+    [RefreshToken] VARCHAR(1024),
+    [TokenExpire] DATE
 );

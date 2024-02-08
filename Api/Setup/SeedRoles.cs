@@ -40,7 +40,7 @@ public static class SeedRoles
         EmployeeStatus status = (repository as EmployeeStatusRepository)!.GetFirstByStatus("ACTIVE");
         EmployeeRegistrationDto ownerRegister = new EmployeeRegistrationDto()
         {
-            Username = "potionShoppe",
+            UserName = "potionShoppe",
             Password = "potionPassword1!",
             FirstName = "Potion",
             LastName = "Shoppe",

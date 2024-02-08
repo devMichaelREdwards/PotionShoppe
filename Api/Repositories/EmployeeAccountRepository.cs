@@ -1,5 +1,7 @@
+using Api.Classes;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Data;
 
@@ -27,6 +29,22 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         return context.EmployeeAccounts.First(a => a.UserName == userName);
     }
 
+    public RefreshToken? GetRefreshTokenForUser(string userName)
+    {
+        EmployeeAccount entity = context.EmployeeAccounts.First(a => a.UserName == userName);
+
+        if (entity.RefreshToken.IsNullOrEmpty() || entity.TokenExpire is null)
+        {
+            return null;
+        }
+
+        return new RefreshToken()
+        {
+            Token = entity.RefreshToken!,
+            Expire = (DateOnly)entity.TokenExpire,
+        };
+    }
+
     public EmployeeAccount Insert(EmployeeAccount entity)
     {
         context.EmployeeAccounts.Add(entity);
@@ -36,6 +54,15 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
 
     public void Update(EmployeeAccount entity)
     {
+        context.Entry(entity).State = EntityState.Modified;
+        Save();
+    }
+
+    public void UpdateRefreshToken(string userName, string? token, DateOnly? expire)
+    {
+        EmployeeAccount entity = GetByUserName(userName);
+        entity.RefreshToken = token;
+        entity.TokenExpire = expire;
         context.Entry(entity).State = EntityState.Modified;
         Save();
     }

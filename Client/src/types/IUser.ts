@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 export interface IAdminUser {
-    username: string;
+    userName: string;
     token: string;
     loggedIn: boolean;
     authConfig: AxiosRequestConfig;

@@ -8,7 +8,9 @@ public interface IAuthService
     Task<bool> RegisterEmployee(EmployeeRegistrationDto user);
     Task<bool> RegisterOwner(EmployeeRegistrationDto user);
     Task<bool> Login(UserLoginDto user);
-    Jwt GenerateJwt(UserLoginDto user, string role);
+    Jwt GenerateJwt(string userName, string role);
+    string UpdateRefreshToken(UserLoginDto user);
     CustomerUser GetCustomerUser(ClaimsPrincipal userClaims);
     string GetEmployeePositionString(string userName);
+    bool CheckEmployeeRefreshToken(string userName, string refreshToken);
 }
