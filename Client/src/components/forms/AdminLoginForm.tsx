@@ -12,19 +12,19 @@ const AdminLoginForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/admin';
-    const [username, setUsername] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const handleLogin = async () => {
         const loginData = {
-            username,
+            userName,
             password,
         };
 
-        const res = await axios.post('user/employee/login', loginData);
+        const res = await axios.post('user/employee/login', loginData, { withCredentials: true });
         if (res.status == HttpStatusCode.Ok) {
             // Login successfull
             const user: IAdminUser = {
-                username,
+                userName,
                 token: res.data.token,
                 loggedIn: true,
                 authConfig: {
@@ -42,11 +42,11 @@ const AdminLoginForm = () => {
         <Form fluid>
             <Form.Group>
                 <Form.Control
-                    value={username}
-                    placeholder='Username'
-                    name='username'
+                    value={userName}
+                    placeholder='UserName'
+                    name='userName'
                     onChange={(e: string) => {
-                        setUsername(e);
+                        setUserName(e);
                     }}
                 />
             </Form.Group>

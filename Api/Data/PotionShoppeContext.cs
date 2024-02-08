@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
@@ -88,6 +86,13 @@ public partial class PotionShoppeContext : IdentityDbContext<AuthUser>
 
             entity.ToTable("CustomerAccount");
 
+            entity.HasIndex(e => e.CustomerId, "IX_CustomerAccount_CustomerId");
+
+            entity.Property(e => e.RefreshToken)
+                .HasMaxLength(1024)
+                .IsUnicode(false)
+                .HasDefaultValueSql("(NULL)");
+            entity.Property(e => e.TokenExpire);
             entity.Property(e => e.UserName).HasMaxLength(450);
 
             entity.HasOne(d => d.Customer).WithMany(p => p.CustomerAccounts)
@@ -148,6 +153,13 @@ public partial class PotionShoppeContext : IdentityDbContext<AuthUser>
 
             entity.ToTable("EmployeeAccount");
 
+            entity.HasIndex(e => e.EmployeeId, "IX_EmployeeAccount_EmployeeId");
+
+            entity.Property(e => e.RefreshToken)
+                .HasMaxLength(1024)
+                .IsUnicode(false)
+                .HasDefaultValueSql("(NULL)");
+            entity.Property(e => e.TokenExpire);
             entity.Property(e => e.UserName).HasMaxLength(450);
 
             entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeAccounts)

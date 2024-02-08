@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Api.Models;
+﻿namespace Api.Models;
 
 public partial class CustomerAccount
 {
@@ -10,6 +7,10 @@ public partial class CustomerAccount
     public string? UserName { get; set; }
 
     public int? CustomerId { get; set; }
+
+    public string? RefreshToken { get; set; }
+
+    public DateOnly? TokenExpire { get; set; }
 
     public virtual Customer? Customer { get; set; }
 }
