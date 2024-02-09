@@ -1,11 +1,11 @@
 import { Container, Content, FlexboxGrid, Panel } from 'rsuite';
 import FlexboxGridItem from 'rsuite/esm/FlexboxGrid/FlexboxGridItem';
-import AdminLoginForm from '../../forms/AdminLoginForm';
+import AdminLoginForm from '../../../forms/AdminLoginForm';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../../hooks/useAuth';
 import { useEffect } from 'react';
-import { refreshEmployee } from '../../../helpers/authenticate';
-import { IAdminUser } from '../../../types/IUser';
+import { refreshEmployee } from '../../../../helpers/authenticate';
+import { IAdminUser } from '../../../../types/IUser';
 
 const AdminLoginPage = () => {
     const { user, setUser } = useAuth();
