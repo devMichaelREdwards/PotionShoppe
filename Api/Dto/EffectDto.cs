@@ -28,11 +28,15 @@ public partial class EffectDto : IDto<Effect>
 
     public string BuildDescription()
     {
-        return string.Format(Description, Value, Duration);
+        return Description
+            .Replace("{value}", Value.ToString())
+            .Replace("{duration}", Duration.ToString());
     }
 
     public static string BuildDescription(Effect effect)
     {
-        return string.Format(effect.Description, effect.Value, effect.Duration);
+        return effect.Description
+            .Replace("{value}", effect.Value.ToString())
+            .Replace("{duration}", effect.Duration.ToString());
     }
 }

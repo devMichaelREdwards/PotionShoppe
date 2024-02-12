@@ -17,6 +17,11 @@ public class EffectRepository : IRepository<Effect>, IDisposable
         return [.. context.Effects];
     }
 
+    public IEnumerable<Effect> GetListing()
+    {
+        return [.. context.Effects];
+    }
+
     public Effect GetById(int id)
     {
         return context.Effects.Find(id);
@@ -65,11 +70,6 @@ public class EffectRepository : IRepository<Effect>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<Effect> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

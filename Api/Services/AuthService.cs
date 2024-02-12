@@ -212,7 +212,7 @@ public class AuthService : IAuthService
         if(role == "Owner") return [
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role),
-            role == "Owner" ? new(ClaimTypes.Role, "Employee") : null
+            new(ClaimTypes.Role, "Employee")
         ];
 
         if(role == "Employee") return [

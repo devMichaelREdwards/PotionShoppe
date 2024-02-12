@@ -62,6 +62,18 @@ public class MappingProfile : Profile
         CreateMap<Effect, string>().ConvertUsing(e => EffectDto.BuildDescription(e));
         CreateMap<EffectDto, string>().ConvertUsing(e => e.BuildDescription());
         CreateMap<string, Effect>().ConstructUsing(e => null);
+        CreateMap<Effect, EffectListing>()
+            .ConvertUsing(
+                e =>
+                    new()
+                    {
+                        EffectId = e.EffectId,
+                        Name = e.Name,
+                        Value = e.Value,
+                        Duration = e.Duration,
+                        Description = EffectDto.BuildDescription(e)
+                    }
+            );
     }
 
     private void CreatePotionMappings()

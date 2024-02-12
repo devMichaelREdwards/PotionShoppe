@@ -4,21 +4,21 @@ INSERT INTO "Effect" (
         "Duration",
         "Description"
     )
-VALUES ('Minor Health', 25, 0, 'Regens {0} health'),
-    ('Major Health', 100, 0, 'Regens {0} health'),
-    ('Minor Mana', 25, 0, 'Regens {0} mana'),
-    ('Major Mana', 100, 0, 'Regens {0} mana'),
+VALUES ('Minor Health', 25, 0, 'Regens {value} health'),
+    ('Major Health', 100, 0, 'Regens {value} health'),
+    ('Minor Mana', 25, 0, 'Regens {value} mana'),
+    ('Major Mana', 100, 0, 'Regens {value} mana'),
     (
         'Defense',
         50,
         10,
-        'Increases defense by {0} for {1} minutes'
+        'Increases defense by {value} for {duration} minutes'
     ),
     (
         'Acid Protection',
         0,
         10,
-        'Grants Acid Protection for {1} minutes'
+        'Grants Acid Protection for {duration} minutes'
     );
 INSERT INTO "Ingredient" (
         "Name",

@@ -45,7 +45,7 @@ const EmployeeListing = () => {
 
     return (
         <div className='listing'>
-            <Listing id='employeeId' columns={columns} route={'employee/employee-listing'} rowButtons={rowButtons} />
+            <Listing id='employeeId' columns={columns} route={'employee/listing'} rowButtons={rowButtons} />
         </div>
     );
 };
