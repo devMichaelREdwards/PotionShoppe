@@ -1,0 +1,21 @@
+.admin-page {
+    width: 100%;
+}
+
+.button-group {
+    align-self: center;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.listing-header {
+    padding: 20px 0 20px 20px;
+    color: var(--rs-text-heading);
+    border-bottom: 1px solid rgb(217, 217, 217);
+}
+
+.listing-row {
+    padding: 20px 0 20px 20px;
+    color: var(--rs-text-heading);
+    box-shadow: none;
+}
