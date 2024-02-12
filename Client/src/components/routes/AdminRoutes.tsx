@@ -16,6 +16,7 @@ import EffectFormPage from '../pages/admin/inventory/EffectFormPage';
 import CustomerFormPage from '../pages/admin/users/CustomerFormPage';
 import ReceiptListingPage from '../pages/admin/orders/ReceiptListingPage';
 import OrderListingPage from '../pages/admin/orders/OrderListingPage';
+import EmployeeFormPage from '../pages/admin/users/EmployeeForm';
 
 const AdminRoutes = () => {
     return (
@@ -44,7 +45,7 @@ const AdminRoutes = () => {
                 <Route path='admin' element={<AdminRedirect allowedRoles={['Owner']} />}>
                     <Route path='' element={<AdminDashboardPage />} />
                     <Route path='customers/*' element={<CustomerFormPage />} />
-                    <Route path='employees/*' element={<CustomerListingPage />} />
+                    <Route path='employees/*' element={<EmployeeFormPage />} />
                 </Route>
             </Routes>
         </AuthProvider>
