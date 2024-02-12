@@ -67,5 +67,10 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
         Dispose(true);
     }
 
+    public IEnumerable<IngredientCategory> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

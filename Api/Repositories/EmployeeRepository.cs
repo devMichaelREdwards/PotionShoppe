@@ -19,6 +19,14 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
             .Include(e => e.EmployeePosition)];
     }
 
+    public IEnumerable<Employee> GetListing()
+    {
+        return [.. context.Employees
+            .Include(e => e.EmployeeStatus)
+            .Include(e => e.EmployeePosition)
+            .Include(e => e.EmployeeAccounts)];
+    }
+
     public Employee GetById(int id)
     {
         return context.Employees.Find(id);

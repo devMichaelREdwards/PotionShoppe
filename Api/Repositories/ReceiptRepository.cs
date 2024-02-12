@@ -72,5 +72,10 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<Receipt> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

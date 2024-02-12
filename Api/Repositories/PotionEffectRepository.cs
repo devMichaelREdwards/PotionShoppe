@@ -67,5 +67,10 @@ public class PotionEffectRepository : IRepository<PotionEffect>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<PotionEffect> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

@@ -67,5 +67,10 @@ public class CustomerRepository : IRepository<Customer>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<Customer> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }
