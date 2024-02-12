@@ -1,27 +1,9 @@
-import { Container, Content, Footer, Header } from 'rsuite';
-import Listing from '../../../common/listing/Listing';
-import { IListingColumn } from '../../../../types/IListing';
-
-const EmployeeListingPage = () => {
-    return (
-        <div className='admin-page'>
-            <Container>
-                <Header>Employees</Header>
-                <Content>
-                    <EmployeeFilters />
-                    <EmployeeListing />
-                </Content>
-                <Footer></Footer>
-            </Container>
-        </div>
-    );
-};
-
-const EmployeeFilters = () => {
-    return <div className='filters'>Filters</div>;
-};
+import useAuth from '../../../../../hooks/useAuth';
+import { IActionButton, IListingColumn } from '../../../../../types/IListing';
+import Listing from '../../../../common/listing/Listing';
 
 const EmployeeListing = () => {
+    const { user } = useAuth();
     const columns: IListingColumn[] = [
         {
             align: 'left',
@@ -55,11 +37,17 @@ const EmployeeListing = () => {
         },
     ];
 
+    const rowButtons: IActionButton[] = [];
+
+    if (user?.roles.includes('Owner')) {
+        rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'employeeId' });
+    }
+
     return (
         <div className='listing'>
-            <Listing id='employeeId' columns={columns} route={'employee/employee-listing'} openModal={() => null} />
+            <Listing id='employeeId' columns={columns} route={'employee/employee-listing'} rowButtons={rowButtons} />
         </div>
     );
 };
 
-export default EmployeeListingPage;
+export default EmployeeListing;

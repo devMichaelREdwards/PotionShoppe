@@ -1,17 +1,20 @@
-import { Button, Checkbox, FlexboxGrid, List } from 'rsuite';
+import { FlexboxGrid, List } from 'rsuite';
 import { IData } from '../../../types/IData';
-import { IListingColumn } from '../../../types/IListing';
+import { IActionButton, IListingColumn } from '../../../types/IListing';
 import { nanoid } from 'nanoid';
+import IDCheckBox from './IdCheckBox';
+import ActionButtonCollection from '../input/ActionButtonCollection';
 
 interface IProps {
     id: number;
     data: IData;
     checked: boolean;
     columns: IListingColumn[];
+    rowButtons?: IActionButton[];
     handleCheckboxClick: (id: number) => void;
 }
 
-const ListingRow = ({ id, data, checked, columns, handleCheckboxClick }: IProps) => {
+const ListingRow = ({ id, data, checked, columns, rowButtons, handleCheckboxClick }: IProps) => {
     if (!id) return null;
     let colsLeft = 22; //24 - 2 for checkbox col
     return (
@@ -28,43 +31,10 @@ const ListingRow = ({ id, data, checked, columns, handleCheckboxClick }: IProps)
                         </FlexboxGrid.Item>
                     );
                 })}
-                <ListingRowButtons id={data.id} colspan={colsLeft} />
+                <ActionButtonCollection id={data.id} data={data} colspan={colsLeft} buttons={rowButtons} />
             </FlexboxGrid>
         </List.Item>
     );
 };
 
 export default ListingRow;
-
-interface IIDCheckBox {
-    id: number;
-    checked: boolean;
-    handleCheckboxClick: (id: number) => void;
-}
-
-const IDCheckBox = ({ id, checked, handleCheckboxClick }: IIDCheckBox) => {
-    return (
-        <Checkbox
-            value={id}
-            onChange={() => {
-                return handleCheckboxClick(id);
-            }}
-            checked={checked}
-        />
-    );
-};
-
-interface IRowButtons {
-    id: number;
-    colspan: number;
-}
-
-const ListingRowButtons = ({ id, colspan }: IRowButtons) => {
-    return (
-        <FlexboxGrid.Item key='buttons' className='button-group' colspan={colspan}>
-            <Button color='blue' appearance='primary'>
-                Edit
-            </Button>
-        </FlexboxGrid.Item>
-    );
-};
