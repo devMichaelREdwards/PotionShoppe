@@ -173,7 +173,7 @@ public class AuthService : IAuthService
             succeeded = result.Succeeded;
         }
 
-        if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
+        if (succeeded) // If the owner exists or was created, add the Customer role and create a Customer entity
         {
             valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
             await userManager.AddToRoleAsync(valid!, "Owner");
@@ -208,13 +208,26 @@ public class AuthService : IAuthService
     }
     #endregion
 
-    public Jwt GenerateJwt(string userName, string role)
-    {
-        IEnumerable<Claim> claims =
-        [
+    private IEnumerable<Claim>? GetEmployeeClaims(string userName, string role) {
+        if(role == "Owner") return [
+            new(ClaimTypes.Email, userName),
+            new(ClaimTypes.Role, role),
+            role == "Owner" ? new(ClaimTypes.Role, "Employee") : null
+        ];
+
+        if(role == "Employee") return [
+            
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role)
+        
         ];
+
+        return null;
+    }
+
+    public Jwt GenerateJwt(string userName, string role)
+    {
+        IEnumerable<Claim>? claims = GetEmployeeClaims(userName, role);
         SymmetricSecurityKey securityKey = new(
             Encoding.ASCII.GetBytes(config.GetSection("Jwt:SecretKey").Value!)
         );

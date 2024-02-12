@@ -104,5 +104,10 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         Dispose(true);
     }
 
+    public IEnumerable<EmployeeAccount> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

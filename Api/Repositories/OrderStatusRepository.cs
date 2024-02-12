@@ -67,5 +67,10 @@ public class OrderStatusRepository : IRepository<OrderStatus>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<OrderStatus> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

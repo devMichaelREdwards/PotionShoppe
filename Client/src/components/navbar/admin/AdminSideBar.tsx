@@ -41,7 +41,7 @@ const AdminSideBar = () => {
                         </Nav.Menu>
                     </Nav>
                 </Sidenav.Body>
-                <Sidenav.Toggle expanded={expand} onToggle={(expanded) => setExpand(expanded)} />
+                <Sidenav.Toggle onToggle={(expanded) => setExpand(expanded)} />
             </Sidenav>
         </Sidebar>
     );

@@ -72,5 +72,10 @@ public class EmployeePositionRepository : IRepository<EmployeePosition>, IDispos
         Dispose(true);
     }
 
+    public IEnumerable<EmployeePosition> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

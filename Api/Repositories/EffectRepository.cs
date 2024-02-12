@@ -67,5 +67,10 @@ public class EffectRepository : IRepository<Effect>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<Effect> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

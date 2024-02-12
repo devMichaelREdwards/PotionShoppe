@@ -67,5 +67,10 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
         Dispose(true);
     }
 
+    public IEnumerable<Ingredient> GetListing()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 }

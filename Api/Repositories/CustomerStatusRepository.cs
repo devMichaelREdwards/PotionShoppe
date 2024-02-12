@@ -22,7 +22,8 @@ public class CustomerStatusRepository : IRepository<CustomerStatus>, IDisposable
         return context.CustomerStatuses.Find(id)!;
     }
 
-    public CustomerStatus GetFirstByStatus(string status) {
+    public CustomerStatus GetFirstByStatus(string status)
+    {
         return context.CustomerStatuses.First(s => s.Title == status);
     }
 
@@ -69,6 +70,11 @@ public class CustomerStatusRepository : IRepository<CustomerStatus>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IEnumerable<CustomerStatus> GetListing()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public interface ICustomerAccountRepository :IRepository<CustomerAccount> {
+public interface ICustomerAccountRepository : IRepository<CustomerAccount>
+{
     CustomerAccount GetByUserName();
-} 
+}
 
 public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposable
 {
@@ -51,10 +52,11 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
         Save();
     }
 
-    public bool CustomerExists(string userName) {
+    public bool CustomerExists(string userName)
+    {
         return context.CustomerAccounts.FirstOrDefault(a => a.UserName == userName) != null;
     }
-    
+
     public void Save()
     {
         context.SaveChanges();
@@ -78,6 +80,11 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IEnumerable<CustomerAccount> GetListing()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

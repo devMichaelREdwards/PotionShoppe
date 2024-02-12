@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Nav } from 'rsuite';
+import setTitle from '../../../helpers/setTitle';
 
 interface IProps {
     title: string;
@@ -10,7 +11,15 @@ interface IProps {
 
 const AdminNavItem = ({ title, route, eventKey, icon }: IProps) => {
     return (
-        <Nav.Item as={Link} to={route} icon={icon} eventKey={eventKey}>
+        <Nav.Item
+            as={Link}
+            to={route}
+            icon={icon}
+            eventKey={eventKey}
+            onClick={() => {
+                setTitle(title);
+            }}
+        >
             {title}
         </Nav.Item>
     );

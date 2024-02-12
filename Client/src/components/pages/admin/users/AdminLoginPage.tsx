@@ -6,6 +6,7 @@ import useAuth from '../../../../hooks/useAuth';
 import { useEffect } from 'react';
 import { refreshEmployee } from '../../../../helpers/authenticate';
 import { IAdminUser } from '../../../../types/IUser';
+import setTitle from '../../../../helpers/setTitle';
 
 const AdminLoginPage = () => {
     const { user, setUser } = useAuth();
@@ -27,11 +28,12 @@ const AdminLoginPage = () => {
                     },
                     roles: res.roles,
                 };
-                console.log(user);
                 setUser(user);
                 navigate(from, { replace: true });
             }
         };
+
+        setTitle('Employee Login');
         checkRefresh();
     });
 
