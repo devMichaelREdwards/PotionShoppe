@@ -5,14 +5,13 @@ import { nanoid } from 'nanoid';
 import { IData } from '../../../types/IData';
 
 interface IProps {
-    id: number;
     colspan: number;
     buttons?: IActionButton[];
-    data: IData;
+    data?: IData;
     remove?: () => void;
 }
 
-const ActionButtonCollection = ({ id, colspan, buttons, data, remove }: IProps) => {
+const ActionButtonCollection = ({ colspan, buttons, data, remove }: IProps) => {
     return (
         <FlexboxGrid.Item key='buttons' className='button-group' colspan={colspan}>
             {buttons?.map((b) => {
@@ -24,7 +23,7 @@ const ActionButtonCollection = ({ id, colspan, buttons, data, remove }: IProps) 
                         label={b.label}
                         icon={b.icon}
                         action={b.action}
-                        arg={b.argKey ? data[b.argKey] : undefined}
+                        arg={b.argKey ? data?.[b.argKey] : undefined}
                     />
                 );
             })}

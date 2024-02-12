@@ -25,7 +25,7 @@ const ListingHeaderRow = ({ columns, headerButtons, remove }: IListingHeaderRowP
                     );
                 })}
 
-                <ActionButtonCollection colspan={colsLeft} buttons={headerButtons} id={0} remove={remove} />
+                <ActionButtonCollection colspan={colsLeft} buttons={headerButtons} remove={remove} />
             </FlexboxGrid>
         </List.Item>
     );
