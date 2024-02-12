@@ -41,6 +41,19 @@ public class MappingProfile : Profile
         Map<EmployeePosition, EmployeePositionDto>();
         CreateMap<Employee, string>().ConstructUsing(e => $"{e.FirstName} {e.LastName}");
         Map<Employee, EmployeeDto>();
+        CreateMap<Employee, EmployeeListing>()
+            .ConvertUsing(
+                e =>
+                    new()
+                    {
+                        EmployeeId = e.EmployeeId,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        EmployeePosition = e.EmployeePosition!.Title,
+                        EmployeeStatus = e.EmployeeStatus!.Title,
+                        UserName = e.EmployeeAccounts.First().UserName
+                    }
+            );
     }
 
     private void CreateEffectMappings()

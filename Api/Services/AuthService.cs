@@ -173,7 +173,7 @@ public class AuthService : IAuthService
             succeeded = result.Succeeded;
         }
 
-        if (succeeded) // If the customer exists or was created, add the Customer role and create a Customer entity
+        if (succeeded) // If the owner exists or was created, add the Customer role and create a Customer entity
         {
             valid = await userManager.FindByNameAsync(userRegistration.UserName)!;
             await userManager.AddToRoleAsync(valid!, "Owner");

@@ -27,6 +27,14 @@ public class EmployeeController : ControllerBase
         return Ok(mapper.Map<List<EmployeeDto>>(result));
     }
 
+    [HttpGet("employee-listing")]
+    [Authorize(Roles = "Employee,Owner")]
+    public IActionResult GetEmployeeListing()
+    {
+        var result = employees.GetListing();
+        return Ok(mapper.Map<List<EmployeeListing>>(result));
+    }
+
     [HttpPost]
     [Authorize(Roles = "Owner")]
     public IActionResult PostEmployee(EmployeeDto employee)
