@@ -208,13 +208,26 @@ public class AuthService : IAuthService
     }
     #endregion
 
-    public Jwt GenerateJwt(string userName, string role)
-    {
-        IEnumerable<Claim> claims =
-        [
+    private IEnumerable<Claim>? GetEmployeeClaims(string userName, string role) {
+        if(role == "Owner") return [
+            new(ClaimTypes.Email, userName),
+            new(ClaimTypes.Role, role),
+            role == "Owner" ? new(ClaimTypes.Role, "Employee") : null
+        ];
+
+        if(role == "Employee") return [
+            
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role)
+        
         ];
+
+        return null;
+    }
+
+    public Jwt GenerateJwt(string userName, string role)
+    {
+        IEnumerable<Claim>? claims = GetEmployeeClaims(userName, role);
         SymmetricSecurityKey securityKey = new(
             Encoding.ASCII.GetBytes(config.GetSection("Jwt:SecretKey").Value!)
         );

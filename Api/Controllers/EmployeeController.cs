@@ -28,7 +28,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("employee-listing")]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult GetEmployeeListing()
     {
         var result = employees.GetListing();
