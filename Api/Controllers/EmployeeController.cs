@@ -27,7 +27,7 @@ public class EmployeeController : ControllerBase
         return Ok(mapper.Map<List<EmployeeDto>>(result));
     }
 
-    [HttpGet("employee-listing")]
+    [HttpGet("listing")]
     [Authorize(Roles = "Employee")]
     public IActionResult GetEmployeeListing()
     {

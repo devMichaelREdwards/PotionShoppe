@@ -20,14 +20,22 @@ public class EffectController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetEffects()
     {
         var result = effects.Get();
         return Ok(mapper.Map<List<EffectDto>>(result));
     }
 
+    [HttpGet("listing")]
+    public IActionResult GetEffectListing()
+    {
+        var result = effects.GetListing();
+        return Ok(mapper.Map<List<EffectListing>>(result));
+    }
+
     [HttpPost]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PostEffect(EffectDto effect)
     {
         effects.Insert(mapper.Map<Effect>(effect));
@@ -35,7 +43,7 @@ public class EffectController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PutEffect(EffectDto effect)
     {
         if (effect.EffectId == null)
@@ -47,11 +55,22 @@ public class EffectController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult DeleteEffect(EffectDto effect)
     {
         if (effect.EffectId != null)
             effects.Delete((int)effect.EffectId);
+        return Ok();
+    }
+
+    [HttpPost("remove")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult RemoveEffects(int[] ids)
+    {
+        foreach (int id in ids)
+        {
+            effects.Delete(id);
+        }
         return Ok();
     }
 }

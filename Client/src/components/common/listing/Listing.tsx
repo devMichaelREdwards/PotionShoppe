@@ -13,7 +13,7 @@ interface IProps {
     columns: IListingColumn[];
     headerButtons?: IActionButton[];
     rowButtons?: IActionButton[];
-    remove?: () => void;
+    remove?: (selected: number[]) => void;
 }
 
 const Listing = ({ id, route, columns, headerButtons, rowButtons, remove }: IProps) => {
@@ -33,8 +33,9 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, remove }: IPro
         }
     };
 
-    const handleRemoveClick = () => {
-        remove?.();
+    const handleRemoveClick = async () => {
+        await remove?.(selected);
+        setSelected([]);
         setDraw(draw + 1);
     };
 
@@ -49,7 +50,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, remove }: IPro
 
     if (error || !Array.isArray(data)) return <>Error Screen</>;
     return (
-        <List className='panel' hover>
+        <List className='panel'>
             <ListingHeaderRow key={'Header'} columns={columns} headerButtons={headerButtons} remove={remove ? handleRemoveClick : undefined} />
             {data.map((row: IData) => {
                 return (
