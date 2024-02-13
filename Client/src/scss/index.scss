@@ -1,12 +1,13 @@
 // Third Party imports
 @import 'rsuite/dist/rsuite.min.css';
 
-// App
-@import './App.scss';
-
 // Global
+@import './global/variables';
 @import './global/input';
 @import './global/layout';
+
+// App
+@import './App.scss';
 
 // Pages
 @import './pages/employee-login';
