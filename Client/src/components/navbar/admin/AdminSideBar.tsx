@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Sidebar, Sidenav, Nav } from 'rsuite';
 import AdminNavItem from './AdminNavItem';
+import { Link } from 'react-router-dom';
 
 const headerStyles = {
     // Put this into actual CSS when you do styling
@@ -14,14 +15,22 @@ const headerStyles = {
     textAlign: 'center' as const,
 };
 
+const AdminDashboardLink = () => {
+    return (
+        <div style={headerStyles}>
+            <Link to='/admin'>
+                <span>Potion Shoppe</span>
+            </Link>
+        </div>
+    );
+};
+
 const AdminSideBar = () => {
     const [expand, setExpand] = useState(true);
     return (
         <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width={expand ? 260 : 56} collapsible>
             <Sidenav.Header>
-                <div style={headerStyles}>
-                    <span>Potion Shoppe</span>
-                </div>
+                <AdminDashboardLink />
             </Sidenav.Header>
             <Sidenav expanded={expand} appearance='subtle'>
                 <Sidenav.Body>

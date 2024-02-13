@@ -1,7 +1,9 @@
 import { Container, Content, Footer, Header } from 'rsuite';
 import EmployeeListing from './EmployeeListing';
+import useTitle from '../../../../../hooks/useTitle';
 
 const EmployeeListingPage = () => {
+    useTitle('Employees');
     return (
         <div className='admin-page'>
             <Container>

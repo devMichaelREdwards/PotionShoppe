@@ -6,13 +6,14 @@ import useAuth from '../../../../hooks/useAuth';
 import { useEffect } from 'react';
 import { refreshEmployee } from '../../../../helpers/authenticate';
 import { IAdminUser } from '../../../../types/IUser';
-import setTitle from '../../../../helpers/setTitle';
+import useTitle from '../../../../hooks/useTitle';
 
 const AdminLoginPage = () => {
     const { user, setUser } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/admin';
+    useTitle('Employee Login');
     useEffect(() => {
         const checkRefresh = async () => {
             const res = await refreshEmployee();
@@ -33,7 +34,6 @@ const AdminLoginPage = () => {
             }
         };
 
-        setTitle('Employee Login');
         checkRefresh();
     });
 
