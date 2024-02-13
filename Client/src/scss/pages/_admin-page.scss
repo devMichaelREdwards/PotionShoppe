@@ -1,3 +1,39 @@
 .admin-page {
     width: 100%;
 }
+
+.admin-panel {
+    width: 100vw;
+    height: 100vh;
+
+    .rs-container {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+.admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: $AdminSidebarWidth !important;
+    flex: 0 0 $AdminSidebarWidth !important;
+    height: 100%;
+}
+
+.admin-nav-menu {
+    .rs-dropdown-toggle {
+        background: $AdminNavBarMenuColor;
+        margin-bottom: 5px;
+        background: $AdminNavBarMenuColor !important;
+    }
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    font-size: $FontMedium;
+
+    img {
+        margin-right: 15px;
+    }
+}

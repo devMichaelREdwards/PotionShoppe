@@ -73,3 +73,24 @@ input:-webkit-autofill:active {
     -webkit-background-clip: text;
     -webkit-text-fill-color: #000;
 }
+
+.rs-sidenav-default,
+.rs-sidenav-default .rs-dropdown-toggle,
+.rs-sidenav-default .rs-sidenav-item,
+.rs-sidenav-default .rs-dropdown .rs-dropdown-toggle:hover {
+    background: transparent;
+}
+
+.rs-sidenav-nav > .rs-dropdown .rs-dropdown-toggle,
+.rs-sidenav-nav > .rs-sidenav-item,
+.rs-sidenav-nav > .rs-dropdown .rs-dropdown-toggle .rs-dropdown-toggle-caret {
+    font-size: $FontLarge;
+}
+
+.rs-sidenav-default .rs-dropdown-item.rs-dropdown-item-active {
+    color: $AdminNavBarMenuHoverColor;
+}
+
+.rs-sidenav-nav > .rs-dropdown .rs-dropdown-toggle .rs-dropdown-toggle-caret {
+    margin-top: 7px;
+}
