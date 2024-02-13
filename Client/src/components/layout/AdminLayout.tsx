@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import { Container } from 'rsuite';
 import AdminSideBar from '../navbar/admin/AdminSideBar';
-import setTitle from '../../helpers/setTitle';
+import useTitle from '../../hooks/useTitle';
 
 const AdminLayout = () => {
-    setTitle('Potion Shoppe Admin');
+    useTitle('Potion Shoppe Admin');
     return (
         <div className='employee-panel'>
             <Container>
