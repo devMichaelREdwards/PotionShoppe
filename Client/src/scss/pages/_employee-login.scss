@@ -1,0 +1,63 @@
+.login-logo {
+    margin-top: 5vh;
+
+    img {
+        margin-right: -25px;
+        width: 40vw;
+    }
+}
+
+.admin-login-panel {
+    margin-top: 10vh;
+    width: 50vw;
+}
+
+@media only screen and (max-width: 1024px) {
+    .login-logo {
+        width: 70vw;
+    }
+
+    .admin-login-panel {
+        width: 90vw;
+    }
+}
+
+.admin-login-page {
+    height: 100vh;
+    align-items: center;
+}
+
+.admin-login-button {
+    height: 50px;
+    width: 300px;
+    color: $AdminLoginButtonFontColor;
+    border-radius: 0;
+    font-weight: 600 !important;
+
+    img {
+        position: relative;
+        margin-top: -50px;
+        margin-left: -50px;
+        width: 500px;
+    }
+}
+
+.admin-login-button:hover {
+    img {
+        opacity: 0.7;
+    }
+}
+
+.admin-login-button-wrapper {
+    margin-top: 10vh;
+    justify-content: center;
+    button {
+        background: transparent;
+    }
+}
+
+.admin-login-button-wrapper:hover {
+    button {
+        background: transparent;
+    }
+}

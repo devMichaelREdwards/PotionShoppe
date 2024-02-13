@@ -1,0 +1,40 @@
+.button-group {
+    align-self: center;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-control {
+    display: flex;
+}
+
+.form-control-label {
+    margin: auto;
+    position: relative;
+    flex-basis: 20%;
+    text-align: right;
+    padding-right: 45px;
+}
+
+.form-control-input {
+    border-bottom: 1px solid #000000 !important;
+    font-size: 18px;
+}
+
+.image-button {
+    position: relative;
+    text-align: center;
+    color: white;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.image-button-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
