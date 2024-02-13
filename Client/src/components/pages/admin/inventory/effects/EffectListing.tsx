@@ -10,25 +10,25 @@ const EffectListing = () => {
             align: 'left',
             label: 'Name',
             dataKey: 'name',
-            colspan: 5,
+            colspan: 4,
         },
         {
             align: 'left',
             label: 'Value',
             dataKey: 'value',
-            colspan: 3,
+            colspan: 2,
         },
         {
             align: 'left',
             label: 'Duration',
             dataKey: 'duration',
-            colspan: 3,
+            colspan: 2,
         },
         {
             align: 'left',
             label: 'Description',
             dataKey: 'description',
-            colspan: 3,
+            colspan: 13,
         },
     ];
 

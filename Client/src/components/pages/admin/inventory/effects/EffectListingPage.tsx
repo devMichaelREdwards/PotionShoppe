@@ -1,9 +1,9 @@
 import { Container, Content, Footer, Header } from 'rsuite';
 import EffectListing from './EffectListing';
-import setTitle from '../../../../../helpers/setTitle';
+import useTitle from '../../../../../hooks/useTitle';
 
 const EffectListingPage = () => {
-    setTitle('Effects');
+    useTitle('Effects');
     return (
         <div className='admin-page'>
             <Container>
