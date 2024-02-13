@@ -1,7 +1,7 @@
-import setTitle from '../../../../../helpers/setTitle';
+import useTitle from '../../../../../hooks/useTitle';
 
 const PotionListingPage = () => {
-    setTitle('Potions');
+    useTitle('Potions');
     return <div>Potion Listing</div>;
 };
 

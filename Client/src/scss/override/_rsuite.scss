@@ -1,0 +1,75 @@
+.rs-list {
+    box-shadow: none;
+}
+
+body,
+.rs-list-item {
+    background-color: transparent;
+}
+
+.rs-form-control-input,
+.rs-input {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+.rs-ripple-pond {
+    display: none !important;
+}
+
+.rs-btn {
+    border-radius: 0;
+}
+
+.rs-input {
+    border-radius: 0;
+    border: 0;
+    outline: none !important;
+    -webkit-outline: none !important;
+    color: black;
+    :focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 0;
+    }
+}
+
+.rs-input-group {
+    margin: auto 0;
+
+    &:not(.rs-input-group-disabled):hover {
+        border-color: #000;
+    }
+
+    :focus-within,
+    &:not(.rs-input-group-disabled).rs-input-group-focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border-color: #000;
+    }
+}
+
+hr {
+    padding: 0;
+    margin: 0;
+    height: 1px;
+    background-color: #000;
+    border: none;
+}
+
+.rs-panel {
+    border-radius: 0;
+}
+
+input:-webkit-auto {
+    background: none !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #000;
+}

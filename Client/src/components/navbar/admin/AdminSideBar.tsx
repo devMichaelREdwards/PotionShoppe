@@ -8,7 +8,6 @@ const headerStyles = {
     padding: 18,
     fontSize: 16,
     height: 56,
-    background: '#FFF',
     color: ' #000',
     whiteSpace: 'nowrap',
     overflow: 'hidden',

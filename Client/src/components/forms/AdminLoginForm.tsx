@@ -5,6 +5,7 @@ import { IAdminUser } from '../../types/IUser';
 import { Button, ButtonToolbar, Form } from 'rsuite';
 import useAuth from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { TextControl, PasswordControl } from '../common/input/FormControl';
 
 const AdminLoginForm = () => {
     const { setUser } = useAuth();
@@ -41,9 +42,9 @@ const AdminLoginForm = () => {
     return (
         <Form fluid>
             <Form.Group>
-                <Form.Control
+                <TextControl
                     value={userName}
-                    placeholder='UserName'
+                    label='Username'
                     name='userName'
                     onChange={(e: string) => {
                         setUserName(e);
@@ -51,24 +52,38 @@ const AdminLoginForm = () => {
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Control
+                <PasswordControl
                     value={password}
-                    placeholder='Password'
+                    label='Password'
                     name='password'
-                    type='password'
                     onChange={(e: string) => {
                         setPassword(e);
                     }}
                 />
             </Form.Group>
             <Form.Group>
-                <ButtonToolbar>
-                    <Button appearance='primary' onClick={handleLogin}>
-                        Sign in
-                    </Button>
+                <ButtonToolbar className='admin-login-button-wrapper'>
+                    <ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} />
                 </ButtonToolbar>
             </Form.Group>
         </Form>
+    );
+};
+
+interface IImageButton {
+    src: string;
+    className?: string;
+    onClick: () => void;
+}
+
+const ImageButton = ({ src, className, onClick }: IImageButton) => {
+    return (
+        <Button appearance='primary' onClick={onClick}>
+            <div className={`image-button ${className}`}>
+                <img src={src} />
+                <div className='image-button-text'>Sign In</div>
+            </div>
+        </Button>
     );
 };
 
