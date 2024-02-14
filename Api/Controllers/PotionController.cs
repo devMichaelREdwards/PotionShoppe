@@ -20,10 +20,18 @@ public class PotionController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetPotions()
     {
         var result = potions.Get();
         return Ok(mapper.Map<List<PotionDto>>(result));
+    }
+
+    [HttpGet("listing")]
+    public IActionResult GetPotionListing()
+    {
+        var result = potions.GetListing();
+        return Ok(mapper.Map<List<PotionListing>>(result));
     }
 
     [HttpPost]
