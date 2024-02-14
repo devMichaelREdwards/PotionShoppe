@@ -6,7 +6,7 @@ import useTitle from '../../hooks/useTitle';
 const AdminLayout = () => {
     useTitle('Potion Shoppe Admin');
     return (
-        <div className='employee-panel'>
+        <div className='admin-panel'>
             <Container>
                 <AdminSideBar />
                 <Outlet />

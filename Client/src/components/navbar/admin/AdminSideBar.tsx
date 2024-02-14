@@ -1,7 +1,8 @@
-import { useState } from 'react';
 import { Sidebar, Sidenav, Nav } from 'rsuite';
 import AdminNavItem from './AdminNavItem';
 import { Link } from 'react-router-dom';
+import { CustomerIcon, EffectIcon, EmployeeIcon, IngredientIcon, OrderIcon, ReceiptIcon, PotionIcon } from '../../common/image/Icon';
+import { useState } from 'react';
 
 const headerStyles = {
     // Put this into actual CSS when you do styling
@@ -25,31 +26,72 @@ const AdminDashboardLink = () => {
 };
 
 const AdminSideBar = () => {
-    const [expand, setExpand] = useState(true);
+    const [active, setActive] = useState('');
     return (
-        <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width={expand ? 260 : 56} collapsible>
+        <Sidebar className='admin-sidebar'>
             <Sidenav.Header>
                 <AdminDashboardLink />
             </Sidenav.Header>
-            <Sidenav expanded={expand} appearance='subtle'>
+            <Sidenav>
                 <Sidenav.Body>
                     <Nav>
-                        <Nav.Menu eventKey='1' title='Users'>
-                            <AdminNavItem title='Customers' route='customers' eventKey='1-1' />
-                            <AdminNavItem title='Employees' route='employees' eventKey='1-2' />
+                        <Nav.Menu className='admin-nav-menu' eventKey='1' title='Users'>
+                            <AdminNavItem
+                                title='Customers'
+                                route='customers'
+                                eventKey='1-1'
+                                icon={<CustomerIcon active={active === '1-1'} />}
+                                setActive={setActive}
+                            />
+                            <AdminNavItem
+                                title='Employees'
+                                route='employees'
+                                eventKey='1-2'
+                                icon={<EmployeeIcon active={active === '1-2'} />}
+                                setActive={setActive}
+                            />
                         </Nav.Menu>
-                        <Nav.Menu eventKey='2' title='Inventory'>
-                            <AdminNavItem title='Potions' route='potions' eventKey='2-1' />
-                            <AdminNavItem title='Ingredients' route='ingredients' eventKey='2-2' />
-                            <AdminNavItem title='Effects' route='effects' eventKey='2-3' />
+                        <Nav.Menu className='admin-nav-menu' eventKey='2' title='Inventory'>
+                            <AdminNavItem
+                                title='Potions'
+                                route='potions'
+                                eventKey='2-1'
+                                icon={<PotionIcon active={active === '2-1'} />}
+                                setActive={setActive}
+                            />
+                            <AdminNavItem
+                                title='Ingredients'
+                                route='ingredients'
+                                eventKey='2-2'
+                                icon={<IngredientIcon active={active === '2-2'} />}
+                                setActive={setActive}
+                            />
+                            <AdminNavItem
+                                title='Effects'
+                                route='effects'
+                                eventKey='2-3'
+                                icon={<EffectIcon active={active === '2-3'} />}
+                                setActive={setActive}
+                            />
                         </Nav.Menu>
-                        <Nav.Menu eventKey='3' title='Orders'>
-                            <AdminNavItem title='Orders' route='orders' eventKey='3-1' />
-                            <AdminNavItem title='Receipts' route='receipts' eventKey='3-2' />
+                        <Nav.Menu className='admin-nav-menu' eventKey='3' title='Orders'>
+                            <AdminNavItem
+                                title='Orders'
+                                route='orders'
+                                eventKey='3-1'
+                                icon={<OrderIcon active={active === '3-1'} />}
+                                setActive={setActive}
+                            />
+                            <AdminNavItem
+                                title='Receipts'
+                                route='receipts'
+                                eventKey='3-2'
+                                icon={<ReceiptIcon active={active === '3-2'} />}
+                                setActive={setActive}
+                            />
                         </Nav.Menu>
                     </Nav>
                 </Sidenav.Body>
-                <Sidenav.Toggle onToggle={(expanded) => setExpand(expanded)} />
             </Sidenav>
         </Sidebar>
     );

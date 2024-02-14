@@ -7,6 +7,16 @@ html {
 }
 
 * {
-    font-size: 24px;
+    font-size: $FontSmall;
     font-family: 'Livvic';
+}
+
+.icon {
+    img {
+        height: 35px;
+    }
+}
+
+.hidden {
+    display: none;
 }
