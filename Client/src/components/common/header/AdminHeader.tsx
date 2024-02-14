@@ -7,7 +7,7 @@ interface IProps {
 
 const AdminHeader = ({ title }: IProps) => {
     return (
-        <Header>
+        <Header className='admin-header'>
             <h2>{title}</h2>
             <Breadcrumbs separator={'>'} />
         </Header>

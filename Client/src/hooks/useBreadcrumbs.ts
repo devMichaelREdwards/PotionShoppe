@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 export interface IBreadcrumb {
     src: string;
     name: string;
+    active?: boolean;
 }
 
 const useBreadcrumbs = () => {

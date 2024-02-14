@@ -54,3 +54,21 @@
         }
     }
 }
+
+.admin-header {
+    display: flex;
+    align-items: center;
+
+    .breadcrumbs {
+        margin: 5px 0 0 20px;
+
+        .crumb {
+            margin: 0 5px;
+        }
+
+        .active-crumb,
+        .separator {
+            color: $AdminNavBarMenuHoverColor;
+        }
+    }
+}
