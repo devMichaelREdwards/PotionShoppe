@@ -7,7 +7,6 @@
     height: 100vh;
 
     .rs-container {
-        width: 100vw;
         height: 100vh;
     }
 }
@@ -18,6 +17,9 @@
     width: $AdminSidebarWidth !important;
     flex: 0 0 $AdminSidebarWidth !important;
     height: 100%;
+    border-right: 1px solid $SeparatorColor;
+    border-radius: 0 10px 10px 0;
+    background-color: $AdminSidebarBackgroundColor;
 }
 
 .admin-nav-menu {
@@ -39,6 +41,8 @@
 }
 
 .admin-nav-item:hover {
+    color: $AdminNavBarMenuHoverColor;
+
     .color-icon {
         .greyscale-image {
             display: none;
