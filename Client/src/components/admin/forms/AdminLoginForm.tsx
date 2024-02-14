@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
 import { HttpStatusCode } from 'axios';
-import { IAdminUser } from '../../types/IUser';
+import { IAdminUser } from '../../../types/IUser';
 import { Button, ButtonToolbar, Form } from 'rsuite';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TextControl, PasswordControl } from '../common/input/FormControl';
+import { TextControl, PasswordControl } from '../../common/input/FormControl';
 
 const AdminLoginForm = () => {
     const { setUser } = useAuth();

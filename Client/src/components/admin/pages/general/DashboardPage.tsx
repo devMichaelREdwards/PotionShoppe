@@ -1,13 +1,12 @@
-import { Container, Content, Header } from 'rsuite';
+import { Container, Content } from 'rsuite';
 import useTitle from '../../../../hooks/useTitle';
+import AdminHeader from '../../../common/header/AdminHeader';
 
 const AdminDashboardPage = () => {
     useTitle('Potion Shoppe Admin');
     return (
         <Container>
-            <Header>
-                <h2>Page Title</h2>
-            </Header>
+            <AdminHeader title='Dashboard' />
             <Content>Content</Content>
         </Container>
     );

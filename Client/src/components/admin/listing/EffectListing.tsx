@@ -1,8 +1,8 @@
-import axios from '../../../../../api/axios';
-import useAuth from '../../../../../hooks/useAuth';
-import { IActionButton, IListingColumn } from '../../../../../types/IListing';
-import { PotionIcon } from '../../../../common/image/Icon';
-import Listing from '../../../../common/listing/Listing';
+import axios from '../../../api/axios';
+import useAuth from '../../../hooks/useAuth';
+import { IActionButton, IListingColumn } from '../../../types/IListing';
+import { PotionIcon } from '../../common/image/Icon';
+import Listing from '../../common/listing/Listing';
 
 const EffectListing = () => {
     const { user } = useAuth();
@@ -51,11 +51,7 @@ const EffectListing = () => {
         await axios.post('effect/remove', selected, user?.authConfig);
     };
 
-    return (
-        <div className='listing'>
-            <Listing id='effectId' columns={columns} route={'effect/listing'} remove={remove} rowButtons={rowButtons} />
-        </div>
-    );
+    return <Listing id='effectId' columns={columns} route={'effect/listing'} remove={remove} rowButtons={rowButtons} />;
 };
 
 export default EffectListing;

@@ -1,5 +1,5 @@
 import { Container, Content, Header, Panel } from 'rsuite';
-import AdminLoginForm from '../../../forms/AdminLoginForm';
+import AdminLoginForm from '../../forms/AdminLoginForm';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
 import { useEffect } from 'react';
