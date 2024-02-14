@@ -37,3 +37,16 @@
         margin-right: 15px;
     }
 }
+
+.admin-nav-item:hover {
+    .color-icon {
+        .greyscale-image {
+            display: none;
+        }
+
+        .color-image:not(.active) {
+            display: block;
+            opacity: 50%;
+        }
+    }
+}

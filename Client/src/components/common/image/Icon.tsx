@@ -18,64 +18,64 @@ interface IIcon {
 }
 
 export const CustomerIcon = ({ active }: IIcon) => {
-    const src = active ? CustomerIconColor : CustomerIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={CustomerIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={CustomerIconColor} />
         </div>
     );
 };
 
 export const EmployeeIcon = ({ active }: IIcon) => {
-    const src = active ? EmployeeIconColor : EmployeeIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={EmployeeIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={EmployeeIconColor} />
         </div>
     );
 };
 
 export const PotionIcon = ({ active }: IIcon) => {
-    const src = active ? PotionIconColor : PotionIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={PotionIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={PotionIconColor} />
         </div>
     );
 };
 
 export const EffectIcon = ({ active }: IIcon) => {
-    const src = active ? EffectIconColor : EffectIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={EffectIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={EffectIconColor} />
         </div>
     );
 };
 
 export const IngredientIcon = ({ active }: IIcon) => {
-    const src = active ? IngredientIconColor : IngredientIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={IngredientIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={IngredientIconColor} />
         </div>
     );
 };
 
 export const OrderIcon = ({ active }: IIcon) => {
-    const src = active ? OrderIconColor : OrderIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={OrderIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={OrderIconColor} />
         </div>
     );
 };
 
 export const ReceiptIcon = ({ active }: IIcon) => {
-    const src = active ? ReceiptIconColor : ReceiptIconGrey;
     return (
-        <div className='icon'>
-            <img src={src} />
+        <div className='icon color-icon'>
+            <img className={`greyscale-image ${active && 'hidden'}`} src={ReceiptIconGrey} />
+            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={ReceiptIconColor} />
         </div>
     );
 };
