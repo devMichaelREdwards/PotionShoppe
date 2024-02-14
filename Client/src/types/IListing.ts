@@ -11,7 +11,7 @@ export interface IActionButton {
     appearance: TypeAttributes.Appearance;
     label?: string;
     color?: TypeAttributes.Color;
-    icon?: string;
+    icon?: JSX.Element;
     argKey?: string;
     [arg: string]: unknown;
     action: (arg: unknown) => void;
