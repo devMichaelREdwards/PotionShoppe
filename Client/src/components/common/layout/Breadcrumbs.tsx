@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import useBreadcrumbs from '../../../hooks/useBreadcrumbs';
 import Crumb from './Crumb';
 
@@ -13,10 +14,10 @@ const Breadcrumbs = ({ separator }: IProps) => {
             {breadcrumbs.map((crumb, i) => {
                 const active = i == breadcrumbs.length - 1;
                 return (
-                    <>
+                    <span key={nanoid()}>
                         <Crumb {...crumb} active={active} />
                         {!active && <span className='separator'>{separator}</span>}
-                    </>
+                    </span>
                 );
             })}
         </div>

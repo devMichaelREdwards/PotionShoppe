@@ -49,6 +49,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, remove }: IPro
     if (loading) return <>Loading Screen</>;
 
     if (error || !Array.isArray(data)) return <>Error Screen</>;
+    console.log(data);
     return (
         <List className='panel'>
             <ListingHeaderRow key={'Header'} columns={columns} headerButtons={headerButtons} remove={remove ? handleRemoveClick : undefined} />

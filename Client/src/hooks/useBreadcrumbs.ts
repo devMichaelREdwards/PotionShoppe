@@ -8,7 +8,6 @@ export interface IBreadcrumb {
 
 const useBreadcrumbs = () => {
     const location = useLocation();
-    console.log(location.pathname);
     const route = location.pathname.substring(1).split('/');
 
     const breadcrumbs: IBreadcrumb[] = [];
