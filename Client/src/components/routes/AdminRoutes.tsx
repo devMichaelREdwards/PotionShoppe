@@ -1,22 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
-import EmployeeLoginPage from '../pages/admin/users/AdminLoginPage';
-import AdminDashboardPage from '../pages/admin/general/DashboardPage';
-import AdminRedirect from '../redirect/AdminRedirect';
+import EmployeeLoginPage from '../admin/pages/users/AdminLoginPage';
+import AdminDashboardPage from '../admin/pages/general/DashboardPage';
+import AdminRedirect from '../admin/redirect/AdminRedirect';
 import { AuthProvider } from '../../context/AuthContext';
-import CustomerListingPage from '../pages/admin/users/customers/CustomerListingPage';
-import EmployeeListingPage from '../pages/admin/users/employees/EmployeeListingPage';
-import IngredientListingPage from '../pages/admin/inventory/ingredients/IngredientListingPage';
-import PotionListingPage from '../pages/admin/inventory/potions/PotionListingPage';
-import IngredientFormPage from '../pages/admin/inventory/ingredients/IngredientFormPage';
-import PotionFormPage from '../pages/admin/inventory/potions/PotionFormPage';
-import OrderFormPage from '../pages/admin/orders/OrderFormPage';
-import ReceiptFormPage from '../pages/admin/orders/ReceiptFormPage';
-import EffectListingPage from '../pages/admin/inventory/effects/EffectListingPage';
-import EffectFormPage from '../pages/admin/inventory/effects/EffectFormPage';
-import CustomerFormPage from '../pages/admin/users/customers/CustomerFormPage';
-import ReceiptListingPage from '../pages/admin/orders/ReceiptListingPage';
-import OrderListingPage from '../pages/admin/orders/OrderListingPage';
-import EmployeeFormPage from '../pages/admin/users/employees/EmployeeForm';
+import CustomerListingPage from '../admin/pages/users/customers/CustomerListingPage';
+import EmployeeListingPage from '../admin/pages/users/employees/EmployeeListingPage';
+import IngredientListingPage from '../admin/pages/inventory/ingredients/IngredientListingPage';
+import PotionListingPage from '../admin/pages/inventory/potions/PotionListingPage';
+import IngredientFormPage from '../admin/pages/inventory/ingredients/IngredientFormPage';
+import PotionFormPage from '../admin/pages/inventory/potions/PotionFormPage';
+import OrderFormPage from '../admin/pages/orders/OrderFormPage';
+import ReceiptFormPage from '../admin/pages/orders/ReceiptFormPage';
+import EffectListingPage from '../admin/pages/inventory/effects/EffectListingPage';
+import EffectFormPage from '../admin/pages/inventory/effects/EffectFormPage';
+import CustomerFormPage from '../admin/pages/users/customers/CustomerFormPage';
+import ReceiptListingPage from '../admin/pages/orders/ReceiptListingPage';
+import OrderListingPage from '../admin/pages/orders/OrderListingPage';
+import EmployeeFormPage from '../admin/pages/users/employees/EmployeeForm';
 
 const AdminRoutes = () => {
     return (

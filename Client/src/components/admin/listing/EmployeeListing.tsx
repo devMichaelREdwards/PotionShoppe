@@ -1,6 +1,6 @@
-import useAuth from '../../../../../hooks/useAuth';
-import { IActionButton, IListingColumn } from '../../../../../types/IListing';
-import Listing from '../../../../common/listing/Listing';
+import useAuth from '../../../hooks/useAuth';
+import { IActionButton, IListingColumn } from '../../../types/IListing';
+import Listing from '../../common/listing/Listing';
 
 const EmployeeListing = () => {
     const { user } = useAuth();
@@ -43,11 +43,7 @@ const EmployeeListing = () => {
         rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'employeeId' });
     }
 
-    return (
-        <div className='listing'>
-            <Listing id='employeeId' columns={columns} route={'employee/listing'} rowButtons={rowButtons} />
-        </div>
-    );
+    return <Listing id='employeeId' columns={columns} route={'employee/listing'} rowButtons={rowButtons} />;
 };
 
 export default EmployeeListing;

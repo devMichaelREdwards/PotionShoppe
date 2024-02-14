@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { authenticateEmployee, refreshEmployee } from '../../helpers/authenticate';
+import { authenticateEmployee, refreshEmployee } from '../../../helpers/authenticate';
 import AdminLayout from '../layout/AdminLayout';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 interface IRedirectProps {
     allowedRoles?: string[];

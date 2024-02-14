@@ -27,7 +27,7 @@ const ActionButtonCollection = ({ colspan, buttons, data, remove }: IProps) => {
                     />
                 );
             })}
-            {remove && <ActionButton key={nanoid()} color={'red'} appearance={'ghost'} label={'Delete'} icon={'trash icon'} action={remove} />}
+            {remove && <ActionButton key={nanoid()} color={'red'} appearance={'ghost'} label={'Delete'} action={remove} />}
         </FlexboxGrid.Item>
     );
 };

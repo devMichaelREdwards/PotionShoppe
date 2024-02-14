@@ -1,5 +1,5 @@
 import { Container, Content, Footer, Header } from 'rsuite';
-import EmployeeListing from './EmployeeListing';
+import EmployeeListing from '../../../listing/EmployeeListing';
 import useTitle from '../../../../../hooks/useTitle';
 
 const EmployeeListingPage = () => {
