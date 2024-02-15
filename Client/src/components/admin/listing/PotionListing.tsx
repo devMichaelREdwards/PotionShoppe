@@ -27,7 +27,7 @@ const PotionListing = () => {
         {
             align: 'center',
             label: 'Description',
-            dataKey: 'duration',
+            dataKey: 'description',
             colspan: 4,
         },
         {

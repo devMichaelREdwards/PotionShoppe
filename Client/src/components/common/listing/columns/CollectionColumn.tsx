@@ -10,7 +10,6 @@ const CollectionColumn = ({ collection }: IProps) => {
     return (
         <div className='collection-column'>
             {collection.map((data: ICollectionObject) => {
-                console.log(data);
                 return <CollectionObject key={nanoid()} {...data} />;
             })}
         </div>
