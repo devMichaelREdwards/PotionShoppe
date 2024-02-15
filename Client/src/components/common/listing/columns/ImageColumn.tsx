@@ -2,7 +2,11 @@ interface IProps {
     src: string;
 }
 const ImageColumn = ({ src }: IProps) => {
-    return <img className='img-column' src={src} />;
+    return (
+        <div className='img-column'>
+            <img src={src} />
+        </div>
+    );
 };
 
 export default ImageColumn;

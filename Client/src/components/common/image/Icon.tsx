@@ -20,8 +20,8 @@ interface IIcon {
 export const CustomerIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={CustomerIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={CustomerIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={CustomerIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={CustomerIconColor} />
         </div>
     );
 };
@@ -29,8 +29,8 @@ export const CustomerIcon = ({ active }: IIcon) => {
 export const EmployeeIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={EmployeeIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={EmployeeIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={EmployeeIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={EmployeeIconColor} />
         </div>
     );
 };
@@ -38,8 +38,8 @@ export const EmployeeIcon = ({ active }: IIcon) => {
 export const PotionIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={PotionIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={PotionIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={PotionIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={PotionIconColor} />
         </div>
     );
 };
@@ -47,8 +47,8 @@ export const PotionIcon = ({ active }: IIcon) => {
 export const EffectIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={EffectIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={EffectIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={EffectIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={EffectIconColor} />
         </div>
     );
 };
@@ -56,8 +56,8 @@ export const EffectIcon = ({ active }: IIcon) => {
 export const IngredientIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={IngredientIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={IngredientIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={IngredientIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={IngredientIconColor} />
         </div>
     );
 };
@@ -65,8 +65,8 @@ export const IngredientIcon = ({ active }: IIcon) => {
 export const OrderIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={OrderIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={OrderIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={OrderIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={OrderIconColor} />
         </div>
     );
 };
@@ -74,8 +74,8 @@ export const OrderIcon = ({ active }: IIcon) => {
 export const ReceiptIcon = ({ active }: IIcon) => {
     return (
         <div className='icon color-icon'>
-            <img className={`greyscale-image ${active && 'hidden'}`} src={ReceiptIconGrey} />
-            <img className={`color-image ${!active && 'hidden'} ${active && 'active'}`} src={ReceiptIconColor} />
+            <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={ReceiptIconGrey} />
+            <img className={`color-image ${active ? 'active' : 'hidden'}`} src={ReceiptIconColor} />
         </div>
     );
 };

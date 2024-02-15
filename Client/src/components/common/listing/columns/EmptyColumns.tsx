@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const EmptyColumns = ({ columns }: IProps) => {
-    return <FlexboxGrid.Item colspan={columns}></FlexboxGrid.Item>;
+    return <FlexboxGrid.Item className='listing-item' colspan={columns}></FlexboxGrid.Item>;
 };
 
 export default EmptyColumns;
