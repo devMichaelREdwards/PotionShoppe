@@ -146,12 +146,12 @@ VALUES ('Potion Of Health', '', 0, 0, 5, '', 1),
     ('Anti-Acid Coating', '', 0, 0, 5, '', 1),
     ('Potion Of The Golem', '', 0, 0, 5, '', 1),
     (
-        'Elixir of Vitality',
+        'Elixir Of Vitality',
         'A potion that restores health and enhances strength.',
         30,
         15,
         20,
-        'https://localhost:7211/api/Image/Elixir_of_Vitality.png',
+        'https://localhost:7211/api/Image/Elixir_Of_Vitality.png',
         1
     ),
     (
