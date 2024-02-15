@@ -23,7 +23,7 @@ public partial class PotionListing
         foreach(PotionEffect effect in potion.PotionEffects) {
             effects.Add(new PotionEffectListing() {
                 Title = effect?.Effect?.Name!,
-                Color = "black" // Color needed in database
+                Color = effect?.Effect?.Color!
             });
         }
 
