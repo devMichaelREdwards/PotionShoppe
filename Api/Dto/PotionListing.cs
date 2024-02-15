@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Api.Models;
 
 public partial class PotionListing
@@ -19,12 +16,15 @@ public partial class PotionListing
 
     public string? Image { get; set; }
 
-    public List<string>? PotionEffects { get; set; } = [];
+    public List<PotionEffectListing>? PotionEffects { get; set; } = [];
 
-    public static List<string> BuildEffectsList(Potion potion) {
-        List<string> effects = [];
+    public static List<PotionEffectListing> BuildEffectsList(Potion potion) {
+        List<PotionEffectListing> effects = [];
         foreach(PotionEffect effect in potion.PotionEffects) {
-            effects.Add(effect?.Effect?.Name!);
+            effects.Add(new PotionEffectListing() {
+                Title = effect?.Effect?.Name!,
+                Color = "black" // Color needed in database
+            });
         }
 
         return effects;

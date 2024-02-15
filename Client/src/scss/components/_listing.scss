@@ -9,3 +9,24 @@
     color: var(--rs-text-heading);
     box-shadow: none;
 }
+
+.collection-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pill {
+    border-radius: 16px;
+    text-align: center;
+    width: 80%;
+    font-size: $FontTiny;
+}
+
+.pill.light {
+    color: black;
+}
+
+.pill.dark {
+    color: white;
+}

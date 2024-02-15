@@ -1,8 +1,10 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
-import { IActionButton, IListingColumn } from '../../../types/IListing';
+import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
 import { PotionIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
+import CollectionColumn from '../../common/listing/columns/CollectionColumn';
+import ImageColumn from '../../common/listing/columns/ImageColumn';
 
 const PotionListing = () => {
     const { user } = useAuth();
@@ -14,6 +16,7 @@ const PotionListing = () => {
             label: 'Image',
             dataKey: 'image',
             colspan: 2,
+            component: (src: unknown) => <ImageColumn src={src as string} />,
         },
         {
             align: 'center',
@@ -32,6 +35,7 @@ const PotionListing = () => {
             label: 'Effects',
             dataKey: 'potionEffects',
             colspan: 4,
+            component: (collection: unknown) => <CollectionColumn collection={collection as ICollectionObject[]} />,
         },
         {
             align: 'center',

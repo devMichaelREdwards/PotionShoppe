@@ -25,6 +25,13 @@ const ListingRow = ({ id, data, checked, columns, rowButtons, handleCheckboxClic
                 </FlexboxGrid.Item>
                 {columns.map((col) => {
                     colsLeft -= col.colspan;
+                    if (col.component) {
+                        return (
+                            <FlexboxGrid.Item className='vertical-center-text' key={col.dataKey} colspan={col.colspan}>
+                                {col.component(data[col.dataKey])}
+                            </FlexboxGrid.Item>
+                        );
+                    }
                     return (
                         <FlexboxGrid.Item className='vertical-center-text' key={col.dataKey} colspan={col.colspan}>
                             <div>
