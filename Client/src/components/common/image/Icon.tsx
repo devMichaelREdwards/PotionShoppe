@@ -1,17 +1,17 @@
-import CustomerIconColor from '../../../../public/assets/icon/color/Customer_Icon.svg';
-import CustomerIconGrey from '../../../../public/assets/icon/greyscale/Customer_Icon.svg';
-import EmployeeIconColor from '../../../../public/assets/icon/color/Employee_Icon.svg';
-import EmployeeIconGrey from '../../../../public/assets/icon/greyscale/Employee_Icon.svg';
-import PotionIconColor from '../../../../public/assets/icon/color/Potion_Icon.svg';
-import PotionIconGrey from '../../../../public/assets/icon/greyscale/Potion_Icon.svg';
-import EffectIconColor from '../../../../public/assets/icon/color/Effect_Icon.svg';
-import EffectIconGrey from '../../../../public/assets/icon/greyscale/Effect_Icon.svg';
-import IngredientIconColor from '../../../../public/assets/icon/color/Ingredient_Icon.svg';
-import IngredientIconGrey from '../../../../public/assets/icon/greyscale/Ingredient_Icon.svg';
-import OrderIconColor from '../../../../public/assets/icon/color/Order_Icon.svg';
-import OrderIconGrey from '../../../../public/assets/icon/greyscale/Order_Icon.svg';
-import ReceiptIconColor from '../../../../public/assets/icon/color/Receipt_Icon.svg';
-import ReceiptIconGrey from '../../../../public/assets/icon/greyscale/Receipt_Icon.svg';
+import CustomerIconColor from '/assets/icon/color/Customer_Icon.svg';
+import CustomerIconGrey from '/assets/icon/greyscale/Customer_Icon.svg';
+import EmployeeIconColor from '/assets/icon/color/Employee_Icon.svg';
+import EmployeeIconGrey from '/assets/icon/greyscale/Employee_Icon.svg';
+import PotionIconColor from '/assets/icon/color/Potion_Icon.svg';
+import PotionIconGrey from '/assets/icon/greyscale/Potion_Icon.svg';
+import EffectIconColor from '/assets/icon/color/Effect_Icon.svg';
+import EffectIconGrey from '/assets/icon/greyscale/Effect_Icon.svg';
+import IngredientIconColor from '/assets/icon/color/Ingredient_Icon.svg';
+import IngredientIconGrey from '/assets/icon/greyscale/Ingredient_Icon.svg';
+import OrderIconColor from '/assets/icon/color/Order_Icon.svg';
+import OrderIconGrey from '/assets/icon/greyscale/Order_Icon.svg';
+import ReceiptIconColor from '/assets/icon/color/Receipt_Icon.svg';
+import ReceiptIconGrey from '/assets/icon/greyscale/Receipt_Icon.svg';
 
 interface IIcon {
     active?: boolean;

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { List, FlexboxGrid } from 'rsuite';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
-import EmptyColumns from './EmptyColumns';
+import EmptyColumns from './columns/EmptyColumns';
 import ActionButtonCollection from '../input/ActionButtonCollection';
 
 interface IListingHeaderRowProps {
