@@ -15,6 +15,8 @@ public partial class Effect
 
     public string? Description { get; set; }
 
+    public string? Color { get; set; }
+
     public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
     public virtual ICollection<PotionEffect> PotionEffects { get; set; } = new List<PotionEffect>();

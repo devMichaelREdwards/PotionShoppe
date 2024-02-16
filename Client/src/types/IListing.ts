@@ -5,6 +5,7 @@ export interface IListingColumn {
     label: string;
     dataKey: string;
     colspan: number;
+    component?: (data: unknown) => JSX.Element;
 }
 
 export interface IActionButton {
@@ -15,4 +16,9 @@ export interface IActionButton {
     argKey?: string;
     [arg: string]: unknown;
     action: (arg: unknown) => void;
+}
+
+export interface ICollectionObject {
+    title: string;
+    color?: string;
 }

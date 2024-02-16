@@ -1,14 +1,15 @@
-.admin-page {
-    width: 100%;
-}
-
 .admin-panel {
     width: 100vw;
     height: 100vh;
-
+    overflow: hidden;
     .rs-container {
         height: 100vh;
     }
+}
+
+.admin-page {
+    overflow-y: scroll;
+    max-height: 100vh;
 }
 
 .admin-sidebar {

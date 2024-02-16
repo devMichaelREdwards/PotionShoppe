@@ -1,3 +1,6 @@
+// Third Party imports
+@import 'rsuite/dist/rsuite.min.css';
+
 // Global
 @import './global/variables';
 @import './global/input';
@@ -5,9 +8,6 @@
 
 // App
 @import './App.scss';
-
-// Third Party imports
-@import 'rsuite/dist/rsuite.min.css';
 
 // Overrides
 @import './override/rsuite';

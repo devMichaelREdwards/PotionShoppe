@@ -32,7 +32,8 @@ CREATE TABLE [Effect] (
     [Name] VARCHAR(1024),
     [Value] INT,
     [Duration] INT,
-    [Description] VARCHAR(1024)
+    [Description] VARCHAR(1024),
+    [Color] VARCHAR(32)
 );
 CREATE TABLE [IngredientCategory] (
     [IngredientCategoryId] INT IDENTITY(1, 1) PRIMARY KEY,

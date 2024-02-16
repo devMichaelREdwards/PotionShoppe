@@ -1,5 +1,14 @@
-.rs-list {
+.rs-list,
+.rs-list-item {
     box-shadow: none;
+}
+
+.rs-list {
+    overflow: hidden;
+}
+
+.rs-list-item-md {
+    padding: 0;
 }
 
 body,
@@ -15,7 +24,7 @@ body,
 }
 
 .rs-ripple-pond {
-    display: none !important;
+    //display: none !important;
 }
 
 .rs-btn {

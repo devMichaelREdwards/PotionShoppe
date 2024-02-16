@@ -13,7 +13,7 @@ interface IProps {
 
 const ActionButtonCollection = ({ colspan, buttons, data, remove }: IProps) => {
     return (
-        <FlexboxGrid.Item key='buttons' className='button-group' colspan={colspan}>
+        <FlexboxGrid.Item className='listing-item button-group' key='buttons' colspan={colspan}>
             {buttons?.map((b) => {
                 return (
                     <ActionButton

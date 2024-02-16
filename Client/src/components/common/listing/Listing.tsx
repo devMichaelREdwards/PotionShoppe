@@ -50,7 +50,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, remove }: IPro
 
     if (error || !Array.isArray(data)) return <>Error Screen</>;
     return (
-        <List className='panel'>
+        <List className='panel listing'>
             <ListingHeaderRow key={'Header'} columns={columns} headerButtons={headerButtons} remove={remove ? handleRemoveClick : undefined} />
             {data.map((row: IData) => {
                 return (
