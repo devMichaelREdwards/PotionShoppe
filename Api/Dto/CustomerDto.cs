@@ -6,8 +6,6 @@ public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
 
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-
-    public string? Name { get; set; }
     public int? CustomerStatusId { get; set; }
     public CustomerStatusDto? CustomerStatus { get; set; }
 

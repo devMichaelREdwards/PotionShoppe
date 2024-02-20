@@ -27,6 +27,14 @@ public class CustomerController : ControllerBase
         return Ok(mapper.Map<List<CustomerDto>>(result));
     }
 
+    [HttpGet("listing")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult GetCustomerListing()
+    {
+        var result = customers.GetListing();
+        return Ok(mapper.Map<List<CustomerListing>>(result));
+    }
+
     [HttpPost]
     public IActionResult PostCustomer(CustomerDto customer)
     {
@@ -37,7 +45,8 @@ public class CustomerController : ControllerBase
     [HttpPut]
     public IActionResult PutCustomer(CustomerDto customer)
     {
-        if (customer.CustomerId == null) return Ok();
+        if (customer.CustomerId == null)
+            return Ok();
 
         Customer existing = customers.GetById((int)customer.CustomerId);
         customer.Update(existing);
