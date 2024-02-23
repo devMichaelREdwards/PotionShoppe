@@ -83,7 +83,8 @@ public class MappingProfile : Profile
                         Name = e.Name,
                         Value = e.Value,
                         Duration = e.Duration,
-                        Description = EffectDto.BuildDescription(e)
+                        Description = EffectDto.BuildDescription(e),
+                        Color = EffectListing.BuildEffectColor(e)
                     }
             );
     }

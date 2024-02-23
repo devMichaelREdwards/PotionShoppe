@@ -57,6 +57,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .pill.light {
@@ -65,4 +66,14 @@
 
 .pill.dark {
     color: white;
+}
+
+.pill.error {
+    span {
+        color: red;
+        font-size: 44px;
+        font-weight: bolder;
+        margin-left: 10px;
+        font-family: 'fantasy';
+    }
 }
