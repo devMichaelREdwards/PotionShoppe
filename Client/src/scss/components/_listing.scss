@@ -1,3 +1,4 @@
+@use '../global/variables' as *;
 .listing {
     border: 1px solid black;
 }
@@ -13,6 +14,10 @@
     border-top: none;
 }
 
+.listing-row:not(.listing-header):hover {
+    background: #88888844;
+}
+
 .listing-item {
     display: flex;
     align-items: center;
@@ -25,6 +30,10 @@
 .listing-item:last-child {
     border: none;
     justify-content: right;
+}
+
+.listing-checkbox .rs-checkbox-inner::before {
+    //display: none;
 }
 
 .img-column {

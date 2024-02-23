@@ -1,3 +1,4 @@
+@use '../global/variables' as *;
 .rs-list,
 .rs-list-item {
     box-shadow: none;
@@ -102,4 +103,15 @@ input:-webkit-autofill:active {
 
 .rs-sidenav-nav > .rs-dropdown .rs-dropdown-toggle .rs-dropdown-toggle-caret {
     margin-top: 7px;
+}
+
+.listing-checkbox .rs-checkbox {
+    border: 1px solid black;
+}
+
+.listing-checkbox .rs-checkbox-inner {
+}
+
+.listing-checkbox.rs-checkbox-checked .rs-checkbox-inner::after {
+    display: none;
 }
