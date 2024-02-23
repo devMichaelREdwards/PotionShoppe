@@ -26,6 +26,13 @@ public class IngredientController : ControllerBase
         return Ok(mapper.Map<List<IngredientDto>>(result));
     }
 
+    [HttpGet("listing")]
+    public IActionResult GetPotionListing()
+    {
+        var result = ingredients.GetListing();
+        return Ok(mapper.Map<List<IngredientListing>>(result));
+    }
+
     [HttpPost]
     [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostIngredient(IngredientDto ingredient)
@@ -54,6 +61,17 @@ public class IngredientController : ControllerBase
     {
         if (ingredient.IngredientId != null)
             ingredients.Delete((int)ingredient.IngredientId);
+        return Ok();
+    }
+
+    [HttpPost("remove")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult RemoveIngredients(int[] ids)
+    {
+        foreach (int id in ids)
+        {
+            ingredients.Delete(id);
+        }
         return Ok();
     }
 }

@@ -63,4 +63,15 @@ public class PotionController : ControllerBase
             potions.Delete((int)potion.PotionId);
         return Ok();
     }
+
+    [HttpPost("remove")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult RemovePotions(int[] ids)
+    {
+        foreach (int id in ids)
+        {
+            potions.Delete(id);
+        }
+        return Ok();
+    }
 }
