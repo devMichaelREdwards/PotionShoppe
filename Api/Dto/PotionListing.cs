@@ -16,12 +16,15 @@ public partial class PotionListing
 
     public string? Image { get; set; }
 
-    public List<PotionEffectListing>? PotionEffects { get; set; } = [];
+    public List<EffectDisplayListing>? PotionEffects { get; set; } = [];
 
-    public static List<PotionEffectListing> BuildEffectsList(Potion potion) {
-        List<PotionEffectListing> effects = [];
-        foreach(PotionEffect effect in potion.PotionEffects) {
-            effects.Add(new PotionEffectListing() {
+    public static List<EffectDisplayListing> BuildEffectsList(Potion potion)
+    {
+        List<EffectDisplayListing> effects = [];
+        foreach (PotionEffect effect in potion.PotionEffects)
+        {
+            effects.Add(new EffectDisplayListing()
+            {
                 Title = effect?.Effect?.Name!,
                 Color = effect?.Effect?.Color!
             });

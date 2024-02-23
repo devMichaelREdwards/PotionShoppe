@@ -19,11 +19,12 @@ public partial class IngredientListing
     public int? EffectId { get; set; }
     public string? IngredientCategory { get; set; }
 
-    public PotionEffectListing? Effect { get; set; }
+    public EffectDisplayListing? Effect { get; set; }
 
-    public static PotionEffectListing BuildIngredientEffect(Ingredient ingredient)
+    public static EffectDisplayListing BuildIngredientEffect(Ingredient ingredient)
     {
-        return new PotionEffectListing()
+        var test = "test";
+        return new EffectDisplayListing()
         {
             Title = ingredient.Effect!.Name,
             Color = ingredient.Effect.Color
