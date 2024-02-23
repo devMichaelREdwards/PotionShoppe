@@ -1,3 +1,4 @@
+@use '../global/variables' as *;
 .listing {
     border: 1px solid black;
 }
@@ -11,6 +12,10 @@
 }
 .listing-header {
     border-top: none;
+}
+
+.listing-row:not(.listing-header):hover {
+    background: #88888844;
 }
 
 .listing-item {

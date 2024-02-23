@@ -14,7 +14,12 @@ public class CustomerRepository : IRepository<Customer>, IDisposable
 
     public IEnumerable<Customer> Get()
     {
-        return [.. context.Customers.Include(e => e.CustomerStatus)];
+        return [.. context.Customers.Include(c => c.CustomerStatus)];
+    }
+
+        public IEnumerable<Customer> GetListing()
+    {
+        return [.. context.Customers.Include(c => c.CustomerStatus).Include(c => c.CustomerAccounts)];
     }
 
     public Customer GetById(int id)
@@ -65,11 +70,6 @@ public class CustomerRepository : IRepository<Customer>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<Customer> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

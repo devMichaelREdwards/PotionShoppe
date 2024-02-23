@@ -28,6 +28,18 @@ public class MappingProfile : Profile
         Map<CustomerStatus, CustomerStatusDto>();
         Map<Customer, CustomerDto>();
         CreateMap<Customer, string>().ConvertUsing(c => $"{c.FirstName} {c.LastName}");
+        CreateMap<Customer, CustomerListing>()
+            .ConvertUsing(
+                e =>
+                    new()
+                    {
+                        CustomerId = e.CustomerId,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        CustomerStatus = e.CustomerStatus!.Title,
+                        UserName = e.CustomerAccounts.First().UserName
+                    }
+            );
     }
 
     private void CreateEmployeeMappings()

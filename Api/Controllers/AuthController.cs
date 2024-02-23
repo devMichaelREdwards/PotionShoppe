@@ -11,9 +11,7 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService authService;
 
-    public AuthController(
-        IAuthService _authService
-    )
+    public AuthController(IAuthService _authService)
     {
         authService = _authService;
     }
@@ -62,7 +60,11 @@ public class AuthController : ControllerBase
             string position = authService.GetEmployeePositionString(userLogin.UserName);
             Jwt token = authService.GenerateJwt(userLogin.UserName, position);
             string refresh = authService.UpdateRefreshToken(userLogin);
-            Response.Cookies.Append("potionShoppeUserName", userLogin.UserName, Cookie.GetOptions());
+            Response.Cookies.Append(
+                "potionShoppeUserName",
+                userLogin.UserName,
+                Cookie.GetOptions()
+            );
             Response.Cookies.Append("potionShoppe", refresh, Cookie.GetOptions());
             return Ok(token);
         }
@@ -73,8 +75,13 @@ public class AuthController : ControllerBase
     [HttpGet("employee/refresh")]
     public IActionResult EmployeeRefresh()
     {
-        if (Request.Cookies["potionShoppeUserName"] == null || Request.Cookies["potionShoppe"] == null)
-            return BadRequest();
+        if (
+            Request.Cookies["potionShoppeUserName"] == null
+            || Request.Cookies["potionShoppe"] == null
+        )
+        {
+            return Ok(false);
+        }
 
         string userName = Request.Cookies["potionShoppeUserName"]!;
         string refreshToken = Request.Cookies["potionShoppe"]!;
@@ -88,7 +95,6 @@ public class AuthController : ControllerBase
         string message = "No Token Found";
         return Ok(message);
     }
-
 
     [HttpPost("employee/authenticate")]
     [Authorize(Roles = "Employee,Owner")]
