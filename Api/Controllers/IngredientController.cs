@@ -20,6 +20,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetIngredients()
     {
         var result = ingredients.Get();
@@ -27,14 +28,14 @@ public class IngredientController : ControllerBase
     }
 
     [HttpGet("listing")]
-    public IActionResult GetPotionListing()
+    public IActionResult GetIngredientListing()
     {
         var result = ingredients.GetListing();
         return Ok(mapper.Map<List<IngredientListing>>(result));
     }
 
     [HttpPost]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PostIngredient(IngredientDto ingredient)
     {
         ingredients.Insert(mapper.Map<Ingredient>(ingredient));
@@ -42,7 +43,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PutIngredient(IngredientDto ingredient)
     {
         if (ingredient.IngredientId == null)
@@ -56,7 +57,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult DeleteIngredient(IngredientDto ingredient)
     {
         if (ingredient.IngredientId != null)
