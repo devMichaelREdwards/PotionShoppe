@@ -117,6 +117,22 @@ public class MappingProfile : Profile
         Map<Ingredient, IngredientDto>();
         Map<IngredientCategory, IngredientCategoryDto>();
         CreateMap<IngredientCategoryDto, string>().ConvertUsing(c => c.Title);
+        CreateMap<Ingredient, IngredientListing>()
+            .ConvertUsing(
+                i =>
+                    new()
+                    {
+                        IngredientId = i.IngredientId,
+                        Name = i.Name,
+                        Description = i.Description,
+                        Price = i.Price,
+                        Cost = i.Cost,
+                        CurrentStock = i.CurrentStock,
+                        Image = i.Image,
+                        Effect = IngredientListing.BuildIngredientEffect(i),
+                        IngredientCategory = i.IngredientCategory.Title
+                    }
+            );
     }
 
     private void CreateOrderMappings()

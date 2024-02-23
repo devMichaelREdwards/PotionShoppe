@@ -17,6 +17,11 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
         return [.. context.Ingredients.Include(i => i.Effect)];
     }
 
+    public IEnumerable<Ingredient> GetListing()
+    {
+        return [.. context.Ingredients.Include(i => i.Effect)];
+    }
+
     public Ingredient GetById(int id)
     {
         return context.Ingredients.Find(id);
@@ -65,11 +70,6 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<Ingredient> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion
