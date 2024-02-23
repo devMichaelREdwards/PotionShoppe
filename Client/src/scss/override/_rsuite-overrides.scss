@@ -25,7 +25,7 @@ body,
 }
 
 .rs-ripple-pond {
-    //display: none !important;
+    display: none !important;
 }
 
 .rs-btn {
@@ -109,9 +109,6 @@ input:-webkit-autofill:active {
     border: 1px solid black;
 }
 
-.listing-checkbox .rs-checkbox-inner {
-}
-
-.listing-checkbox.rs-checkbox-checked .rs-checkbox-inner::after {
+.listing-checkbox .rs-checkbox-inner::after {
     display: none;
 }

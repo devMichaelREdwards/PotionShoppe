@@ -9,10 +9,11 @@
 @use './App.scss';
 
 // Overrides
-@use './override/rsuite-defaults';
+@use './override/rsuite-overrides';
 
 // Components
 @use './components/listing';
+@use './components/checkbox';
 
 // Pages
 @use './pages/employee-login';

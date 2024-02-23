@@ -9,6 +9,7 @@ interface IIDCheckBox {
 const IDCheckBox = ({ id, checked, handleCheckboxClick }: IIDCheckBox) => {
     return (
         <Checkbox
+            className='listing-checkbox'
             value={id}
             onChange={() => {
                 return handleCheckboxClick(id);

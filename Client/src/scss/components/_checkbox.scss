@@ -1,0 +1,32 @@
+@use '../global/variables' as *;
+.listing-checkbox {
+    .rs-checkbox-inner {
+        &::before {
+            // Checkbox box
+            border: 1px solid $SeparatorColor;
+        }
+    }
+
+    label:hover .rs-checkbox-inner {
+        &::before {
+            // Checkbox box
+            border: 1px solid $SeparatorColor;
+        }
+    }
+}
+
+.listing-checkbox.rs-checkbox-checked {
+    .rs-checkbox-inner {
+        &::before {
+            // Checkbox box
+            background: $SeparatorColor;
+            border: 1px solid $SeparatorColor;
+        }
+    }
+
+    label:hover .rs-checkbox-inner {
+        &::before {
+            // Checkbox box
+        }
+    }
+}
