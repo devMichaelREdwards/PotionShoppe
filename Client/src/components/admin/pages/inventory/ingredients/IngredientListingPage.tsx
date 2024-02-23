@@ -1,7 +1,7 @@
 import useTitle from '../../../../../hooks/useTitle';
 
 const IngredientListingPage = () => {
-    useTitle('Potions');
+    useTitle('Ingredients');
     return <div>Ingredient Listing</div>;
 };
 

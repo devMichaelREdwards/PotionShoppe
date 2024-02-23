@@ -1,20 +1,20 @@
-import { Container, Content, Footer, Header } from 'rsuite';
+import { Container, Content, Panel } from 'rsuite';
 import EmployeeListing from '../../../listing/EmployeeListing';
 import useTitle from '../../../../../hooks/useTitle';
+import AdminHeader from '../../../../common/header/AdminHeader';
 
 const EmployeeListingPage = () => {
     useTitle('Employees');
     return (
-        <div className='admin-page'>
+        <Panel className='admin-page'>
             <Container>
-                <Header>Employees</Header>
+                <AdminHeader title='Employees' />
                 <Content>
                     <EmployeeFilters />
                     <EmployeeListing />
                 </Content>
-                <Footer></Footer>
             </Container>
-        </div>
+        </Panel>
     );
 };
 
