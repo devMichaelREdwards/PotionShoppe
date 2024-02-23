@@ -34,7 +34,7 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PostIngredient(IngredientDto ingredient)
     {
         ingredients.Insert(mapper.Map<Ingredient>(ingredient));
