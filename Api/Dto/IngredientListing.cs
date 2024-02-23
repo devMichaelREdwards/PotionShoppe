@@ -23,7 +23,6 @@ public partial class IngredientListing
 
     public static EffectDisplayListing BuildIngredientEffect(Ingredient ingredient)
     {
-        var test = "test";
         return new EffectDisplayListing()
         {
             Title = ingredient.Effect!.Name,
