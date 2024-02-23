@@ -26,6 +26,12 @@ const IngredientListing = () => {
         },
         {
             align: 'center',
+            label: 'Category',
+            dataKey: 'ingredientCategory',
+            colspan: 2,
+        },
+        {
+            align: 'center',
             label: 'Description',
             dataKey: 'description',
             colspan: 4,
@@ -41,19 +47,19 @@ const IngredientListing = () => {
             align: 'center',
             label: 'Cost',
             dataKey: 'cost',
-            colspan: 2,
+            colspan: 1,
         },
         {
             align: 'center',
             label: 'Price',
             dataKey: 'price',
-            colspan: 2,
+            colspan: 1,
         },
         {
             align: 'center',
             label: 'In Stock',
             dataKey: 'currentStock',
-            colspan: 2,
+            colspan: 1,
         },
     ];
 

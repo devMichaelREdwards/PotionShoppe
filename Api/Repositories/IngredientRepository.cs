@@ -14,12 +14,12 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
 
     public IEnumerable<Ingredient> Get()
     {
-        return [.. context.Ingredients.Include(i => i.Effect)];
+        return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }
 
     public IEnumerable<Ingredient> GetListing()
     {
-        return [.. context.Ingredients.Include(i => i.Effect)];
+        return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }
 
     public Ingredient GetById(int id)
