@@ -98,9 +98,9 @@ public class AuthController : ControllerBase
 
     [HttpPost("employee/authenticate")]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult Authorize()
+    public IActionResult Authenticate()
     {
-        bool authorized = true;
-        return Ok(authorized);
+        bool authenticated = true;
+        return Ok(authenticated);
     }
 }

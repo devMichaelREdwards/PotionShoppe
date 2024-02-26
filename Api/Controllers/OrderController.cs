@@ -24,11 +24,19 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetOrders()
     {
         var result = orders.Get();
         return Ok(mapper.Map<List<OrderDto>>(result));
+    }
+
+    [HttpGet("listing")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult GetOrderListing()
+    {
+        var result = orders.GetListing();
+        return Ok(mapper.Map<List<OrderListing>>(result));
     }
 
     [HttpPost]

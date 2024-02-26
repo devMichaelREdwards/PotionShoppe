@@ -144,6 +144,15 @@ public class MappingProfile : Profile
         Map<OrderIngredient, OrderIngredientDto>();
         CreateMap<Order, string>().ConvertUsing(o => o.OrderNumber);
         CreateMap<OrderDto, string>().ConvertUsing(o => o.OrderNumber);
+        CreateMap<Order, OrderListing>().ConvertUsing(o => new()
+        {
+            OrderId = o.OrderId,
+            OrderNumber = o.OrderNumber,
+            Total = o.Total,
+            DatePlaced = o.DatePlaced,
+            Customer = $"{o.Customer.FirstName} {o.Customer.LastName}",
+            OrderStatus = o.OrderStatus.Title
+        });
     }
 
     private void CreateReceiptMappings()
