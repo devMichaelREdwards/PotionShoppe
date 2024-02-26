@@ -1,44 +1,42 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
-import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
+import { IActionButton, IListingColumn } from '../../../types/IListing';
 import { PotionIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
-import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
-const EffectListing = () => {
+const OrderListing = () => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
         {
             align: 'center',
-            label: 'Name',
-            dataKey: 'name',
+            label: 'Order Number',
+            dataKey: 'orderNumber',
             colspan: 4,
         },
         {
             align: 'center',
-            label: 'Value',
-            dataKey: 'value',
+            label: 'Customer',
+            dataKey: 'customer',
+            colspan: 4,
+        },
+        {
+            align: 'center',
+            label: 'Date Placed',
+            dataKey: 'datePlaced',
             colspan: 2,
         },
         {
             align: 'center',
-            label: 'Duration',
-            dataKey: 'duration',
+            label: 'Status',
+            dataKey: 'orderStatus',
             colspan: 2,
         },
         {
             align: 'center',
-            label: 'Color',
-            dataKey: 'color',
+            label: 'Total',
+            dataKey: 'total',
             colspan: 2,
-            component: (color: unknown) => <CollectionColumn collection={[color as ICollectionObject]} />,
-        },
-        {
-            align: 'center',
-            label: 'Description',
-            dataKey: 'description',
-            colspan: 10,
         },
     ];
 
@@ -48,7 +46,7 @@ const EffectListing = () => {
             label: 'edit',
             color: 'violet',
             icon: <PotionIcon />,
-            argKey: 'effectId',
+            argKey: 'orderId',
             action: (id) => {
                 console.log(id);
             },
@@ -56,10 +54,18 @@ const EffectListing = () => {
     ];
 
     const remove = async (selected: number[]) => {
-        await axios.post('effect/remove', selected, user?.authConfig);
+        await axios.post('order/remove', selected, user?.authConfig);
     };
 
-    return <Listing id='effectId' columns={columns} route={'effect/listing'} remove={remove} rowButtons={rowButtons} />;
+    return (
+        <Listing
+            id='orderId'
+            columns={columns}
+            route={'order/listing'}
+            remove={user?.roles.includes('Owner') ? remove : undefined}
+            rowButtons={rowButtons}
+        />
+    );
 };
 
-export default EffectListing;
+export default OrderListing;

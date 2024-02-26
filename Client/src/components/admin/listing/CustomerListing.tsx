@@ -6,25 +6,25 @@ const CustomerListing = () => {
     const { user } = useAuth();
     const columns: IListingColumn[] = [
         {
-            align: 'left',
+            align: 'center',
             label: 'First Name',
             dataKey: 'firstName',
             colspan: 3,
         },
         {
-            align: 'left',
+            align: 'center',
             label: 'Last Name',
             dataKey: 'lastName',
             colspan: 3,
         },
         {
-            align: 'left',
+            align: 'center',
             label: 'Username',
             dataKey: 'userName',
             colspan: 3,
         },
         {
-            align: 'left',
+            align: 'center',
             label: 'Status',
             dataKey: 'customerStatus',
             colspan: 3,

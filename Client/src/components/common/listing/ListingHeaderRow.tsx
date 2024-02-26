@@ -11,11 +11,11 @@ interface IListingHeaderRowProps {
 }
 
 const ListingHeaderRow = ({ columns, headerButtons, remove }: IListingHeaderRowProps) => {
-    let colsLeft = 22; //24 - 2 for checkbox col
+    let colsLeft = 23; //24 - 1 for checkbox col
     return (
         <List.Item className='listing-row listing-header'>
             <FlexboxGrid>
-                <EmptyColumns key={nanoid()} columns={2} />
+                <EmptyColumns key={nanoid()} columns={1} />
                 {columns.map((col) => {
                     colsLeft -= col.colspan;
                     return (

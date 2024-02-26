@@ -16,11 +16,11 @@ interface IProps {
 
 const ListingRow = ({ id, data, checked, columns, rowButtons, handleCheckboxClick }: IProps) => {
     if (!id) return null;
-    let colsLeft = 22; //24 - 2 for checkbox col
+    let colsLeft = 23; //24 - 1 for checkbox col
     return (
         <List.Item key={nanoid()} className='listing-row'>
             <FlexboxGrid>
-                <FlexboxGrid.Item className='listing-item' key='id' colspan={2}>
+                <FlexboxGrid.Item className='listing-item' key='id' colspan={1}>
                     <IDCheckBox id={id} checked={checked} handleCheckboxClick={handleCheckboxClick} />
                 </FlexboxGrid.Item>
                 {columns.map((col) => {

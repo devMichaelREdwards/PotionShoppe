@@ -25,6 +25,15 @@ public class OrderRepository : IRepository<Order>, IDisposable
                 ];
     }
 
+    public IEnumerable<Order> GetListing()
+    {
+        return [.. context.Orders
+                    .Include(o => o.Customer)
+                    .ThenInclude(c => c.CustomerStatus)
+                    .Include(o => o.OrderStatus)
+                ];
+    }
+
     public Order GetById(int id)
     {
         return context.Orders.Find(id);
@@ -73,11 +82,6 @@ public class OrderRepository : IRepository<Order>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<Order> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

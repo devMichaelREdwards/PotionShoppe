@@ -9,13 +9,13 @@ import IngredientListingPage from '../admin/pages/inventory/ingredients/Ingredie
 import PotionListingPage from '../admin/pages/inventory/potions/PotionListingPage';
 import IngredientFormPage from '../admin/pages/inventory/ingredients/IngredientFormPage';
 import PotionFormPage from '../admin/pages/inventory/potions/PotionFormPage';
-import OrderFormPage from '../admin/pages/orders/OrderFormPage';
-import ReceiptFormPage from '../admin/pages/orders/ReceiptFormPage';
+import OrderFormPage from '../admin/pages/orders/orders/OrderFormPage';
+import ReceiptFormPage from '../admin/pages/orders/receipts/ReceiptFormPage';
 import EffectListingPage from '../admin/pages/inventory/effects/EffectListingPage';
 import EffectFormPage from '../admin/pages/inventory/effects/EffectFormPage';
 import CustomerFormPage from '../admin/pages/users/customers/CustomerFormPage';
-import ReceiptListingPage from '../admin/pages/orders/ReceiptListingPage';
-import OrderListingPage from '../admin/pages/orders/OrderListingPage';
+import ReceiptListingPage from '../admin/pages/orders/receipts/ReceiptListingPage';
+import OrderListingPage from '../admin/pages/orders/orders/OrderListingPage';
 import EmployeeFormPage from '../admin/pages/users/employees/EmployeeForm';
 
 const AdminRoutes = () => {
