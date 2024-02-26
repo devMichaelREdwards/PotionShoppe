@@ -16,15 +16,24 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
     {
         return [.. context.Receipts
                     .Include(r => r.Order)
-                    .Include(r => r.Employee).ThenInclude(e => e.EmployeePosition)
-                    .Include(r => r.Employee).ThenInclude(e => e.EmployeeStatus)
+                    .Include(r => r.Employee).ThenInclude(e => e!.EmployeePosition)
+                    .Include(r => r.Employee).ThenInclude(e => e!.EmployeeStatus)
+
+                ];
+    }
+
+    public IEnumerable<Receipt> GetListing()
+    {
+        return [.. context.Receipts
+                    .Include(r => r.Order).ThenInclude(o => o!.Customer)
+                    .Include(r => r.Employee)
 
                 ];
     }
 
     public Receipt GetById(int id)
     {
-        return context.Receipts.Find(id);
+        return context.Receipts!.Find(id)!;
     }
 
     public Receipt Insert(Receipt entity)
@@ -42,7 +51,7 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
 
     public void Delete(int id)
     {
-        Receipt receipt = context.Receipts.Find(id);
+        Receipt receipt = context.Receipts.Find(id)!;
         context.Receipts.Remove(receipt);
         Save();
     }
@@ -70,11 +79,6 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<Receipt> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

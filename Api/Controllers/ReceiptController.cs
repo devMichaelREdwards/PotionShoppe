@@ -10,50 +10,59 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class ReceiptController : ControllerBase
 {
-    private readonly IRepository<Receipt> receipts;
-    private readonly IMapper mapper;
+    private readonly IRepository<Receipt> _receipts;
+    private readonly IMapper _mapper;
 
-    public ReceiptController(IRepository<Receipt> _receipts, IMapper _mapper)
+    public ReceiptController(IRepository<Receipt> receipts, IMapper mapper)
     {
-        receipts = _receipts;
-        mapper = _mapper;
+        _receipts = receipts;
+        _mapper = mapper;
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetReceipts()
     {
-        var result = receipts.Get();
-        return Ok(mapper.Map<List<ReceiptDto>>(result));
+        var result = _receipts.Get();
+        return Ok(_mapper.Map<List<ReceiptDto>>(result));
+    }
+
+    [HttpGet("listing")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult GetReceiptsListing()
+    {
+        var result = _receipts.GetListing();
+        return Ok(_mapper.Map<List<ReceiptListing>>(result));
     }
 
     [HttpPost]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Employee")]
     public IActionResult PostReceipt(ReceiptDto receipt)
     {
         receipt.DateFulfilled = DateOnly.FromDateTime(DateTime.Today);
-        receipts.Insert(mapper.Map<Receipt>(receipt));
+        _receipts.Insert(_mapper.Map<Receipt>(receipt));
         return Ok();
     }
 
     [HttpPut]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult PutReceipt(ReceiptDto receipt)
     {
         if (receipt.ReceiptId == null)
             return Ok();
 
-        Receipt existing = receipts.GetById((int)receipt.ReceiptId);
+        Receipt existing = _receipts.GetById((int)receipt.ReceiptId);
         receipt.Update(existing);
-        receipts.Update(existing);
+        _receipts.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Owner")]
     public IActionResult DeleteReceipt(ReceiptDto receipt)
     {
         if (receipt.ReceiptId != null)
-            receipts.Delete((int)receipt.ReceiptId);
+            _receipts.Delete((int)receipt.ReceiptId);
         return Ok();
     }
 }

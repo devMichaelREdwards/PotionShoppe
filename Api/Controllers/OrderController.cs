@@ -14,13 +14,11 @@ public class OrderController : ControllerBase
 {
     private readonly IRepository<Order> orders;
     private readonly IMapper mapper;
-    private readonly IAuthService authService;
 
     public OrderController(IRepository<Order> _orders, IMapper _mapper, IAuthService _authService)
     {
         orders = _orders;
         mapper = _mapper;
-        authService = _authService;
     }
 
     [HttpGet]

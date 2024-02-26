@@ -36,7 +36,7 @@ public class MappingProfile : Profile
                         CustomerId = e.CustomerId,
                         FirstName = e.FirstName,
                         LastName = e.LastName,
-                        CustomerStatus = e.CustomerStatus!.Title,
+                        CustomerStatus = e.CustomerStatus.Title,
                         UserName = e.CustomerAccounts.First().UserName
                     }
             );
@@ -61,8 +61,8 @@ public class MappingProfile : Profile
                         EmployeeId = e.EmployeeId,
                         FirstName = e.FirstName,
                         LastName = e.LastName,
-                        EmployeePosition = e.EmployeePosition!.Title,
-                        EmployeeStatus = e.EmployeeStatus!.Title,
+                        EmployeePosition = e.EmployeePosition.Title,
+                        EmployeeStatus = e.EmployeeStatus.Title,
                         UserName = e.EmployeeAccounts.First().UserName
                     }
             );
@@ -158,5 +158,14 @@ public class MappingProfile : Profile
     private void CreateReceiptMappings()
     {
         Map<Receipt, ReceiptDto>();
+        CreateMap<Receipt, ReceiptListing>().ConvertUsing(r => new()
+        {
+            ReceiptId = r.ReceiptId,
+            ReceiptNumber = r.ReceiptNumber,
+            Order = r.Order.OrderNumber,
+            DateFulfilled = r.DateFulfilled,
+            Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
+            Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}"
+        });
     }
 }
