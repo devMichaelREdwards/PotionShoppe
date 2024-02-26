@@ -59,7 +59,7 @@ const IngredientListing = () => {
             align: 'center',
             label: 'In Stock',
             dataKey: 'currentStock',
-            colspan: 1,
+            colspan: 2,
         },
     ];
 
