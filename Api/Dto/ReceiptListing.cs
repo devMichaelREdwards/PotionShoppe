@@ -15,4 +15,5 @@ public partial class ReceiptListing
 
     public string? Customer { get; set; }
     public string? Order { get; set; }
+    public int? Total { get; set; }
 }

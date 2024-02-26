@@ -165,7 +165,8 @@ public class MappingProfile : Profile
             Order = r.Order.OrderNumber,
             DateFulfilled = r.DateFulfilled,
             Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
-            Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}"
+            Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}",
+            Total = r.Order.Total
         });
     }
 }
