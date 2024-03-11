@@ -28,8 +28,10 @@ public partial class EffectFilter : IFilter<Effect>
         }
     }
 
-    public static EffectFilter BuildFilter(IQueryCollection query)
+    public static EffectFilter? BuildFilter(IQueryCollection query)
     {
+        if (query.Count == 0) return null;
+
         return new()
         {
             Name = ParseFilter.GetString("name", query),
@@ -38,6 +40,6 @@ public partial class EffectFilter : IFilter<Effect>
             DurationMin = ParseFilter.GetInt("dmin", query),
             DurationMax = ParseFilter.GetInt("dmax", query),
             Value = ParseFilter.GetNumberOptions("value", query)
-        }; ;
+        };
     }
 }
