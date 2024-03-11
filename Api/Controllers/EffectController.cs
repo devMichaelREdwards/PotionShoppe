@@ -30,7 +30,8 @@ public class EffectController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetEffectListing()
     {
-        var result = effects.GetListing();
+        EffectFilter filter = EffectFilter.BuildFilter(Request.Query);
+        var result = effects.GetListing(filter);
         return Ok(mapper.Map<List<EffectListing>>(result));
     }
 

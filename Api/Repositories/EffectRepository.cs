@@ -22,12 +22,37 @@ public class EffectRepository : IRepository<Effect>, IDisposable
     {
         var effects = from effect in _context.Effects select effect;
 
-        string name = filter.GetValue("name");
+        string? name = filter.GetValue("name");
         if (name != null)
         {
-            effects = effects.Where(e => e.Name.ToLower().Contains(name.ToLower()));
+            effects = effects.Where(e => e.Name!.ToLower().Contains(name.ToLower()));
         }
-        return [.. _context.Effects];
+
+        int? vMin = filter.GetValue("vmin");
+        if (vMin != null)
+        {
+            effects = effects.Where(e => e.Value >= vMin);
+        }
+
+        int? vMax = filter.GetValue("vmax");
+        if (vMax != null)
+        {
+            effects = effects.Where(e => e.Value <= vMax);
+        }
+
+        int? dMin = filter.GetValue("dmin");
+        if (dMin != null)
+        {
+            effects = effects.Where(e => e.Duration >= dMin);
+        }
+
+        int? dMax = filter.GetValue("dmax");
+        if (dMax != null)
+        {
+            effects = effects.Where(e => e.Duration <= dMax);
+        }
+
+        return effects;
     }
 
     public Effect GetById(int id)
