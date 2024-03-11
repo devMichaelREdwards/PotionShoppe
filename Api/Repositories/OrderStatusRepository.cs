@@ -17,6 +17,11 @@ public class OrderStatusRepository : IRepository<OrderStatus>, IDisposable
         return [.. context.OrderStatuses];
     }
 
+    public IEnumerable<OrderStatus> GetListing(IFilter<OrderStatus>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public OrderStatus GetById(int id)
     {
         return context.OrderStatuses.Find(id);
@@ -67,10 +72,6 @@ public class OrderStatusRepository : IRepository<OrderStatus>, IDisposable
         Dispose(true);
     }
 
-    public IEnumerable<OrderStatus> GetListing()
-    {
-        throw new NotImplementedException();
-    }
 
     #endregion
 }

@@ -22,7 +22,7 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
                 ];
     }
 
-    public IEnumerable<Receipt> GetListing()
+    public IEnumerable<Receipt> GetListing(IFilter<Receipt>? filter = null)
     {
         return [.. context.Receipts
                     .Include(r => r.Order).ThenInclude(o => o!.Customer)

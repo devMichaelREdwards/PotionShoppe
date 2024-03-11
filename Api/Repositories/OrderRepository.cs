@@ -25,7 +25,7 @@ public class OrderRepository : IRepository<Order>, IDisposable
                 ];
     }
 
-    public IEnumerable<Order> GetListing()
+    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null)
     {
         return [.. context.Orders
                     .Include(o => o.Customer)

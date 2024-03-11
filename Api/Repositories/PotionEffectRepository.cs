@@ -17,6 +17,11 @@ public class PotionEffectRepository : IRepository<PotionEffect>, IDisposable
         return [.. context.PotionEffects.Include(pe => pe.Potion).Include(pe => pe.Effect)];
     }
 
+    public IEnumerable<PotionEffect> GetListing(IFilter<PotionEffect>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public PotionEffect GetById(int id)
     {
         return context.PotionEffects.Find(id);
@@ -65,11 +70,6 @@ public class PotionEffectRepository : IRepository<PotionEffect>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<PotionEffect> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

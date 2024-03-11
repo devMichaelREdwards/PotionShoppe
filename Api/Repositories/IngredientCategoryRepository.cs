@@ -17,6 +17,11 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
         return [.. context.IngredientCategories];
     }
 
+    public IEnumerable<IngredientCategory> GetListing(IFilter<IngredientCategory>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public IngredientCategory GetById(int id)
     {
         return context.IngredientCategories.Find(id)!;
@@ -65,11 +70,6 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<IngredientCategory> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion
