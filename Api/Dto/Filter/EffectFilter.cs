@@ -12,6 +12,8 @@ public partial class EffectFilter : IFilter<Effect>
     public int? DurationMin { get; set; }
     public int? DurationMax { get; set; }
 
+    public List<int> Value { get; set; }
+
     public dynamic? GetValue(string key)
     {
         switch (key)
@@ -21,6 +23,7 @@ public partial class EffectFilter : IFilter<Effect>
             case "vmax": return ValueMax;
             case "dmin": return DurationMin;
             case "dmax": return DurationMax;
+            case "value": return Value;
             default: return null;
         }
     }
@@ -33,7 +36,8 @@ public partial class EffectFilter : IFilter<Effect>
             ValueMin = ParseFilter.GetInt("vmin", query),
             ValueMax = ParseFilter.GetInt("vmax", query),
             DurationMin = ParseFilter.GetInt("dmin", query),
-            DurationMax = ParseFilter.GetInt("dmax", query)
+            DurationMax = ParseFilter.GetInt("dmax", query),
+            Value = ParseFilter.GetNumberOptions("value", query)
         }; ;
     }
 }

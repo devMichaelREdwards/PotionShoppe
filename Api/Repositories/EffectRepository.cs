@@ -52,6 +52,12 @@ public class EffectRepository : IRepository<Effect>, IDisposable
             effects = effects.Where(e => e.Duration <= dMax);
         }
 
+        List<int>? values = filter.GetValue("value");
+        if (values != null)
+        {
+            effects = effects.Where(e => values!.Contains((int)e.Value));
+        }
+
         return effects;
     }
 
