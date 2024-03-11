@@ -17,7 +17,7 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
         return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }
 
-    public IEnumerable<Ingredient> GetListing()
+    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null)
     {
         return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }

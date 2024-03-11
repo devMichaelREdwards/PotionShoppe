@@ -22,6 +22,11 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
         return [.. context.CustomerAccounts.Include(ca => ca.Customer).ThenInclude(c => c.CustomerStatus)];
     }
 
+    public IEnumerable<CustomerAccount> GetListing(IFilter<CustomerAccount>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public CustomerAccount GetById(int id)
     {
         return context.CustomerAccounts.Find(id);
@@ -80,11 +85,6 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<CustomerAccount> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

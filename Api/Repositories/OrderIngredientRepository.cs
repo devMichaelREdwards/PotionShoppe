@@ -17,6 +17,11 @@ public class OrderIngredientRepository : IRepository<OrderIngredient>, IDisposab
         return [.. context.OrderIngredients.Include(pe => pe.Order).Include(pe => pe.Ingredient)];
     }
 
+    public IEnumerable<OrderIngredient> GetListing(IFilter<OrderIngredient>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public OrderIngredient GetById(int id)
     {
         return context.OrderIngredients.Find(id);
@@ -67,10 +72,7 @@ public class OrderIngredientRepository : IRepository<OrderIngredient>, IDisposab
         Dispose(true);
     }
 
-    public IEnumerable<OrderIngredient> GetListing()
-    {
-        throw new NotImplementedException();
-    }
+
 
     #endregion
 }

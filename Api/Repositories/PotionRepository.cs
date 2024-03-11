@@ -17,7 +17,7 @@ public class PotionRepository : IRepository<Potion>, IDisposable
         return [.. context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
     }
 
-    public IEnumerable<Potion> GetListing()
+    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null)
     {
         return [.. context.Potions.Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
     }
@@ -71,7 +71,6 @@ public class PotionRepository : IRepository<Potion>, IDisposable
     {
         Dispose(true);
     }
-
 
     #endregion
 }

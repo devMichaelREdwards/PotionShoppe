@@ -17,7 +17,7 @@ public class CustomerRepository : IRepository<Customer>, IDisposable
         return [.. context.Customers.Include(c => c.CustomerStatus)];
     }
 
-        public IEnumerable<Customer> GetListing()
+    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null)
     {
         return [.. context.Customers.Include(c => c.CustomerStatus).Include(c => c.CustomerAccounts)];
     }

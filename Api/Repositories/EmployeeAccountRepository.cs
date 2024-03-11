@@ -19,6 +19,11 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         return [.. context.EmployeeAccounts.Include(e => e.Employee).ThenInclude(e => e.EmployeeStatus)];
     }
 
+    public IEnumerable<EmployeeAccount> GetListing(IFilter<EmployeeAccount>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public EmployeeAccount GetById(int id)
     {
         return context.EmployeeAccounts.Find(id);
@@ -104,10 +109,6 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         Dispose(true);
     }
 
-    public IEnumerable<EmployeeAccount> GetListing()
-    {
-        throw new NotImplementedException();
-    }
 
     #endregion
 }

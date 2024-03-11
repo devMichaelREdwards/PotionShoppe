@@ -1,6 +1,6 @@
 namespace Api.Models;
 
-public partial class CustomerDto : IDto<Customer>, IUpdate<Customer>
+public partial class CustomerDto : IDto<Customer>
 {
     public int? CustomerId { get; set; }
 

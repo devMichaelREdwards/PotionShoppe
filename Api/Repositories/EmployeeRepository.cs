@@ -19,7 +19,7 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
             .Include(e => e.EmployeePosition)];
     }
 
-    public IEnumerable<Employee> GetListing()
+    public IEnumerable<Employee> GetListing(IFilter<Employee>? filter = null)
     {
         return [.. context.Employees
             .Include(e => e.EmployeeStatus)
@@ -81,6 +81,7 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
     {
         Dispose(true);
     }
+
 
     #endregion
 }

@@ -17,6 +17,11 @@ public class EmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
         return [.. context.EmployeeStatuses];
     }
 
+    public IEnumerable<EmployeeStatus> GetListing(IFilter<EmployeeStatus>? filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
     public EmployeeStatus GetById(int id)
     {
         return context.EmployeeStatuses.Find(id);
@@ -69,11 +74,6 @@ public class EmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IEnumerable<EmployeeStatus> GetListing()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion
