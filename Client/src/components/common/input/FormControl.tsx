@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 
 interface IInput {
@@ -45,6 +44,7 @@ export const PasswordControl = ({ value, label, placeholder, name, onChange }: I
 };
 
 interface IRangeSlider {
+    value: [number, number];
     label: string;
     min: number;
     max: number;
@@ -52,8 +52,7 @@ interface IRangeSlider {
     onRangeChange: (value: [number, number]) => void;
 }
 
-export const RangeSliderControl = ({ label, min, max, id, onRangeChange }: IRangeSlider) => {
-    const [value, setValue] = useState([min, max]);
+export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }: IRangeSlider) => {
     return (
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
@@ -64,7 +63,6 @@ export const RangeSliderControl = ({ label, min, max, id, onRangeChange }: IRang
                 min={min}
                 max={max}
                 onChange={(value) => {
-                    setValue(value);
                     onRangeChange(value);
                 }}
             />
@@ -77,7 +75,6 @@ export const RangeSliderControl = ({ label, min, max, id, onRangeChange }: IRang
                         if (next > value[1]) {
                             return;
                         }
-                        setValue([next, value[1]]);
                         onRangeChange([next, value[1]]);
                     }}
                 />
@@ -90,7 +87,6 @@ export const RangeSliderControl = ({ label, min, max, id, onRangeChange }: IRang
                         if (value[0] > next) {
                             return;
                         }
-                        setValue([value[0], next]);
                         onRangeChange([value[0], next]);
                     }}
                 />
