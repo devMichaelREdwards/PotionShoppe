@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Form } from 'rsuite';
 import { IEffectFilters } from '../../../types/IFilter';
 import { TextControl, RangeSliderControl } from '../../common/input/FormControl';
+import { MagicWandIcon } from '../../common/image/Icon';
 
 interface IEffectFiltersProps {
     filterLimits: IEffectFilters;
@@ -22,43 +23,50 @@ const EffectFilters = ({ filterLimits, setFilterByKey, setValueRange, setDuratio
         clearFilters();
     };
     return (
-        <Form className='filters'>
-            <Form.Group>
-                <TextControl
-                    value={name}
-                    label='Name'
-                    name='name'
-                    onChange={(e: string) => {
-                        setName(e);
-                        setFilterByKey('name', e);
-                    }}
-                />
-                <RangeSliderControl
-                    value={value}
-                    id={'value'}
-                    label={'Value'}
-                    min={filterLimits.vmin ?? 0}
-                    max={filterLimits.vmax ?? 1000}
-                    onRangeChange={(e) => {
-                        setValue(e);
-                        setValueRange(e);
-                    }}
-                />
-                <RangeSliderControl
-                    value={duration}
-                    id={'duration'}
-                    label={'Duration'}
-                    min={filterLimits.dmin ?? 0}
-                    max={filterLimits.dmax ?? 1000}
-                    onRangeChange={(e) => {
-                        setDuration(e);
-                        setDurationRange(e);
-                    }}
-                />
-            </Form.Group>
-
-            <Button onClick={clearFiltersClick}>Clear Filters</Button>
-        </Form>
+        <div className='filters'>
+            <div className='filter-icon'>
+                <MagicWandIcon />
+                Filters
+            </div>
+            <Form className='filter-form'>
+                <Form.Group className='filter-group'>
+                    <TextControl
+                        value={name}
+                        label='Name'
+                        name='name'
+                        onChange={(e: string) => {
+                            setName(e);
+                            setFilterByKey('name', e);
+                        }}
+                    />
+                    <RangeSliderControl
+                        value={value}
+                        id={'value'}
+                        label={'Value'}
+                        min={filterLimits.vmin ?? 0}
+                        max={filterLimits.vmax ?? 1000}
+                        onRangeChange={(e) => {
+                            setValue(e);
+                            setValueRange(e);
+                        }}
+                    />
+                    <RangeSliderControl
+                        value={duration}
+                        id={'duration'}
+                        label={'Duration'}
+                        min={filterLimits.dmin ?? 0}
+                        max={filterLimits.dmax ?? 1000}
+                        onRangeChange={(e) => {
+                            setDuration(e);
+                            setDurationRange(e);
+                        }}
+                    />
+                </Form.Group>
+            </Form>
+            <div className='clear-filters-button'>
+                <Button onClick={clearFiltersClick}>Clear Filters</Button>
+            </div>
+        </div>
     );
 };
 

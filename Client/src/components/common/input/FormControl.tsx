@@ -68,6 +68,7 @@ export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }
             />
             <InputGroup>
                 <InputNumber
+                    className='form-control-input'
                     id={`${id}-min`}
                     value={value[0]}
                     onChange={(nextValue) => {
@@ -80,6 +81,7 @@ export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }
                 />
                 <InputGroup.Addon>to</InputGroup.Addon>
                 <InputNumber
+                    className='form-control-input'
                     id={`${id}-max`}
                     value={value[1]}
                     onChange={(nextValue) => {

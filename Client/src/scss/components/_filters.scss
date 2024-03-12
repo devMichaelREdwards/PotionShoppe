@@ -1,11 +1,56 @@
+@use '../global/variables' as *;
 .filters {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    height: 150px;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid black;
     border-bottom: 0;
+    padding: 5px;
 
-    .rs-form-group {
+    .filter-icon {
+        display: flex;
+        width: 250px;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        font-size: $FontLarge;
+    }
+
+    .filter-form {
+        width: 100%;
+    }
+
+    .filter-group.rs-form-group {
+        display: flex;
+        min-width: 100%;
+        justify-content: center;
+        gap: 50px;
+        height: 100px;
+        margin: 0 !important;
+        padding-bottom: 10px;
+        .form-control {
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+
+            .form-control-label {
+                margin: 0;
+                padding: 0;
+            }
+            .form-control-input {
+                margin: 0;
+                padding: 0;
+                font-size: $FontSmall;
+            }
+        }
+    }
+
+    .clear-filters-button {
+        width: 250px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding-right: 10px;
     }
 }
