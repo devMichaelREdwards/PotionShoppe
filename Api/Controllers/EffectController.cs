@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.Marshalling;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -11,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EffectController : ControllerBase
 {
-    private readonly IRepository<Effect> effects;
+    private readonly IFilterRepository<Effect> effects;
     private readonly IMapper mapper;
 
-    public EffectController(IRepository<Effect> _effects, IMapper _mapper)
+    public EffectController(IFilterRepository<Effect> _effects, IMapper _mapper)
     {
         effects = _effects;
         mapper = _mapper;
@@ -39,8 +38,8 @@ public class EffectController : ControllerBase
     [HttpGet("filters")]
     public IActionResult GetFilterInfo()
     {
-
-        return Ok();
+        EffectFilter filterLimits = (EffectFilter)effects.GetFilterData();
+        return Ok(filterLimits);
     }
 
     [HttpPost]

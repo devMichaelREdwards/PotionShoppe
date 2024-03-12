@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, RangeSlider } from 'rsuite';
+import { Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -48,10 +48,11 @@ interface IRangeSlider {
     label: string;
     min: number;
     max: number;
+    id: string;
     onRangeChange: (value: [number, number]) => void;
 }
 
-export const RangeSliderControl = ({ label, min, max, onRangeChange }: IRangeSlider) => {
+export const RangeSliderControl = ({ label, min, max, id, onRangeChange }: IRangeSlider) => {
     const [value, setValue] = useState([min, max]);
     return (
         <span className='form-control'>
@@ -67,6 +68,33 @@ export const RangeSliderControl = ({ label, min, max, onRangeChange }: IRangeSli
                     onRangeChange(value);
                 }}
             />
+            <InputGroup>
+                <InputNumber
+                    id={`${id}-min`}
+                    value={value[0]}
+                    onChange={(nextValue) => {
+                        const next = nextValue as number;
+                        if (next > value[1]) {
+                            return;
+                        }
+                        setValue([next, value[1]]);
+                        onRangeChange([next, value[1]]);
+                    }}
+                />
+                <InputGroup.Addon>to</InputGroup.Addon>
+                <InputNumber
+                    id={`${id}-max`}
+                    value={value[1]}
+                    onChange={(nextValue) => {
+                        const next = nextValue as number;
+                        if (value[0] > next) {
+                            return;
+                        }
+                        setValue([value[0], next]);
+                        onRangeChange([value[0], next]);
+                    }}
+                />
+            </InputGroup>
         </span>
     );
 };

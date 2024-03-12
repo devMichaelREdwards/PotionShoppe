@@ -12,3 +12,13 @@ public interface IRepository<T>
     void Update(T entity);
     void Save();
 }
+
+public interface IAccountRepository<T> : IRepository<T>
+{
+    // Make this later
+}
+
+public interface IFilterRepository<T> : IRepository<T>
+{
+    IFilter<T> GetFilterData();
+}

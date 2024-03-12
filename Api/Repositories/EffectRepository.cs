@@ -1,10 +1,9 @@
-using System.Linq.Expressions;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public class EffectRepository : IRepository<Effect>, IDisposable
+public class EffectRepository : IFilterRepository<Effect>, IDisposable
 {
     private PotionShoppeContext _context;
 
@@ -64,6 +63,15 @@ public class EffectRepository : IRepository<Effect>, IDisposable
     public Effect GetById(int id)
     {
         return _context.Effects.Find(id);
+    }
+
+    public IFilter<Effect> GetFilterData()
+    {
+        return new EffectFilter()
+        {
+            ValueMax = _context.Effects.Max(e => e.Value),
+            DurationMax = _context.Effects.Max(e => e.Duration)
+        };
     }
 
     public Effect Insert(Effect entity)

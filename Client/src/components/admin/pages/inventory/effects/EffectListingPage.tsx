@@ -1,16 +1,37 @@
-import { Button, Content, Form } from 'rsuite';
+import { Content } from 'rsuite';
 import EffectListing from '../../../listing/EffectListing';
 import useTitle from '../../../../../hooks/useTitle';
 import AdminHeader from '../../../../common/header/AdminHeader';
 import { IEffectFilters } from '../../../../../types/IFilter';
-import { RangeSliderControl, TextControl } from '../../../../common/input/FormControl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { debounce } from '../../../../../helpers/timing';
+import axios from '../../../../../api/axios';
+import EffectFilters from '../../../filters/EffectFilters';
 
 const EffectListingPage = () => {
     useTitle('Effects');
 
     const [filters, setFilters] = useState<IEffectFilters>({});
+
+    const [filterLimits, setFilterLimits] = useState<IEffectFilters>({});
+
+    const [loading, setLoading] = useState(true);
+
+    const [draw, setDraw] = useState(0);
+
+    useEffect(() => {
+        const getFilterData = async () => {
+            const response = await axios.get('effect/filters');
+            const limits = response.data;
+            setFilterLimits({
+                vmax: limits.valueMax,
+                dmax: limits.durationMax,
+            });
+            setLoading(false);
+        };
+
+        getFilterData();
+    }, [draw]);
 
     const setFilterByKey = (key: keyof IEffectFilters, value: string | number) => {
         setFilters({ ...filters, [key]: value });
@@ -25,21 +46,24 @@ const EffectListingPage = () => {
     }, 500);
 
     const clearFilters = () => {
-        // Reset constraints here as well?
+        setDraw(draw + 1);
         setFilters({
             name: '',
-            vmin: 0,
-            vmax: 1000,
-            dmin: 0,
-            dmax: 1000,
+            vmin: filterLimits.vmin ?? 0,
+            vmax: filterLimits.vmax ?? 1000,
+            dmin: filterLimits.dmin ?? 0,
+            dmax: filterLimits.dmax ?? 1000,
         });
     };
+
+    if (loading) return <>Loading Screen</>;
 
     return (
         <div className='admin-page'>
             <AdminHeader title='Effects' />
             <Content>
                 <EffectFilters
+                    filterLimits={filterLimits}
                     setFilterByKey={setFilterByKey}
                     setValueRange={setValueRange}
                     setDurationRange={setDurationRange}
@@ -48,55 +72,6 @@ const EffectListingPage = () => {
                 <EffectListing filters={filters} />
             </Content>
         </div>
-    );
-};
-
-interface IEffectFiltersProps {
-    setFilterByKey: (key: keyof IEffectFilters, value: string | number) => void;
-    setValueRange: (range: [number, number]) => void;
-    setDurationRange: (range: [number, number]) => void;
-    clearFilters: () => void;
-}
-
-const EffectFilters = ({ setFilterByKey, setValueRange, setDurationRange, clearFilters }: IEffectFiltersProps) => {
-    const [name, setName] = useState('');
-
-    const clearFiltersClick = () => {
-        setName('');
-        clearFilters();
-    };
-    return (
-        <Form className='filters'>
-            <Form.Group>
-                <TextControl
-                    value={name}
-                    label='Name'
-                    name='name'
-                    onChange={(e: string) => {
-                        setName(e);
-                        setFilterByKey('name', e);
-                    }}
-                />
-                <RangeSliderControl
-                    label={'Value'}
-                    min={0}
-                    max={100}
-                    onRangeChange={(e) => {
-                        setValueRange(e);
-                    }}
-                />
-                <RangeSliderControl
-                    label={'Duration'}
-                    min={0}
-                    max={100}
-                    onRangeChange={(e) => {
-                        setDurationRange(e);
-                    }}
-                />
-            </Form.Group>
-
-            <Button onClick={clearFiltersClick}>Clear Filters</Button>
-        </Form>
     );
 };
 
