@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.Marshalling;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -30,9 +31,16 @@ public class EffectController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetEffectListing()
     {
-        EffectFilter filter = EffectFilter.BuildFilter(Request.Query);
+        EffectFilter? filter = EffectFilter.BuildFilter(Request.Query);
         var result = effects.GetListing(filter);
         return Ok(mapper.Map<List<EffectListing>>(result));
+    }
+
+    [HttpGet("filters")]
+    public IActionResult GetFilterInfo()
+    {
+
+        return Ok();
     }
 
     [HttpPost]

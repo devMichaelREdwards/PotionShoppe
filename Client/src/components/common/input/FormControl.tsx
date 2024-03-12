@@ -1,4 +1,5 @@
-import { Form } from 'rsuite';
+import { useState } from 'react';
+import { Form, RangeSlider } from 'rsuite';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -37,6 +38,33 @@ export const PasswordControl = ({ value, label, placeholder, name, onChange }: I
                 type='password'
                 onChange={(e: string) => {
                     onChange(e);
+                }}
+            />
+        </span>
+    );
+};
+
+interface IRangeSlider {
+    label: string;
+    min: number;
+    max: number;
+    onRangeChange: (value: [number, number]) => void;
+}
+
+export const RangeSliderControl = ({ label, min, max, onRangeChange }: IRangeSlider) => {
+    const [value, setValue] = useState([min, max]);
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <RangeSlider
+                className='form-control-input'
+                progress
+                value={[value[0], value[1]]}
+                min={min}
+                max={max}
+                onChange={(value) => {
+                    setValue(value);
+                    onRangeChange(value);
                 }}
             />
         </span>
