@@ -1,4 +1,4 @@
-import { Container, Content, Header, Panel } from 'rsuite';
+import { Container, Content, Footer, Header, Panel } from 'rsuite';
 import AdminLoginForm from '../../forms/AdminLoginForm';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { refreshEmployee } from '../../../../helpers/authenticate';
 import { IAdminUser } from '../../../../types/IUser';
 import useTitle from '../../../../hooks/useTitle';
+import CopyrightText from '../../../common/information/CopyrightText';
 
 const AdminLoginPage = () => {
     const { user, setUser } = useAuth();
@@ -47,6 +48,9 @@ const AdminLoginPage = () => {
                     <AdminLoginForm />
                 </Panel>
             </Content>
+            <Footer>
+                <CopyrightText />
+            </Footer>
         </Container>
     );
 };

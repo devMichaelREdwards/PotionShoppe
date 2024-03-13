@@ -1,8 +1,9 @@
-import { Sidebar, Sidenav, Nav } from 'rsuite';
+import { Sidebar, Sidenav, Nav, Footer } from 'rsuite';
 import AdminNavItem from './AdminNavItem';
 import { Link } from 'react-router-dom';
 import { CustomerIcon, EffectIcon, EmployeeIcon, IngredientIcon, OrderIcon, ReceiptIcon, PotionIcon } from '../../common/image/Icon';
 import { useState } from 'react';
+import CopyrightText from '../../common/information/CopyrightText';
 
 const headerStyles = {
     // Put this into actual CSS when you do styling
@@ -93,6 +94,9 @@ const AdminSideBar = () => {
                     </Nav>
                 </Sidenav.Body>
             </Sidenav>
+            <div className='admin-copyright'>
+                <CopyrightText />
+            </div>
         </Sidebar>
     );
 };
