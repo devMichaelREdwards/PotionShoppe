@@ -34,7 +34,8 @@ body,
 }
 
 .rs-input,
-.rs-input-number {
+.rs-input-number,
+.rs-input-group {
     outline: none !important;
     -webkit-outline: none !important;
     color: black;
@@ -47,17 +48,28 @@ body,
 
 .rs-input-group {
     margin: auto 0;
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
 
     &:not(.rs-input-group-disabled):hover {
         border-color: #000;
     }
 
-    :focus-within,
     &:not(.rs-input-group-disabled).rs-input-group-focus {
         -webkit-box-shadow: none;
         box-shadow: none;
         border-color: #000;
     }
+}
+
+.rs-input-group:focus-within {
+    border-color: #000;
+}
+
+.rs-input-group-addon {
+    background: none;
+    font-size: $FontSmall;
 }
 
 hr {

@@ -22,9 +22,29 @@
 }
 
 .form-control-input.rs-slider {
-    margin-top: 14px;
+    margin-top: 6px !important;
     width: 100%;
     border: none !important;
+
+    .rs-slider-bar {
+        height: 1px;
+        background-color: black;
+
+        .rs-slider-progress-bar {
+            height: 3px;
+            background-color: black;
+        }
+    }
+
+    .rs-slider-handle {
+        &::before {
+            background: none;
+            border: 1px solid black;
+            border-radius: 0;
+            rotate: 45deg;
+            margin: -4px 0 0 -6px;
+        }
+    }
 }
 
 .image-button {
