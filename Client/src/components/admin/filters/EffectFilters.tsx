@@ -1,21 +1,44 @@
 import { useState } from 'react';
-import { Button, Form } from 'rsuite';
+import { Form } from 'rsuite';
 import { IEffectFilters } from '../../../types/IFilter';
 import { TextControl, RangeSliderControl } from '../../common/input/FormControl';
 import { MagicWandIcon } from '../../common/image/Icon';
+import { debounce } from '../../../helpers/timing';
+import ActionButton from '../../common/input/ActionButton';
 
 interface IEffectFiltersProps {
+    filters: IEffectFilters;
     filterLimits: IEffectFilters;
-    setFilterByKey: (key: keyof IEffectFilters, value: string | number) => void;
-    setValueRange: (range: [number, number]) => void;
-    setDurationRange: (range: [number, number]) => void;
-    clearFilters: () => void;
+    setFilters: React.Dispatch<React.SetStateAction<IEffectFilters>>;
+    onClearCallback?: () => void;
 }
 
-const EffectFilters = ({ filterLimits, setFilterByKey, setValueRange, setDurationRange, clearFilters }: IEffectFiltersProps) => {
+const EffectFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IEffectFiltersProps) => {
     const [name, setName] = useState('');
     const [value, setValue] = useState<[number, number]>([filterLimits.vmin ?? 0, filterLimits.vmax ?? 1000]);
     const [duration, setDuration] = useState<[number, number]>([filterLimits.dmin ?? 0, filterLimits.dmax ?? 1000]);
+
+    const setFilterByKey = (key: keyof IEffectFilters, value: string | number) => {
+        setFilters({ ...filters, [key]: value });
+    };
+
+    const setValueRange = debounce((range: [number, number]) => {
+        setFilters({ ...filters, vmin: range[0], vmax: range[1] });
+    }, 500);
+
+    const setDurationRange = debounce((range: [number, number]) => {
+        setFilters({ ...filters, dmin: range[0], dmax: range[1] });
+    }, 500);
+    const clearFilters = () => {
+        setFilters({
+            name: '',
+            vmin: filterLimits.vmin ?? 0,
+            vmax: filterLimits.vmax ?? 1000,
+            dmin: filterLimits.dmin ?? 0,
+            dmax: filterLimits.dmax ?? 1000,
+        });
+        onClearCallback?.();
+    };
     const clearFiltersClick = () => {
         setName('');
         setValue([filterLimits.vmin ?? 0, filterLimits.vmax ?? 1000]);
@@ -64,7 +87,7 @@ const EffectFilters = ({ filterLimits, setFilterByKey, setValueRange, setDuratio
                 </Form.Group>
             </Form>
             <div className='clear-filters-button'>
-                <Button onClick={clearFiltersClick}>Clear Filters</Button>
+                <ActionButton color={'red'} appearance={'ghost'} label={'Clear Filters'} action={clearFiltersClick} />
             </div>
         </div>
     );
