@@ -11,6 +11,10 @@
 .admin-page {
     overflow-y: auto;
     max-height: 100vh;
+
+    .rs-panel-body {
+        padding: 10px;
+    }
 }
 
 .admin-sidebar {

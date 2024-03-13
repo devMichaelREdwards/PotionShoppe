@@ -1,10 +1,9 @@
-using System.Linq.Expressions;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public class EffectRepository : IRepository<Effect>, IDisposable
+public class EffectRepository : IFilterRepository<Effect>, IDisposable
 {
     private PotionShoppeContext _context;
 
@@ -22,37 +21,37 @@ public class EffectRepository : IRepository<Effect>, IDisposable
     {
         var effects = from effect in _context.Effects select effect;
 
-        string? name = filter.GetValue("name");
+        string? name = filter?.GetValue("name");
         if (name != null)
         {
             effects = effects.Where(e => e.Name!.ToLower().Contains(name.ToLower()));
         }
 
-        int? vMin = filter.GetValue("vmin");
+        int? vMin = filter?.GetValue("vmin");
         if (vMin != null)
         {
             effects = effects.Where(e => e.Value >= vMin);
         }
 
-        int? vMax = filter.GetValue("vmax");
+        int? vMax = filter?.GetValue("vmax");
         if (vMax != null)
         {
             effects = effects.Where(e => e.Value <= vMax);
         }
 
-        int? dMin = filter.GetValue("dmin");
+        int? dMin = filter?.GetValue("dmin");
         if (dMin != null)
         {
             effects = effects.Where(e => e.Duration >= dMin);
         }
 
-        int? dMax = filter.GetValue("dmax");
+        int? dMax = filter?.GetValue("dmax");
         if (dMax != null)
         {
             effects = effects.Where(e => e.Duration <= dMax);
         }
 
-        List<int>? values = filter.GetValue("value");
+        List<int>? values = filter?.GetValue("value");
         if (values != null)
         {
             effects = effects.Where(e => values!.Contains((int)e.Value));
@@ -64,6 +63,15 @@ public class EffectRepository : IRepository<Effect>, IDisposable
     public Effect GetById(int id)
     {
         return _context.Effects.Find(id);
+    }
+
+    public IFilter<Effect> GetFilterData()
+    {
+        return new EffectFilter()
+        {
+            ValueMax = _context.Effects.Max(e => e.Value),
+            DurationMax = _context.Effects.Max(e => e.Duration)
+        };
     }
 
     public Effect Insert(Effect entity)

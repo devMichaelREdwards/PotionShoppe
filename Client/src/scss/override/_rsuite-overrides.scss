@@ -18,7 +18,8 @@ body,
 }
 
 .rs-form-control-input,
-.rs-input {
+.rs-input,
+.rs-input-number {
     border: none;
     background: transparent;
     border-radius: 0;
@@ -32,32 +33,43 @@ body,
     border-radius: 0;
 }
 
-.rs-input {
-    border-radius: 0;
-    border: 0;
+.rs-input,
+.rs-input-number,
+.rs-input-group {
     outline: none !important;
     -webkit-outline: none !important;
     color: black;
     :focus {
         -webkit-box-shadow: none;
         box-shadow: none;
-        border: 0;
+        border: none;
     }
 }
 
 .rs-input-group {
     margin: auto 0;
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
 
     &:not(.rs-input-group-disabled):hover {
         border-color: #000;
     }
 
-    :focus-within,
     &:not(.rs-input-group-disabled).rs-input-group-focus {
         -webkit-box-shadow: none;
         box-shadow: none;
         border-color: #000;
     }
+}
+
+.rs-input-group:focus-within {
+    border-color: #000;
+}
+
+.rs-input-group-addon {
+    background: none;
+    font-size: $FontSmall;
 }
 
 hr {
