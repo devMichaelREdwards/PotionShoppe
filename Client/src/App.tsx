@@ -1,6 +1,7 @@
 import AdminRoutes from './components/routes/AdminRoutes';
 
 const App = () => {
+    //Test commit
     return (
         <>
             <AdminRoutes />
