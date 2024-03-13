@@ -23,7 +23,6 @@
 }
 
 .form-control-input.rs-slider {
-    margin-top: 6px !important;
     width: 100%;
     border: none !important;
 
@@ -46,6 +45,10 @@
             margin: -4px 0 0 -5.5px;
         }
     }
+}
+
+.form-control .rs-input-group {
+    margin: 0;
 }
 
 .image-button {
