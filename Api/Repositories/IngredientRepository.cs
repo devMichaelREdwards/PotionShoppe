@@ -17,12 +17,12 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
         return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }
 
-    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null)
+    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null)
     {
         return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
     }
 
-    public Ingredient GetById(int id)
+    public Ingredient? GetById(int id)
     {
         return context.Ingredients.Find(id);
     }

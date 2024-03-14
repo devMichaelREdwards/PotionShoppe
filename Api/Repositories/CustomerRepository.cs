@@ -17,12 +17,12 @@ public class CustomerRepository : IRepository<Customer>, IDisposable
         return [.. context.Customers.Include(c => c.CustomerStatus)];
     }
 
-    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null)
+    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null, Pagination? page = null)
     {
         return [.. context.Customers.Include(c => c.CustomerStatus).Include(c => c.CustomerAccounts)];
     }
 
-    public Customer GetById(int id)
+    public Customer? GetById(int id)
     {
         return context.Customers.Find(id);
     }

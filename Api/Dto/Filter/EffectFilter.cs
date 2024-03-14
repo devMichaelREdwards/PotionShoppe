@@ -1,6 +1,5 @@
 
 using Api.Classes;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Api.Models;
 
@@ -12,7 +11,7 @@ public partial class EffectFilter : IFilter<Effect>
     public int? DurationMin { get; set; }
     public int? DurationMax { get; set; }
 
-    public List<int> Value { get; set; }
+    public List<int> Value { get; set; } = [];
 
     public dynamic? GetValue(string key)
     {

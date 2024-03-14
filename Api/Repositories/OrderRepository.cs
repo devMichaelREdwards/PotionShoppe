@@ -25,7 +25,7 @@ public class OrderRepository : IRepository<Order>, IDisposable
                 ];
     }
 
-    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null)
+    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null, Pagination? page = null)
     {
         return [.. context.Orders
                     .Include(o => o.Customer)
@@ -34,7 +34,7 @@ public class OrderRepository : IRepository<Order>, IDisposable
                 ];
     }
 
-    public Order GetById(int id)
+    public Order? GetById(int id)
     {
         return context.Orders.Find(id);
     }

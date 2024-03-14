@@ -31,7 +31,8 @@ public class EffectController : ControllerBase
     public IActionResult GetEffectListing()
     {
         EffectFilter? filter = EffectFilter.BuildFilter(Request.Query);
-        var result = effects.GetListing(filter);
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = effects.GetListing(filter, page);
         return Ok(mapper.Map<List<EffectListing>>(result));
     }
 

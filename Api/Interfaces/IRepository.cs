@@ -5,8 +5,8 @@ namespace Api.Data;
 public interface IRepository<T>
 {
     IEnumerable<T> Get();
-    IEnumerable<T> GetListing(IFilter<T>? filter = null);
-    T GetById(int id);
+    IEnumerable<T> GetListing(IFilter<T>? filter = null, Pagination? page = null);
+    T? GetById(int id);
     T Insert(T entity);
     void Delete(int id);
     void Update(T entity);
@@ -21,4 +21,5 @@ public interface IAccountRepository<T> : IRepository<T>
 public interface IFilterRepository<T> : IRepository<T>
 {
     IFilter<T> GetFilterData();
+
 }

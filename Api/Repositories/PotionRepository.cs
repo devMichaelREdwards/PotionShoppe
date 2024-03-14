@@ -17,12 +17,12 @@ public class PotionRepository : IRepository<Potion>, IDisposable
         return [.. context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
     }
 
-    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null)
+    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null)
     {
         return [.. context.Potions.Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
     }
 
-    public Potion GetById(int id)
+    public Potion? GetById(int id)
     {
         return context.Potions.Find(id);
     }

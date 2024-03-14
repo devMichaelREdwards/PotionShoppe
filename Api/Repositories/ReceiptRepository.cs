@@ -22,7 +22,7 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
                 ];
     }
 
-    public IEnumerable<Receipt> GetListing(IFilter<Receipt>? filter = null)
+    public IEnumerable<Receipt> GetListing(IFilter<Receipt>? filter = null, Pagination? page = null)
     {
         return [.. context.Receipts
                     .Include(r => r.Order).ThenInclude(o => o!.Customer)
@@ -31,7 +31,7 @@ public class ReceiptRepository : IRepository<Receipt>, IDisposable
                 ];
     }
 
-    public Receipt GetById(int id)
+    public Receipt? GetById(int id)
     {
         return context.Receipts!.Find(id)!;
     }

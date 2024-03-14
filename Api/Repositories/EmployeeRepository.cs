@@ -19,7 +19,7 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
             .Include(e => e.EmployeePosition)];
     }
 
-    public IEnumerable<Employee> GetListing(IFilter<Employee>? filter = null)
+    public IEnumerable<Employee> GetListing(IFilter<Employee>? filter = null, Pagination? page = null)
     {
         return [.. context.Employees
             .Include(e => e.EmployeeStatus)
@@ -27,7 +27,7 @@ public class EmployeeRepository : IRepository<Employee>, IDisposable
             .Include(e => e.EmployeeAccounts)];
     }
 
-    public Employee GetById(int id)
+    public Employee? GetById(int id)
     {
         return context.Employees.Find(id);
     }
