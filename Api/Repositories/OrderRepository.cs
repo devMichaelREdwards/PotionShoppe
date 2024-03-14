@@ -1,9 +1,10 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class OrderRepository : IRepository<Order>, IDisposable
+public class OrderRepository : IListingRepository<Order>, IDisposable
 {
     private PotionShoppeContext context;
 
@@ -27,11 +28,12 @@ public class OrderRepository : IRepository<Order>, IDisposable
 
     public IEnumerable<Order> GetListing(IFilter<Order>? filter = null, Pagination? page = null)
     {
-        return [.. context.Orders
+        var orders = context.Orders
                     .Include(o => o.Customer)
                     .ThenInclude(c => c.CustomerStatus)
                     .Include(o => o.OrderStatus)
-                ];
+                    .AsQueryable();
+        return orders.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
     public Order? GetById(int id)
@@ -82,6 +84,11 @@ public class OrderRepository : IRepository<Order>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Order> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

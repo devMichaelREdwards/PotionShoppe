@@ -10,12 +10,12 @@ public partial class Pagination : IFilter<Pagination>
 
     public dynamic? GetValue(string key)
     {
-        switch (key)
+        return key switch
         {
-            case "page": return Page;
-            case "limit": return Limit;
-            default: return null;
-        }
+            "page" => Page,
+            "limit" => (dynamic?)Limit,
+            _ => null,
+        };
     }
 
     public static Pagination? BuildFilter(IQueryCollection query)

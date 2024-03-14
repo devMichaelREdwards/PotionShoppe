@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class PotionController : ControllerBase
 {
-    private readonly IRepository<Potion> potions;
+    private readonly IListingRepository<Potion> potions;
     private readonly IMapper mapper;
 
-    public PotionController(IRepository<Potion> _potions, IMapper _mapper)
+    public PotionController(IListingRepository<Potion> _potions, IMapper _mapper)
     {
         potions = _potions;
         mapper = _mapper;

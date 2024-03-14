@@ -15,16 +15,16 @@ public partial class EffectFilter : IFilter<Effect>
 
     public dynamic? GetValue(string key)
     {
-        switch (key)
+        return key switch
         {
-            case "name": return Name;
-            case "vmin": return ValueMin;
-            case "vmax": return ValueMax;
-            case "dmin": return DurationMin;
-            case "dmax": return DurationMax;
-            case "value": return Value;
-            default: return null;
-        }
+            "name" => Name,
+            "vmin" => ValueMin,
+            "vmax" => ValueMax,
+            "dmin" => DurationMin,
+            "dmax" => DurationMax,
+            "value" => Value,
+            _ => null,
+        };
     }
 
     public static EffectFilter? BuildFilter(IQueryCollection query)

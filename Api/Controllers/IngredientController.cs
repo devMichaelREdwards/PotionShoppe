@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class IngredientController : ControllerBase
 {
-    private readonly IRepository<Ingredient> ingredients;
+    private readonly IListingRepository<Ingredient> ingredients;
     private readonly IMapper mapper;
 
-    public IngredientController(IRepository<Ingredient> _ingredients, IMapper _mapper)
+    public IngredientController(IListingRepository<Ingredient> _ingredients, IMapper _mapper)
     {
         ingredients = _ingredients;
         mapper = _mapper;

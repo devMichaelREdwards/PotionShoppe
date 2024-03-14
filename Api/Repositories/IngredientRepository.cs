@@ -4,7 +4,7 @@ using PagedList;
 
 namespace Api.Data;
 
-public class IngredientRepository : IRepository<Ingredient>, IDisposable
+public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 {
     private PotionShoppeContext _context;
 
@@ -73,6 +73,11 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Ingredient> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion
