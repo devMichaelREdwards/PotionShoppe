@@ -17,6 +17,7 @@ const Pagination = ({ page, limit, onPageChange, onLimitChange }: IProps) => {
         if (pageNumber) onPageChange(pageNumber);
         else {
             onPageChange(1);
+            setPage('1');
         }
     };
 
@@ -24,7 +25,8 @@ const Pagination = ({ page, limit, onPageChange, onLimitChange }: IProps) => {
         const limitNumber = parseInt(newLimit);
         if (limitNumber) onLimitChange(limitNumber);
         else {
-            onLimitChange(1);
+            onLimitChange(20);
+            setLimit('20');
         }
     };
 
