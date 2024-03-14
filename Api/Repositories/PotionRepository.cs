@@ -1,55 +1,58 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class PotionRepository : IRepository<Potion>, IDisposable
+public class PotionRepository : IListingRepository<Potion>, IDisposable
 {
-    private PotionShoppeContext context;
+    private PotionShoppeContext _context;
 
-    public PotionRepository(PotionShoppeContext _context)
+    public PotionRepository(PotionShoppeContext context)
     {
-        context = _context;
+        _context = context;
     }
 
     public IEnumerable<Potion> Get()
     {
-        return [.. context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
+        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
+        return [.. potions];
     }
 
-    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null)
+    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null)
     {
-        return [.. context.Potions.Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect)];
+        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
+        return potions.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
-    public Potion GetById(int id)
+    public Potion? GetById(int id)
     {
-        return context.Potions.Find(id);
+        return _context.Potions.Find(id);
     }
 
     public Potion Insert(Potion entity)
     {
-        context.Potions.Add(entity);
+        _context.Potions.Add(entity);
         Save();
         return entity;
     }
 
     public void Update(Potion entity)
     {
-        context.Entry(entity).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
         Save();
     }
 
     public void Delete(int id)
     {
-        Potion potion = context.Potions.Find(id);
-        context.Potions.Remove(potion);
+        Potion potion = _context.Potions.Find(id);
+        _context.Potions.Remove(potion);
         Save();
     }
 
     public void Save()
     {
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     #region Dispose
@@ -61,7 +64,7 @@ public class PotionRepository : IRepository<Potion>, IDisposable
         {
             if (disposing)
             {
-                context.Dispose();
+                _context.Dispose();
             }
         }
         this.disposed = true;
@@ -70,6 +73,11 @@ public class PotionRepository : IRepository<Potion>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Potion> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

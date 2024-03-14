@@ -1,55 +1,58 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class IngredientRepository : IRepository<Ingredient>, IDisposable
+public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 {
-    private PotionShoppeContext context;
+    private PotionShoppeContext _context;
 
-    public IngredientRepository(PotionShoppeContext _context)
+    public IngredientRepository(PotionShoppeContext context)
     {
-        context = _context;
+        _context = context;
     }
 
     public IEnumerable<Ingredient> Get()
     {
-        return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
+        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory).AsQueryable();
+        return [.. ingredients];
     }
 
-    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null)
+    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null)
     {
-        return [.. context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory)];
+        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory).AsQueryable();
+        return ingredients.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
-    public Ingredient GetById(int id)
+    public Ingredient? GetById(int id)
     {
-        return context.Ingredients.Find(id);
+        return _context.Ingredients.Find(id);
     }
 
     public Ingredient Insert(Ingredient entity)
     {
-        context.Ingredients.Add(entity);
+        _context.Ingredients.Add(entity);
         Save();
         return entity;
     }
 
     public void Update(Ingredient entity)
     {
-        context.Entry(entity).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
         Save();
     }
 
     public void Delete(int id)
     {
-        Ingredient ingredient = context.Ingredients.Find(id);
-        context.Ingredients.Remove(ingredient);
+        Ingredient ingredient = _context.Ingredients.Find(id);
+        _context.Ingredients.Remove(ingredient);
         Save();
     }
 
     public void Save()
     {
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     #region Dispose
@@ -61,7 +64,7 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
         {
             if (disposing)
             {
-                context.Dispose();
+                _context.Dispose();
             }
         }
         this.disposed = true;
@@ -70,6 +73,11 @@ public class IngredientRepository : IRepository<Ingredient>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Ingredient> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class PotionController : ControllerBase
 {
-    private readonly IRepository<Potion> potions;
+    private readonly IListingRepository<Potion> potions;
     private readonly IMapper mapper;
 
-    public PotionController(IRepository<Potion> _potions, IMapper _mapper)
+    public PotionController(IListingRepository<Potion> _potions, IMapper _mapper)
     {
         potions = _potions;
         mapper = _mapper;
@@ -30,7 +30,8 @@ public class PotionController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetPotionListing()
     {
-        var result = potions.GetListing();
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = potions.GetListing(null, page);
         return Ok(mapper.Map<List<PotionListing>>(result));
     }
 

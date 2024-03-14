@@ -17,12 +17,12 @@ public class OrderPotionRepository : IRepository<OrderPotion>, IDisposable
         return [.. context.OrderPotions.Include(pe => pe.Order).Include(pe => pe.Potion)];
     }
 
-    public IEnumerable<OrderPotion> GetListing(IFilter<OrderPotion>? filter = null)
+    public IEnumerable<OrderPotion> GetListing(IFilter<OrderPotion>? filter = null, Pagination? page = null)
     {
         throw new NotImplementedException();
     }
 
-    public OrderPotion GetById(int id)
+    public OrderPotion? GetById(int id)
     {
         return context.OrderPotions.Find(id);
     }

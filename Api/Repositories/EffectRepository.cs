@@ -1,9 +1,10 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class EffectRepository : IFilterRepository<Effect>, IDisposable
+public class EffectRepository : IListingRepository<Effect>, IDisposable
 {
     private PotionShoppeContext _context;
 
@@ -17,9 +18,9 @@ public class EffectRepository : IFilterRepository<Effect>, IDisposable
         return [.. _context.Effects];
     }
 
-    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null)
+    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null)
     {
-        var effects = from effect in _context.Effects select effect;
+        var effects = _context.Effects.AsQueryable();
 
         string? name = filter?.GetValue("name");
         if (name != null)
@@ -54,13 +55,13 @@ public class EffectRepository : IFilterRepository<Effect>, IDisposable
         List<int>? values = filter?.GetValue("value");
         if (values != null)
         {
-            effects = effects.Where(e => values!.Contains((int)e.Value));
+            effects = effects.Where(e => values!.Contains((int)e.Value!));
         }
 
-        return effects;
+        return effects.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
-    public Effect GetById(int id)
+    public Effect? GetById(int id)
     {
         return _context.Effects.Find(id);
     }
