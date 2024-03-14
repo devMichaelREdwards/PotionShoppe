@@ -20,7 +20,7 @@ public class EffectRepository : IFilterRepository<Effect>, IDisposable
 
     public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null)
     {
-        var effects = from effect in _context.Effects select effect;
+        var effects = _context.Effects.AsQueryable();
 
         string? name = filter?.GetValue("name");
         if (name != null)

@@ -30,7 +30,8 @@ public class IngredientController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetIngredientListing()
     {
-        var result = ingredients.GetListing();
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = ingredients.GetListing(null, page);
         return Ok(mapper.Map<List<IngredientListing>>(result));
     }
 

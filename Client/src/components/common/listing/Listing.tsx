@@ -24,7 +24,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     const [draw, setDraw] = useState(0);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(20);
-    const { data, loading, error, refresh } = useData(route + `?page=${page}&limit=${limit}&${filterString}`);
+    const { data, loading, error, refresh } = useData(route + `?page=${page}&limit=${limit}&${filterString ?? ''}`);
     const handleCheckboxClick = (id: number) => {
         if (selected.includes(id)) {
             const newSelected = selected.filter((inArr) => {
