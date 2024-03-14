@@ -66,7 +66,7 @@ const EffectListing = ({ filters }: IProps) => {
 
     const buildFilterString = (filters: IEffectFilters) => {
         let addFilters = false;
-        let filterString = '?';
+        let filterString = '';
         if (filters.name) {
             addFilters = true;
             filterString += `name=${filters.name}`;
@@ -99,7 +99,16 @@ const EffectListing = ({ filters }: IProps) => {
         return addFilters ? filterString : '';
     };
 
-    return <Listing id='effectId' columns={columns} route={`effect/listing${buildFilterString(filters)}`} remove={remove} rowButtons={rowButtons} />;
+    return (
+        <Listing
+            id='effectId'
+            columns={columns}
+            route={`effect/listing`}
+            remove={remove}
+            rowButtons={rowButtons}
+            filterString={buildFilterString(filters)}
+        />
+    );
 };
 
 export default EffectListing;
