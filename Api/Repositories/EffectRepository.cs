@@ -4,7 +4,7 @@ using PagedList;
 
 namespace Api.Data;
 
-public class EffectRepository : IFilterRepository<Effect>, IDisposable
+public class EffectRepository : IListingRepository<Effect>, IDisposable
 {
     private PotionShoppeContext _context;
 

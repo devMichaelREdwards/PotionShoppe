@@ -44,7 +44,6 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     };
 
     const handlePageChange = (newPage: number) => {
-        console.log(newPage);
         if (newPage < 1) return;
         setPage(newPage);
     };

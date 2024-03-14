@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EffectController : ControllerBase
 {
-    private readonly IFilterRepository<Effect> effects;
+    private readonly IListingRepository<Effect> effects;
     private readonly IMapper mapper;
 
-    public EffectController(IFilterRepository<Effect> _effects, IMapper _mapper)
+    public EffectController(IListingRepository<Effect> _effects, IMapper _mapper)
     {
         effects = _effects;
         mapper = _mapper;

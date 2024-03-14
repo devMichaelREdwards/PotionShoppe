@@ -20,14 +20,17 @@ const EffectFilters = ({ filters, filterLimits, setFilters, onClearCallback }: I
 
     const setFilterByKey = (key: keyof IEffectFilters, value: string | number) => {
         setFilters({ ...filters, [key]: value });
+        onClearCallback?.();
     };
 
     const setValueRange = debounce((range: [number, number]) => {
         setFilters({ ...filters, vmin: range[0], vmax: range[1] });
+        onClearCallback?.();
     }, 500);
 
     const setDurationRange = debounce((range: [number, number]) => {
         setFilters({ ...filters, dmin: range[0], dmax: range[1] });
+        onClearCallback?.();
     }, 500);
     const clearFilters = () => {
         setFilters({

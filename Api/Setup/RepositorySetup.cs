@@ -10,7 +10,7 @@ public static class RepositorySetup
         services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
         services.AddScoped<IRepository<EmployeePosition>, EmployeePositionRepository>();
         services.AddScoped<IRepository<Employee>, EmployeeRepository>();
-        services.AddScoped<IFilterRepository<Effect>, EffectRepository>();
+        services.AddScoped<IListingRepository<Effect>, EffectRepository>();
         services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
         services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository>();
         services.AddScoped<IRepository<Customer>, CustomerRepository>();

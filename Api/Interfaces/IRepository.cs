@@ -18,7 +18,7 @@ public interface IAccountRepository<T> : IRepository<T>
     // Make this later
 }
 
-public interface IFilterRepository<T> : IRepository<T>
+public interface IListingRepository<T> : IRepository<T>
 {
     IFilter<T> GetFilterData();
 
