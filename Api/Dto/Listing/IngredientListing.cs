@@ -16,6 +16,7 @@ public partial class IngredientListing
 
     public string? Image { get; set; }
 
+    public int? EffectId { get; set; }
     public string? IngredientCategory { get; set; }
 
     public EffectDisplayListing? Effect { get; set; }

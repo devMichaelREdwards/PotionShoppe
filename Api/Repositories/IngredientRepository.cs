@@ -41,37 +41,6 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
             ingredients = ingredients.Where(i => i.EffectId == effect);
         }
 
-        int? cMin = filter?.GetValue("cmin");
-        if (cMin != null)
-        {
-            ingredients = ingredients.Where(i => i.Cost >= cMin);
-        }
-
-        int? cMax = filter?.GetValue("cmax");
-        if (cMax != null)
-        {
-            ingredients = ingredients.Where(i => i.Cost <= cMax);
-        }
-
-        int? pMin = filter?.GetValue("pmin");
-        if (pMin != null)
-        {
-            ingredients = ingredients.Where(i => i.Price >= pMin);
-        }
-
-        int? pMax = filter?.GetValue("pmax");
-        if (pMax != null)
-        {
-            ingredients = ingredients.Where(i => i.Price <= pMax);
-        }
-
-        int? inStock = filter?.GetValue("instock");
-        if (inStock != null)
-        {
-            ingredients = ingredients.Where(i => i.CurrentStock > 0);
-        }
-
-
         return ingredients.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
