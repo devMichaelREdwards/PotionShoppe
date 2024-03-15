@@ -22,6 +22,25 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
     public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null)
     {
         var ingredients = _context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory).AsQueryable();
+
+        string? name = filter?.GetValue("name");
+        if (name != null)
+        {
+            ingredients = ingredients.Where(i => i.Name!.ToLower().Contains(name.ToLower()));
+        }
+
+        int? category = filter?.GetValue("category");
+        if (category != null)
+        {
+            ingredients = ingredients.Where(i => i.IngredientCategoryId == category);
+        }
+
+        int? effect = filter?.GetValue("effect");
+        if (effect != null)
+        {
+            ingredients = ingredients.Where(i => i.EffectId == effect);
+        }
+
         return ingredients.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
