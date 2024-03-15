@@ -12,7 +12,7 @@ public partial class IngredientFilter : IFilter<Ingredient>
     public int? CostMax { get; set; }
     public int? PriceMin { get; set; }
     public int? PriceMax { get; set; }
-    public int? InStock { get; set; }
+    public bool? InStock { get; set; }
     public dynamic? GetValue(string key)
     {
         switch (key)
@@ -43,7 +43,7 @@ public partial class IngredientFilter : IFilter<Ingredient>
             CostMax = ParseFilter.GetInt("cmax", query),
             PriceMin = ParseFilter.GetInt("pmin", query),
             PriceMax = ParseFilter.GetInt("pmax", query),
-            InStock = ParseFilter.GetInt("instock", query)
+            InStock = ParseFilter.GetBool("instock", query)
         };
     }
 }

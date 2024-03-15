@@ -65,7 +65,7 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
             ingredients = ingredients.Where(i => i.Price <= pMax);
         }
 
-        int? inStock = filter?.GetValue("instock");
+        bool? inStock = filter?.GetValue("instock");
         if (inStock != null)
         {
             ingredients = ingredients.Where(i => i.CurrentStock > 0);
