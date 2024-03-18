@@ -66,13 +66,22 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         }
 
         bool? inStock = filter?.GetValue("instock");
-        if (inStock != null)
+        if (inStock == true)
         {
             ingredients = ingredients.Where(i => i.CurrentStock > 0);
         }
 
 
         return ingredients.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
+    }
+
+    public IFilter<Ingredient> GetFilterData()
+    {
+        return new IngredientFilter()
+        {
+            CostMax = _context.Ingredients.Max(i => i.Cost),
+            PriceMax = _context.Ingredients.Max(i => i.Price)
+        };
     }
 
     public Ingredient? GetById(int id)
@@ -123,11 +132,6 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IFilter<Ingredient> GetFilterData()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion

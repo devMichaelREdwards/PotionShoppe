@@ -1,4 +1,4 @@
-import { Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -37,6 +37,30 @@ export const PasswordControl = ({ value, label, placeholder, name, onChange }: I
                 type='password'
                 onChange={(e: string) => {
                     onChange(e);
+                }}
+            />
+        </span>
+    );
+};
+
+interface ICheckbox {
+    value: boolean;
+    label?: string;
+    name: string;
+    onChange: () => void;
+}
+
+export const CheckboxControl = ({ value, label, name, onChange }: ICheckbox) => {
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <Checkbox
+                className='listing-checkbox'
+                id={`instock-filter`}
+                value={name}
+                checked={value}
+                onChange={() => {
+                    onChange();
                 }}
             />
         </span>

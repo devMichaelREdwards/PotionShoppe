@@ -36,6 +36,13 @@ public class IngredientController : ControllerBase
         return Ok(mapper.Map<List<IngredientListing>>(result));
     }
 
+    [HttpGet("filters")]
+    public IActionResult GetFilterInfo()
+    {
+        IngredientFilter filterLimits = (IngredientFilter)ingredients.GetFilterData();
+        return Ok(filterLimits);
+    }
+
     [HttpPost]
     [Authorize(Roles = "Employee")]
     public IActionResult PostIngredient(IngredientDto ingredient)
