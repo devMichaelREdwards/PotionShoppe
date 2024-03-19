@@ -61,7 +61,6 @@ export const CheckboxControl = ({ value, label, name, onChange }: ICheckbox) => 
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <Checkbox
                 className='checkbox'
-                id={`instock-filter`}
                 value={name}
                 checked={value}
                 onChange={() => {
