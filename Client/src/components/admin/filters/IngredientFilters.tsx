@@ -16,6 +16,7 @@ interface IProps {
 
 const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IProps) => {
     const [name, setName] = useState('');
+    const [categoryQuery, setCategoryQuery] = useState('');
     const [categories, setCategories] = useState<ICollectionObject[]>([]);
     const [effectQuery, setEffectQuery] = useState('');
     const [effects, setEffects] = useState<ICollectionObject[]>([]);
@@ -47,6 +48,20 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
         const newEffects = [...effects.filter((e) => e.id !== id)];
         setEffects(newEffects);
         setFilters({ ...filters, effects: newEffects.map((e) => e.id ?? 0) });
+        onClearCallback?.();
+    };
+
+    const addCategory = (category: ICollectionObject) => {
+        const newCategories = [...categories, category];
+        setCategories(newCategories);
+        setFilters({ ...filters, categories: newCategories.map((c) => c.id ?? 0) });
+        onClearCallback?.();
+    };
+
+    const removeCategory = (id: number) => {
+        const newCategories = [...categories.filter((c) => c.id !== id)];
+        setEffects(newCategories);
+        setFilters({ ...filters, categories: newCategories.map((c) => c.id ?? 0) });
         onClearCallback?.();
     };
 
@@ -123,6 +138,17 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
                         addTag={addEffect}
                         removeTag={removeEffect}
                         setValue={(newValue) => setEffectQuery(newValue)}
+                    />
+                    <TagSearchInput
+                        value={categoryQuery}
+                        label='Category'
+                        route='ingredientcategory'
+                        tags={categories}
+                        idKey='ingredientCategoryId'
+                        dataKey='title'
+                        addTag={addCategory}
+                        removeTag={removeCategory}
+                        setValue={(newValue) => setCategoryQuery(newValue)}
                     />
                     <CheckboxControl
                         value={inStock}

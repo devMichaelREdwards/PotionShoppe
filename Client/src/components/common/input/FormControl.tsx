@@ -212,7 +212,8 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                         return d[dataKey] == v;
                     });
                     if (!selected) return;
-                    const color = (selected['color'] as { color: string })['color'] as string;
+                    console.log(selected);
+                    const color = selected['color'] ? ((selected['color'] as { color: string })['color'] as string) : 'grey';
                     const collectionObj = {
                         id: selected[idKey] as number,
                         title: selected[dataKey] as string,

@@ -108,6 +108,7 @@ const IngredientListing = ({ filters }: IProps) => {
         }
 
         if (filters.effects !== undefined && filters.effects.length > 0) {
+            console.log(filters);
             if (addFilters) filterString += `&`;
             else addFilters = true;
             let idString = '';
