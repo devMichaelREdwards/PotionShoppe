@@ -49,7 +49,7 @@ public class ParseFilter
             return null;
         }
 
-        string[] values = value.Split("|");
+        string[] values = value.Split(",");
 
         List<int> ret = [];
 

@@ -4,7 +4,8 @@ import { debounce } from '../../../helpers/timing';
 import { MagicWandIcon } from '../../common/image/Icon';
 import { Form } from 'rsuite';
 import ActionButton from '../../common/input/ActionButton';
-import { TextControl, RangeSliderControl, CheckboxControl } from '../../common/input/FormControl';
+import { TextControl, RangeSliderControl, CheckboxControl, TagSearchInput } from '../../common/input/FormControl';
+import { ICollectionObject } from '../../../types/IListing';
 
 interface IProps {
     filters: IIngredientFilters;
@@ -15,8 +16,9 @@ interface IProps {
 
 const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IProps) => {
     const [name, setName] = useState('');
-    const [category, setCategory] = useState(0);
-    const [effect, setEffect] = useState(0);
+    const [categories, setCategories] = useState<ICollectionObject[]>([]);
+    const [effectQuery, setEffectQuery] = useState('');
+    const [effects, setEffects] = useState<ICollectionObject[]>([]);
     const [cost, setCost] = useState<[number, number]>([filterLimits.cmin ?? 0, filterLimits.cmax ?? 1000]);
     const [price, setPrice] = useState<[number, number]>([filterLimits.pmin ?? 0, filterLimits.pmax ?? 1000]);
     const [inStock, setInStock] = useState(filterLimits.instock ?? false);
@@ -34,11 +36,25 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
         setFilters({ ...filters, pmin: range[0], pmax: range[1] });
     });
 
+    const addEffect = (effect: ICollectionObject) => {
+        const newEffects = [...effects, effect];
+        setEffects(newEffects);
+        setFilters({ ...filters, effects: newEffects.map((e) => e.id ?? 0) });
+        onClearCallback?.();
+    };
+
+    const removeEffect = (id: number) => {
+        const newEffects = [...effects.filter((e) => e.id !== id)];
+        setEffects(newEffects);
+        setFilters({ ...filters, effects: newEffects.map((e) => e.id ?? 0) });
+        onClearCallback?.();
+    };
+
     const clearFilters = () => {
         setFilters({
             name: '',
-            category: 0,
-            effect: 0,
+            categories: [],
+            effects: [],
             cmin: filterLimits.cmin ?? 0,
             cmax: filterLimits.cmax ?? 1000,
             pmin: filterLimits.pmin ?? 0,
@@ -49,8 +65,8 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
     };
     const clearFiltersClick = () => {
         setName('');
-        setCategory(0);
-        setEffect(0);
+        setCategories([]);
+        setEffects([]);
         setCost([filterLimits.cmin ?? 0, filterLimits.cmax ?? 1000]);
         setPrice([filterLimits.pmin ?? 0, filterLimits.pmax ?? 1000]);
         setInStock(false);
@@ -94,6 +110,19 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
                             setPrice(e);
                             setPriceRange(e);
                         }}
+                    />
+                </Form.Group>
+                <Form.Group className='filter-group'>
+                    <TagSearchInput
+                        value={effectQuery}
+                        label='Effect'
+                        route='effect/listing'
+                        tags={effects}
+                        idKey='effectId'
+                        dataKey='name'
+                        addTag={addEffect}
+                        removeTag={removeEffect}
+                        setValue={(newValue) => setEffectQuery(newValue)}
                     />
                     <CheckboxControl
                         value={inStock}

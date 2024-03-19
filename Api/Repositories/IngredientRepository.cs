@@ -29,16 +29,16 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
             ingredients = ingredients.Where(i => i.Name!.ToLower().Contains(name.ToLower()));
         }
 
-        int? category = filter?.GetValue("category");
-        if (category != null)
+        List<int>? categories = filter?.GetValue("category");
+        if (categories != null)
         {
-            ingredients = ingredients.Where(i => i.IngredientCategoryId == category);
+            ingredients = ingredients.Where(i => categories.Contains(i.IngredientCategoryId ?? 0));
         }
 
-        int? effect = filter?.GetValue("effect");
-        if (effect != null)
+        List<int>? effects = filter?.GetValue("effect");
+        if (effects != null)
         {
-            ingredients = ingredients.Where(i => i.EffectId == effect);
+            ingredients = ingredients.Where(i => effects.Contains(i.EffectId ?? 0));
         }
 
         int? cMin = filter?.GetValue("cmin");

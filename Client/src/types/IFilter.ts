@@ -8,8 +8,8 @@ export interface IEffectFilters {
 
 export interface IIngredientFilters {
     name?: string;
-    category?: number;
-    effect?: number;
+    categories?: number[];
+    effects?: number[];
     cmin?: number;
     cmax?: number;
     pmin?: number;

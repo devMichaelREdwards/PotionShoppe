@@ -125,11 +125,11 @@ input:-webkit-autofill:active {
     margin-top: 7px;
 }
 
-.listing-checkbox .rs-checkbox {
+.checkbox .rs-checkbox {
     border: 1px solid black;
 }
 
-.listing-checkbox .rs-checkbox-inner::after {
+.checkbox .rs-checkbox-inner::after {
     display: none;
 }
 

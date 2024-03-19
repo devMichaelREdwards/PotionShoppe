@@ -40,14 +40,14 @@ const IngredientListingPage = () => {
             <AdminHeader title='Ingredients' />
             <Content>
                 <IngredientFilters
-                    filters={filters}
+                    filters={{ ...filters }}
                     filterLimits={filterLimits}
                     setFilters={setFilters}
                     onClearCallback={() => {
                         setDraw(draw + 1);
                     }}
                 />
-                <IngredientListing filters={filters} />
+                <IngredientListing filters={{ ...filters }} />
             </Content>
         </Panel>
     );

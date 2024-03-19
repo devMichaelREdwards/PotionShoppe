@@ -93,16 +93,31 @@ const IngredientListing = ({ filters }: IProps) => {
             filterString += `name=${filters.name}`;
         }
 
-        if (filters.category !== undefined && filters.category > 0) {
+        if (filters.categories !== undefined && filters.categories.length > 0) {
             if (addFilters) filterString += `&`;
             else addFilters = true;
-            filterString += `category=${filters.category}`;
+
+            let idString = '';
+            filters.categories.forEach((cat, i) => {
+                idString += cat;
+                if (i < filters.categories!.length - 1) {
+                    idString += ',';
+                }
+            });
+            filterString += `category=${idString}`;
         }
 
-        if (filters.effect !== undefined && filters.effect > 0) {
+        if (filters.effects !== undefined && filters.effects.length > 0) {
             if (addFilters) filterString += `&`;
             else addFilters = true;
-            filterString += `effect=${filters.effect}`;
+            let idString = '';
+            filters.effects.forEach((eff, i) => {
+                idString += eff;
+                if (i < filters.effects!.length - 1) {
+                    idString += ',';
+                }
+            });
+            filterString += `effect=${idString}`;
         }
 
         if (filters.cmin !== undefined && filters.cmin > 0) {
