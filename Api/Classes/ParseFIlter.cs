@@ -22,6 +22,12 @@ public class ParseFilter
         return parsedValue;
     }
 
+    public static bool? GetBool(string key, IQueryCollection query)
+    {
+        string? value = query[key];
+        return value != null;
+    }
+
     public static List<string> GetStringOptions(string key, IQueryCollection query)
     {
         string? value = query[key];
@@ -43,7 +49,7 @@ public class ParseFilter
             return null;
         }
 
-        string[] values = value.Split("|");
+        string[] values = value.Split(",");
 
         List<int> ret = [];
 

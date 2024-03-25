@@ -5,3 +5,14 @@ export interface IEffectFilters {
     dmin?: number;
     dmax?: number;
 }
+
+export interface IIngredientFilters {
+    name?: string;
+    categories?: number[];
+    effects?: number[];
+    cmin?: number;
+    cmax?: number;
+    pmin?: number;
+    pmax?: number;
+    instock?: boolean;
+}

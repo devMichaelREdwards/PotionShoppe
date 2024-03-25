@@ -19,6 +19,7 @@ export interface IActionButton {
 }
 
 export interface ICollectionObject {
+    id?: number;
     title: string;
     color?: string;
 }

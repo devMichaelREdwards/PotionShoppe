@@ -6,14 +6,14 @@ import { MagicWandIcon } from '../../common/image/Icon';
 import { debounce } from '../../../helpers/timing';
 import ActionButton from '../../common/input/ActionButton';
 
-interface IEffectFiltersProps {
+interface IProps {
     filters: IEffectFilters;
     filterLimits: IEffectFilters;
     setFilters: React.Dispatch<React.SetStateAction<IEffectFilters>>;
     onClearCallback?: () => void;
 }
 
-const EffectFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IEffectFiltersProps) => {
+const EffectFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IProps) => {
     const [name, setName] = useState('');
     const [value, setValue] = useState<[number, number]>([filterLimits.vmin ?? 0, filterLimits.vmax ?? 1000]);
     const [duration, setDuration] = useState<[number, number]>([filterLimits.dmin ?? 0, filterLimits.dmax ?? 1000]);

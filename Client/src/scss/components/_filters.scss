@@ -9,7 +9,7 @@
 
     .filter-icon {
         display: flex;
-        width: 250px;
+        width: 200px;
         gap: 10px;
         justify-content: center;
         align-items: center;
@@ -17,7 +17,13 @@
     }
 
     .filter-form {
-        width: 100%;
+    }
+
+    .filter-toggles {
+        .form-control-label {
+            flex-basis: 70%;
+            padding-right: 10px;
+        }
     }
 
     .filter-group.rs-form-group {
@@ -25,10 +31,11 @@
         min-width: 100%;
         justify-content: center;
         gap: 50px;
-        height: 80px;
+
         margin-bottom: 10px;
         .form-control {
-            height: 100%;
+            width: 300px;
+            min-height: 100px;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
@@ -38,17 +45,60 @@
                 padding: 0;
             }
             .form-control-input {
+                width: 300px;
                 margin: 0;
                 padding: 0;
                 font-size: $FontSmall;
+
+                input {
+                    font-size: $FontSmall;
+                }
             }
         }
     }
 
     .clear-filters-button {
-        width: 250px;
         display: flex;
         justify-content: flex-end;
-        gap: 10px;
+        gap: 20px;
+    }
+}
+
+.form-control-tags {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding-top: 5px;
+}
+
+.tag {
+    padding: 10px;
+    width: 80%;
+    height: 10px;
+    border-radius: 16px;
+    font-size: $FontTiny;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.tag.light {
+    color: black;
+}
+
+.tag.dark {
+    color: white;
+}
+
+.tag.error {
+    span {
+        color: red;
+        font-size: 44px;
+        font-weight: bolder;
+        margin-left: 10px;
+        font-family: 'fantasy';
     }
 }

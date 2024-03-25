@@ -30,9 +30,17 @@ public class IngredientController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetIngredientListing()
     {
+        IngredientFilter? filter = IngredientFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = ingredients.GetListing(null, page);
+        var result = ingredients.GetListing(filter, page);
         return Ok(mapper.Map<List<IngredientListing>>(result));
+    }
+
+    [HttpGet("filters")]
+    public IActionResult GetFilterInfo()
+    {
+        IngredientFilter filterLimits = (IngredientFilter)ingredients.GetFilterData();
+        return Ok(filterLimits);
     }
 
     [HttpPost]
