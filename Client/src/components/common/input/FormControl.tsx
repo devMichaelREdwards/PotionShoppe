@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
+import CloseIcon from '@rsuite/icons/Close';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -230,14 +231,36 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                         const colorData = Color(colorString);
                         return (
                             <div className={`tag ${colorData.isLight() ? 'light' : 'dark'}`} style={{ backgroundColor: `${colorString}` }}>
-                                {tag.title}
+                                <span className='tag-space'></span>
+                                <span className='tag-title'>{tag.title}</span>
+                                <span className='tag-close'>
+                                    <Button
+                                        appearance='subtle'
+                                        onClick={() => {
+                                            removeTag(tag.id ?? 0);
+                                        }}
+                                    >
+                                        <CloseIcon />
+                                    </Button>
+                                </span>
                             </div>
                         );
                     } catch (e) {
                         // If the color string cannot be parsed
                         return (
-                            <div className={`tag light`} style={{ backgroundColor: `${'grey'}` }}>
-                                {tag.title}
+                            <div className={`tag light`} style={{ backgroundColor: 'grey' }}>
+                                <span className='tag-space'></span>
+                                <span className='tag-title'>{tag.title}</span>
+                                <span className='tag-close'>
+                                    <Button
+                                        appearance='subtle'
+                                        onClick={() => {
+                                            removeTag(tag.id ?? 0);
+                                        }}
+                                    >
+                                        <CloseIcon />
+                                    </Button>
+                                </span>
                             </div>
                         );
                     }

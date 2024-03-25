@@ -146,3 +146,7 @@ input:-webkit-autofill:active {
         color: $AdminNavBarMenuHoverColor;
     }
 }
+
+.tag-close .rs-btn:hover {
+    background: none;
+}
