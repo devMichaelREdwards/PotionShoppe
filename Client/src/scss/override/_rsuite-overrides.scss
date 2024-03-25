@@ -72,7 +72,7 @@ body,
 }
 
 .rs-input-group:focus-within {
-    border-color: #000;
+    border-color: $InkColor;
 }
 
 .rs-input-group-addon {
@@ -84,7 +84,7 @@ hr {
     padding: 0;
     margin: 0;
     height: 1px;
-    background-color: #000;
+    background-color: $InkColor;
     border: none;
 }
 
@@ -101,7 +101,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-background-clip: text;
-    -webkit-text-fill-color: #000;
+    -webkit-text-fill-color: $InkColor;
 }
 
 .rs-sidenav-default,
@@ -126,7 +126,7 @@ input:-webkit-autofill:active {
 }
 
 .checkbox .rs-checkbox {
-    border: 1px solid black;
+    border: 1px solid $InkColor;
 }
 
 .checkbox .rs-checkbox-inner::after {
@@ -135,4 +135,14 @@ input:-webkit-autofill:active {
 
 .rs-input-group:not(.rs-input-group-inside) > :first-child {
     border-radius: 0;
+}
+
+.rs-picker-popup {
+    background: $BackgroundParchmentPaperImage;
+    border: 1px solid $InkColor;
+
+    *:hover {
+        background: none;
+        color: $AdminNavBarMenuHoverColor;
+    }
 }
