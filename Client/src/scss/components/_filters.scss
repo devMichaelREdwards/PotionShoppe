@@ -81,16 +81,33 @@
     font-size: $FontTiny;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     cursor: pointer;
+
+    .tag-title {
+        font-size: $FontTiny;
+    }
+
+    .tag-close,
+    .tag-space {
+        width: 50px;
+    }
 }
 
 .tag.light {
     color: black;
+
+    svg {
+        color: black;
+    }
 }
 
 .tag.dark {
     color: white;
+
+    svg {
+        color: white;
+    }
 }
 
 .tag.error {
