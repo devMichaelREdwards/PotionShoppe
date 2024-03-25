@@ -150,17 +150,19 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
                         removeTag={removeCategory}
                         setValue={(newValue) => setCategoryQuery(newValue)}
                     />
-                    <CheckboxControl
-                        value={inStock}
-                        label={'In Stock'}
-                        name={'instock'}
-                        onChange={() => {
-                            setInStock(!inStock);
-                            setFilterByKey('instock', !inStock);
-                        }}
-                    />
                 </Form.Group>
             </Form>
+            <Form.Group className='filter-toggles'>
+                <CheckboxControl
+                    value={inStock}
+                    label={'In Stock'}
+                    name={'instock'}
+                    onChange={() => {
+                        setInStock(!inStock);
+                        setFilterByKey('instock', !inStock);
+                    }}
+                />
+            </Form.Group>
             <div className='clear-filters-button'>
                 <ActionButton color={'red'} appearance={'ghost'} label={'Clear Filters'} action={clearFiltersClick} />
             </div>

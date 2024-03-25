@@ -57,7 +57,7 @@ interface ICheckbox {
 
 export const CheckboxControl = ({ value, label, name, onChange }: ICheckbox) => {
     return (
-        <span className='form-control'>
+        <span className='form-control checkbox-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <Checkbox
                 className='checkbox'

@@ -9,7 +9,7 @@
 
     .filter-icon {
         display: flex;
-        width: 250px;
+        width: 200px;
         gap: 10px;
         justify-content: center;
         align-items: center;
@@ -17,7 +17,13 @@
     }
 
     .filter-form {
-        width: 100%;
+    }
+
+    .filter-toggles {
+        .form-control-label {
+            flex-basis: 70%;
+            padding-right: 10px;
+        }
     }
 
     .filter-group.rs-form-group {
@@ -52,15 +58,9 @@
     }
 
     .clear-filters-button {
-        width: 250px;
         display: flex;
         justify-content: flex-end;
         gap: 20px;
-    }
-
-    .checkbox {
-        height: 50px;
-        margin-bottom: 40px;
     }
 }
 
