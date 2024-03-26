@@ -36,6 +36,13 @@ public class PotionController : ControllerBase
         return Ok(mapper.Map<List<PotionListing>>(result));
     }
 
+    [HttpGet("filters")]
+    public IActionResult GetFilterInfo()
+    {
+        PotionFilter filterLimits = (PotionFilter)potions.GetFilterData();
+        return Ok(filterLimits);
+    }
+
     [HttpPost]
     [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostPotion(PotionDto potion)

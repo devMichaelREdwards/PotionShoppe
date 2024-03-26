@@ -66,6 +66,15 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         return potions.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
+    public IFilter<Potion> GetFilterData()
+    {
+        return new PotionFilter()
+        {
+            CostMax = _context.Potions.Max(i => i.Cost),
+            PriceMax = _context.Potions.Max(i => i.Price)
+        };
+    }
+
     public Potion? GetById(int id)
     {
         return _context.Potions.Find(id);
@@ -114,11 +123,6 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
     public void Dispose()
     {
         Dispose(true);
-    }
-
-    public IFilter<Potion> GetFilterData()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion
