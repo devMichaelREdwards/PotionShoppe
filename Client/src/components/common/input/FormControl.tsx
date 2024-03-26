@@ -224,48 +224,50 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                     setDirty(true);
                 }}
             />
-            <div className='form-control-tags'>
-                {tags.map((tag) => {
-                    const colorString: string = tag.color ? tag.color : 'grey';
-                    try {
-                        const colorData = Color(colorString);
-                        return (
-                            <div className={`tag ${colorData.isLight() ? 'light' : 'dark'}`} style={{ backgroundColor: `${colorString}` }}>
-                                <span className='tag-space'></span>
-                                <span className='tag-title'>{tag.title}</span>
-                                <span className='tag-close'>
-                                    <Button
-                                        appearance='subtle'
-                                        onClick={() => {
-                                            removeTag(tag.id ?? 0);
-                                        }}
-                                    >
-                                        <CloseIcon />
-                                    </Button>
-                                </span>
-                            </div>
-                        );
-                    } catch (e) {
-                        // If the color string cannot be parsed
-                        return (
-                            <div className={`tag light`} style={{ backgroundColor: 'grey' }}>
-                                <span className='tag-space'></span>
-                                <span className='tag-title'>{tag.title}</span>
-                                <span className='tag-close'>
-                                    <Button
-                                        appearance='subtle'
-                                        onClick={() => {
-                                            removeTag(tag.id ?? 0);
-                                        }}
-                                    >
-                                        <CloseIcon />
-                                    </Button>
-                                </span>
-                            </div>
-                        );
-                    }
-                })}
-            </div>
+            {tags.length > 0 && (
+                <div className='form-control-tags'>
+                    {tags.map((tag) => {
+                        const colorString: string = tag.color ? tag.color : 'grey';
+                        try {
+                            const colorData = Color(colorString);
+                            return (
+                                <div className={`tag ${colorData.isLight() ? 'light' : 'dark'}`} style={{ backgroundColor: `${colorString}` }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(tag.id ?? 0);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        } catch (e) {
+                            // If the color string cannot be parsed
+                            return (
+                                <div className={`tag light`} style={{ backgroundColor: 'grey' }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(tag.id ?? 0);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
+            )}
         </span>
     );
 };
