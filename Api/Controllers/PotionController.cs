@@ -30,8 +30,9 @@ public class PotionController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetPotionListing()
     {
+        PotionFilter? filter = PotionFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = potions.GetListing(null, page);
+        var result = potions.GetListing(filter, page);
         return Ok(mapper.Map<List<PotionListing>>(result));
     }
 

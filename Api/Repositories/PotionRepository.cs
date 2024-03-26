@@ -22,6 +22,47 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
     public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null)
     {
         var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
+        string? name = filter?.GetValue("name");
+        if (name != null)
+        {
+            potions = potions.Where(i => i.Name!.ToLower().Contains(name.ToLower()));
+        }
+
+        List<int>? effects = filter?.GetValue("effect");
+        if (effects != null)
+        {
+            potions = potions.Where(p => p.PotionEffects.Any(e => effects.Contains(e.EffectId ?? 0)));
+        }
+
+        int? cMin = filter?.GetValue("cmin");
+        if (cMin != null)
+        {
+            potions = potions.Where(i => i.Cost >= cMin);
+        }
+
+        int? cMax = filter?.GetValue("cmax");
+        if (cMax != null)
+        {
+            potions = potions.Where(i => i.Cost <= cMax);
+        }
+
+        int? pMin = filter?.GetValue("pmin");
+        if (pMin != null)
+        {
+            potions = potions.Where(i => i.Price >= pMin);
+        }
+
+        int? pMax = filter?.GetValue("pmax");
+        if (pMax != null)
+        {
+            potions = potions.Where(i => i.Price <= pMax);
+        }
+
+        bool? inStock = filter?.GetValue("instock");
+        if (inStock == true)
+        {
+            potions = potions.Where(i => i.CurrentStock > 0);
+        }
         return potions.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
