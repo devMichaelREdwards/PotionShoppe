@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import axios from '../../../api/axios';
-import { HttpStatusCode } from 'axios';
 import { IAdminUser } from '../../../types/IUser';
-import { Button, ButtonToolbar, Form } from 'rsuite';
+import { Button, ButtonToolbar, Form, Message, useToaster } from 'rsuite';
 import useAuth from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TextControl, PasswordControl } from '../../common/input/FormControl';
@@ -10,6 +9,7 @@ import { TextControl, PasswordControl } from '../../common/input/FormControl';
 const AdminLoginForm = () => {
     const { setUser } = useAuth();
     const navigate = useNavigate();
+    const toaster = useToaster();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/admin';
     const [userName, setUserName] = useState('');
@@ -40,10 +40,9 @@ const AdminLoginForm = () => {
                 navigate(from, { replace: true });
             })
             .catch((error) => {
-                console.log(error.response.data);
+                toaster.push(<Message type='error'>{error.response.data}</Message>, { duration: 5000 });
+                setLoading(false);
             });
-
-        setLoading(false);
     };
     return (
         <Form fluid>
@@ -69,13 +68,7 @@ const AdminLoginForm = () => {
             </Form.Group>
             <Form.Group>
                 <ButtonToolbar className='admin-login-button-wrapper'>
-                    {/*<ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} loading={loading} />*/}
-                    <Button appearance='primary' onClick={handleLogin} loading={loading}>
-                        <div className={`image-button admin-login-button`}>
-                            <img src={'/assets/employee/Burned_Parchment.png'} />
-                            {!loading && <div className='image-button-text'>Sign In</div>}
-                        </div>
-                    </Button>
+                    <ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} loading={loading} />
                 </ButtonToolbar>
             </Form.Group>
         </Form>
