@@ -9,35 +9,41 @@ import { TextControl, PasswordControl } from '../../common/input/FormControl';
 
 const AdminLoginForm = () => {
     const { setUser } = useAuth();
-
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/admin';
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const handleLogin = async () => {
+        setLoading(true);
         const loginData = {
             userName,
             password,
         };
-
-        const res = await axios.post('user/employee/login', loginData, { withCredentials: true });
-        if (res.status == HttpStatusCode.Ok) {
-            // Login successfull
-            const user: IAdminUser = {
-                userName,
-                token: res.data.token,
-                loggedIn: true,
-                authConfig: {
-                    headers: {
-                        Authorization: `Bearer ${res.data.token}`,
+        await axios
+            .post('user/employee/login', loginData, { withCredentials: true })
+            .then((res) => {
+                // Login successfull
+                const user: IAdminUser = {
+                    userName,
+                    token: res.data.token,
+                    loggedIn: true,
+                    authConfig: {
+                        headers: {
+                            Authorization: `Bearer ${res.data.token}`,
+                        },
                     },
-                },
-                roles: res.data.roles,
-            };
-            setUser(user);
-            navigate(from, { replace: true });
-        }
+                    roles: res.data.roles,
+                };
+                setUser(user);
+                navigate(from, { replace: true });
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+
+        setLoading(false);
     };
     return (
         <Form fluid>
@@ -63,7 +69,13 @@ const AdminLoginForm = () => {
             </Form.Group>
             <Form.Group>
                 <ButtonToolbar className='admin-login-button-wrapper'>
-                    <ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} />
+                    {/*<ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} loading={loading} />*/}
+                    <Button appearance='primary' onClick={handleLogin} loading={loading}>
+                        <div className={`image-button admin-login-button`}>
+                            <img src={'/assets/employee/Burned_Parchment.png'} />
+                            {!loading && <div className='image-button-text'>Sign In</div>}
+                        </div>
+                    </Button>
                 </ButtonToolbar>
             </Form.Group>
         </Form>
@@ -73,15 +85,16 @@ const AdminLoginForm = () => {
 interface IImageButton {
     src: string;
     className?: string;
-    onClick: () => void;
+    loading?: boolean;
+    onClick: () => Promise<void>;
 }
 
-const ImageButton = ({ src, className, onClick }: IImageButton) => {
+const ImageButton = ({ src, className, loading, onClick }: IImageButton) => {
     return (
-        <Button appearance='primary' onClick={onClick}>
+        <Button appearance='primary' onClick={onClick} loading={loading}>
             <div className={`image-button ${className}`}>
                 <img src={src} />
-                <div className='image-button-text'>Sign In</div>
+                {!loading && <div className='image-button-text'>Sign In</div>}
             </div>
         </Button>
     );
