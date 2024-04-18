@@ -19,7 +19,7 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         return [.. context.EmployeeAccounts.Include(e => e.Employee).ThenInclude(e => e.EmployeeStatus)];
     }
 
-    public IEnumerable<EmployeeAccount> GetListing(IFilter<EmployeeAccount>? filter = null, Pagination? page = null)
+    public IEnumerable<EmployeeAccount> GetListing(IFilter<EmployeeAccount>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }

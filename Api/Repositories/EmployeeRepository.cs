@@ -23,7 +23,7 @@ public class EmployeeRepository : IListingRepository<Employee>, IDisposable
         return [.. employees];
     }
 
-    public IEnumerable<Employee> GetListing(IFilter<Employee>? filter = null, Pagination? page = null)
+    public IEnumerable<Employee> GetListing(IFilter<Employee>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var employees = _context.Employees
             .Include(e => e.EmployeeStatus)

@@ -26,7 +26,7 @@ public class OrderRepository : IListingRepository<Order>, IDisposable
                 ];
     }
 
-    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null, Pagination? page = null)
+    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var orders = context.Orders
                     .Include(o => o.Customer)

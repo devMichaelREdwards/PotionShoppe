@@ -1,3 +1,4 @@
+using System.Net;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 using PagedList;
@@ -18,7 +19,7 @@ public class EffectRepository : IListingRepository<Effect>, IDisposable
         return [.. _context.Effects];
     }
 
-    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null)
+    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var effects = _context.Effects.AsQueryable();
 
@@ -56,6 +57,32 @@ public class EffectRepository : IListingRepository<Effect>, IDisposable
         if (values != null)
         {
             effects = effects.Where(e => values!.Contains((int)e.Value!));
+        }
+
+        string? sort = sortOrder?.GetValue("sort");
+        string? order = sortOrder?.GetValue("order");
+
+        if (sort != null && order != null)
+        {
+            if (sort == "value" && order == "asc")
+            {
+                effects = effects.OrderBy(e => e.Value);
+            }
+
+            if (sort == "value" && order == "desc")
+            {
+                effects = effects.OrderByDescending(e => e.Value);
+            }
+
+            if (sort == "duration" && order == "asc")
+            {
+                effects = effects.OrderBy(e => e.Duration);
+            }
+
+            if (sort == "duration" && order == "desc")
+            {
+                effects = effects.OrderByDescending(e => e.Duration);
+            }
         }
 
         return effects.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);

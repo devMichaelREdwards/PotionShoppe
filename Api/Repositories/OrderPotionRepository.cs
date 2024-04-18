@@ -17,7 +17,7 @@ public class OrderPotionRepository : IRepository<OrderPotion>, IDisposable
         return [.. context.OrderPotions.Include(pe => pe.Order).Include(pe => pe.Potion)];
     }
 
-    public IEnumerable<OrderPotion> GetListing(IFilter<OrderPotion>? filter = null, Pagination? page = null)
+    public IEnumerable<OrderPotion> GetListing(IFilter<OrderPotion>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }

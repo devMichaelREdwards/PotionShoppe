@@ -5,7 +5,7 @@ namespace Api.Data;
 public interface IRepository<T>
 {
     IEnumerable<T> Get();
-    IEnumerable<T> GetListing(IFilter<T>? filter = null, Pagination? page = null);
+    IEnumerable<T> GetListing(IFilter<T>? filter = null, Pagination? page = null, SortOrder? sortOrder = null);
     T? GetById(int id);
     T Insert(T entity);
     void Delete(int id);

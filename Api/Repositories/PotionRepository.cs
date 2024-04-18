@@ -19,7 +19,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         return [.. potions];
     }
 
-    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null)
+    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
         string? name = filter?.GetValue("name");

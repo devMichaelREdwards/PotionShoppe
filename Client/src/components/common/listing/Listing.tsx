@@ -32,7 +32,9 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     const [limit, setLimit] = useState(20);
     const [sort, setSort] = useState('');
     const [sortOrder, setSortOrder] = useState(SortOrder.default);
-    const { data, loading, error, refresh } = useData(route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`);
+    const { data, loading, error, refresh, setLoading } = useData(
+        route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`
+    );
     const handleCheckboxClick = (id: number) => {
         if (selected.includes(id)) {
             const newSelected = selected.filter((inArr) => {
@@ -62,6 +64,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     };
 
     const handleSortClick = (col: string) => {
+        setLoading(true);
         // If the col is the current sort col
         if (col === sort) {
             // Default -> Ascending -> Descending

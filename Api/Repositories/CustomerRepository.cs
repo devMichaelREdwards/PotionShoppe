@@ -19,7 +19,7 @@ public class CustomerRepository : IListingRepository<Customer>, IDisposable
         return [.. customers];
     }
 
-    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null, Pagination? page = null)
+    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var customers = _context.Customers.Include(c => c.CustomerStatus).Include(c => c.CustomerAccounts).AsQueryable();
         return customers.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);

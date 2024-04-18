@@ -17,7 +17,7 @@ public class OrderStatusRepository : IRepository<OrderStatus>, IDisposable
         return [.. context.OrderStatuses];
     }
 
-    public IEnumerable<OrderStatus> GetListing(IFilter<OrderStatus>? filter = null, Pagination? page = null)
+    public IEnumerable<OrderStatus> GetListing(IFilter<OrderStatus>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }
