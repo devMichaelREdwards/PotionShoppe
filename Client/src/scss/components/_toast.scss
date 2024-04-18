@@ -1,0 +1,9 @@
+@use '../global/variables' as *;
+
+.rs-message-error > .rs-message-container {
+    background: $ErrorColor;
+
+    .rs-message-body {
+        color: $LightFontColor;
+    }
+}

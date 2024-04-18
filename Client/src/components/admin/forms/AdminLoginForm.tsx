@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import axios from '../../../api/axios';
 import { IAdminUser } from '../../../types/IUser';
-import { Button, ButtonToolbar, Form, Message, useToaster } from 'rsuite';
+import { ButtonToolbar, Form, Message, useToaster } from 'rsuite';
 import useAuth from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TextControl, PasswordControl } from '../../common/input/FormControl';
+import ImageButton from '../../common/input/ImageButton';
 
 const AdminLoginForm = () => {
     const { setUser } = useAuth();
@@ -72,24 +73,6 @@ const AdminLoginForm = () => {
                 </ButtonToolbar>
             </Form.Group>
         </Form>
-    );
-};
-
-interface IImageButton {
-    src: string;
-    className?: string;
-    loading?: boolean;
-    onClick: () => Promise<void>;
-}
-
-const ImageButton = ({ src, className, loading, onClick }: IImageButton) => {
-    return (
-        <Button appearance='primary' onClick={onClick} loading={loading}>
-            <div className={`image-button ${className}`}>
-                <img src={src} />
-                {!loading && <div className='image-button-text'>Sign In</div>}
-            </div>
-        </Button>
     );
 };
 

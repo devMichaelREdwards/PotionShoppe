@@ -1,4 +1,4 @@
-import { Sidebar, Sidenav, Nav, Footer } from 'rsuite';
+import { Sidebar, Sidenav, Nav } from 'rsuite';
 import AdminNavItem from './AdminNavItem';
 import { Link } from 'react-router-dom';
 import { CustomerIcon, EffectIcon, EmployeeIcon, IngredientIcon, OrderIcon, ReceiptIcon, PotionIcon } from '../../common/image/Icon';

@@ -1,6 +1,9 @@
 // Third Party imports
 @use 'rsuite/dist/rsuite.min.css';
 
+// Overrides
+@use './override/rsuite-overrides';
+
 // Global
 @use './global/input';
 @use './global/layout';
@@ -8,13 +11,11 @@
 // App
 @use './App.scss';
 
-// Overrides
-@use './override/rsuite-overrides';
-
 // Components
 @use './components/listing';
 @use './components/filters';
 @use './components/checkbox';
+@use './components/toast';
 
 // Pages
 @use './pages/employee-login';
