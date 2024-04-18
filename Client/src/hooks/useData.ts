@@ -30,5 +30,5 @@ export const useData = (source: string) => {
         setDraw(draw + 1);
     };
 
-    return { data, draw, loading, error, refresh };
+    return { data, draw, loading, error, refresh, setLoading };
 };

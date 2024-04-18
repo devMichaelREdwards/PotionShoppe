@@ -23,7 +23,7 @@ public class ReceiptRepository : IListingRepository<Receipt>, IDisposable
                 ];
     }
 
-    public IEnumerable<Receipt> GetListing(IFilter<Receipt>? filter = null, Pagination? page = null)
+    public IEnumerable<Receipt> GetListing(IFilter<Receipt>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var receipts = context.Receipts
                     .Include(r => r.Order).ThenInclude(o => o!.Customer)

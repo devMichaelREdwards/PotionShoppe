@@ -19,7 +19,7 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         return [.. ingredients];
     }
 
-    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null)
+    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var ingredients = _context.Ingredients.Include(i => i.Effect).Include(i => i.IngredientCategory).AsQueryable();
 

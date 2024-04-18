@@ -17,7 +17,7 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
         return [.. context.IngredientCategories];
     }
 
-    public IEnumerable<IngredientCategory> GetListing(IFilter<IngredientCategory>? filter = null, Pagination? page = null)
+    public IEnumerable<IngredientCategory> GetListing(IFilter<IngredientCategory>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }

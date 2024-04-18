@@ -17,7 +17,7 @@ public class OrderIngredientRepository : IRepository<OrderIngredient>, IDisposab
         return [.. context.OrderIngredients.Include(pe => pe.Order).Include(pe => pe.Ingredient)];
     }
 
-    public IEnumerable<OrderIngredient> GetListing(IFilter<OrderIngredient>? filter = null, Pagination? page = null)
+    public IEnumerable<OrderIngredient> GetListing(IFilter<OrderIngredient>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }

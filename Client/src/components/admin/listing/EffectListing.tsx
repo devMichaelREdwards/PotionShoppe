@@ -24,12 +24,14 @@ const EffectListing = ({ filters }: IProps) => {
             align: 'center',
             label: 'Value',
             dataKey: 'value',
+            sortable: true,
             colspan: 2,
         },
         {
             align: 'center',
             label: 'Duration',
             dataKey: 'duration',
+            sortable: true,
             colspan: 2,
         },
         {

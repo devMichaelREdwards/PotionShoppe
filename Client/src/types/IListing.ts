@@ -5,6 +5,7 @@ export interface IListingColumn {
     label: string;
     dataKey: string;
     colspan: number;
+    sortable?: boolean;
     component?: (data: unknown) => JSX.Element;
 }
 

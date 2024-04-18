@@ -17,7 +17,7 @@ public class EmployeePositionRepository : IRepository<EmployeePosition>, IDispos
         return [.. context.EmployeePositions];
     }
 
-    public IEnumerable<EmployeePosition> GetListing(IFilter<EmployeePosition>? filter = null, Pagination? page = null)
+    public IEnumerable<EmployeePosition> GetListing(IFilter<EmployeePosition>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }
