@@ -18,13 +18,21 @@ interface IProps {
     remove?: (selected: number[]) => void;
 }
 
+export enum SortOrder {
+    ascending = 'asc',
+    descending = 'desc',
+    default = '',
+}
+
 const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove }: IProps) => {
     const idKey = id ?? route + 'Id';
     const [selected, setSelected] = useState<number[]>([]);
     const [draw, setDraw] = useState(0);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(20);
-    const { data, loading, error, refresh } = useData(route + `?page=${page}&limit=${limit}&${filterString ?? ''}`);
+    const [sort, setSort] = useState('');
+    const [sortOrder, setSortOrder] = useState(SortOrder.default);
+    const { data, loading, error, refresh } = useData(route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`);
     const handleCheckboxClick = (id: number) => {
         if (selected.includes(id)) {
             const newSelected = selected.filter((inArr) => {
@@ -53,6 +61,33 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
         setLimit(newLimit);
     };
 
+    const handleSortClick = (col: string) => {
+        // If the col is the current sort col
+        if (col === sort) {
+            // Default -> Ascending -> Descending
+            if (sortOrder === SortOrder.default) {
+                setSortOrder(SortOrder.ascending);
+            }
+
+            if (sortOrder === SortOrder.ascending) {
+                setSortOrder(SortOrder.descending);
+            }
+
+            if (sortOrder === SortOrder.descending) {
+                setSortOrder(SortOrder.default);
+            }
+
+            return;
+        }
+
+        // If the col is sortable
+        const colSortable = columns.find((c) => c.dataKey == col && c.sortable);
+        if (colSortable) {
+            setSort(colSortable.dataKey);
+            setSortOrder(SortOrder.ascending);
+        }
+    };
+
     useEffect(() => {
         refresh();
     }, [draw]);
@@ -64,7 +99,15 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     return (
         <>
             <List className='panel listing'>
-                <ListingHeaderRow key={'Header'} columns={columns} headerButtons={headerButtons} remove={remove ? handleRemoveClick : undefined} />
+                <ListingHeaderRow
+                    key={'Header'}
+                    columns={columns}
+                    headerButtons={headerButtons}
+                    sortCol={sort}
+                    sortOrder={sortOrder}
+                    sort={handleSortClick}
+                    remove={remove ? handleRemoveClick : undefined}
+                />
                 {data.map((row: IData) => {
                     return (
                         <ListingRow
