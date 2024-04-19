@@ -71,6 +71,41 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
             ingredients = ingredients.Where(i => i.CurrentStock > 0);
         }
 
+        string? sort = sortOrder?.GetValue("sort");
+        string? order = sortOrder?.GetValue("order");
+
+        if (sort != null && order != null)
+        {
+            if (sort == "cost" && order == "asc")
+            {
+                ingredients = ingredients.OrderBy(i => i.Cost);
+            }
+
+            if (sort == "cost" && order == "desc")
+            {
+                ingredients = ingredients.OrderByDescending(i => i.Cost);
+            }
+
+            if (sort == "price" && order == "asc")
+            {
+                ingredients = ingredients.OrderBy(i => i.Price);
+            }
+
+            if (sort == "price" && order == "desc")
+            {
+                ingredients = ingredients.OrderByDescending(i => i.Price);
+            }
+
+            if (sort == "currentStock" && order == "asc")
+            {
+                ingredients = ingredients.OrderBy(i => i.CurrentStock);
+            }
+
+            if (sort == "currentStock" && order == "desc")
+            {
+                ingredients = ingredients.OrderByDescending(i => i.CurrentStock);
+            }
+        }
 
         return ingredients.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
