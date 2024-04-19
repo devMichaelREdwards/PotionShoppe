@@ -32,7 +32,8 @@ public class PotionController : ControllerBase
     {
         PotionFilter? filter = PotionFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = potions.GetListing(filter, page);
+        SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
+        var result = potions.GetListing(filter, page, sortOrder);
         return Ok(mapper.Map<List<PotionListing>>(result));
     }
 

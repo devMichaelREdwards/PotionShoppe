@@ -46,18 +46,21 @@ const PotionListing = ({ filters }: IProps) => {
             align: 'center',
             label: 'Cost',
             dataKey: 'cost',
+            sortable: true,
             colspan: 2,
         },
         {
             align: 'center',
             label: 'Price',
             dataKey: 'price',
+            sortable: true,
             colspan: 2,
         },
         {
             align: 'center',
             label: 'In Stock',
             dataKey: 'currentStock',
+            sortable: true,
             colspan: 2,
         },
     ];
