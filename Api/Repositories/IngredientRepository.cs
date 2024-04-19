@@ -96,12 +96,12 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
                 ingredients = ingredients.OrderByDescending(i => i.Price);
             }
 
-            if (sort == "instock" && order == "asc")
+            if (sort == "currentStock" && order == "asc")
             {
                 ingredients = ingredients.OrderBy(i => i.CurrentStock);
             }
 
-            if (sort == "instock" && order == "desc")
+            if (sort == "currentStock" && order == "desc")
             {
                 ingredients = ingredients.OrderByDescending(i => i.CurrentStock);
             }

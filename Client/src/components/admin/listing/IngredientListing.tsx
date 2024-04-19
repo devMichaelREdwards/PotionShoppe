@@ -27,7 +27,7 @@ const IngredientListing = ({ filters }: IProps) => {
             align: 'center',
             label: 'Name',
             dataKey: 'name',
-            colspan: 4,
+            colspan: 3,
         },
         {
             align: 'center',
@@ -52,18 +52,21 @@ const IngredientListing = ({ filters }: IProps) => {
             align: 'center',
             label: 'Cost',
             dataKey: 'cost',
-            colspan: 1,
+            sortable: true,
+            colspan: 2,
         },
         {
             align: 'center',
             label: 'Price',
             dataKey: 'price',
-            colspan: 1,
+            sortable: true,
+            colspan: 2,
         },
         {
             align: 'center',
             label: 'In Stock',
             dataKey: 'currentStock',
+            sortable: true,
             colspan: 2,
         },
     ];
