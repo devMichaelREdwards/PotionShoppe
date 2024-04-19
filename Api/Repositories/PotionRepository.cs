@@ -63,6 +63,43 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         {
             potions = potions.Where(i => i.CurrentStock > 0);
         }
+
+        string? sort = sortOrder?.GetValue("sort");
+        string? order = sortOrder?.GetValue("order");
+
+        if (sort != null && order != null)
+        {
+            if (sort == "cost" && order == "asc")
+            {
+                potions = potions.OrderBy(i => i.Cost);
+            }
+
+            if (sort == "cost" && order == "desc")
+            {
+                potions = potions.OrderByDescending(i => i.Cost);
+            }
+
+            if (sort == "price" && order == "asc")
+            {
+                potions = potions.OrderBy(i => i.Price);
+            }
+
+            if (sort == "price" && order == "desc")
+            {
+                potions = potions.OrderByDescending(i => i.Price);
+            }
+
+            if (sort == "currentStock" && order == "asc")
+            {
+                potions = potions.OrderBy(i => i.CurrentStock);
+            }
+
+            if (sort == "currentStock" && order == "desc")
+            {
+                potions = potions.OrderByDescending(i => i.CurrentStock);
+            }
+        }
+
         return potions.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
