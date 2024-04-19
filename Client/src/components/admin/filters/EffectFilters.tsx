@@ -14,9 +14,9 @@ interface IProps {
 }
 
 const EffectFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IProps) => {
-    const [name, setName] = useState('');
-    const [value, setValue] = useState<[number, number]>([filterLimits.vmin ?? 0, filterLimits.vmax ?? 1000]);
-    const [duration, setDuration] = useState<[number, number]>([filterLimits.dmin ?? 0, filterLimits.dmax ?? 1000]);
+    const [name, setName] = useState(filters.name ?? '');
+    const [value, setValue] = useState<[number, number]>([filters.vmin ?? filterLimits.vmin ?? 0, filters.vmax ?? filterLimits.vmax ?? 1000]);
+    const [duration, setDuration] = useState<[number, number]>([filters.dmin ?? filterLimits.dmin ?? 0, filters.dmax ?? filterLimits.dmax ?? 1000]);
 
     const setFilterByKey = (key: keyof IEffectFilters, value: string | number) => {
         setFilters({ ...filters, [key]: value });
