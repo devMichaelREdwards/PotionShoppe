@@ -32,7 +32,8 @@ public class IngredientController : ControllerBase
     {
         IngredientFilter? filter = IngredientFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = ingredients.GetListing(filter, page);
+        SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
+        var result = ingredients.GetListing(filter, page, sortOrder);
         return Ok(mapper.Map<List<IngredientListing>>(result));
     }
 
