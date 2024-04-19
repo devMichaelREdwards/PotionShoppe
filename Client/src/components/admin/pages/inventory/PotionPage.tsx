@@ -1,14 +1,14 @@
 import { Content, Panel } from 'rsuite';
-import IngredientListing from '../../../listing/IngredientListing';
-import useTitle from '../../../../../hooks/useTitle';
-import AdminHeader from '../../../../common/header/AdminHeader';
-import { IIngredientFilters } from '../../../../../types/IFilter';
-import axios from '../../../../../api/axios';
-import { useEffect, useState } from 'react';
-import IngredientFilters from '../../../filters/IngredientFilters';
+import PotionListing from '../../listing/PotionListing';
+import useTitle from '../../../../hooks/useTitle';
+import AdminHeader from '../../../common/header/AdminHeader';
+import { IIngredientFilters } from '../../../../types/IFilter';
+import { useState, useEffect } from 'react';
+import PotionFilters from '../../filters/PotionFilters';
+import axios from '../../../../api/axios';
 
-const IngredientListingPage = () => {
-    useTitle('Ingredients');
+const PotionPage = () => {
+    useTitle('Potions');
 
     const [filters, setFilters] = useState<IIngredientFilters>({});
 
@@ -20,9 +20,10 @@ const IngredientListingPage = () => {
 
     useEffect(() => {
         const getFilterData = async () => {
-            const response = await axios.get('ingredient/filters');
+            const response = await axios.get('potion/filters');
 
             const limits = response.data;
+            console.log(limits);
             setFilterLimits({
                 cmax: limits.costMax,
                 pmax: limits.priceMax,
@@ -34,12 +35,11 @@ const IngredientListingPage = () => {
     }, [draw]);
 
     if (loading) return <>Loading Screen</>;
-
     return (
         <Panel className='admin-page'>
-            <AdminHeader title='Ingredients' />
+            <AdminHeader title='Potions' />
             <Content>
-                <IngredientFilters
+                <PotionFilters
                     filters={{ ...filters }}
                     filterLimits={filterLimits}
                     setFilters={setFilters}
@@ -47,10 +47,10 @@ const IngredientListingPage = () => {
                         setDraw(draw + 1);
                     }}
                 />
-                <IngredientListing filters={{ ...filters }} />
+                <PotionListing filters={{ ...filters }} />
             </Content>
         </Panel>
     );
 };
 
-export default IngredientListingPage;
+export default PotionPage;

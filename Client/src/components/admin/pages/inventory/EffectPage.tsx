@@ -1,14 +1,14 @@
 import { Content, Panel } from 'rsuite';
-import EffectListing from '../../../listing/EffectListing';
-import useTitle from '../../../../../hooks/useTitle';
-import AdminHeader from '../../../../common/header/AdminHeader';
-import { IEffectFilters } from '../../../../../types/IFilter';
+import EffectListing from '../../listing/EffectListing';
+import useTitle from '../../../../hooks/useTitle';
+import AdminHeader from '../../../common/header/AdminHeader';
+import { IEffectFilters } from '../../../../types/IFilter';
 import { useEffect, useState } from 'react';
-import axios from '../../../../../api/axios';
-import EffectFilters from '../../../filters/EffectFilters';
-import ActionButton from '../../../../common/input/ActionButton';
+import axios from '../../../../api/axios';
+import EffectFilters from '../../filters/EffectFilters';
+import EffectForm from '../../forms/EffectForm';
 
-const EffectListingPage = () => {
+const EffectPage = () => {
     useTitle('Effects');
 
     const [filters, setFilters] = useState<IEffectFilters>({});
@@ -46,10 +46,9 @@ const EffectListingPage = () => {
         <Panel className='admin-page'>
             <AdminHeader title='Effects' />
             {edit ? (
-                <>
-                    Test
-                    <ActionButton appearance={'ghost'} label={'Test'} action={() => toggleEdit(false)} />
-                </>
+                <Content>
+                    <EffectForm toggleEdit={toggleEdit} />
+                </Content>
             ) : (
                 <Content>
                     <EffectFilters
@@ -67,4 +66,4 @@ const EffectListingPage = () => {
     );
 };
 
-export default EffectListingPage;
+export default EffectPage;
