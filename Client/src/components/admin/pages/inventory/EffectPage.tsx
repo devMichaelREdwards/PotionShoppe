@@ -21,8 +21,11 @@ const EffectPage = () => {
 
     const [edit, setEdit] = useState(false);
 
-    const toggleEdit = (active: boolean) => {
+    const [editId, setEditId] = useState<number>(0);
+
+    const toggleEdit = (active: boolean, editId?: number) => {
         setEdit(active);
+        setEditId(editId ?? 0);
         setDraw(draw + 1);
     };
 
@@ -47,7 +50,7 @@ const EffectPage = () => {
             <AdminHeader title='Effects' />
             {edit ? (
                 <Content>
-                    <EffectForm toggleEdit={toggleEdit} />
+                    <EffectForm editId={editId} toggleEdit={toggleEdit} />
                 </Content>
             ) : (
                 <Content>

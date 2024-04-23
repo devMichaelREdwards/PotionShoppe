@@ -3,6 +3,7 @@
     align-self: center;
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 .form-control {
@@ -67,4 +68,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.textarea-input {
+    display: inline-block;
+    width: 100%;
+    background: none;
+    resize: vertical;
 }

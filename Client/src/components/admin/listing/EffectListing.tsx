@@ -8,7 +8,7 @@ import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
 interface IProps {
     filters: IEffectFilters;
-    toggleEdit: (active: boolean) => void;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
 const EffectListing = ({ filters, toggleEdit }: IProps) => {
@@ -69,7 +69,7 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
             icon: <PotionIcon />,
             argKey: 'effectId',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];

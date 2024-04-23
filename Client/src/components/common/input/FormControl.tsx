@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, Input, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
+import React from 'react';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -31,6 +32,23 @@ export const TextControl = ({ value, label, placeholder, name, onChange }: IInpu
     );
 };
 
+export const TextAreaControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+    return (
+        <span className='form-control text-area'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <textarea
+                className='form-control-input textarea-input'
+                value={value}
+                onChange={(e) => {
+                    onChange(e.target.value);
+                }}
+            >
+                {' '}
+            </textarea>
+        </span>
+    );
+};
+
 export const PasswordControl = ({ value, label, placeholder, name, onChange }: IInput) => {
     return (
         <span className='form-control'>
@@ -43,6 +61,31 @@ export const PasswordControl = ({ value, label, placeholder, name, onChange }: I
                 type='password'
                 onChange={(e: string) => {
                     onChange(e);
+                }}
+            />
+        </span>
+    );
+};
+
+interface INumberInput {
+    value: string | number | readonly string[] | undefined;
+    placeholder?: string;
+    label?: string;
+    name: string;
+    onChange: (value: number) => void;
+}
+
+export const NumberControl = ({ value, label, placeholder, name, onChange }: INumberInput) => {
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <InputNumber
+                className='form-control-input'
+                value={value as number}
+                placeholder={placeholder}
+                name={name}
+                onChange={(e: string | number) => {
+                    onChange(+e);
                 }}
             />
         </span>
