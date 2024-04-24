@@ -6,7 +6,7 @@ import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 
 interface IProps {
-    editId: number;
+    editId?: number;
     toggleEdit: (active: boolean) => void;
 }
 
@@ -19,11 +19,24 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
     const toaster = useToaster();
     const { user } = useAuth();
     useEffect(() => {
-        //console.log(editId);
-        // Populate edit form here
-    });
+        const getData = async () => {
+            if (editId) {
+                const response = await axios.get(`effect/${editId}`, user?.authConfig);
+
+                if (response.status == 200) {
+                    const effect = response.data;
+                    setName(effect.name);
+                    setValue(effect.value);
+                    setDuration(effect.duration);
+                    setDescription(effect.description);
+                    setColor(effect.color.color);
+                }
+            }
+        };
+        getData();
+    }, [editId]);
     const handleSubmit = async () => {
-        if (editId > 0) {
+        if (editId && editId > 0) {
             const data = {
                 effectId: editId,
                 name,

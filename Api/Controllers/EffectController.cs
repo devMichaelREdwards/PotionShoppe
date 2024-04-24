@@ -27,6 +27,25 @@ public class EffectController : ControllerBase
         return Ok(mapper.Map<List<EffectDto>>(result));
     }
 
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult GetEffect(int? id)
+    {
+        if (id == null) return BadRequest("Invalid request");
+        var result = effects.GetById((int)id);
+        if (result == null) return BadRequest("No resource found");
+        return Ok(mapper.Map<EffectDto>(result));
+    }
+
+    [HttpGet("listing/{id}")]
+    public IActionResult GetEffectListing(int? id)
+    {
+        if (id == null) return BadRequest("Invalid request");
+        var result = effects.GetById((int)id);
+        if (result == null) return BadRequest("No resource found");
+        return Ok(mapper.Map<EffectListing>(result));
+    }
+
     [HttpGet("listing")]
     public IActionResult GetEffectListing()
     {
