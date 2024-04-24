@@ -21,9 +21,7 @@ const PotionPage = () => {
     useEffect(() => {
         const getFilterData = async () => {
             const response = await axios.get('potion/filters');
-
             const limits = response.data;
-            console.log(limits);
             setFilterLimits({
                 cmax: limits.costMax,
                 pmax: limits.priceMax,

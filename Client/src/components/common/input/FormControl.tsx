@@ -12,10 +12,11 @@ interface IInput {
     placeholder?: string;
     label?: string;
     name: string;
+    error?: string;
     onChange: (value: string) => void;
 }
 
-export const TextControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+export const TextControl = ({ value, label, placeholder, name, error, onChange }: IInput) => {
     return (
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
@@ -24,6 +25,7 @@ export const TextControl = ({ value, label, placeholder, name, onChange }: IInpu
                 value={value}
                 placeholder={placeholder}
                 name={name}
+                errorMessage={error}
                 onChange={(e: string) => {
                     onChange(e);
                 }}
@@ -68,7 +70,6 @@ export const ColorPickerControl = ({ value, label, placeholder, name, onChange }
                         <SliderPicker
                             color={colorData.hex()}
                             onChange={(color) => {
-                                console.log(color);
                                 onChange?.(color.hex);
                             }}
                         />
@@ -101,7 +102,6 @@ export const ColorPickerControl = ({ value, label, placeholder, name, onChange }
                         <SliderPicker
                             color={colorData.hex()}
                             onChange={(color) => {
-                                console.log(color);
                                 onChange?.(color.hex);
                             }}
                         />
@@ -355,7 +355,6 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                         return d[dataKey] == v;
                     });
                     if (!selected) return;
-                    console.log(selected);
                     const color = selected['color'] ? ((selected['color'] as { color: string })['color'] as string) : 'grey';
                     const collectionObj = {
                         id: selected[idKey] as number,

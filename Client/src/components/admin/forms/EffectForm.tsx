@@ -4,6 +4,8 @@ import { Form, Message, useToaster } from 'rsuite';
 import { ColorPickerControl, NumberControl, TextAreaControl, TextControl } from '../../common/input/FormControl';
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { useID } from '../../../hooks/useData';
+import { useSubmit } from '../../../hooks/useSubmit';
 
 interface IProps {
     editId?: number;
@@ -11,71 +13,38 @@ interface IProps {
 }
 
 const EffectForm = ({ editId, toggleEdit }: IProps) => {
+    const { data, loading } = useID(editId ? `effect/${editId}` : '');
     const [name, setName] = useState('');
-    const [value, setValue] = useState('');
-    const [duration, setDuration] = useState('');
+    const [value, setValue] = useState('0');
+    const [duration, setDuration] = useState('0');
     const [description, setDescription] = useState('');
     const [color, setColor] = useState('#ff0000');
-    const toaster = useToaster();
-    const { user } = useAuth();
+    const { submitting, errors, submitForm } = useSubmit('effect', 'Effect Saved', 'An error occurred! Please correct the errors and try again.');
+
     useEffect(() => {
-        const getData = async () => {
-            if (editId) {
-                const response = await axios.get(`effect/${editId}`, user?.authConfig);
+        const effect = data;
+        if (!editId || !effect) return;
+        setName(effect.name as string);
+        setValue(effect.value as string);
+        setDuration(effect.duration as string);
+        setDescription(effect.description as string);
+        setColor(effect.color as string);
+    }, [data]);
 
-                if (response.status == 200) {
-                    const effect = response.data;
-                    setName(effect.name);
-                    setValue(effect.value);
-                    setDuration(effect.duration);
-                    setDescription(effect.description);
-                    setColor(effect.color.color);
-                }
-            }
-        };
-        getData();
-    }, [editId]);
     const handleSubmit = async () => {
-        if (editId && editId > 0) {
-            const data = {
-                effectId: editId,
-                name,
-                value,
-                duration,
-                description,
-                color,
-            };
-            await axios
-                .put('effect', data, user?.authConfig)
-                .then(() => {
-                    // Put successful
-                    toaster.push(<Message type='success'>Effect Saved</Message>, { duration: 5000 });
-                })
-                .catch((error) => {
-                    // Put failed
-                    toaster.push(<Message type='error'>{error.response.data}</Message>, { duration: 5000 });
-                });
-        } else {
-            const data = {
-                name,
-                value,
-                duration,
-                description,
-                color,
-            };
+        const data = {
+            effectId: editId,
+            name,
+            value,
+            duration,
+            description,
+            color,
+        };
 
-            await axios
-                .post('effect', data, user?.authConfig)
-                .then((res) => {
-                    // Post successful
-                    toaster.push(<Message type='success'>Effect Saved</Message>, { duration: 5000 });
-                })
-                .catch((error) => {
-                    // Post failed
-                    toaster.push(<Message type='error'>An error occurred! Please check the form and try again.</Message>, { duration: 5000 });
-                });
-        }
+        submitForm(data, () => toggleEdit(false));
     };
+
+    if (loading || submitting) return <>Loading Screen...</>;
     return (
         <Form fluid>
             <Form.Group>
@@ -83,6 +52,7 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
                     value={name}
                     label='Name'
                     name='name'
+                    error={errors?.name}
                     onChange={(e: string) => {
                         setName(e);
                     }}
@@ -95,7 +65,7 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
                     name='value'
                     onChange={(e: number) => {
                         if (e < 0) {
-                            setValue('');
+                            setValue('0');
                             return;
                         }
                         setValue(e.toString());
@@ -109,7 +79,7 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
                     name='duration'
                     onChange={(e: number) => {
                         if (e < 0) {
-                            setDuration('');
+                            setDuration('0');
                             return;
                         }
                         setDuration(e.toString());

@@ -1,8 +1,10 @@
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Api.Controllers;
 
@@ -67,6 +69,8 @@ public class EffectController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult PostEffect(EffectDto effect)
     {
+        ErrorCollection errors = SetErrors(effect);
+        if (errors.Error) return BadRequest(errors);
         effects.Insert(mapper.Map<Effect>(effect));
         return Ok();
     }
@@ -75,11 +79,15 @@ public class EffectController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult PutEffect(EffectDto effect)
     {
-        if (effect.EffectId == null)
-            return Ok();
-        Effect existing = effects.GetById((int)effect.EffectId);
-        effect.Update(existing);
-        effects.Update(existing);
+        ErrorCollection errors = SetErrors(effect, true);
+        Effect? existing = effects.GetById((int)effect.EffectId);
+        if (existing is null)
+        {
+            errors.Add("exist", "This effect was not found. Please refresh the listing.");
+        }
+        if (errors.Error) return BadRequest(errors);
+        effect.Update(existing!); // Set data in collected DTO
+        effects.Update(existing!); // Save new DTO to database
         return Ok();
     }
 
@@ -101,5 +109,30 @@ public class EffectController : ControllerBase
             effects.Delete(id);
         }
         return Ok();
+    }
+
+    private ErrorCollection SetErrors(EffectDto effect, Boolean withId = false)
+    {
+        ErrorCollection errors = new();
+        if (withId && effect.EffectId == null)
+        {
+            errors.Add("id", "Invalid Effect ID sent with request.");
+        }
+        if (effect.Name.Length < 3)
+        {
+            errors.Add("name", "Name must be 3 characters.");
+        }
+
+        if (effect.Value < 0)
+        {
+            errors.Add("value", "Value must be positive.");
+        }
+
+        if (effect.Duration < 0)
+        {
+            errors.Add("duration", "Duration must be positive.");
+        }
+
+        return errors;
     }
 }

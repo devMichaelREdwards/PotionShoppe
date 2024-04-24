@@ -43,7 +43,6 @@ const PotionFilters = ({ filters, filterLimits, setFilters, onClearCallback }: I
     };
 
     const removeEffect = (id: number) => {
-        console.log(id);
         const newEffects = [...effects.filter((e) => e.id !== id)];
         setEffects(newEffects);
         setFilters({ ...filters, effects: newEffects.map((e) => e.id ?? 0) });
