@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Checkbox, Form, Input, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
-import React from 'react';
+import { SliderPicker } from 'react-color';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -39,6 +39,8 @@ export const TextAreaControl = ({ value, label, placeholder, name, onChange }: I
             <textarea
                 className='form-control-input textarea-input'
                 value={value}
+                name={name}
+                placeholder={placeholder}
                 onChange={(e) => {
                     onChange(e.target.value);
                 }}
@@ -48,6 +50,103 @@ export const TextAreaControl = ({ value, label, placeholder, name, onChange }: I
         </span>
     );
 };
+
+export const ColorPickerControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+    try {
+        const colorData = Color(value);
+        const pickerStyles = { backgroundColor: colorData.hex() };
+        return (
+            <span className='form-control color-picker'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <span className='color-picker-input'>
+                    <span className='color-display'>
+                        <span className='color-display-outline'>
+                            <span className='color-display-inner' style={pickerStyles}></span>
+                        </span>
+                    </span>
+                    <span className='color-picker-slider'>
+                        <SliderPicker
+                            color={colorData.hex()}
+                            onChange={(color) => {
+                                console.log(color);
+                                onChange?.(color.hex);
+                            }}
+                        />
+                    </span>
+                    <Form.Control
+                        className='form-control-input'
+                        value={value}
+                        placeholder={placeholder}
+                        name={name}
+                        onChange={(e: string) => {
+                            onChange(e);
+                        }}
+                    />
+                </span>
+            </span>
+        );
+    } catch {
+        const colorData = Color('#fff');
+        const pickerStyles = { backgroundColor: colorData.hex() };
+        return (
+            <span className='form-control color-picker'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <span className='color-picker-input'>
+                    <span className='color-display'>
+                        <span className='color-display-outline'>
+                            <span className='color-display-inner' style={pickerStyles}></span>
+                        </span>
+                    </span>
+                    <span className='color-picker-slider'>
+                        <SliderPicker
+                            color={colorData.hex()}
+                            onChange={(color) => {
+                                console.log(color);
+                                onChange?.(color.hex);
+                            }}
+                        />
+                    </span>
+                    <Form.Control
+                        className='form-control-input'
+                        value={value}
+                        placeholder={placeholder}
+                        name={name}
+                        onChange={(e: string) => {
+                            onChange(e);
+                        }}
+                    />
+                </span>
+            </span>
+        );
+    }
+};
+
+/*
+
+            <div className='color-display'>
+                <div className='color-display-outline'>
+                    <div className='color-display-inner' style={pickerStyles}></div>
+                </div>
+            </div>
+            <div className='color-picker-slider'>
+                <SliderPicker
+                    color={colorData.hex()}
+                    onChangeComplete={(color) => {
+                        onChange?.(color.hex);
+                    }}
+                />
+            </div>
+            <Form.Control
+                className='form-control-input'
+                value={value}
+                placeholder={placeholder}
+                name={name}
+                onChange={(e: string) => {
+                    onChange(e);
+                }}
+            />
+
+*/
 
 export const PasswordControl = ({ value, label, placeholder, name, onChange }: IInput) => {
     return (

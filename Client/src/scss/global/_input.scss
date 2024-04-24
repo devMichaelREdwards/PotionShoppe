@@ -76,3 +76,36 @@
     background: none;
     resize: vertical;
 }
+
+.color-picker-input {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .color-display {
+        flex-basis: 5%;
+        .color-display-outline {
+            border: 1px solid $InkColor;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .color-display-inner {
+            height: 80%;
+            width: 80%;
+        }
+    }
+
+    .color-picker-slider {
+        flex-basis: 65%;
+        margin: 0 10px;
+    }
+
+    .rs-form-control {
+        flex-basis: 30%;
+    }
+}
