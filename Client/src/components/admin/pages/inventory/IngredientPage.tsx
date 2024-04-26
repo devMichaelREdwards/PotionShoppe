@@ -1,13 +1,13 @@
 import { Content, Panel } from 'rsuite';
-import IngredientListing from '../../../listing/IngredientListing';
-import useTitle from '../../../../../hooks/useTitle';
-import AdminHeader from '../../../../common/header/AdminHeader';
-import { IIngredientFilters } from '../../../../../types/IFilter';
-import axios from '../../../../../api/axios';
+import IngredientListing from '../../listing/IngredientListing';
+import useTitle from '../../../../hooks/useTitle';
+import AdminHeader from '../../../common/header/AdminHeader';
+import { IIngredientFilters } from '../../../../types/IFilter';
+import axios from '../../../../api/axios';
 import { useEffect, useState } from 'react';
-import IngredientFilters from '../../../filters/IngredientFilters';
+import IngredientFilters from '../../filters/IngredientFilters';
 
-const IngredientListingPage = () => {
+const IngredientPage = () => {
     useTitle('Ingredients');
 
     const [filters, setFilters] = useState<IIngredientFilters>({});
@@ -53,4 +53,4 @@ const IngredientListingPage = () => {
     );
 };
 
-export default IngredientListingPage;
+export default IngredientPage;

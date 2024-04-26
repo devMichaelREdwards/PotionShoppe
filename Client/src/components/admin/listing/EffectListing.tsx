@@ -8,9 +8,10 @@ import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
 interface IProps {
     filters: IEffectFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
-const EffectListing = ({ filters }: IProps) => {
+const EffectListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -49,6 +50,17 @@ const EffectListing = ({ filters }: IProps) => {
         },
     ];
 
+    const headerButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'Add',
+            color: 'violet',
+            action: () => {
+                toggleEdit(true);
+            },
+        },
+    ];
+
     const rowButtons: IActionButton[] = [
         {
             appearance: 'ghost',
@@ -57,7 +69,7 @@ const EffectListing = ({ filters }: IProps) => {
             icon: <PotionIcon />,
             argKey: 'effectId',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
@@ -107,6 +119,7 @@ const EffectListing = ({ filters }: IProps) => {
             columns={columns}
             route={`effect/listing`}
             remove={remove}
+            headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}
         />

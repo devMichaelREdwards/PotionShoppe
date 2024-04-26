@@ -5,16 +5,18 @@ import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
+import { SliderPicker } from 'react-color';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
     placeholder?: string;
     label?: string;
     name: string;
+    error?: string;
     onChange: (value: string) => void;
 }
 
-export const TextControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+export const TextControl = ({ value, label, placeholder, name, error, onChange }: IInput) => {
     return (
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
@@ -23,12 +25,100 @@ export const TextControl = ({ value, label, placeholder, name, onChange }: IInpu
                 value={value}
                 placeholder={placeholder}
                 name={name}
+                errorMessage={error}
                 onChange={(e: string) => {
                     onChange(e);
                 }}
             />
         </span>
     );
+};
+
+export const TextAreaControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+    return (
+        <span className='form-control text-area'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <textarea
+                className='form-control-input textarea-input'
+                value={value}
+                name={name}
+                placeholder={placeholder}
+                onChange={(e) => {
+                    onChange(e.target.value);
+                }}
+            >
+                {' '}
+            </textarea>
+        </span>
+    );
+};
+
+export const ColorPickerControl = ({ value, label, placeholder, name, onChange }: IInput) => {
+    try {
+        const colorData = Color(value);
+        const pickerStyles = { backgroundColor: colorData.hex() };
+        return (
+            <span className='form-control color-picker'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <span className='color-picker-input'>
+                    <span className='color-display'>
+                        <span className='color-display-outline'>
+                            <span className='color-display-inner' style={pickerStyles}></span>
+                        </span>
+                    </span>
+                    <span className='color-picker-slider'>
+                        <SliderPicker
+                            color={colorData.hex()}
+                            onChange={(color) => {
+                                onChange?.(color.hex);
+                            }}
+                        />
+                    </span>
+                    <Form.Control
+                        className='form-control-input'
+                        value={value}
+                        placeholder={placeholder}
+                        name={name}
+                        onChange={(e: string) => {
+                            onChange(e);
+                        }}
+                    />
+                </span>
+            </span>
+        );
+    } catch {
+        const colorData = Color('#fff');
+        const pickerStyles = { backgroundColor: colorData.hex() };
+        return (
+            <span className='form-control color-picker'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <span className='color-picker-input'>
+                    <span className='color-display'>
+                        <span className='color-display-outline'>
+                            <span className='color-display-inner' style={pickerStyles}></span>
+                        </span>
+                    </span>
+                    <span className='color-picker-slider'>
+                        <SliderPicker
+                            color={colorData.hex()}
+                            onChange={(color) => {
+                                onChange?.(color.hex);
+                            }}
+                        />
+                    </span>
+                    <Form.Control
+                        className='form-control-input'
+                        value={value}
+                        placeholder={placeholder}
+                        name={name}
+                        onChange={(e: string) => {
+                            onChange(e);
+                        }}
+                    />
+                </span>
+            </span>
+        );
+    }
 };
 
 export const PasswordControl = ({ value, label, placeholder, name, onChange }: IInput) => {
@@ -43,6 +133,31 @@ export const PasswordControl = ({ value, label, placeholder, name, onChange }: I
                 type='password'
                 onChange={(e: string) => {
                     onChange(e);
+                }}
+            />
+        </span>
+    );
+};
+
+interface INumberInput {
+    value: string | number | readonly string[] | undefined;
+    placeholder?: string;
+    label?: string;
+    name: string;
+    onChange: (value: number) => void;
+}
+
+export const NumberControl = ({ value, label, placeholder, name, onChange }: INumberInput) => {
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <InputNumber
+                className='form-control-input'
+                value={value as number}
+                placeholder={placeholder}
+                name={name}
+                onChange={(e: string | number) => {
+                    onChange(+e);
                 }}
             />
         </span>
@@ -213,7 +328,6 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                         return d[dataKey] == v;
                     });
                     if (!selected) return;
-                    console.log(selected);
                     const color = selected['color'] ? ((selected['color'] as { color: string })['color'] as string) : 'grey';
                     const collectionObj = {
                         id: selected[idKey] as number,

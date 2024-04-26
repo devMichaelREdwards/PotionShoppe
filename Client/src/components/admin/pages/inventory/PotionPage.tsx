@@ -1,13 +1,13 @@
 import { Content, Panel } from 'rsuite';
-import PotionListing from '../../../listing/PotionListing';
-import useTitle from '../../../../../hooks/useTitle';
-import AdminHeader from '../../../../common/header/AdminHeader';
-import { IIngredientFilters } from '../../../../../types/IFilter';
+import PotionListing from '../../listing/PotionListing';
+import useTitle from '../../../../hooks/useTitle';
+import AdminHeader from '../../../common/header/AdminHeader';
+import { IIngredientFilters } from '../../../../types/IFilter';
 import { useState, useEffect } from 'react';
-import PotionFilters from '../../../filters/PotionFilters';
-import axios from '../../../../../api/axios';
+import PotionFilters from '../../filters/PotionFilters';
+import axios from '../../../../api/axios';
 
-const PotionListingPage = () => {
+const PotionPage = () => {
     useTitle('Potions');
 
     const [filters, setFilters] = useState<IIngredientFilters>({});
@@ -21,9 +21,7 @@ const PotionListingPage = () => {
     useEffect(() => {
         const getFilterData = async () => {
             const response = await axios.get('potion/filters');
-
             const limits = response.data;
-            console.log(limits);
             setFilterLimits({
                 cmax: limits.costMax,
                 pmax: limits.priceMax,
@@ -53,4 +51,4 @@ const PotionListingPage = () => {
     );
 };
 
-export default PotionListingPage;
+export default PotionPage;

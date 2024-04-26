@@ -25,7 +25,7 @@ const AdminLoginForm = () => {
         await axios
             .post('user/employee/login', loginData, { withCredentials: true })
             .then((res) => {
-                // Login successfull
+                // Login successful
                 const user: IAdminUser = {
                     userName,
                     token: res.data.token,
