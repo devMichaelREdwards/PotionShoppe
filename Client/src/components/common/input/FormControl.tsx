@@ -121,33 +121,6 @@ export const ColorPickerControl = ({ value, label, placeholder, name, onChange }
     }
 };
 
-/*
-
-            <div className='color-display'>
-                <div className='color-display-outline'>
-                    <div className='color-display-inner' style={pickerStyles}></div>
-                </div>
-            </div>
-            <div className='color-picker-slider'>
-                <SliderPicker
-                    color={colorData.hex()}
-                    onChangeComplete={(color) => {
-                        onChange?.(color.hex);
-                    }}
-                />
-            </div>
-            <Form.Control
-                className='form-control-input'
-                value={value}
-                placeholder={placeholder}
-                name={name}
-                onChange={(e: string) => {
-                    onChange(e);
-                }}
-            />
-
-*/
-
 export const PasswordControl = ({ value, label, placeholder, name, onChange }: IInput) => {
     return (
         <span className='form-control'>
