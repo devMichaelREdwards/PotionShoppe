@@ -111,7 +111,7 @@ public class EffectController : ControllerBase
         return Ok();
     }
 
-    private ErrorCollection SetErrors(EffectDto effect, Boolean withId = false)
+    private ErrorCollection SetErrors(EffectDto effect, bool withId = false)
     {
         ErrorCollection errors = new();
         if (withId && effect.EffectId == null)

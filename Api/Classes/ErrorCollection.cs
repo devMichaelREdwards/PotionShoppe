@@ -12,4 +12,9 @@ public class ErrorCollection
     {
         Errors.Add(key, message);
     }
+
+    public void Remove(string key)
+    {
+        Errors.Remove(key);
+    }
 }

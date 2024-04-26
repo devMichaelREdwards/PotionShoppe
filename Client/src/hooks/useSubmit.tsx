@@ -16,7 +16,6 @@ export const useSubmit = (route: string, successMessage: string, errorMessage: s
     let request;
 
     const submitForm = async (data: IPostData, successCallback?: () => void, errorCallback?: () => void) => {
-        console.log(data);
         if (data.effectId && (data.effectId as number) > 0) {
             request = axios.put(route, data, user?.authConfig);
         } else {
