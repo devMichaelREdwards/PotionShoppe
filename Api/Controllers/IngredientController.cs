@@ -1,3 +1,4 @@
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -10,21 +11,23 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class IngredientController : ControllerBase
 {
-    private readonly IListingRepository<Ingredient> ingredients;
-    private readonly IMapper mapper;
+    private readonly IListingRepository<Ingredient> _ingredients;
+    private readonly IListingRepository<Effect> _effects;
+    private readonly IMapper _mapper;
 
-    public IngredientController(IListingRepository<Ingredient> _ingredients, IMapper _mapper)
+    public IngredientController(IListingRepository<Ingredient> ingredients, IListingRepository<Effect> effects, IMapper mapper)
     {
-        ingredients = _ingredients;
-        mapper = _mapper;
+        _ingredients = ingredients;
+        _effects = effects;
+        _mapper = mapper;
     }
 
     [HttpGet]
     [Authorize(Roles = "Owner")]
     public IActionResult GetIngredients()
     {
-        var result = ingredients.Get();
-        return Ok(mapper.Map<List<IngredientDto>>(result));
+        var result = _ingredients.Get();
+        return Ok(_mapper.Map<List<IngredientDto>>(result));
     }
 
     [HttpGet("listing")]
@@ -33,14 +36,14 @@ public class IngredientController : ControllerBase
         IngredientFilter? filter = IngredientFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
         SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
-        var result = ingredients.GetListing(filter, page, sortOrder);
-        return Ok(mapper.Map<List<IngredientListing>>(result));
+        var result = _ingredients.GetListing(filter, page, sortOrder);
+        return Ok(_mapper.Map<List<IngredientListing>>(result));
     }
 
     [HttpGet("filters")]
     public IActionResult GetFilterInfo()
     {
-        IngredientFilter filterLimits = (IngredientFilter)ingredients.GetFilterData();
+        IngredientFilter filterLimits = (IngredientFilter)_ingredients.GetFilterData();
         return Ok(filterLimits);
     }
 
@@ -48,7 +51,9 @@ public class IngredientController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult PostIngredient(IngredientDto ingredient)
     {
-        ingredients.Insert(mapper.Map<Ingredient>(ingredient));
+        ErrorCollection errors = SetErrors(ingredient);
+        if (errors.Error) return BadRequest(errors);
+        _ingredients.Insert(_mapper.Map<Ingredient>(ingredient));
         return Ok();
     }
 
@@ -56,13 +61,14 @@ public class IngredientController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult PutIngredient(IngredientDto ingredient)
     {
-        if (ingredient.IngredientId == null)
-            return Ok();
-
-        Ingredient existing = ingredients.GetById((int)ingredient.IngredientId);
-        ingredient.Update(existing);
-        ingredients.Update(existing);
-
+        ErrorCollection errors = SetErrors(ingredient, true);
+        Ingredient existing = _ingredients.GetById((int)ingredient.IngredientId);
+        if (existing is null)
+        {
+            errors.Add("exist", "This ingredient was not found. Please refresh the listing.");
+        }
+        ingredient.Update(existing!);
+        _ingredients.Update(existing!);
         return Ok();
     }
 
@@ -71,7 +77,7 @@ public class IngredientController : ControllerBase
     public IActionResult DeleteIngredient(IngredientDto ingredient)
     {
         if (ingredient.IngredientId != null)
-            ingredients.Delete((int)ingredient.IngredientId);
+            _ingredients.Delete((int)ingredient.IngredientId);
         return Ok();
     }
 
@@ -81,8 +87,43 @@ public class IngredientController : ControllerBase
     {
         foreach (int id in ids)
         {
-            ingredients.Delete(id);
+            _ingredients.Delete(id);
         }
         return Ok();
+    }
+
+    private ErrorCollection SetErrors(IngredientDto ingredient, bool withId = false)
+    {
+        ErrorCollection errors = new();
+        if (withId && ingredient.EffectId == null)
+        {
+            errors.Add("id", "Invalid Ingredient ID sent with request.");
+        }
+        if (ingredient.Name.Length < 3)
+        {
+            errors.Add("name", "Name must be 3 characters.");
+        }
+
+        if (ingredient.Price < 0)
+        {
+            errors.Add("price", "Price must be positive.");
+        }
+
+        if (ingredient.Cost < 0)
+        {
+            errors.Add("cost", "Cost must be positive.");
+        }
+
+        if (ingredient.CurrentStock < 0)
+        {
+            errors.Add("instock", "Stock must be positive.");
+        }
+
+        if (_effects.GetById(ingredient.EffectId ?? -1) == null)
+        {
+            errors.Add("effect", "This is an invalid effect id.");
+        }
+
+        return errors;
     }
 }
