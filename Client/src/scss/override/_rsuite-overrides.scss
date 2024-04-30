@@ -139,6 +139,8 @@ input:-webkit-autofill:active {
 
 .rs-picker-popup {
     background: $BackgroundParchmentPaperImage;
+    background-position: center top;
+    background-size: 100% auto;
     border: 1px solid $InkColor;
 
     *:hover {
@@ -149,4 +151,9 @@ input:-webkit-autofill:active {
 
 .tag-close .rs-btn:hover {
     background: none;
+}
+
+.rs-auto-complete-item-focus {
+    background: none;
+    color: $AdminNavBarMenuHoverColor;
 }

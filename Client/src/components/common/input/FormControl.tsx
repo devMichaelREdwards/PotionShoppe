@@ -259,7 +259,7 @@ export const StringSearchInput = ({ value, label, placeholder, route, idKey, dat
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
-                className='form-control-input'
+                className='form-control-input autocomplete-input'
                 placeholder={placeholder}
                 value={value}
                 data={data.map((item) => {
@@ -302,8 +302,6 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
     const { data } = useData(route);
 
     useEffect(() => {
-        // This is the only way that the input clears after onSelect due to onChange being called after onSelect
-        // Maybe just rewrite this component? Rsuite failed me here
         if (dirty) {
             setValue('');
             setDirty(false);
@@ -315,6 +313,7 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
                 className='form-control-input'
+                menuClassName='autocomplete-popup'
                 placeholder={placeholder}
                 data={data.map((item) => {
                     return item[dataKey] as string;
