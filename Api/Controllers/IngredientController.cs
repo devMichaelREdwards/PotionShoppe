@@ -95,13 +95,18 @@ public class IngredientController : ControllerBase
     private ErrorCollection SetErrors(IngredientDto ingredient, bool withId = false)
     {
         ErrorCollection errors = new();
-        if (withId && ingredient.EffectId == null)
+        if (withId && ingredient.IngredientId == null)
         {
             errors.Add("id", "Invalid Ingredient ID sent with request.");
         }
         if (ingredient.Name.Length < 3)
         {
             errors.Add("name", "Name must be 3 characters.");
+        }
+
+        if (ingredient.IngredientCategoryId == null)
+        {
+            errors.Add("id", "Invalid Category ID sent with request.");
         }
 
         if (ingredient.Price < 0)
@@ -121,7 +126,7 @@ public class IngredientController : ControllerBase
 
         if (_effects.GetById(ingredient.EffectId ?? -1) == null)
         {
-            errors.Add("effect", "This is an invalid effect id.");
+            errors.Add("effect", "Invalid Effect ID sent with request.");
         }
 
         return errors;

@@ -5,7 +5,7 @@ import useAuth from './useAuth';
 import { useState } from 'react';
 
 interface IErrorState {
-    name?: string;
+    [key: string]: string;
 }
 
 export const useSubmit = (route: string, successMessage: string, errorMessage: string) => {

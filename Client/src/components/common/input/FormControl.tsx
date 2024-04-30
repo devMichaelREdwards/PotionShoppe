@@ -248,6 +248,7 @@ interface IStringSearchInput {
     route: string;
     idKey: string;
     dataKey: string;
+    error?: string;
     onSelect: (data: ICollectionObject) => void;
     setValue: (value: string) => void;
 }
