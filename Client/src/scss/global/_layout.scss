@@ -1,3 +1,9 @@
+@use '../global/variables' as *;
 .justify-center {
     justify-content: center;
+}
+
+.admin-copyright {
+    margin: auto auto 0 auto;
+    font-size: $FontTiny;
 }

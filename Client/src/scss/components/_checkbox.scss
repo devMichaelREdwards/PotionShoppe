@@ -1,5 +1,5 @@
 @use '../global/variables' as *;
-.listing-checkbox {
+.checkbox {
     .rs-checkbox-inner {
         &::before {
             // Checkbox box
@@ -15,11 +15,11 @@
     }
 }
 
-.listing-checkbox.rs-checkbox-checked {
+.checkbox.rs-checkbox-checked {
     .rs-checkbox-inner {
         &::before {
             // Checkbox box
-            background: $SeparatorColor;
+            background: $InkColor;
             border: 1px solid $SeparatorColor;
         }
     }

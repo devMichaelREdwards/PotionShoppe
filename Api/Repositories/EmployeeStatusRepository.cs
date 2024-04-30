@@ -17,12 +17,12 @@ public class EmployeeStatusRepository : IRepository<EmployeeStatus>, IDisposable
         return [.. context.EmployeeStatuses];
     }
 
-    public IEnumerable<EmployeeStatus> GetListing(IFilter<EmployeeStatus>? filter = null)
+    public IEnumerable<EmployeeStatus> GetListing(IFilter<EmployeeStatus>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }
 
-    public EmployeeStatus GetById(int id)
+    public EmployeeStatus? GetById(int id)
     {
         return context.EmployeeStatuses.Find(id);
     }

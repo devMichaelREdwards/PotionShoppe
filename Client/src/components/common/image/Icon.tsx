@@ -12,6 +12,11 @@ import OrderIconColor from '/assets/icon/color/Order_Icon.svg';
 import OrderIconGrey from '/assets/icon/greyscale/Order_Icon.svg';
 import ReceiptIconColor from '/assets/icon/color/Receipt_Icon.svg';
 import ReceiptIconGrey from '/assets/icon/greyscale/Receipt_Icon.svg';
+import MagicWand from '/assets/icon/Magic_Wand.svg';
+import Sort from '/assets/icon/Sort.svg';
+import SortUp from '/assets/icon/Sort_Up.svg';
+import SortDown from '/assets/icon/Sort_Down.svg';
+import { SortOrder } from '../listing/Listing';
 
 interface IIcon {
     active?: boolean;
@@ -76,6 +81,42 @@ export const ReceiptIcon = ({ active }: IIcon) => {
         <div className='icon color-icon'>
             <img className={`greyscale-image ${active ? 'hidden' : ''}`} src={ReceiptIconGrey} />
             <img className={`color-image ${active ? 'active' : 'hidden'}`} src={ReceiptIconColor} />
+        </div>
+    );
+};
+
+export const MagicWandIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={MagicWand} />
+        </div>
+    );
+};
+
+interface ISortIcon {
+    sort: SortOrder;
+}
+
+export const SortIcon = ({ sort }: ISortIcon) => {
+    if (sort === SortOrder.ascending) {
+        return (
+            <div className='icon sort-icon'>
+                <img src={SortUp} />
+            </div>
+        );
+    }
+
+    if (sort === SortOrder.descending) {
+        return (
+            <div className='icon sort-icon'>
+                <img src={SortDown} />
+            </div>
+        );
+    }
+
+    return (
+        <div className='icon sort-icon'>
+            <img src={Sort} />
         </div>
     );
 };

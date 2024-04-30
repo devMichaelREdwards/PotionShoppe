@@ -1,10 +1,11 @@
-using System.Linq.Expressions;
+using System.Net;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class EffectRepository : IRepository<Effect>, IDisposable
+public class EffectRepository : IListingRepository<Effect>, IDisposable
 {
     private PotionShoppeContext _context;
 
@@ -18,52 +19,87 @@ public class EffectRepository : IRepository<Effect>, IDisposable
         return [.. _context.Effects];
     }
 
-    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null)
+    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        var effects = from effect in _context.Effects select effect;
+        var effects = _context.Effects.AsQueryable();
 
-        string? name = filter.GetValue("name");
+        string? name = filter?.GetValue("name");
         if (name != null)
         {
             effects = effects.Where(e => e.Name!.ToLower().Contains(name.ToLower()));
         }
 
-        int? vMin = filter.GetValue("vmin");
+        int? vMin = filter?.GetValue("vmin");
         if (vMin != null)
         {
             effects = effects.Where(e => e.Value >= vMin);
         }
 
-        int? vMax = filter.GetValue("vmax");
+        int? vMax = filter?.GetValue("vmax");
         if (vMax != null)
         {
             effects = effects.Where(e => e.Value <= vMax);
         }
 
-        int? dMin = filter.GetValue("dmin");
+        int? dMin = filter?.GetValue("dmin");
         if (dMin != null)
         {
             effects = effects.Where(e => e.Duration >= dMin);
         }
 
-        int? dMax = filter.GetValue("dmax");
+        int? dMax = filter?.GetValue("dmax");
         if (dMax != null)
         {
             effects = effects.Where(e => e.Duration <= dMax);
         }
 
-        List<int>? values = filter.GetValue("value");
+        List<int>? values = filter?.GetValue("value");
         if (values != null)
         {
-            effects = effects.Where(e => values!.Contains((int)e.Value));
+            effects = effects.Where(e => values!.Contains((int)e.Value!));
         }
 
-        return effects;
+        string? sort = sortOrder?.GetValue("sort");
+        string? order = sortOrder?.GetValue("order");
+
+        if (sort != null && order != null)
+        {
+            if (sort == "value" && order == "asc")
+            {
+                effects = effects.OrderBy(e => e.Value);
+            }
+
+            if (sort == "value" && order == "desc")
+            {
+                effects = effects.OrderByDescending(e => e.Value);
+            }
+
+            if (sort == "duration" && order == "asc")
+            {
+                effects = effects.OrderBy(e => e.Duration);
+            }
+
+            if (sort == "duration" && order == "desc")
+            {
+                effects = effects.OrderByDescending(e => e.Duration);
+            }
+        }
+
+        return effects.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
-    public Effect GetById(int id)
+    public Effect? GetById(int id)
     {
         return _context.Effects.Find(id);
+    }
+
+    public IFilter<Effect> GetFilterData()
+    {
+        return new EffectFilter()
+        {
+            ValueMax = _context.Effects.Max(e => e.Value),
+            DurationMax = _context.Effects.Max(e => e.Duration)
+        };
     }
 
     public Effect Insert(Effect entity)

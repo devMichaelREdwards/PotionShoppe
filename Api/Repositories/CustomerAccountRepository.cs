@@ -22,12 +22,12 @@ public class CustomerAccountRepository : IRepository<CustomerAccount>, IDisposab
         return [.. context.CustomerAccounts.Include(ca => ca.Customer).ThenInclude(c => c.CustomerStatus)];
     }
 
-    public IEnumerable<CustomerAccount> GetListing(IFilter<CustomerAccount>? filter = null)
+    public IEnumerable<CustomerAccount> GetListing(IFilter<CustomerAccount>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }
 
-    public CustomerAccount GetById(int id)
+    public CustomerAccount? GetById(int id)
     {
         return context.CustomerAccounts.Find(id);
     }

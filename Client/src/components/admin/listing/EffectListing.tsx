@@ -1,11 +1,17 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IEffectFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
 import { PotionIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
-const EffectListing = () => {
+interface IProps {
+    filters: IEffectFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
+}
+
+const EffectListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -19,12 +25,14 @@ const EffectListing = () => {
             align: 'center',
             label: 'Value',
             dataKey: 'value',
+            sortable: true,
             colspan: 2,
         },
         {
             align: 'center',
             label: 'Duration',
             dataKey: 'duration',
+            sortable: true,
             colspan: 2,
         },
         {
@@ -42,6 +50,17 @@ const EffectListing = () => {
         },
     ];
 
+    const headerButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'Add',
+            color: 'violet',
+            action: () => {
+                toggleEdit(true);
+            },
+        },
+    ];
+
     const rowButtons: IActionButton[] = [
         {
             appearance: 'ghost',
@@ -50,7 +69,7 @@ const EffectListing = () => {
             icon: <PotionIcon />,
             argKey: 'effectId',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
@@ -59,7 +78,52 @@ const EffectListing = () => {
         await axios.post('effect/remove', selected, user?.authConfig);
     };
 
-    return <Listing id='effectId' columns={columns} route={'effect/listing'} remove={remove} rowButtons={rowButtons} />;
+    const buildFilterString = (filters: IEffectFilters) => {
+        let addFilters = false;
+        let filterString = '';
+        if (filters.name) {
+            addFilters = true;
+            filterString += `name=${filters.name}`;
+        }
+
+        if (filters.vmin !== undefined && filters.vmin >= 0) {
+            if (addFilters) filterString += `&`;
+            else addFilters = true;
+            filterString += `vmin=${filters.vmin}`;
+        }
+
+        if (filters.vmax !== undefined && filters.vmax >= 0) {
+            if (addFilters) filterString += `&`;
+            else addFilters = true;
+            filterString += `vmax=${filters.vmax}`;
+        }
+
+        if (filters.dmin !== undefined && filters.dmin >= 0) {
+            if (addFilters) filterString += `&`;
+            else addFilters = true;
+            filterString += `dmin=${filters.dmin}`;
+        }
+
+        if (filters.dmax !== undefined && filters.dmax >= 0) {
+            if (addFilters) filterString += `&`;
+            else addFilters = true;
+            filterString += `dmax=${filters.dmax}`;
+        }
+
+        return addFilters ? filterString : '';
+    };
+
+    return (
+        <Listing
+            id='effectId'
+            columns={columns}
+            route={`effect/listing`}
+            remove={remove}
+            headerButtons={headerButtons}
+            rowButtons={rowButtons}
+            filterString={buildFilterString(filters)}
+        />
+    );
 };
 
 export default EffectListing;

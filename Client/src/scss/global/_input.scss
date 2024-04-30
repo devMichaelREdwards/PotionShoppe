@@ -1,7 +1,9 @@
+@use '../global/variables' as *;
 .button-group {
     align-self: center;
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 .form-control {
@@ -21,6 +23,35 @@
     font-size: 18px;
 }
 
+.form-control-input.rs-slider {
+    width: 100%;
+    border: none !important;
+
+    .rs-slider-bar {
+        height: 1px;
+        background-color: $InkColor;
+
+        .rs-slider-progress-bar {
+            height: 3px;
+            background-color: $InkColor;
+        }
+    }
+
+    .rs-slider-handle {
+        &::before {
+            background-color: $InkColor;
+            border: 1px solid $InkColor;
+            border-radius: 0;
+            rotate: 45deg;
+            margin: -4px 0 0 -5.5px;
+        }
+    }
+}
+
+.form-control .rs-input-group {
+    margin: 0;
+}
+
 .image-button {
     position: relative;
     text-align: center;
@@ -37,4 +68,44 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.textarea-input {
+    display: inline-block;
+    width: 100%;
+    background: none;
+    resize: vertical;
+}
+
+.color-picker-input {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .color-display {
+        flex-basis: 5%;
+        .color-display-outline {
+            border: 1px solid $InkColor;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .color-display-inner {
+            height: 80%;
+            width: 80%;
+        }
+    }
+
+    .color-picker-slider {
+        flex-basis: 65%;
+        margin: 0 10px;
+    }
+
+    .rs-form-control {
+        flex-basis: 30%;
+    }
 }

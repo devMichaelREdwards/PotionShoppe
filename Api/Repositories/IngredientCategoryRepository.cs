@@ -17,12 +17,12 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
         return [.. context.IngredientCategories];
     }
 
-    public IEnumerable<IngredientCategory> GetListing(IFilter<IngredientCategory>? filter = null)
+    public IEnumerable<IngredientCategory> GetListing(IFilter<IngredientCategory>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         throw new NotImplementedException();
     }
 
-    public IngredientCategory GetById(int id)
+    public IngredientCategory? GetById(int id)
     {
         return context.IngredientCategories.Find(id)!;
     }

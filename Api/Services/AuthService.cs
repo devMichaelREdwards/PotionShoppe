@@ -14,20 +14,20 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<AuthUser> userManager;
     private readonly IRepository<CustomerAccount> customerAccounts;
-    private readonly IRepository<Customer> customers;
+    private readonly IListingRepository<Customer> customers;
     private readonly IRepository<CustomerStatus> customerStatuses;
     private readonly IRepository<EmployeeAccount> employeeAccounts;
     private readonly IRepository<EmployeePosition> employeePositions;
-    private readonly IRepository<Employee> employees;
+    private readonly IListingRepository<Employee> employees;
     private readonly IConfiguration config;
     private readonly IMapper mapper;
 
     public AuthService(
         UserManager<AuthUser> _userManager,
         IRepository<CustomerAccount> _customerAccounts,
-        IRepository<Customer> _customers,
+        IListingRepository<Customer> _customers,
         IRepository<CustomerStatus> _customerStatuses,
-        IRepository<Employee> _employees,
+        IListingRepository<Employee> _employees,
         IRepository<EmployeeAccount> _employeeAccounts,
         IRepository<EmployeePosition> _employeePositions,
         IConfiguration _config,
@@ -208,18 +208,19 @@ public class AuthService : IAuthService
     }
     #endregion
 
-    private IEnumerable<Claim>? GetEmployeeClaims(string userName, string role) {
-        if(role == "Owner") return [
+    private IEnumerable<Claim>? GetEmployeeClaims(string userName, string role)
+    {
+        if (role == "Owner") return [
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role),
             new(ClaimTypes.Role, "Employee")
         ];
 
-        if(role == "Employee") return [
-            
+        if (role == "Employee") return [
+
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role)
-        
+
         ];
 
         return null;

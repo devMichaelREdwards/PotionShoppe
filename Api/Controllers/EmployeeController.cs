@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
-    private readonly IRepository<Employee> employees;
+    private readonly IListingRepository<Employee> employees;
     private readonly IMapper mapper;
 
-    public EmployeeController(IRepository<Employee> _employees, IMapper _mapper)
+    public EmployeeController(IListingRepository<Employee> _employees, IMapper _mapper)
     {
         employees = _employees;
         mapper = _mapper;
@@ -31,7 +31,8 @@ public class EmployeeController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetEmployeeListing()
     {
-        var result = employees.GetListing();
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = employees.GetListing(null, page);
         return Ok(mapper.Map<List<EmployeeListing>>(result));
     }
 

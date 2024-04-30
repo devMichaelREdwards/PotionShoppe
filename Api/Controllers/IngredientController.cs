@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class IngredientController : ControllerBase
 {
-    private readonly IRepository<Ingredient> ingredients;
+    private readonly IListingRepository<Ingredient> ingredients;
     private readonly IMapper mapper;
 
-    public IngredientController(IRepository<Ingredient> _ingredients, IMapper _mapper)
+    public IngredientController(IListingRepository<Ingredient> _ingredients, IMapper _mapper)
     {
         ingredients = _ingredients;
         mapper = _mapper;
@@ -30,8 +30,18 @@ public class IngredientController : ControllerBase
     [HttpGet("listing")]
     public IActionResult GetIngredientListing()
     {
-        var result = ingredients.GetListing();
+        IngredientFilter? filter = IngredientFilter.BuildFilter(Request.Query);
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
+        var result = ingredients.GetListing(filter, page, sortOrder);
         return Ok(mapper.Map<List<IngredientListing>>(result));
+    }
+
+    [HttpGet("filters")]
+    public IActionResult GetFilterInfo()
+    {
+        IngredientFilter filterLimits = (IngredientFilter)ingredients.GetFilterData();
+        return Ok(filterLimits);
     }
 
     [HttpPost]

@@ -5,6 +5,7 @@ export interface IListingColumn {
     label: string;
     dataKey: string;
     colspan: number;
+    sortable?: boolean;
     component?: (data: unknown) => JSX.Element;
 }
 
@@ -19,6 +20,7 @@ export interface IActionButton {
 }
 
 export interface ICollectionObject {
+    id?: number;
     title: string;
     color?: string;
 }
