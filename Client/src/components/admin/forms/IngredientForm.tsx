@@ -6,6 +6,7 @@ import { useID } from '../../../hooks/useData';
 import { useSubmit } from '../../../hooks/useSubmit';
 import { ICollectionObject } from '../../../types/IListing';
 import { API_URL } from '../../../api/axios';
+import { IPostData } from '../../../types/IData';
 
 interface IProps {
     editId?: number;
@@ -13,8 +14,8 @@ interface IProps {
 }
 
 const IngredientForm = ({ editId, toggleEdit }: IProps) => {
-    const { data, loading } = useID(editId ? `effect/${editId}` : '');
-    const [image, setImage] = useState(''); // Image picker needed
+    const { data, loading } = useID(editId ? `ingredient/${editId}` : '');
+    const [image, setImage] = useState(`${API_URL}/image/`); // Image picker needed
     const [name, setName] = useState('');
     const [categoryId, setCategoryId] = useState(0); // Use search input
     const [categoryQuery, setCategoryQuery] = useState('');
@@ -30,11 +31,20 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
         'Ingredient Saved',
         'An error occurred! Please correct the errors and try again.'
     );
-
+    console.log(editId);
     useEffect(() => {
-        const effect = data;
-        if (!editId || !effect) return;
-        setName(effect.name as string);
+        const ingredient = data;
+        if (!editId || !ingredient) return;
+        setName(ingredient.name as string);
+        setImage(ingredient.image as string);
+        setCategoryId(ingredient.ingredientCategoryId as number);
+        setCategoryQuery((ingredient.ingredientCategory as IPostData).title as string);
+        setDescription(ingredient.description as string);
+        setEffectId(ingredient.effectId as number);
+        setEffectQuery((ingredient.effect as IPostData).name as string);
+        setCost(ingredient.cost as string);
+        setPrice(ingredient.price as string);
+        setCurrentStock(ingredient.currentStock as string);
     }, [data]);
 
     const handleSubmit = async () => {
@@ -46,7 +56,7 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
             price,
             cost,
             currentStock,
-            image: `${API_URL}/image/${image}`,
+            image,
             effectId: effectId,
             ingredientCategoryId: categoryId,
         };

@@ -45,7 +45,7 @@ const ImageSelectorModal = ({ open, api, closeModal, selectImage }: IImageSelect
                                     className='image-selection-image'
                                     src={trueSrc}
                                     onClick={() => {
-                                        clickImage(imgName, index);
+                                        clickImage(trueSrc, index);
                                     }}
                                 />
                             </span>

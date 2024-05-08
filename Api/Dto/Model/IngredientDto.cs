@@ -35,7 +35,8 @@ public partial class IngredientDto : IDto<Ingredient>
             && other.Cost == Cost
             && other.CurrentStock == CurrentStock
             && other.Image == Image
-            && other.EffectId == EffectId;
+            && other.EffectId == EffectId
+            && other.IngredientCategoryId == IngredientCategoryId;
     }
 
     public void Update(Ingredient dest)
@@ -48,5 +49,6 @@ public partial class IngredientDto : IDto<Ingredient>
         dest.CurrentStock = CurrentStock ?? dest.CurrentStock;
         dest.Image = Image ?? dest.Image;
         dest.EffectId = EffectId ?? dest.EffectId;
+        dest.IngredientCategoryId = IngredientCategoryId ?? dest.IngredientCategoryId;
     }
 }

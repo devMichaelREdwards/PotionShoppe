@@ -121,7 +121,7 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 
     public Ingredient? GetById(int id)
     {
-        return _context.Ingredients.Find(id);
+        return _context.Ingredients.Where(i => i.IngredientId == id).Include(i => i.Effect).Include(i => i.IngredientCategory).First();
     }
 
     public Ingredient Insert(Ingredient entity)

@@ -89,9 +89,9 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             label: 'edit',
             color: 'violet',
             icon: <IngredientIcon />,
-            argKey: 'IngredientId',
+            argKey: 'ingredientId',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
