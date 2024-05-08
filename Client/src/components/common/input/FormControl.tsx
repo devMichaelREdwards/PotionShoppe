@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, Modal, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
 import { SliderPicker } from 'react-color';
+import ImageButton from './ImageButton';
+import ImageSelectorModal from '../../admin/modal/ImageSelectorModal';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -241,6 +243,39 @@ export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }
     );
 };
 
+interface IImageSelectorControl {
+    value: string;
+    api: string;
+    label: string;
+    onImageChange: (value: string) => void;
+}
+
+export const ImageSelectorControl = ({ value, api, label, onImageChange }: IImageSelectorControl) => {
+    const [open, setOpen] = useState(false);
+
+    const openModal = () => {
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    };
+
+    const selectImage = (src: string) => {
+        onImageChange(src);
+        setOpen(false);
+    };
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <span className='image-selector-input'>
+                <ImageButton src={`${api}/${value}`} onClick={openModal} />
+            </span>
+            <ImageSelectorModal open={open} api={api} closeModal={closeModal} selectImage={selectImage} />
+        </span>
+    );
+};
+
 interface IStringSearchInput {
     value: string;
     label?: string;
@@ -248,6 +283,7 @@ interface IStringSearchInput {
     route: string;
     idKey: string;
     dataKey: string;
+    error?: string;
     onSelect: (data: ICollectionObject) => void;
     setValue: (value: string) => void;
 }
@@ -258,7 +294,7 @@ export const StringSearchInput = ({ value, label, placeholder, route, idKey, dat
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
-                className='form-control-input'
+                className='form-control-input autocomplete-input'
                 placeholder={placeholder}
                 value={value}
                 data={data.map((item) => {
@@ -301,8 +337,6 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
     const { data } = useData(route);
 
     useEffect(() => {
-        // This is the only way that the input clears after onSelect due to onChange being called after onSelect
-        // Maybe just rewrite this component? Rsuite failed me here
         if (dirty) {
             setValue('');
             setDirty(false);
@@ -314,6 +348,7 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
                 className='form-control-input'
+                menuClassName='autocomplete-popup'
                 placeholder={placeholder}
                 data={data.map((item) => {
                     return item[dataKey] as string;

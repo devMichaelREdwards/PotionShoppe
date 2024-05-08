@@ -9,9 +9,10 @@ import ImageColumn from '../../common/listing/columns/ImageColumn';
 
 interface IProps {
     filters: IIngredientFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
-const IngredientListing = ({ filters }: IProps) => {
+const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -68,6 +69,17 @@ const IngredientListing = ({ filters }: IProps) => {
             dataKey: 'currentStock',
             sortable: true,
             colspan: 2,
+        },
+    ];
+
+    const headerButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'Add',
+            color: 'violet',
+            action: () => {
+                toggleEdit(true);
+            },
         },
     ];
 
@@ -162,6 +174,7 @@ const IngredientListing = ({ filters }: IProps) => {
             columns={columns}
             route={'ingredient/listing'}
             remove={remove}
+            headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}
         />

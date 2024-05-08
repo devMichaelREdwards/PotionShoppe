@@ -31,6 +31,7 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
 
     const handleSubmit = async () => {
         const data = {
+            editId: editId,
             effectId: editId,
             name,
             value,
