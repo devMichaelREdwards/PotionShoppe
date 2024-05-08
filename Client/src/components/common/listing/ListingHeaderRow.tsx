@@ -29,7 +29,7 @@ const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, re
                             key={col.dataKey}
                             colspan={col.colspan}
                             onClick={() => {
-                                sort?.(col.dataKey);
+                                col.sortable && sort?.(col.dataKey);
                             }}
                         >
                             {col.label}
