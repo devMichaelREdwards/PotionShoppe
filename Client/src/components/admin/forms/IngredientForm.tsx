@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import ActionButton from '../../common/input/ActionButton';
 import { Form } from 'rsuite';
-import { NumberControl, StringSearchInput, TextAreaControl, TextControl } from '../../common/input/FormControl';
+import { ImageSelectorControl, NumberControl, StringSearchInput, TextAreaControl, TextControl } from '../../common/input/FormControl';
 import { useID } from '../../../hooks/useData';
 import { useSubmit } from '../../../hooks/useSubmit';
 import { ICollectionObject } from '../../../types/IListing';
+import { API_URL } from '../../../api/axios';
 
 interface IProps {
     editId?: number;
@@ -38,13 +39,14 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
 
     const handleSubmit = async () => {
         const data = {
+            editId: editId,
             ingredientId: editId,
             name,
             description,
             price,
             cost,
             currentStock,
-            image,
+            image: `${API_URL}/image/${image}`,
             effectId: effectId,
             ingredientCategoryId: categoryId,
         };
@@ -145,6 +147,16 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
                     name='description'
                     onChange={(e: string) => {
                         setDescription(e);
+                    }}
+                />
+            </Form.Group>
+            <Form.Group>
+                <ImageSelectorControl
+                    value={image}
+                    api={`${API_URL}/image`}
+                    label='Image'
+                    onImageChange={(img: string) => {
+                        setImage(img);
                     }}
                 />
             </Form.Group>

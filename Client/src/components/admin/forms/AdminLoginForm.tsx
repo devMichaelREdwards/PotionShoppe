@@ -69,7 +69,13 @@ const AdminLoginForm = () => {
             </Form.Group>
             <Form.Group>
                 <ButtonToolbar className='admin-login-button-wrapper'>
-                    <ImageButton className='admin-login-button' src='/assets/employee/Burned_Parchment.png' onClick={handleLogin} loading={loading} />
+                    <ImageButton
+                        className='admin-login-button'
+                        src='/assets/employee/Burned_Parchment.png'
+                        label='Sign In'
+                        onClick={handleLogin}
+                        loading={loading}
+                    />
                 </ButtonToolbar>
             </Form.Group>
         </Form>

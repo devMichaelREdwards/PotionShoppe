@@ -4,15 +4,16 @@ interface IImageButton {
     src: string;
     className?: string;
     loading?: boolean;
-    onClick: () => Promise<void>;
+    label?: string;
+    onClick: () => Promise<void> | void;
 }
 
-const ImageButton = ({ src, className, loading, onClick }: IImageButton) => {
+const ImageButton = ({ src, className, loading, label, onClick }: IImageButton) => {
     return (
-        <Button appearance='primary' onClick={onClick} loading={loading}>
+        <Button appearance='primary' className='image-button-wrapper' onClick={onClick} loading={loading}>
             <div className={`image-button ${className}`}>
                 <img src={src} />
-                {!loading && <div className='image-button-text'>Sign In</div>}
+                {!loading && label && <div className='image-button-text'>{label}</div>}
             </div>
         </Button>
     );

@@ -110,6 +110,47 @@
     }
 }
 
-.autocomplete-input {
+.autocomplete-input,
+.image-selector-input {
     width: 100%;
+
+    .image-button-wrapper {
+        border: 1px solid $InkColor;
+        width: 250px;
+    }
+}
+
+.image-selector-collection {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+}
+
+.image-selection {
+    width: 24%;
+    height: 25vh;
+    padding: 3px;
+    border: 1px solid transparent;
+    &:hover,
+    &.active {
+        border: 1px solid $InkColor;
+    }
+}
+
+.image-button-wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    background: none !important;
+}
+
+.modal .rs-modal-content {
+    background-image: url(/assets/general/Parchment_Background.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.image-selector-input {
+    max-height: 200px;
 }

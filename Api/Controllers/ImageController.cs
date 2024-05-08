@@ -15,11 +15,22 @@ public class ImageController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    public IActionResult GetNoImage()
+    {
+        string filePath = Path.Combine(_env.ContentRootPath, "Assets", "Images", "Image_Not_Found.png");
+        var png = PhysicalFile(filePath, "image/png");
+        return png;
+    }
+
+    [HttpGet("listing")]
     public IActionResult GetAllImagePaths()
     {
         var path = Path.Combine(_env.ContentRootPath, "Assets", "Images");
         string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+        for (int i = 0; i < files.Length; i++)
+        {
+            files[i] = files[i].Split('/').Last();
+        }
         return Ok(files);
     }
 

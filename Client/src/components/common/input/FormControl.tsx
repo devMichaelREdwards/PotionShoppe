@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, Modal, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
 import { SliderPicker } from 'react-color';
+import ImageButton from './ImageButton';
+import ImageSelectorModal from '../../admin/modal/ImageSelectorModal';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -237,6 +239,39 @@ export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }
                     }}
                 />
             </InputGroup>
+        </span>
+    );
+};
+
+interface IImageSelectorControl {
+    value: string;
+    api: string;
+    label: string;
+    onImageChange: (value: string) => void;
+}
+
+export const ImageSelectorControl = ({ value, api, label, onImageChange }: IImageSelectorControl) => {
+    const [open, setOpen] = useState(false);
+
+    const openModal = () => {
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    };
+
+    const selectImage = (src: string) => {
+        onImageChange(src);
+        setOpen(false);
+    };
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <span className='image-selector-input'>
+                <ImageButton src={`${api}/${value}`} onClick={openModal} />
+            </span>
+            <ImageSelectorModal open={open} api={api} closeModal={closeModal} selectImage={selectImage} />
         </span>
     );
 };
