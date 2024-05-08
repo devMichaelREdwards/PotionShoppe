@@ -15,14 +15,22 @@ interface IImageSelectorModal {
 const ImageSelectorModal = ({ open, api, closeModal, selectImage }: IImageSelectorModal) => {
     const [selected, setSelected] = useState<number>();
     const [selectedSrc, setSelectedSrc] = useState('');
-    const { data } = useData('image/listing');
+    const { data, refresh } = useData('image/listing');
 
     const clickImage = (src: string, index: number) => {
         setSelectedSrc(src);
         setSelected(index);
     };
     return (
-        <Modal className='modal' size={'lg'} open={open} onClose={() => closeModal()}>
+        <Modal
+            className='modal'
+            size={'lg'}
+            open={open}
+            onOpen={() => {
+                refresh();
+            }}
+            onClose={() => closeModal()}
+        >
             <Modal.Header>
                 <Modal.Title>Select an image</Modal.Title>
             </Modal.Header>
