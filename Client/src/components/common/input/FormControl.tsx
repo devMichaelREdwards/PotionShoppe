@@ -269,7 +269,7 @@ export const ImageSelectorControl = ({ value, api, label, onImageChange }: IImag
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <span className='image-selector-input'>
-                <ImageButton src={`${api}/${value}`} onClick={openModal} />
+                <ImageButton src={`${value}`} onClick={openModal} />
             </span>
             <ImageSelectorModal open={open} api={api} closeModal={closeModal} selectImage={selectImage} />
         </span>
