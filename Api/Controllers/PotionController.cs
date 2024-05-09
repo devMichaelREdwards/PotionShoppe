@@ -80,7 +80,6 @@ public class PotionController : ControllerBase
     {
         if (potion.PotionId != null)
         {
-
             _potions.Delete((int)potion.PotionId);
         }
         return Ok();
