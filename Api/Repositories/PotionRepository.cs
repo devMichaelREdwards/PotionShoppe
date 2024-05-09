@@ -114,7 +114,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public Potion? GetById(int id)
     {
-        return _context.Potions.Find(id);
+        return _context.Potions.Where(p => p.PotionId == id).Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).First();
     }
 
     public Potion Insert(Potion entity)
@@ -133,6 +133,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
     public void Delete(int id)
     {
         Potion potion = _context.Potions.Find(id);
+        _context.PotionEffects.RemoveRange(_context.PotionEffects.Where(pe => pe.PotionId == id));
         _context.Potions.Remove(potion);
         Save();
     }

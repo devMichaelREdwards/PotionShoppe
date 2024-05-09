@@ -25,7 +25,9 @@ public partial class PotionListing
         {
             effects.Add(new EffectDisplayListing()
             {
+                EffectId = effect.EffectId,
                 Title = effect?.Effect?.Name!,
+                Description = EffectDto.BuildDescription(effect?.Effect!),
                 Color = effect?.Effect?.Color!
             });
         }

@@ -10,21 +10,30 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class PotionController : ControllerBase
 {
-    private readonly IListingRepository<Potion> potions;
-    private readonly IMapper mapper;
+    private readonly IListingRepository<Potion> _potions;
+    private readonly IMapper _mapper;
 
-    public PotionController(IListingRepository<Potion> _potions, IMapper _mapper)
+    public PotionController(IListingRepository<Potion> potions, IMapper mapper)
     {
-        potions = _potions;
-        mapper = _mapper;
+        _potions = potions;
+        _mapper = mapper;
     }
 
     [HttpGet]
     [Authorize(Roles = "Owner")]
     public IActionResult GetPotions()
     {
-        var result = potions.Get();
-        return Ok(mapper.Map<List<PotionDto>>(result));
+        var result = _potions.Get();
+        return Ok(_mapper.Map<List<PotionDto>>(result));
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetPotionFormData(int? id)
+    {
+        if (id == null) return BadRequest("Invalid request");
+        var result = _potions.GetById((int)id);
+        if (result == null) return BadRequest("No resource found");
+        return Ok(_mapper.Map<PotionListing>(result));
     }
 
     [HttpGet("listing")]
@@ -33,14 +42,14 @@ public class PotionController : ControllerBase
         PotionFilter? filter = PotionFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
         SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
-        var result = potions.GetListing(filter, page, sortOrder);
-        return Ok(mapper.Map<List<PotionListing>>(result));
+        var result = _potions.GetListing(filter, page, sortOrder);
+        return Ok(_mapper.Map<List<PotionListing>>(result));
     }
 
     [HttpGet("filters")]
     public IActionResult GetFilterInfo()
     {
-        PotionFilter filterLimits = (PotionFilter)potions.GetFilterData();
+        PotionFilter filterLimits = (PotionFilter)_potions.GetFilterData();
         return Ok(filterLimits);
     }
 
@@ -48,7 +57,7 @@ public class PotionController : ControllerBase
     [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostPotion(PotionDto potion)
     {
-        potions.Insert(mapper.Map<Potion>(potion));
+        _potions.Insert(_mapper.Map<Potion>(potion));
         return Ok();
     }
 
@@ -59,9 +68,9 @@ public class PotionController : ControllerBase
         if (potion.PotionId == null)
             return Ok();
 
-        Potion existing = potions.GetById((int)potion.PotionId);
+        Potion existing = _potions.GetById((int)potion.PotionId);
         potion.Update(existing);
-        potions.Update(existing);
+        _potions.Update(existing);
         return Ok();
     }
 
@@ -70,7 +79,10 @@ public class PotionController : ControllerBase
     public IActionResult DeletePotion(PotionDto potion)
     {
         if (potion.PotionId != null)
-            potions.Delete((int)potion.PotionId);
+        {
+
+            _potions.Delete((int)potion.PotionId);
+        }
         return Ok();
     }
 
@@ -80,7 +92,7 @@ public class PotionController : ControllerBase
     {
         foreach (int id in ids)
         {
-            potions.Delete(id);
+            _potions.Delete(id);
         }
         return Ok();
     }

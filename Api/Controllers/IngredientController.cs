@@ -29,6 +29,7 @@ public class IngredientController : ControllerBase
         var result = _ingredients.Get();
         return Ok(_mapper.Map<List<IngredientDto>>(result));
     }
+
     [HttpGet("{id}")]
     public IActionResult GetIngredientListing(int? id)
     {

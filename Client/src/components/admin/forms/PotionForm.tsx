@@ -1,64 +1,85 @@
 import { useEffect, useState } from 'react';
-import ActionButton from '../../common/input/ActionButton';
-import { Form } from 'rsuite';
-import { ImageSelectorControl, NumberControl, StringSearchInput, TextAreaControl, TextControl } from '../../common/input/FormControl';
+import { Form, Message, useToaster } from 'rsuite';
 import { useID } from '../../../hooks/useData';
 import { useSubmit } from '../../../hooks/useSubmit';
-import { ICollectionObject } from '../../../types/IListing';
 import { API_URL } from '../../../api/axios';
-import { IPostData } from '../../../types/IData';
+import { IData, IPostData } from '../../../types/IData';
+import { CollectionSearchInput, ImageSelectorControl, NumberControl, TextAreaControl, TextControl } from '../../common/input/FormControl';
+import { ICollectionObject } from '../../../types/IListing';
+import ActionButton from '../../common/input/ActionButton';
 
 interface IProps {
     editId?: number;
     toggleEdit: (active: boolean) => void;
 }
 
-const IngredientForm = ({ editId, toggleEdit }: IProps) => {
-    const { data, loading } = useID(editId ? `ingredient/${editId}` : '');
+const PotionForm = ({ editId, toggleEdit }: IProps) => {
+    const toaster = useToaster();
+    const { data, loading } = useID(editId ? `potion/${editId}` : '');
     const [image, setImage] = useState(`${API_URL}/image/`);
     const [name, setName] = useState('');
-    const [categoryId, setCategoryId] = useState(0);
-    const [categoryQuery, setCategoryQuery] = useState('');
     const [description, setDescription] = useState('');
-    const [effectId, setEffectId] = useState(0);
-    const [effectQuery, setEffectQuery] = useState('');
     const [cost, setCost] = useState('0');
     const [price, setPrice] = useState('0');
     const [currentStock, setCurrentStock] = useState('0');
+    const [effectQuery, setEffectQuery] = useState('');
+    const [effects, setEffects] = useState<ICollectionObject[]>([]);
+    const { submitting, errors, submitForm } = useSubmit('potion', 'Potion Saved', 'An error occurred! Please correct the errors and try again.');
 
-    const { submitting, errors, submitForm } = useSubmit(
-        'ingredient',
-        'Ingredient Saved',
-        'An error occurred! Please correct the errors and try again.'
-    );
+    const addEffect = (effect: ICollectionObject) => {
+        if (effects.length >= 5) {
+            toaster.push(<Message type='error'>A potion can only have 5 effects.</Message>, { duration: 5000 });
+            return;
+        }
+
+        const newEffects = [...effects, effect];
+        setEffects(newEffects);
+    };
+
+    const removeEffect = (id: number) => {
+        const newEffects = [...effects.filter((e) => e.id !== id)];
+        setEffects(newEffects);
+    };
+
+    const buildEffectData = () => {
+        const result: IPostData[] = [];
+        effects.forEach((e) => {
+            result.push({
+                potionId: editId,
+                effectId: e.id,
+            });
+        });
+        return result;
+    };
 
     useEffect(() => {
-        const ingredient = data;
-        if (!editId || !ingredient) return;
-        setName(ingredient.name as string);
-        setImage(ingredient.image as string);
-        setCategoryId(ingredient.ingredientCategoryId as number);
-        setCategoryQuery((ingredient.ingredientCategory as IPostData).title as string);
-        setDescription(ingredient.description as string);
-        setEffectId(ingredient.effectId as number);
-        setEffectQuery((ingredient.effect as IPostData).name as string);
-        setCost(ingredient.cost as string);
-        setPrice(ingredient.price as string);
-        setCurrentStock(ingredient.currentStock as string);
+        const potion = data;
+        if (!editId || !potion) return;
+        setName(potion.name as string);
+        setImage(potion.image as string);
+        setDescription(potion.description as string);
+        setCost(potion.cost as string);
+        setPrice(potion.price as string);
+        setCurrentStock(potion.currentStock as string);
+
+        const loadedEffects = (potion.potionEffects as IData[]).map((e) => {
+            return { ...e, id: e.effectId } as ICollectionObject;
+        });
+
+        setEffects(loadedEffects);
     }, [data]);
 
     const handleSubmit = async () => {
         const data = {
             editId: editId,
-            ingredientId: editId,
+            potionId: editId,
             name,
             description,
             price,
             cost,
             currentStock,
             image,
-            effectId: effectId,
-            ingredientCategoryId: categoryId,
+            potionEffects: buildEffectData(),
         };
 
         submitForm(data, () => toggleEdit(false));
@@ -76,36 +97,6 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
                     onChange={(e: string) => {
                         setName(e);
                     }}
-                />
-            </Form.Group>
-            <Form.Group>
-                <StringSearchInput
-                    value={categoryQuery}
-                    label='Category'
-                    route='ingredientcategory'
-                    idKey='ingredientCategoryId'
-                    dataKey='title'
-                    error={errors?.category}
-                    onSelect={(e: ICollectionObject) => {
-                        setCategoryId(e.id ?? 0);
-                        setCategoryQuery(e.title);
-                    }}
-                    setValue={(v) => setCategoryQuery(v)}
-                />
-            </Form.Group>
-            <Form.Group>
-                <StringSearchInput
-                    value={effectQuery}
-                    label='Effect'
-                    route='effect/listing'
-                    idKey='effectId'
-                    dataKey='name'
-                    error={errors?.category}
-                    onSelect={(e: ICollectionObject) => {
-                        setEffectId(e.id ?? 0);
-                        setEffectQuery(e.title);
-                    }}
-                    setValue={(v) => setEffectQuery(v)}
                 />
             </Form.Group>
             <Form.Group>
@@ -170,6 +161,19 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
                     }}
                 />
             </Form.Group>
+            <Form.Group>
+                <CollectionSearchInput
+                    value={effectQuery}
+                    label='Effect'
+                    route='effect/listing'
+                    tags={effects}
+                    idKey='effectId'
+                    dataKey='name'
+                    addTag={addEffect}
+                    removeTag={removeEffect}
+                    setValue={(newValue) => setEffectQuery(newValue)}
+                />
+            </Form.Group>
 
             <ActionButton
                 appearance='ghost'
@@ -191,4 +195,4 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
     );
 };
 
-export default IngredientForm;
+export default PotionForm;
