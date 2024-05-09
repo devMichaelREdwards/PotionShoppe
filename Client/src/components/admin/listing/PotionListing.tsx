@@ -9,9 +9,10 @@ import ImageColumn from '../../common/listing/columns/ImageColumn';
 
 interface IProps {
     filters: IIngredientFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
-const PotionListing = ({ filters }: IProps) => {
+const PotionListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -65,15 +66,26 @@ const PotionListing = ({ filters }: IProps) => {
         },
     ];
 
+    const headerButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'Add',
+            color: 'violet',
+            action: () => {
+                toggleEdit(true);
+            },
+        },
+    ];
+
     const rowButtons: IActionButton[] = [
         {
             appearance: 'ghost',
             label: 'edit',
             color: 'violet',
             icon: <PotionIcon />,
-            argKey: 'PotionId',
+            argKey: 'potionId',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
@@ -142,6 +154,7 @@ const PotionListing = ({ filters }: IProps) => {
             columns={columns}
             route={'potion/listing'}
             remove={remove}
+            headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}
         />

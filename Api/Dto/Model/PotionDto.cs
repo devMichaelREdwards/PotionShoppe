@@ -47,5 +47,22 @@ public partial class PotionDto : IDto<Potion>
         dest.CurrentStock = CurrentStock ?? dest.CurrentStock;
         dest.Image = Image ?? dest.Image;
         dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
+        dest.PotionEffects = UpdatePotionEffects(PotionEffects) ?? dest.PotionEffects;
+    }
+
+    private ICollection<PotionEffect>? UpdatePotionEffects(ICollection<PotionEffectDto>? effects)
+    {
+        if (effects is null) return null;
+        ICollection<PotionEffect> newEffects = new List<PotionEffect>();
+        foreach (PotionEffectDto effectDto in effects)
+        {
+            newEffects.Add(new PotionEffect()
+            {
+                PotionId = effectDto.PotionId,
+                EffectId = effectDto.EffectId,
+
+            });
+        }
+        return newEffects;
     }
 }

@@ -21,6 +21,14 @@
 .form-control-input {
     border-bottom: 1px solid #000000 !important;
     font-size: 18px;
+    width: 100%;
+}
+
+.collection-control {
+    .form-control-tags {
+        width: 80%;
+        margin-left: 20%;
+    }
 }
 
 .form-control-input.rs-slider {

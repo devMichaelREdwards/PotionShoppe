@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, Modal, RangeSlider } from 'rsuite';
+import { AutoComplete, Button, Checkbox, Form, InputGroup, InputNumber, RangeSlider } from 'rsuite';
 import { useData } from '../../../hooks/useData';
 import { IData } from '../../../types/IData';
 import { ICollectionObject } from '../../../types/IListing';
@@ -373,6 +373,97 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                     setDirty(true);
                 }}
             />
+            {tags.length > 0 && (
+                <div className='form-control-tags'>
+                    {tags.map((tag) => {
+                        const colorString: string = tag.color ? tag.color : 'grey';
+                        try {
+                            const colorData = Color(colorString);
+                            return (
+                                <div className={`tag ${colorData.isLight() ? 'light' : 'dark'}`} style={{ backgroundColor: `${colorString}` }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(tag.id ?? 0);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        } catch (e) {
+                            // If the color string cannot be parsed
+                            return (
+                                <div className={`tag light`} style={{ backgroundColor: 'grey' }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(tag.id ?? 0);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
+            )}
+        </span>
+    );
+};
+
+export const CollectionSearchInput = ({ value, label, placeholder, tags, route, idKey, dataKey, addTag, removeTag, setValue }: ITagSearchInput) => {
+    const [dirty, setDirty] = useState(false);
+    const { data } = useData(route);
+
+    useEffect(() => {
+        if (dirty) {
+            setValue('');
+            setDirty(false);
+        }
+    }, [dirty, setValue]);
+
+    return (
+        <span className='collection-control'>
+            <span className='form-control'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <AutoComplete
+                    className='form-control-input'
+                    menuClassName='autocomplete-popup'
+                    placeholder={placeholder}
+                    data={data.map((item) => {
+                        return item[dataKey] as string;
+                    })}
+                    name={dataKey}
+                    value={value}
+                    onChange={(e) => {
+                        setValue(e);
+                    }}
+                    onSelect={(v: IData) => {
+                        const selected = data.find((d) => {
+                            return d[dataKey] == v;
+                        });
+                        if (!selected) return;
+                        const color = selected['color'] ? ((selected['color'] as { color: string })['color'] as string) : 'grey';
+                        const collectionObj = {
+                            id: selected[idKey] as number,
+                            title: selected[dataKey] as string,
+                            color: color,
+                        };
+                        addTag(collectionObj);
+                        setDirty(true);
+                    }}
+                />
+            </span>
             {tags.length > 0 && (
                 <div className='form-control-tags'>
                     {tags.map((tag) => {
