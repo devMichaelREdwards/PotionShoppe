@@ -7,6 +7,7 @@ import { IData } from '../../../types/IData';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
 import ListingHeaderRow from './ListingHeaderRow';
 import Pagination from '../input/Pagination';
+import ConfirmationModal from '../../admin/modal/ConfirmationModal';
 
 interface IProps {
     id?: string;
@@ -35,6 +36,13 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     const { data, loading, error, refresh, setLoading } = useData(
         route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`
     );
+    const [open, setOpen] = useState(false);
+    const openModal = () => {
+        setOpen(true);
+    };
+    const closeModal = () => {
+        setOpen(false);
+    };
     const handleCheckboxClick = (id: number) => {
         if (selected.includes(id)) {
             const newSelected = selected.filter((inArr) => {
@@ -47,7 +55,11 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
         }
     };
 
-    const handleRemoveClick = async () => {
+    const handleRemoveClick = () => {
+        openModal();
+    };
+
+    const handleRemoveConfirmed = async () => {
         await remove?.(selected);
         setSelected([]);
         setDraw(draw + 1);
@@ -125,6 +137,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                     );
                 })}
             </List>
+            <ConfirmationModal open={open} closeModal={closeModal} confirmationCallback={handleRemoveConfirmed} />
             <Pagination page={page} limit={limit} onPageChange={handlePageChange} onLimitChange={handleLimitChange} />
         </>
     );

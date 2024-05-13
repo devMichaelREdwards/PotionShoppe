@@ -164,3 +164,13 @@
 .image-selector-input {
     max-height: 200px;
 }
+
+.confirmation-modal-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .confirmation-buttons {
+        width: auto;
+    }
+}

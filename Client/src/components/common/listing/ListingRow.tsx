@@ -38,7 +38,7 @@ const ListingRow = ({ id, data, checked, columns, rowButtons, handleCheckboxClic
                         </FlexboxGrid.Item>
                     );
                 })}
-                <ActionButtonCollection data={data} colspan={colsLeft} buttons={rowButtons} />
+                <ActionButtonCollection className={'listing-item'} data={data} colspan={colsLeft} buttons={rowButtons} />
             </FlexboxGrid>
         </List.Item>
     );
