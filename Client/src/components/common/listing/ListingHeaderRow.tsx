@@ -38,7 +38,7 @@ const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, re
                     );
                 })}
 
-                <ActionButtonCollection colspan={colsLeft} buttons={headerButtons} remove={remove} />
+                <ActionButtonCollection colspan={colsLeft} className='listing-item' buttons={headerButtons} remove={remove} />
             </FlexboxGrid>
         </List.Item>
     );
