@@ -72,6 +72,15 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         Save();
     }
 
+    public void ClearRefreshToken(string userName)
+    {
+        EmployeeAccount entity = GetByUserName(userName);
+        entity.RefreshToken = null;
+        entity.TokenExpire = null;
+        context.Entry(entity).State = EntityState.Modified;
+        Save();
+    }
+
     public void Delete(int id)
     {
         EmployeeAccount EmployeeAccount = context.EmployeeAccounts.Find(id);
