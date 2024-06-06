@@ -73,14 +73,13 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("employee/logout")]
-    public async Task<IActionResult> EmployeeLogout(UserLogoutDto userLogout)
+    public IActionResult EmployeeLogout(UserLogoutDto userLogout)
     {
         // Clear user JWT
         authService.ClearRefreshToken(userLogout);
         // Delete cookie from user
         Response.Cookies.Delete("potionShoppeUserName");
         Response.Cookies.Delete("potionShoppe");
-
         return Ok();
     }
 

@@ -28,6 +28,25 @@
     background-color: $AdminSidebarBackgroundColor;
 }
 
+.admin-bottom-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 5px;
+    height: 100%;
+}
+
+.admin-nav-button {
+    background: $AdminNavBarMenuColor;
+    color: $InkColor;
+    font-size: $FontMedium;
+}
+
+.admin-copyright {
+    margin: 0 auto;
+    font-size: $FontTiny;
+}
+
 .admin-nav-menu {
     .rs-dropdown-toggle {
         background: $AdminNavBarMenuColor;
