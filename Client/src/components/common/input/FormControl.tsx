@@ -466,7 +466,7 @@ export const CollectionSearchInput = ({ value, label, placeholder, tags, route, 
             </span>
             {tags.length > 0 && (
                 <div className='form-control-tags'>
-                    {tags.map((tag) => {
+                    {tags.map((tag, i) => {
                         const colorString: string = tag.color ? tag.color : 'grey';
                         try {
                             const colorData = Color(colorString);
@@ -478,7 +478,7 @@ export const CollectionSearchInput = ({ value, label, placeholder, tags, route, 
                                         <Button
                                             appearance='subtle'
                                             onClick={() => {
-                                                removeTag(tag.id ?? 0);
+                                                removeTag(i);
                                             }}
                                         >
                                             <CloseIcon />
@@ -496,7 +496,7 @@ export const CollectionSearchInput = ({ value, label, placeholder, tags, route, 
                                         <Button
                                             appearance='subtle'
                                             onClick={() => {
-                                                removeTag(tag.id ?? 0);
+                                                removeTag(i);
                                             }}
                                         >
                                             <CloseIcon />
