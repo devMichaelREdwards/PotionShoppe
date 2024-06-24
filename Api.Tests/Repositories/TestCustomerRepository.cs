@@ -4,7 +4,7 @@ using Faker;
 
 namespace Api.Tests;
 
-public class TestCustomerRepository : IRepository<Customer>, IDisposable
+public class TestCustomerRepository : IListingRepository<Customer>, IDisposable
 {
     private List<Customer> customers = new();
 
@@ -64,6 +64,16 @@ public class TestCustomerRepository : IRepository<Customer>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
+    {
+        return customers;
+    }
+
+    public IFilter<Customer> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

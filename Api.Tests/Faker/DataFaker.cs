@@ -98,7 +98,10 @@ public static class DataFaker
             {
                 EffectId = i,
                 Duration = i * 10,
-                Description = $"Effect {i}"
+                Value = i * 5,
+                Name = $"Effect {i}",
+                Description = $"Effect {i} Desc",
+                Color = "red",
             });
         }
         return effects;
