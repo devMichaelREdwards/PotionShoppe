@@ -65,5 +65,3 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p Password
     stop and remove the container then rebuild it
 
         Everything works now
-
-    Test Commit number like 6
