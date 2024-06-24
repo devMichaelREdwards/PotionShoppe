@@ -4,7 +4,7 @@ using Faker;
 
 namespace Api.Tests;
 
-public class TestPotionRepository : IRepository<Potion>, IDisposable
+public class TestPotionRepository : IListingRepository<Potion>, IDisposable
 {
     private List<Potion> potions = new();
 
@@ -65,6 +65,16 @@ public class TestPotionRepository : IRepository<Potion>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
+    {
+        return potions;
+    }
+
+    public IFilter<Potion> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion
