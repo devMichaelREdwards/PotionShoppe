@@ -31,12 +31,6 @@ const CustomerListing = ({ filters }: IProps) => {
         },
         {
             align: 'center',
-            label: 'Email',
-            dataKey: 'email',
-            colspan: 3,
-        },
-        {
-            align: 'center',
             label: 'Status',
             dataKey: 'customerStatus',
             colspan: 3,

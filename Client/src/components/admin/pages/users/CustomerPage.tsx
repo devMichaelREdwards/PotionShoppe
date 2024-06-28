@@ -5,7 +5,6 @@ import AdminHeader from '../../../common/header/AdminHeader';
 import CustomerFilters from '../../filters/CustomerFilters';
 import { useEffect, useState } from 'react';
 import { ICustomerFilters } from '../../../../types/IFilter';
-import axios from 'axios';
 
 const CustomerPage = () => {
     useTitle('Customers');
@@ -48,7 +47,6 @@ const CustomerPage = () => {
                         filters={filters}
                         setFilters={setFilters}
                         onClearCallback={() => {
-                            console.log('callback called');
                             setDraw(draw + 1);
                         }}
                     />
