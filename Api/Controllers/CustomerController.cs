@@ -20,7 +20,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetCustomers()
     {
         var result = customers.Get();
@@ -28,7 +28,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet("listing")]
-    //[Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Employee")]
     public IActionResult GetCustomerListing()
     {
         CustomerFilter? filter = CustomerFilter.BuildFilter(Request.Query);

@@ -1,8 +1,14 @@
 import useAuth from '../../../hooks/useAuth';
+import { ICustomerFilters } from '../../../types/IFilter';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
 import Listing from '../../common/listing/Listing';
 
-const CustomerListing = () => {
+interface IProps {
+    filters: ICustomerFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
+}
+
+const CustomerListing = ({ filters }: IProps) => {
     const { user } = useAuth();
     const columns: IListingColumn[] = [
         {
@@ -25,6 +31,12 @@ const CustomerListing = () => {
         },
         {
             align: 'center',
+            label: 'Email',
+            dataKey: 'email',
+            colspan: 3,
+        },
+        {
+            align: 'center',
             label: 'Status',
             dataKey: 'customerStatus',
             colspan: 3,
@@ -37,7 +49,42 @@ const CustomerListing = () => {
         rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'customerId' });
     }
 
-    return <Listing id='customerId' columns={columns} route={'customer/listing'} rowButtons={rowButtons} />;
+    const buildFilterString = (filters: ICustomerFilters) => {
+        let addFilters = false;
+        let filterString = '';
+        if (filters.firstName) {
+            addFilters = true;
+            filterString += `firstName=${filters.firstName}`;
+        }
+
+        if (filters.lastName) {
+            if (addFilters) filterString += `&`;
+            addFilters = true;
+            filterString += `lastName=${filters.lastName}`;
+        }
+
+        if (filters.userName) {
+            if (addFilters) filterString += `&`;
+            addFilters = true;
+            filterString += `userName=${filters.userName}`;
+        }
+
+        if (filters.active) {
+            if (addFilters) filterString += `&`;
+            addFilters = true;
+            filterString += `status=1`;
+        }
+
+        if (filters.banned) {
+            if (addFilters) filterString += `&`;
+            addFilters = true;
+            filterString += `status=2`;
+        }
+
+        return addFilters ? filterString : '';
+    };
+
+    return <Listing id='customerId' columns={columns} route={'customer/listing'} rowButtons={rowButtons} filterString={buildFilterString(filters)} />;
 };
 
 export default CustomerListing;
