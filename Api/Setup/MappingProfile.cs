@@ -38,7 +38,8 @@ public class MappingProfile : Profile
                         FirstName = e.FirstName,
                         LastName = e.LastName,
                         CustomerStatus = e.CustomerStatus.Title,
-                        UserName = e.CustomerAccounts.First().UserName
+                        UserName = e.CustomerAccounts.First().UserName,
+                        Email = e.CustomerAccounts.First().Email
                     }
             );
     }

@@ -99,6 +99,7 @@ CREATE TABLE [OrderIngredient] (
 CREATE TABLE [CustomerAccount] (
     [CustomerAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
     [UserName] NVARCHAR(450),
+    [Email] NVARCHAR(1024),
     [CustomerId] INT REFERENCES [Customer]([CustomerId]),
     [RefreshToken] VARCHAR(1024),
     [TokenExpire] DATE

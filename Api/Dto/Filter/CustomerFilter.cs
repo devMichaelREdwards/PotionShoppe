@@ -8,6 +8,7 @@ public partial class CustomerFilter : IFilter<Customer>
     public string? LastName { get; set; }
     public int? CustomerStatus { get; set; }
     public string? UserName { get; set; }
+    public string? Email { get; set; }
 
     public dynamic? GetValue(string key)
     {
@@ -17,6 +18,7 @@ public partial class CustomerFilter : IFilter<Customer>
             "lastName" => LastName,
             "status" => CustomerStatus,
             "userName" => UserName,
+            "email" => Email,
             _ => null,
         };
     }
@@ -30,6 +32,7 @@ public partial class CustomerFilter : IFilter<Customer>
             FirstName = ParseFilter.GetString("firstName", query),
             LastName = ParseFilter.GetString("lastName", query),
             UserName = ParseFilter.GetString("userName", query),
+            Email = ParseFilter.GetString("email", query),
             CustomerStatus = ParseFilter.GetInt("status", query),
         };
     }

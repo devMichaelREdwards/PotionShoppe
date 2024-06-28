@@ -40,6 +40,12 @@ public class CustomerRepository : IListingRepository<Customer>, IDisposable
             customers = customers.Where(c => c.CustomerAccounts.First().UserName!.ToLower().Contains(userName.ToLower()));
         }
 
+        string? email = filter?.GetValue("email");
+        if (email != null)
+        {
+            customers = customers.Where(c => c.CustomerAccounts.First().Email!.ToLower().Contains(email.ToLower()));
+        }
+
         int? status = filter?.GetValue("status");
         if (status != null)
         {

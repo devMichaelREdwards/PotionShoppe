@@ -15,6 +15,7 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     const [firstName, setFirstName] = useState(filters.firstName ?? '');
     const [lastName, setLastName] = useState(filters.lastName ?? '');
     const [userName, setUserName] = useState(filters.lastName ?? '');
+    const [email, setEmail] = useState(filters.lastName ?? '');
     const [active, setActive] = useState(false);
     const [banned, setBanned] = useState(false);
     const setFilterByKey = (key: keyof ICustomerFilters, value: string | number | boolean) => {
@@ -58,6 +59,8 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
                             setFilterByKey('lastName', e);
                         }}
                     />
+                </Form.Group>
+                <Form.Group className='filter-group'>
                     <TextControl
                         value={userName}
                         label='Username'
@@ -65,6 +68,15 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
                         onChange={(e: string) => {
                             setUserName(e);
                             setFilterByKey('userName', e);
+                        }}
+                    />
+                    <TextControl
+                        value={email}
+                        label='Email'
+                        name='email'
+                        onChange={(e: string) => {
+                            setEmail(e);
+                            setFilterByKey('email', e);
                         }}
                     />
                 </Form.Group>

@@ -31,6 +31,12 @@ const CustomerListing = ({ filters }: IProps) => {
         },
         {
             align: 'center',
+            label: 'Email',
+            dataKey: 'email',
+            colspan: 5,
+        },
+        {
+            align: 'center',
             label: 'Status',
             dataKey: 'customerStatus',
             colspan: 3,
@@ -61,6 +67,12 @@ const CustomerListing = ({ filters }: IProps) => {
             if (addFilters) filterString += `&`;
             addFilters = true;
             filterString += `userName=${filters.userName}`;
+        }
+
+        if (filters.email) {
+            if (addFilters) filterString += `&`;
+            addFilters = true;
+            filterString += `email=${filters.email}`;
         }
 
         if (filters.active) {
