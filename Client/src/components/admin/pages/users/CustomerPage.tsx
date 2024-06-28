@@ -50,6 +50,7 @@ const CustomerPage = () => {
                             setDraw(draw + 1);
                         }}
                     />
+                    {/* Later note: Some actions will require OWNER position*/}
                     <CustomerListing filters={filters} toggleEdit={toggleEdit} />
                 </Content>
             )}
