@@ -22,6 +22,30 @@ public class CustomerRepository : IListingRepository<Customer>, IDisposable
     public IEnumerable<Customer> GetListing(IFilter<Customer>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
         var customers = _context.Customers.Include(c => c.CustomerStatus).Include(c => c.CustomerAccounts).AsQueryable();
+        string? firstName = filter?.GetValue("firstName");
+        if (firstName != null)
+        {
+            customers = customers.Where(c => c.FirstName!.ToLower().Contains(firstName.ToLower()));
+        }
+
+        string? lastName = filter?.GetValue("lastName");
+        if (lastName != null)
+        {
+            customers = customers.Where(c => c.LastName!.ToLower().Contains(lastName.ToLower()));
+        }
+
+        string? userName = filter?.GetValue("userName");
+        if (userName != null)
+        {
+            customers = customers.Where(c => c.CustomerAccounts.First().UserName!.ToLower().Contains(userName.ToLower()));
+        }
+
+        int? status = filter?.GetValue("status");
+        if (status != null)
+        {
+            customers = customers.Where(c => c.CustomerStatusId == status);
+        }
+
         return customers.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 

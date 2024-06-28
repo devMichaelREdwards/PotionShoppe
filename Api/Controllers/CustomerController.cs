@@ -28,11 +28,12 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet("listing")]
-    [Authorize(Roles = "Employee")]
+    //[Authorize(Roles = "Employee")]
     public IActionResult GetCustomerListing()
     {
+        CustomerFilter? filter = CustomerFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = customers.GetListing(null, page);
+        var result = customers.GetListing(filter, page);
         return Ok(mapper.Map<List<CustomerListing>>(result));
     }
 

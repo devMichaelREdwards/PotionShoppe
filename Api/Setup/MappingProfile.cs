@@ -23,6 +23,7 @@ public class MappingProfile : Profile
 
     private void CreateCustomerMappings()
     {
+        Map<Customer, CustomerDto>();
         CreateMap<CustomerStatus, string>().ConvertUsing(p => p.Title);
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
