@@ -93,6 +93,7 @@ public partial class PotionShoppeContext : IdentityDbContext<AuthUser>
                 .HasDefaultValueSql("(NULL)");
             entity.Property(e => e.TokenExpire);
             entity.Property(e => e.UserName).HasMaxLength(450);
+            entity.Property(e => e.Email).HasMaxLength(450);
 
             entity
                 .HasOne(d => d.Customer)

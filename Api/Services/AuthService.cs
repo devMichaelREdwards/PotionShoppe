@@ -156,7 +156,7 @@ public class AuthService : IAuthService
             Customer createdCustomer = customers.Insert(newCustomer);
 
             CustomerAccount newCustomerAccount =
-                new() { UserName = valid?.UserName, CustomerId = createdCustomer.CustomerId };
+                new() { UserName = valid?.UserName, Email = valid?.Email, CustomerId = createdCustomer.CustomerId };
 
             customerAccounts.Insert(newCustomerAccount);
         }

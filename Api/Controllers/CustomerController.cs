@@ -20,7 +20,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetCustomers()
     {
         var result = customers.Get();
@@ -31,8 +31,9 @@ public class CustomerController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetCustomerListing()
     {
+        CustomerFilter? filter = CustomerFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = customers.GetListing(null, page);
+        var result = customers.GetListing(filter, page);
         return Ok(mapper.Map<List<CustomerListing>>(result));
     }
 

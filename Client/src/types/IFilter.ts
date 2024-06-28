@@ -26,3 +26,12 @@ export interface IPotionFilters {
     pmax?: number;
     instock?: boolean;
 }
+
+export interface ICustomerFilters {
+    firstName?: string;
+    lastName?: string;
+    userName?: string;
+    email?: string;
+    active?: boolean;
+    banned?: boolean;
+}

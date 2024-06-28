@@ -1,19 +1,16 @@
 import { Content, Panel } from 'rsuite';
-import EffectListing from '../../listing/EffectListing';
+import CustomerListing from '../../listing/CustomerListing';
 import useTitle from '../../../../hooks/useTitle';
 import AdminHeader from '../../../common/header/AdminHeader';
-import { IEffectFilters } from '../../../../types/IFilter';
+import CustomerFilters from '../../filters/CustomerFilters';
 import { useEffect, useState } from 'react';
-import axios from '../../../../api/axios';
-import EffectFilters from '../../filters/EffectFilters';
-import EffectForm from '../../forms/EffectForm';
+import { ICustomerFilters } from '../../../../types/IFilter';
 
-const EffectPage = () => {
-    useTitle('Effects');
+const CustomerPage = () => {
+    useTitle('Customers');
 
-    const [filters, setFilters] = useState<IEffectFilters>({});
-
-    const [filterLimits, setFilterLimits] = useState<IEffectFilters>({});
+    const [filters, setFilters] = useState<ICustomerFilters>({});
+    const [filterLimits, setFilterLimits] = useState<ICustomerFilters>({});
 
     const [loading, setLoading] = useState(true);
 
@@ -31,12 +28,7 @@ const EffectPage = () => {
 
     useEffect(() => {
         const getFilterData = async () => {
-            const response = await axios.get('effect/filters');
-            const limits = response.data;
-            setFilterLimits({
-                vmax: limits.valueMax,
-                dmax: limits.durationMax,
-            });
+            setFilterLimits({});
             setLoading(false);
         };
         getFilterData();
@@ -46,26 +38,24 @@ const EffectPage = () => {
 
     return (
         <Panel className='admin-page'>
-            <AdminHeader title='Effects' />
+            <AdminHeader title='Customers' />
             {edit ? (
-                <Content>
-                    <EffectForm editId={editId} toggleEdit={toggleEdit} />
-                </Content>
+                <Content>{/* Customer form goes here */}</Content>
             ) : (
                 <Content>
-                    <EffectFilters
+                    <CustomerFilters
                         filters={filters}
-                        filterLimits={filterLimits}
                         setFilters={setFilters}
                         onClearCallback={() => {
                             setDraw(draw + 1);
                         }}
                     />
-                    <EffectListing filters={filters} toggleEdit={toggleEdit} />
+                    {/* Later note: Some actions will require OWNER position*/}
+                    <CustomerListing filters={filters} toggleEdit={toggleEdit} />
                 </Content>
             )}
         </Panel>
     );
 };
 
-export default EffectPage;
+export default CustomerPage;

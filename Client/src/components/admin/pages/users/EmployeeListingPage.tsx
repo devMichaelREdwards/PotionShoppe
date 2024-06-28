@@ -1,7 +1,7 @@
 import { Container, Content, Panel } from 'rsuite';
-import EmployeeListing from '../../../listing/EmployeeListing';
-import useTitle from '../../../../../hooks/useTitle';
-import AdminHeader from '../../../../common/header/AdminHeader';
+import AdminHeader from '../../../common/header/AdminHeader';
+import EmployeeListing from '../../listing/EmployeeListing';
+import useTitle from '../../../../hooks/useTitle';
 
 const EmployeeListingPage = () => {
     useTitle('Employees');

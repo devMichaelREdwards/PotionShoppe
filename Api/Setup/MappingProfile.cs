@@ -23,6 +23,7 @@ public class MappingProfile : Profile
 
     private void CreateCustomerMappings()
     {
+        Map<Customer, CustomerDto>();
         CreateMap<CustomerStatus, string>().ConvertUsing(p => p.Title);
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
@@ -37,7 +38,8 @@ public class MappingProfile : Profile
                         FirstName = e.FirstName,
                         LastName = e.LastName,
                         CustomerStatus = e.CustomerStatus.Title,
-                        UserName = e.CustomerAccounts.First().UserName
+                        UserName = e.CustomerAccounts.First().UserName,
+                        Email = e.CustomerAccounts.First().Email
                     }
             );
     }
