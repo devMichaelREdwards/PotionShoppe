@@ -34,7 +34,6 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
 
     useEffect(() => {
         const ingredient = data;
-        console.log(ingredient);
         if (!editId || !ingredient) return;
         setName(ingredient.name as string);
         setImage(ingredient.image as string);
