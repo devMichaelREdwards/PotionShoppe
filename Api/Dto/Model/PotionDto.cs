@@ -22,6 +22,7 @@ public partial class PotionDto : IDto<Potion>
     public int? EmployeeId { get; set; }
 
     public string? Employee { get; set; }
+    public bool? Active { get; set; }
 
     public ICollection<PotionEffectDto>? PotionEffects { get; set; } = new List<PotionEffectDto>();
 
@@ -52,16 +53,14 @@ public partial class PotionDto : IDto<Potion>
 
     private ICollection<PotionEffect>? UpdatePotionEffects(ICollection<PotionEffectDto>? effects)
     {
-        if (effects is null) return null;
+        if (effects is null)
+            return null;
         ICollection<PotionEffect> newEffects = new List<PotionEffect>();
         foreach (PotionEffectDto effectDto in effects)
         {
-            newEffects.Add(new PotionEffect()
-            {
-                PotionId = effectDto.PotionId,
-                EffectId = effectDto.EffectId,
-
-            });
+            newEffects.Add(
+                new PotionEffect() { PotionId = effectDto.PotionId, EffectId = effectDto.EffectId, }
+            );
         }
         return newEffects;
     }

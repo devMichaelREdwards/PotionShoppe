@@ -10,13 +10,16 @@ export interface IListingColumn {
 }
 
 export interface IActionButton {
-    appearance: TypeAttributes.Appearance;
+    appearance?: TypeAttributes.Appearance;
     label?: string;
     color?: TypeAttributes.Color;
     icon?: JSX.Element;
     argKey?: string;
+    currentValue?: unknown;
+    isToggle?: boolean;
     [arg: string]: unknown;
-    action: (arg: unknown) => void;
+    action?: (arg: unknown) => void;
+    refresh?: () => void;
 }
 
 export interface ICollectionObject {

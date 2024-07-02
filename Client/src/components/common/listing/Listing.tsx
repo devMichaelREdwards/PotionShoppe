@@ -103,6 +103,10 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
         }
     };
 
+    const refreshList = () => {
+        setDraw(draw + 1);
+    };
+
     useEffect(() => {
         refresh();
     }, [draw]);
@@ -133,6 +137,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                             checked={selected.includes(row[idKey] as number)}
                             handleCheckboxClick={handleCheckboxClick}
                             rowButtons={rowButtons}
+                            refresh={refreshList}
                         />
                     );
                 })}

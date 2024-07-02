@@ -21,7 +21,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
+        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.Products).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
         string? name = filter?.GetValue("name");
         if (name != null)
         {
@@ -114,12 +114,23 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public Potion? GetById(int id)
     {
-        return _context.Potions.Where(p => p.PotionId == id).Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).First();
+        return _context.Potions.Where(p => p.PotionId == id).Include(p => p.Employee).Include(p => p.Products).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).First();
     }
 
     public Potion Insert(Potion entity)
     {
         _context.Potions.Add(entity);
+        Save();
+        Product newProduct = new Product
+        {
+            PotionId = entity.PotionId,
+            Cost = entity.Cost,
+            Price = entity.Price,
+            CurrentStock = entity.CurrentStock,
+            DateAdded = DateOnly.FromDateTime(DateTime.Now),
+            Active = true
+        };
+        _context.Products.Add(newProduct);
         Save();
         return entity;
     }
@@ -127,12 +138,23 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
     public void Update(Potion entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
+        Product updateProduct = new Product
+        {
+            PotionId = entity.PotionId,
+            Cost = entity.Cost,
+            Price = entity.Price,
+            CurrentStock = entity.CurrentStock,
+            DateAdded = DateOnly.FromDateTime(DateTime.Now),
+            Active = true
+        };
+        _context.Products.Update(updateProduct);
         Save();
     }
 
     public void Delete(int id)
     {
         Potion potion = _context.Potions.Find(id);
+        _context.Products.RemoveRange(_context.Products.Where(pr => pr.PotionId == id));
         _context.PotionEffects.RemoveRange(_context.PotionEffects.Where(pe => pe.PotionId == id));
         _context.Potions.Remove(potion);
         Save();

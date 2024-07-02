@@ -28,4 +28,6 @@ public partial class Ingredient
     public virtual IngredientCategory? IngredientCategory { get; set; }
 
     public virtual ICollection<OrderIngredient> OrderIngredients { get; set; } = new List<OrderIngredient>();
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -7,6 +7,7 @@ import { IData, IPostData } from '../../../types/IData';
 import { CollectionSearchInput, ImageSelectorControl, NumberControl, TextAreaControl, TextControl } from '../../common/input/FormControl';
 import { ICollectionObject } from '../../../types/IListing';
 import ActionButton from '../../common/input/ActionButton';
+import useAuth from '../../../hooks/useAuth';
 
 interface IProps {
     editId?: number;
@@ -15,6 +16,7 @@ interface IProps {
 
 const PotionForm = ({ editId, toggleEdit }: IProps) => {
     const toaster = useToaster();
+    const { user } = useAuth();
     const { data, loading } = useID(editId ? `potion/${editId}` : '');
     const [image, setImage] = useState(`${API_URL}/image/`);
     const [name, setName] = useState('');
@@ -79,6 +81,7 @@ const PotionForm = ({ editId, toggleEdit }: IProps) => {
             cost,
             currentStock,
             image,
+            employee: user?.userName,
             potionEffects: buildEffectData(),
         };
 

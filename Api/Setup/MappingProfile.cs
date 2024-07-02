@@ -106,10 +106,11 @@ public class MappingProfile : Profile
                         PotionId = p.PotionId,
                         Name = p.Name,
                         Description = p.Description,
-                        Price = p.Price,
-                        Cost = p.Cost,
-                        CurrentStock = p.CurrentStock,
+                        Price = p.Products.First().Price,
+                        Cost = p.Products.First().Cost,
+                        CurrentStock = p.Products.First().CurrentStock,
                         Image = p.Image,
+                        Active = p.Products.First().Active,
                         PotionEffects = PotionListing.BuildEffectsList(p)
                     }
             );
@@ -128,9 +129,9 @@ public class MappingProfile : Profile
                         IngredientId = i.IngredientId,
                         Name = i.Name,
                         Description = i.Description,
-                        Price = i.Price,
-                        Cost = i.Cost,
-                        CurrentStock = i.CurrentStock,
+                        Price = i.Products.First().Price,
+                        Cost = i.Products.First().Cost,
+                        CurrentStock = i.Products.First().CurrentStock,
                         Image = i.Image,
                         Effect = IngredientListing.BuildIngredientEffect(i),
                         IngredientCategory = i.IngredientCategory.Title
@@ -146,29 +147,37 @@ public class MappingProfile : Profile
         Map<OrderIngredient, OrderIngredientDto>();
         CreateMap<Order, string>().ConvertUsing(o => o.OrderNumber);
         CreateMap<OrderDto, string>().ConvertUsing(o => o.OrderNumber);
-        CreateMap<Order, OrderListing>().ConvertUsing(o => new()
-        {
-            OrderId = o.OrderId,
-            OrderNumber = o.OrderNumber,
-            Total = o.Total,
-            DatePlaced = o.DatePlaced,
-            Customer = $"{o.Customer.FirstName} {o.Customer.LastName}",
-            OrderStatus = o.OrderStatus.Title
-        });
+        CreateMap<Order, OrderListing>()
+            .ConvertUsing(
+                o =>
+                    new()
+                    {
+                        OrderId = o.OrderId,
+                        OrderNumber = o.OrderNumber,
+                        Total = o.Total,
+                        DatePlaced = o.DatePlaced,
+                        Customer = $"{o.Customer.FirstName} {o.Customer.LastName}",
+                        OrderStatus = o.OrderStatus.Title
+                    }
+            );
     }
 
     private void CreateReceiptMappings()
     {
         Map<Receipt, ReceiptDto>();
-        CreateMap<Receipt, ReceiptListing>().ConvertUsing(r => new()
-        {
-            ReceiptId = r.ReceiptId,
-            ReceiptNumber = r.ReceiptNumber,
-            Order = r.Order.OrderNumber,
-            DateFulfilled = r.DateFulfilled,
-            Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
-            Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}",
-            Total = r.Order.Total
-        });
+        CreateMap<Receipt, ReceiptListing>()
+            .ConvertUsing(
+                r =>
+                    new()
+                    {
+                        ReceiptId = r.ReceiptId,
+                        ReceiptNumber = r.ReceiptNumber,
+                        Order = r.Order.OrderNumber,
+                        DateFulfilled = r.DateFulfilled,
+                        Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
+                        Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}",
+                        Total = r.Order.Total
+                    }
+            );
     }
 }
