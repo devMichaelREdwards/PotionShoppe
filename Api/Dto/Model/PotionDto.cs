@@ -32,9 +32,9 @@ public partial class PotionDto : IDto<Potion>
             && other.PotionId == PotionId
             && other.Name == Name
             && other.Description == Description
-            && other.Price == Price
-            && other.Cost == Cost
-            && other.CurrentStock == CurrentStock
+            && other.Products.First().Price == Price
+            && other.Products.First().Cost == Cost
+            && other.Products.First().CurrentStock == CurrentStock
             && other.Image == Image
             && other.EmployeeId == EmployeeId;
     }
@@ -43,9 +43,9 @@ public partial class PotionDto : IDto<Potion>
     {
         dest.Name = Name ?? dest.Name;
         dest.Description = Description ?? dest.Description;
-        dest.Price = Price ?? dest.Price;
-        dest.Cost = Cost ?? dest.Cost;
-        dest.CurrentStock = CurrentStock ?? dest.CurrentStock;
+        dest.Products.First().Price = Price ?? dest.Price;
+        dest.Products.First().Cost = Cost ?? dest.Cost;
+        dest.Products.First().CurrentStock = CurrentStock ?? dest.CurrentStock;
         dest.Image = Image ?? dest.Image;
         dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
         dest.PotionEffects = UpdatePotionEffects(PotionEffects) ?? dest.PotionEffects;
