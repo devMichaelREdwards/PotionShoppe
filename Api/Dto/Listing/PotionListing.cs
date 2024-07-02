@@ -15,6 +15,7 @@ public partial class PotionListing
     public int? CurrentStock { get; set; }
 
     public string? Image { get; set; }
+    public bool? Active { get; set; }
 
     public List<EffectDisplayListing>? PotionEffects { get; set; } = [];
 

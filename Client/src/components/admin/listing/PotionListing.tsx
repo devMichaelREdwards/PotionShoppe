@@ -1,5 +1,6 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
 import { PotionIcon } from '../../common/image/Icon';
@@ -78,6 +79,25 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
     ];
 
     const rowButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'edit',
+            color: 'violet',
+            icon: <PotionIcon />,
+            argKey: 'potionId',
+
+            isToggle: true,
+            action: async (data) => {
+                const collected = data as IData;
+                const post = {
+                    potionId: collected.id,
+                    active: !collected.currentValue,
+                };
+                // Add confirmation to this later...
+
+                await axios.post('potion/toggle', post, user?.authConfig);
+            },
+        },
         {
             appearance: 'ghost',
             label: 'edit',

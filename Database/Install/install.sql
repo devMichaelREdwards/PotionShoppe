@@ -50,6 +50,21 @@ CREATE TABLE [Ingredient] (
     [EffectId] INT FOREIGN KEY REFERENCES [Effect]([EffectId]),
     [IngredientCategoryId] INT FOREIGN KEY REFERENCES [IngredientCategory]([IngredientCategoryId])
 );
+CREATE TABLE [Potion] (
+    [PotionId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Name] VARCHAR(1024),
+    [Description] VARCHAR(1024),
+    [Price] INT,
+    [Cost] INT,
+    [CurrentStock] INT,
+    [Image] VARCHAR(1024),
+    [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
+);
+CREATE TABLE [PotionEffect] (
+    [PotionEffectId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [PotionId] INT REFERENCES [Potion]([PotionId]),
+    [EffectId] INT REFERENCES [Effect]([EffectId])
+);
 CREATE TABLE [OrderStatus] (
     [OrderStatusId] INT IDENTITY(1, 1) PRIMARY KEY,
     [Title] VARCHAR(1024)
@@ -69,20 +84,15 @@ CREATE TABLE [Receipt] (
     [OrderId] INT REFERENCES [Order]([OrderId]),
     [DateFulfilled] DATE
 );
-CREATE TABLE [Potion] (
-    [PotionId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [Name] VARCHAR(1024),
-    [Description] VARCHAR(1024),
+Create TABLE [Product] (
+    [ProductId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
+    [PotionId] INT REFERENCES [Potion]([PotionId]),
     [Price] INT,
     [Cost] INT,
     [CurrentStock] INT,
-    [Image] VARCHAR(1024),
-    [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
-);
-CREATE TABLE [PotionEffect] (
-    [PotionEffectId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [PotionId] INT REFERENCES [Potion]([PotionId]),
-    [EffectId] INT REFERENCES [Effect]([EffectId])
+    [DateAdded] DATE,
+    [Active] BIT
 );
 CREATE TABLE [OrderPotion] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,
@@ -93,6 +103,12 @@ CREATE TABLE [OrderPotion] (
 CREATE TABLE [OrderIngredient] (
     [OrderIngredientId] INT IDENTITY(1, 1) PRIMARY KEY,
     [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
+    [OrderId] INT REFERENCES [Order]([OrderId]),
+    [Quantity] INT
+);
+CREATE TABLE [OrderProduct] (
+    [OrderProductId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [ProductId] INT REFERENCES [Product]([ProductId]),
     [OrderId] INT REFERENCES [Order]([OrderId]),
     [Quantity] INT
 );

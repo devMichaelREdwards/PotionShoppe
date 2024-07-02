@@ -21,7 +21,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public IEnumerable<Potion> GetListing(IFilter<Potion>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
+        var potions = _context.Potions.Include(p => p.Employee).Include(p => p.Products).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).AsQueryable();
         string? name = filter?.GetValue("name");
         if (name != null)
         {
@@ -37,31 +37,31 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         int? cMin = filter?.GetValue("cmin");
         if (cMin != null)
         {
-            potions = potions.Where(i => i.Cost >= cMin);
+            potions = potions.Where(i => i.Products.First().Cost >= cMin);
         }
 
         int? cMax = filter?.GetValue("cmax");
         if (cMax != null)
         {
-            potions = potions.Where(i => i.Cost <= cMax);
+            potions = potions.Where(i => i.Products.First().Cost <= cMax);
         }
 
         int? pMin = filter?.GetValue("pmin");
         if (pMin != null)
         {
-            potions = potions.Where(i => i.Price >= pMin);
+            potions = potions.Where(i => i.Products.First().Price >= pMin);
         }
 
         int? pMax = filter?.GetValue("pmax");
         if (pMax != null)
         {
-            potions = potions.Where(i => i.Price <= pMax);
+            potions = potions.Where(i => i.Products.First().Price <= pMax);
         }
 
         bool? inStock = filter?.GetValue("instock");
         if (inStock == true)
         {
-            potions = potions.Where(i => i.CurrentStock > 0);
+            potions = potions.Where(i => i.Products.First().CurrentStock > 0);
         }
 
         string? sort = sortOrder?.GetValue("sort");
@@ -71,32 +71,32 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         {
             if (sort == "cost" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.Cost);
+                potions = potions.OrderBy(i => i.Products.First().Cost);
             }
 
             if (sort == "cost" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.Cost);
+                potions = potions.OrderByDescending(i => i.Products.First().Cost);
             }
 
             if (sort == "price" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.Price);
+                potions = potions.OrderBy(i => i.Products.First().Price);
             }
 
             if (sort == "price" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.Price);
+                potions = potions.OrderByDescending(i => i.Products.First().Price);
             }
 
             if (sort == "currentStock" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.CurrentStock);
+                potions = potions.OrderBy(i => i.Products.First().CurrentStock);
             }
 
             if (sort == "currentStock" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.CurrentStock);
+                potions = potions.OrderByDescending(i => i.Products.First().CurrentStock);
             }
         }
 
@@ -105,34 +105,53 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public IFilter<Potion> GetFilterData()
     {
+        var cost = _context.Products.Where(p => p.PotionId != null).Max(p => p.Cost);
+        var price = _context.Products.Where(p => p.PotionId != null).Max(p => p.Price);
         return new PotionFilter()
         {
-            CostMax = _context.Potions.Max(i => i.Cost),
-            PriceMax = _context.Potions.Max(i => i.Price)
+            CostMax = cost,
+            PriceMax = price
         };
     }
 
     public Potion? GetById(int id)
     {
-        return _context.Potions.Where(p => p.PotionId == id).Include(p => p.Employee).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).First();
+        return _context.Potions.Where(p => p.PotionId == id).Include(p => p.Employee).Include(p => p.Products).Include(p => p.PotionEffects).ThenInclude(pe => pe.Effect).First();
     }
 
     public Potion Insert(Potion entity)
     {
         _context.Potions.Add(entity);
         Save();
+        Product newProduct = new Product
+        {
+            PotionId = entity.PotionId,
+            Cost = entity.Products.First().Cost,
+            Price = entity.Products.First().Price,
+            CurrentStock = entity.Products.First().CurrentStock,
+            DateAdded = DateOnly.FromDateTime(DateTime.Now),
+            Active = true
+        };
+        _context.Products.Add(newProduct);
+        Save();
         return entity;
     }
 
     public void Update(Potion entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
+        Potion potion = _context.Potions.Where(p => p.PotionId == entity.PotionId).First();
+        potion.Name = entity.Name;
+        potion.Description = entity.Description;
+        potion.Image = entity.Image;
+        potion.PotionEffects = entity.PotionEffects;
+        potion.Products = entity.Products;
         Save();
     }
 
     public void Delete(int id)
     {
         Potion potion = _context.Potions.Find(id);
+        _context.Products.RemoveRange(_context.Products.Where(pr => pr.PotionId == id));
         _context.PotionEffects.RemoveRange(_context.PotionEffects.Where(pe => pe.PotionId == id));
         _context.Potions.Remove(potion);
         Save();

@@ -38,10 +38,10 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
         setName(ingredient.name as string);
         setImage(ingredient.image as string);
         setCategoryId(ingredient.ingredientCategoryId as number);
-        setCategoryQuery((ingredient.ingredientCategory as IPostData).title as string);
+        setCategoryQuery(ingredient.ingredientCategory as string);
         setDescription(ingredient.description as string);
         setEffectId(ingredient.effectId as number);
-        setEffectQuery((ingredient.effect as IPostData).name as string);
+        setEffectQuery((ingredient.effect as IPostData).title as string);
         setCost(ingredient.cost as string);
         setPrice(ingredient.price as string);
         setCurrentStock(ingredient.currentStock as string);

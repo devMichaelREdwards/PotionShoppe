@@ -1,6 +1,6 @@
 import { FlexboxGrid } from 'rsuite';
 import { IActionButton } from '../../../types/IListing';
-import ActionButton from './ActionButton';
+import ActionButton, { ActionToggle } from './ActionButton';
 import { nanoid } from 'nanoid';
 import { IData } from '../../../types/IData';
 
@@ -9,14 +9,23 @@ interface IProps {
     className?: string;
     buttons?: IActionButton[];
     data?: IData;
+    refresh?: () => void;
     remove?: () => void;
 }
 
-const ActionButtonCollection = ({ colspan, className, buttons, data, remove }: IProps) => {
+const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, remove }: IProps) => {
     return (
         <FlexboxGrid.Item className={`${className} button-group`} key='buttons' colspan={colspan ?? 24}>
             {buttons?.map((b) => {
-                return (
+                return b.isToggle ? (
+                    <ActionToggle
+                        key={nanoid()}
+                        currentValue={data?.['active']}
+                        action={b.action}
+                        arg={b.argKey ? data?.[b.argKey] : undefined}
+                        refresh={refresh}
+                    />
+                ) : (
                     <ActionButton
                         key={nanoid()}
                         color={b.color}

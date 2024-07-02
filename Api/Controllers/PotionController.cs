@@ -11,11 +11,17 @@ namespace Api.Controllers;
 public class PotionController : ControllerBase
 {
     private readonly IListingRepository<Potion> _potions;
+    private readonly IRepository<EmployeeAccount> _employeeAccounts;
     private readonly IMapper _mapper;
 
-    public PotionController(IListingRepository<Potion> potions, IMapper mapper)
+    public PotionController(
+        IListingRepository<Potion> potions,
+        IRepository<EmployeeAccount> employeeAccounts,
+        IMapper mapper
+    )
     {
         _potions = potions;
+        _employeeAccounts = employeeAccounts;
         _mapper = mapper;
     }
 
@@ -30,9 +36,11 @@ public class PotionController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetPotionFormData(int? id)
     {
-        if (id == null) return BadRequest("Invalid request");
+        if (id == null)
+            return BadRequest("Invalid request");
         var result = _potions.GetById((int)id);
-        if (result == null) return BadRequest("No resource found");
+        if (result == null)
+            return BadRequest("No resource found");
         return Ok(_mapper.Map<PotionListing>(result));
     }
 
@@ -57,6 +65,10 @@ public class PotionController : ControllerBase
     [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostPotion(PotionDto potion)
     {
+        potion.EmployeeId = (_employeeAccounts as EmployeeAccountRepository)
+            .GetByUserName(potion.Employee)
+            .EmployeeId;
+        potion.Employee = null;
         _potions.Insert(_mapper.Map<Potion>(potion));
         return Ok();
     }
@@ -93,6 +105,22 @@ public class PotionController : ControllerBase
         {
             _potions.Delete(id);
         }
+        return Ok();
+    }
+
+    [HttpPost("toggle")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult TogglePotion(PotionDto toggled)
+    {
+        if (toggled.PotionId is null)
+            return BadRequest();
+
+        Potion? potion = _potions.GetById(toggled.PotionId ?? 0);
+        if (potion is null)
+            return BadRequest();
+
+        potion.Products.First().Active = !potion.Products.First().Active;
+        _potions.Update(potion);
         return Ok();
     }
 }
