@@ -43,9 +43,9 @@ public partial class PotionDto : IDto<Potion>
     {
         dest.Name = Name ?? dest.Name;
         dest.Description = Description ?? dest.Description;
-        dest.Products.First().Price = Price ?? dest.Price;
-        dest.Products.First().Cost = Cost ?? dest.Cost;
-        dest.Products.First().CurrentStock = CurrentStock ?? dest.CurrentStock;
+        dest.Products.First().Price = Price ?? dest.Products.First().Price;
+        dest.Products.First().Cost = Cost ?? dest.Products.First().Cost;
+        dest.Products.First().CurrentStock = CurrentStock ?? dest.Products.First().CurrentStock;
         dest.Image = Image ?? dest.Image;
         dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
         dest.PotionEffects = UpdatePotionEffects(PotionEffects) ?? dest.PotionEffects;

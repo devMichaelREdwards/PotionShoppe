@@ -37,31 +37,31 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         int? cMin = filter?.GetValue("cmin");
         if (cMin != null)
         {
-            potions = potions.Where(i => i.Cost >= cMin);
+            potions = potions.Where(i => i.Products.First().Cost >= cMin);
         }
 
         int? cMax = filter?.GetValue("cmax");
         if (cMax != null)
         {
-            potions = potions.Where(i => i.Cost <= cMax);
+            potions = potions.Where(i => i.Products.First().Cost <= cMax);
         }
 
         int? pMin = filter?.GetValue("pmin");
         if (pMin != null)
         {
-            potions = potions.Where(i => i.Price >= pMin);
+            potions = potions.Where(i => i.Products.First().Price >= pMin);
         }
 
         int? pMax = filter?.GetValue("pmax");
         if (pMax != null)
         {
-            potions = potions.Where(i => i.Price <= pMax);
+            potions = potions.Where(i => i.Products.First().Price <= pMax);
         }
 
         bool? inStock = filter?.GetValue("instock");
         if (inStock == true)
         {
-            potions = potions.Where(i => i.CurrentStock > 0);
+            potions = potions.Where(i => i.Products.First().CurrentStock > 0);
         }
 
         string? sort = sortOrder?.GetValue("sort");
@@ -71,32 +71,32 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         {
             if (sort == "cost" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.Cost);
+                potions = potions.OrderBy(i => i.Products.First().Cost);
             }
 
             if (sort == "cost" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.Cost);
+                potions = potions.OrderByDescending(i => i.Products.First().Cost);
             }
 
             if (sort == "price" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.Price);
+                potions = potions.OrderBy(i => i.Products.First().Price);
             }
 
             if (sort == "price" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.Price);
+                potions = potions.OrderByDescending(i => i.Products.First().Price);
             }
 
             if (sort == "currentStock" && order == "asc")
             {
-                potions = potions.OrderBy(i => i.CurrentStock);
+                potions = potions.OrderBy(i => i.Products.First().CurrentStock);
             }
 
             if (sort == "currentStock" && order == "desc")
             {
-                potions = potions.OrderByDescending(i => i.CurrentStock);
+                potions = potions.OrderByDescending(i => i.Products.First().CurrentStock);
             }
         }
 
@@ -105,10 +105,12 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public IFilter<Potion> GetFilterData()
     {
+        var cost = _context.Products.Where(p => p.PotionId != null).Max(p => p.Cost);
+        var price = _context.Products.Where(p => p.PotionId != null).Max(p => p.Price);
         return new PotionFilter()
         {
-            CostMax = _context.Potions.Max(i => i.Cost),
-            PriceMax = _context.Potions.Max(i => i.Price)
+            CostMax = cost,
+            PriceMax = price
         };
     }
 
@@ -124,9 +126,9 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         Product newProduct = new Product
         {
             PotionId = entity.PotionId,
-            Cost = entity.Cost,
-            Price = entity.Price,
-            CurrentStock = entity.CurrentStock,
+            Cost = entity.Products.First().Cost,
+            Price = entity.Products.First().Price,
+            CurrentStock = entity.Products.First().CurrentStock,
             DateAdded = DateOnly.FromDateTime(DateTime.Now),
             Active = true
         };
@@ -140,10 +142,11 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         _context.Entry(entity).State = EntityState.Modified;
         Product updateProduct = new Product
         {
+            ProductId = entity.Products.First().ProductId,
             PotionId = entity.PotionId,
-            Cost = entity.Cost,
-            Price = entity.Price,
-            CurrentStock = entity.CurrentStock,
+            Cost = entity.Products.First().Cost,
+            Price = entity.Products.First().Price,
+            CurrentStock = entity.Products.First().CurrentStock,
             DateAdded = DateOnly.FromDateTime(DateTime.Now),
             Active = true
         };

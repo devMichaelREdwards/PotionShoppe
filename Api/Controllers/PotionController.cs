@@ -51,8 +51,7 @@ public class PotionController : ControllerBase
         Pagination? page = Pagination.BuildFilter(Request.Query);
         SortOrder? sortOrder = SortOrder.BuildFilter(Request.Query);
         var result = _potions.GetListing(filter, page, sortOrder);
-        var mapped = _mapper.Map<List<PotionListing>>(result);
-        return Ok(mapped);
+        return Ok(_mapper.Map<List<PotionListing>>(result));
     }
 
     [HttpGet("filters")]
