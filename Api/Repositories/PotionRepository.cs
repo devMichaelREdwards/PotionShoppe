@@ -139,18 +139,12 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
 
     public void Update(Potion entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
-        Product updateProduct = new Product
-        {
-            ProductId = entity.Products.First().ProductId,
-            PotionId = entity.PotionId,
-            Cost = entity.Products.First().Cost,
-            Price = entity.Products.First().Price,
-            CurrentStock = entity.Products.First().CurrentStock,
-            DateAdded = DateOnly.FromDateTime(DateTime.Now),
-            Active = true
-        };
-        _context.Products.Update(updateProduct);
+        Potion potion = _context.Potions.Where(p => p.PotionId == entity.PotionId).First();
+        potion.Name = entity.Name;
+        potion.Description = entity.Description;
+        potion.Image = entity.Image;
+        potion.PotionEffects = entity.PotionEffects;
+        potion.Products = entity.Products;
         Save();
     }
 
