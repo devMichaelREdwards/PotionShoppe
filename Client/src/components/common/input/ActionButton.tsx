@@ -1,6 +1,7 @@
 import { Button } from 'rsuite';
 import { IActionButton } from '../../../types/IListing';
 import { IData } from '../../../types/IData';
+import { ActiveIcon, InactiveIcon } from '../image/Icon';
 
 const ActionButton = ({ appearance, color, label, icon, action, arg }: IActionButton) => {
     return (
@@ -22,7 +23,11 @@ export const ActionToggle = ({ currentValue, action, refresh, arg }: IActionButt
         refresh?.();
     };
 
-    return <Button onClick={onClick}>{currentValue ? 'Checkmark' : 'X Mark'}</Button>;
+    return (
+        <Button className='action-toggle' onClick={onClick}>
+            {currentValue ? <ActiveIcon /> : <InactiveIcon />}
+        </Button>
+    );
 };
 
 export default ActionButton;

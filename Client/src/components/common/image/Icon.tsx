@@ -16,6 +16,8 @@ import MagicWand from '/assets/icon/Magic_Wand.svg';
 import Sort from '/assets/icon/Sort.svg';
 import SortUp from '/assets/icon/Sort_Up.svg';
 import SortDown from '/assets/icon/Sort_Down.svg';
+import Active from '/assets/icon/Active.svg';
+import Inactive from '/assets/icon/Inactive.svg';
 import { SortOrder } from '../listing/Listing';
 
 interface IIcon {
@@ -89,6 +91,22 @@ export const MagicWandIcon = () => {
     return (
         <div className='icon'>
             <img src={MagicWand} />
+        </div>
+    );
+};
+
+export const ActiveIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={Active} />
+        </div>
+    );
+};
+
+export const InactiveIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={Inactive} />
         </div>
     );
 };

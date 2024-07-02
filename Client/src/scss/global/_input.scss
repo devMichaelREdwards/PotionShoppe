@@ -174,3 +174,10 @@
         width: auto;
     }
 }
+
+.action-toggle,
+.action-toggle:active,
+.action-toggle:hover,
+.action-toggle:focus {
+    background-color: transparent;
+}
