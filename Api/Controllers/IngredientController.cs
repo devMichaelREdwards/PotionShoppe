@@ -31,12 +31,12 @@ public class IngredientController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetIngredientListing(int? id)
+    public IActionResult GetIngredientFormData(int? id)
     {
         if (id == null) return BadRequest("Invalid request");
         var result = _ingredients.GetById((int)id);
         if (result == null) return BadRequest("No resource found");
-        return Ok(_mapper.Map<IngredientDto>(result));
+        return Ok(_mapper.Map<IngredientListing>(result));
     }
 
     [HttpGet("listing")]
@@ -101,6 +101,22 @@ public class IngredientController : ControllerBase
         return Ok();
     }
 
+    [HttpPost("toggle")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult ToggleIngredient(IngredientDto toggled)
+    {
+        if (toggled.IngredientId is null)
+            return BadRequest();
+
+        Ingredient? ingredient = _ingredients.GetById(toggled.IngredientId ?? 0);
+        if (ingredient is null)
+            return BadRequest();
+
+        ingredient.Products.First().Active = !ingredient.Products.First().Active;
+        _ingredients.Update(ingredient);
+        return Ok();
+    }
+
     private ErrorCollection SetErrors(IngredientDto ingredient, bool withId = false)
     {
         ErrorCollection errors = new();
@@ -140,4 +156,6 @@ public class IngredientController : ControllerBase
 
         return errors;
     }
+
+
 }

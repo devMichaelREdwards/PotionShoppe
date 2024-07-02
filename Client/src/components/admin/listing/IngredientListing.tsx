@@ -1,8 +1,9 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { IngredientIcon } from '../../common/image/Icon';
+import { IngredientIcon, PotionIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
@@ -40,7 +41,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             align: 'center',
             label: 'Description',
             dataKey: 'description',
-            colspan: 4,
+            colspan: 3,
         },
         {
             align: 'center',
@@ -84,6 +85,24 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     ];
 
     const rowButtons: IActionButton[] = [
+        {
+            appearance: 'ghost',
+            label: 'edit',
+            color: 'violet',
+            icon: <PotionIcon />,
+            argKey: 'ingredientId',
+            isToggle: true,
+            action: async (data) => {
+                const collected = data as IData;
+                const post = {
+                    ingredientId: collected.id,
+                    active: !collected.currentValue,
+                };
+                // Add confirmation to this later...
+
+                await axios.post('ingredient/toggle', post, user?.authConfig);
+            },
+        },
         {
             appearance: 'ghost',
             label: 'edit',

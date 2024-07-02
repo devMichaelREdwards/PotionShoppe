@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using Api.Models;
 using AutoMapper;
 
@@ -133,7 +134,10 @@ public class MappingProfile : Profile
                         Cost = i.Products.First().Cost,
                         CurrentStock = i.Products.First().CurrentStock,
                         Image = i.Image,
+                        Active = i.Products.First().Active,
+                        EffectId = i.EffectId, // used for form
                         Effect = IngredientListing.BuildIngredientEffect(i),
+                        IngredientCategoryId = i.IngredientCategoryId, // used for form
                         IngredientCategory = i.IngredientCategory.Title
                     }
             );

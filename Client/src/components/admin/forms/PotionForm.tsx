@@ -56,6 +56,7 @@ const PotionForm = ({ editId, toggleEdit }: IProps) => {
 
     useEffect(() => {
         const potion = data;
+        console.log(potion);
         if (!editId || !potion) return;
         setName(potion.name as string);
         setImage(potion.image as string);
