@@ -10,4 +10,5 @@ public partial class EmployeeListing
     public string? EmployeePosition { get; set; }
     public string? EmployeeStatus { get; set; }
     public string? UserName { get; set; }
+    public string? Email { get; set; }
 }

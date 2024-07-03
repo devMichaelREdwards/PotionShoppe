@@ -1,10 +1,10 @@
 import useAuth from '../../../hooks/useAuth';
-import { ICustomerFilters } from '../../../types/IFilter';
+import { IAccountFilters } from '../../../types/IFilter';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
 import Listing from '../../common/listing/Listing';
 
 interface IProps {
-    filters: ICustomerFilters;
+    filters: IAccountFilters;
     toggleEdit: (active: boolean, editId?: number) => void;
 }
 
@@ -49,7 +49,7 @@ const CustomerListing = ({ filters }: IProps) => {
         rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'customerId' });
     }
 
-    const buildFilterString = (filters: ICustomerFilters) => {
+    const buildFilterString = (filters: IAccountFilters) => {
         let addFilters = false;
         let filterString = '';
         if (filters.firstName) {

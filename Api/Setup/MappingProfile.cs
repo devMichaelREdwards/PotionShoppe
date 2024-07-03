@@ -66,7 +66,8 @@ public class MappingProfile : Profile
                         LastName = e.LastName,
                         EmployeePosition = e.EmployeePosition.Title,
                         EmployeeStatus = e.EmployeeStatus.Title,
-                        UserName = e.EmployeeAccounts.First().UserName
+                        UserName = e.EmployeeAccounts.First().UserName,
+                        Email = e.EmployeeAccounts.First().Email
                     }
             );
     }

@@ -123,6 +123,7 @@ CREATE TABLE [CustomerAccount] (
 CREATE TABLE [EmployeeAccount] (
     [EmployeeAccountId] INT IDENTITY(1, 1) PRIMARY KEY,
     [UserName] NVARCHAR(450),
+    [Email] NVARCHAR(1024),
     [EmployeeId] INT REFERENCES [Employee]([EmployeeId]),
     [RefreshToken] VARCHAR(1024),
     [TokenExpire] DATE

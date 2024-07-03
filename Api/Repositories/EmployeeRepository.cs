@@ -30,6 +30,41 @@ public class EmployeeRepository : IListingRepository<Employee>, IDisposable
             .Include(e => e.EmployeePosition)
             .Include(e => e.EmployeeAccounts)
             .AsQueryable();
+        string? firstName = filter?.GetValue("firstName");
+        if (firstName != null)
+        {
+            employees = employees.Where(e => e.FirstName!.ToLower().Contains(firstName.ToLower()));
+        }
+
+        string? lastName = filter?.GetValue("lastName");
+        if (lastName != null)
+        {
+            employees = employees.Where(e => e.LastName!.ToLower().Contains(lastName.ToLower()));
+        }
+
+        string? userName = filter?.GetValue("userName");
+        if (userName != null)
+        {
+            employees = employees.Where(e => e.EmployeeAccounts.First().UserName!.ToLower().Contains(userName.ToLower()));
+        }
+
+        string? email = filter?.GetValue("email");
+        if (email != null)
+        {
+            employees = employees.Where(e => e.EmployeeAccounts.First().Email!.ToLower().Contains(email.ToLower()));
+        }
+
+        List<int>? positions = filter?.GetValue("positions");
+        if (positions != null)
+        {
+            employees = employees.Where(e => positions.Contains(e.EmployeePositionId ?? 0));
+        }
+
+        int? status = filter?.GetValue("status");
+        if (status != null)
+        {
+            employees = employees.Where(e => e.EmployeeStatusId == status);
+        }
         return employees.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
