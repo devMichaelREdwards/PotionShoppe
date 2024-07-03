@@ -1,13 +1,13 @@
-import { Content, Panel } from 'rsuite';
-import CustomerListing from '../../listing/CustomerListing';
-import useTitle from '../../../../hooks/useTitle';
+import { Container, Content, Panel } from 'rsuite';
 import AdminHeader from '../../../common/header/AdminHeader';
-import CustomerFilters from '../../filters/CustomerFilters';
-import { useEffect, useState } from 'react';
+import EmployeeListing from '../../listing/EmployeeListing';
+import useTitle from '../../../../hooks/useTitle';
+import EmployeeFilters from '../../filters/EmployeeFilters';
+import { useState, useEffect } from 'react';
 import { IAccountFilters } from '../../../../types/IFilter';
 
-const CustomerPage = () => {
-    useTitle('Customers');
+const EmployeePage = () => {
+    useTitle('Employees');
 
     const [filters, setFilters] = useState<IAccountFilters>({});
     const [filterLimits, setFilterLimits] = useState<IAccountFilters>({});
@@ -35,27 +35,23 @@ const CustomerPage = () => {
     }, [draw]);
 
     if (loading) return <>Loading Screen</>;
-
     return (
         <Panel className='admin-page'>
-            <AdminHeader title='Customers' />
-            {edit ? (
-                <Content>{/* Customer form goes here */}</Content>
-            ) : (
+            <Container>
+                <AdminHeader title='Employees' />
                 <Content>
-                    <CustomerFilters
+                    <EmployeeFilters
                         filters={filters}
                         setFilters={setFilters}
                         onClearCallback={() => {
                             setDraw(draw + 1);
                         }}
                     />
-                    {/* Later note: Some actions will require OWNER position*/}
-                    <CustomerListing filters={filters} toggleEdit={toggleEdit} />
+                    <EmployeeListing filters={filters} toggleEdit={toggleEdit} />
                 </Content>
-            )}
+            </Container>
         </Panel>
     );
 };
 
-export default CustomerPage;
+export default EmployeePage;

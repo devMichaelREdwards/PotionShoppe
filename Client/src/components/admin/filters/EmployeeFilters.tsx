@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Form } from 'rsuite';
 import { IAccountFilters } from '../../../types/IFilter';
-import { CheckboxControl, TextControl } from '../../common/input/FormControl';
+import { CheckboxControl, TagSearchInput, TextControl } from '../../common/input/FormControl';
 import { MagicWandIcon } from '../../common/image/Icon';
 import ActionButton from '../../common/input/ActionButton';
+import { ICollectionObject } from '../../../types/IListing';
 
 interface IProps {
     filters: IAccountFilters;
@@ -11,7 +12,9 @@ interface IProps {
     onClearCallback?: () => void;
 }
 
-const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
+const EmployeeFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
+    const [positionQuery, setPositionQuery] = useState('');
+    const [positions, setPositions] = useState<ICollectionObject[]>([]);
     const [firstName, setFirstName] = useState(filters.firstName ?? '');
     const [lastName, setLastName] = useState(filters.lastName ?? '');
     const [userName, setUserName] = useState(filters.lastName ?? '');
@@ -20,6 +23,19 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     const [banned, setBanned] = useState(false);
     const setFilterByKey = (key: keyof IAccountFilters, value: string | number | boolean) => {
         setFilters({ ...filters, [key]: value });
+        onClearCallback?.();
+    };
+    const addPosition = (position: ICollectionObject) => {
+        const newPositions = [...positions, position];
+        setPositions(newPositions);
+        setFilters({ ...filters, positions: newPositions.map((e) => e.id ?? 0) });
+        onClearCallback?.();
+    };
+
+    const removePosition = (id: number) => {
+        const newPositions = [...positions.filter((e) => e.id !== id)];
+        setPositions(newPositions);
+        setFilters({ ...filters, positions: newPositions.map((e) => e.id ?? 0) });
         onClearCallback?.();
     };
 
@@ -79,6 +95,17 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
                             setFilterByKey('email', e);
                         }}
                     />
+                    <TagSearchInput
+                        value={positionQuery}
+                        label='Position'
+                        route='employeeposition'
+                        tags={positions}
+                        idKey='employeePositionId'
+                        dataKey='title'
+                        addTag={addPosition}
+                        removeTag={removePosition}
+                        setValue={(newValue) => setPositionQuery(newValue)}
+                    />
                 </Form.Group>
             </Form>
             <Form.Group className='filter-toggles'>
@@ -94,7 +121,7 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
                 />
                 <CheckboxControl
                     value={banned}
-                    label={'Banned'}
+                    label={'Terminated'}
                     name={'banned'}
                     onChange={() => {
                         setBanned(!banned);
@@ -110,4 +137,4 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     );
 };
 
-export default CustomerFilters;
+export default EmployeeFilters;

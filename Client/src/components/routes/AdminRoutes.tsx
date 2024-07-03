@@ -11,7 +11,7 @@ import EffectPage from '../admin/pages/inventory/EffectPage';
 
 import ReceiptListingPage from '../admin/pages/orders/receipts/ReceiptListingPage';
 import OrderListingPage from '../admin/pages/orders/orders/OrderListingPage';
-import EmployeeListingPage from '../admin/pages/users/EmployeeListingPage';
+import EmployeeListingPage from '../admin/pages/users/EmployeePage';
 import CustomerFormPage from '../admin/pages/users/customers/CustomerFormPage';
 import EmployeeFormPage from '../admin/pages/users/employees/EmployeeForm';
 
