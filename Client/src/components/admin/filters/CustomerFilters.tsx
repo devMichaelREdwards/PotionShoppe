@@ -26,11 +26,21 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     const clearFilters = () => {
         setFilters({
             firstName: '',
+            lastName: '',
+            userName: '',
+            email: '',
+            active: false,
+            banned: false,
         });
         onClearCallback?.();
     };
     const clearFiltersClick = () => {
         setFirstName('');
+        setLastName('');
+        setUserName('');
+        setEmail('');
+        setActive(false);
+        setBanned(false);
         clearFilters();
     };
     return (
