@@ -42,11 +42,24 @@ const EmployeeFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     const clearFilters = () => {
         setFilters({
             firstName: '',
+            lastName: '',
+            userName: '',
+            email: '',
+            active: false,
+            banned: false,
+            positions: [],
         });
         onClearCallback?.();
     };
     const clearFiltersClick = () => {
         setFirstName('');
+        setLastName('');
+        setUserName('');
+        setEmail('');
+        setActive(false);
+        setBanned(false);
+        setPositions([]);
+        setPositionQuery('');
         clearFilters();
     };
     return (
