@@ -69,7 +69,16 @@ public class PotionController : ControllerBase
             .GetByUserName(potion.Employee)
             .EmployeeId;
         potion.Employee = null;
-        _potions.Insert(_mapper.Map<Potion>(potion));
+        Potion newPotion = _mapper.Map<Potion>(potion);
+        newPotion.Product = new Product()
+        {
+            Cost = potion.Cost,
+            Price = potion.Price,
+            CurrentStock = potion.CurrentStock,
+            DateAdded = DateOnly.FromDateTime(DateTime.Now),
+            Active = true
+        };
+        _potions.Insert(newPotion);
         return Ok();
     }
 
@@ -81,8 +90,8 @@ public class PotionController : ControllerBase
             return Ok();
 
         Potion existing = _potions.GetById((int)potion.PotionId);
-        potion.Update(existing);
-        _potions.Update(existing);
+        potion.Update(existing!);
+        _potions.Update(existing!);
         return Ok();
     }
 
@@ -119,7 +128,7 @@ public class PotionController : ControllerBase
         if (potion is null)
             return BadRequest();
 
-        potion.Products.First().Active = !potion.Products.First().Active;
+        potion.Product.Active = !potion.Product.Active;
         _potions.Update(potion);
         return Ok();
     }

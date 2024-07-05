@@ -108,11 +108,11 @@ public class MappingProfile : Profile
                         PotionId = p.PotionId,
                         Name = p.Name,
                         Description = p.Description,
-                        Price = p.Products.First().Price,
-                        Cost = p.Products.First().Cost,
-                        CurrentStock = p.Products.First().CurrentStock,
+                        Price = p.Product.Price,
+                        Cost = p.Product.Cost,
+                        CurrentStock = p.Product.CurrentStock,
                         Image = p.Image,
-                        Active = p.Products.First().Active,
+                        Active = p.Product.Active,
                         PotionEffects = PotionListing.BuildEffectsList(p)
                     }
             );
@@ -131,11 +131,11 @@ public class MappingProfile : Profile
                         IngredientId = i.IngredientId,
                         Name = i.Name,
                         Description = i.Description,
-                        Price = i.Products.First().Price,
-                        Cost = i.Products.First().Cost,
-                        CurrentStock = i.Products.First().CurrentStock,
+                        Price = i.Product.Price,
+                        Cost = i.Product.Cost,
+                        CurrentStock = i.Product.CurrentStock,
                         Image = i.Image,
-                        Active = i.Products.First().Active,
+                        Active = i.Product.Active,
                         EffectId = i.EffectId, // used for form
                         Effect = IngredientListing.BuildIngredientEffect(i),
                         IngredientCategoryId = i.IngredientCategoryId, // used for form

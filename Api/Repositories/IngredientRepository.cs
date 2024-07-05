@@ -15,13 +15,13 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 
     public IEnumerable<Ingredient> Get()
     {
-        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(p => p.Products).Include(i => i.IngredientCategory).AsQueryable();
+        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(p => p.Product).Include(i => i.IngredientCategory).AsQueryable();
         return [.. ingredients];
     }
 
     public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(p => p.Products).Include(i => i.IngredientCategory).AsQueryable();
+        var ingredients = _context.Ingredients.Include(i => i.Effect).Include(p => p.Product).Include(i => i.IngredientCategory).AsQueryable();
 
         string? name = filter?.GetValue("name");
         if (name != null)
@@ -44,31 +44,31 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         int? cMin = filter?.GetValue("cmin");
         if (cMin != null)
         {
-            ingredients = ingredients.Where(i => i.Products.First().Cost >= cMin);
+            ingredients = ingredients.Where(i => i.Product.Cost >= cMin);
         }
 
         int? cMax = filter?.GetValue("cmax");
         if (cMax != null)
         {
-            ingredients = ingredients.Where(i => i.Products.First().Cost <= cMax);
+            ingredients = ingredients.Where(i => i.Product.Cost <= cMax);
         }
 
         int? pMin = filter?.GetValue("pmin");
         if (pMin != null)
         {
-            ingredients = ingredients.Where(i => i.Products.First().Price >= pMin);
+            ingredients = ingredients.Where(i => i.Product.Price >= pMin);
         }
 
         int? pMax = filter?.GetValue("pmax");
         if (pMax != null)
         {
-            ingredients = ingredients.Where(i => i.Products.First().Price <= pMax);
+            ingredients = ingredients.Where(i => i.Product.Price <= pMax);
         }
 
         bool? inStock = filter?.GetValue("instock");
         if (inStock == true)
         {
-            ingredients = ingredients.Where(i => i.Products.First().CurrentStock > 0);
+            ingredients = ingredients.Where(i => i.Product.CurrentStock > 0);
         }
 
         string? sort = sortOrder?.GetValue("sort");
@@ -78,32 +78,32 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         {
             if (sort == "cost" && order == "asc")
             {
-                ingredients = ingredients.OrderBy(i => i.Products.First().Cost);
+                ingredients = ingredients.OrderBy(i => i.Product.Cost);
             }
 
             if (sort == "cost" && order == "desc")
             {
-                ingredients = ingredients.OrderByDescending(i => i.Products.First().Cost);
+                ingredients = ingredients.OrderByDescending(i => i.Product.Cost);
             }
 
             if (sort == "price" && order == "asc")
             {
-                ingredients = ingredients.OrderBy(i => i.Products.First().Price);
+                ingredients = ingredients.OrderBy(i => i.Product.Price);
             }
 
             if (sort == "price" && order == "desc")
             {
-                ingredients = ingredients.OrderByDescending(i => i.Products.First().Price);
+                ingredients = ingredients.OrderByDescending(i => i.Product.Price);
             }
 
             if (sort == "currentStock" && order == "asc")
             {
-                ingredients = ingredients.OrderBy(i => i.Products.First().CurrentStock);
+                ingredients = ingredients.OrderBy(i => i.Product.CurrentStock);
             }
 
             if (sort == "currentStock" && order == "desc")
             {
-                ingredients = ingredients.OrderByDescending(i => i.Products.First().CurrentStock);
+                ingredients = ingredients.OrderByDescending(i => i.Product.CurrentStock);
             }
         }
 
@@ -112,8 +112,8 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 
     public IFilter<Ingredient> GetFilterData()
     {
-        var cost = _context.Products.Where(p => p.IngredientId != null).Max(p => p.Cost);
-        var price = _context.Products.Where(p => p.IngredientId != null).Max(p => p.Price);
+        var cost = _context.Ingredients.Include(i => i.Product).Max(i => i.Product.Cost);
+        var price = _context.Ingredients.Include(i => i.Product).Max(i => i.Product.Price);
         return new IngredientFilter()
         {
             CostMax = cost,
@@ -123,23 +123,22 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
 
     public Ingredient? GetById(int id)
     {
-        return _context.Ingredients.Where(i => i.IngredientId == id).Include(i => i.Effect).Include(p => p.Products).Include(i => i.IngredientCategory).First();
+        return _context.Ingredients.Where(i => i.IngredientId == id).Include(i => i.Effect).Include(p => p.Product).Include(i => i.IngredientCategory).First();
     }
 
     public Ingredient Insert(Ingredient entity)
     {
-        _context.Ingredients.Add(entity);
-        Save();
         Product newProduct = new Product
         {
-            IngredientId = entity.IngredientId,
-            Cost = entity.Products.First().Cost,
-            Price = entity.Products.First().Price,
-            CurrentStock = entity.Products.First().CurrentStock,
+            Cost = entity.Product.Cost,
+            Price = entity.Product.Price,
+            CurrentStock = entity.Product.CurrentStock,
             DateAdded = DateOnly.FromDateTime(DateTime.Now),
             Active = true
         };
         _context.Products.Add(newProduct);
+        Save();
+        _context.Ingredients.Add(entity);
         Save();
         return entity;
     }
@@ -151,14 +150,14 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         ingredient.Description = entity.Description;
         ingredient.Image = entity.Image;
         ingredient.EffectId = entity.EffectId;
-        ingredient.Products = entity.Products;
+        ingredient.ProductId = entity.ProductId;
         Save();
     }
 
     public void Delete(int id)
     {
         Ingredient ingredient = _context.Ingredients.Find(id);
-        _context.Products.RemoveRange(_context.Products.Where(pr => pr.IngredientId == id));
+        _context.Products.RemoveRange(_context.Products.Where(pr => pr.ProductId == ingredient.ProductId));
         _context.Ingredients.Remove(ingredient);
         Save();
     }

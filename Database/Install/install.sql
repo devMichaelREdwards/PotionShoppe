@@ -17,6 +17,14 @@ CREATE TABLE [Employee] (
     [EmployeeStatusId] INT REFERENCES [EmployeeStatus]([EmployeeStatusId]),
     [EmployeePositionId] INT REFERENCES [EmployeePosition]([EmployeePositionId]),
 );
+Create TABLE [Product] (
+    [ProductId] INT IDENTITY(1, 1) PRIMARY KEY,
+    [Price] INT,
+    [Cost] INT,
+    [CurrentStock] INT,
+    [DateAdded] DATE,
+    [Active] BIT
+);
 CREATE TABLE [CustomerStatus] (
     [CustomerStatusId] INT IDENTITY(1, 1) PRIMARY KEY,
     [Title] VARCHAR(1024)
@@ -47,6 +55,7 @@ CREATE TABLE [Ingredient] (
     [Cost] INT,
     [CurrentStock] INT,
     [Image] VARCHAR(1024),
+    [ProductId] INT FOREIGN KEY REFERENCES [Product]([ProductId]),
     [EffectId] INT FOREIGN KEY REFERENCES [Effect]([EffectId]),
     [IngredientCategoryId] INT FOREIGN KEY REFERENCES [IngredientCategory]([IngredientCategoryId])
 );
@@ -58,6 +67,7 @@ CREATE TABLE [Potion] (
     [Cost] INT,
     [CurrentStock] INT,
     [Image] VARCHAR(1024),
+    [ProductId] INT FOREIGN KEY REFERENCES [Product]([ProductId]),
     [EmployeeId] INT REFERENCES [Employee]([EmployeeId])
 );
 CREATE TABLE [PotionEffect] (
@@ -83,16 +93,6 @@ CREATE TABLE [Receipt] (
     [EmployeeId] INT REFERENCES [Employee]([EmployeeId]),
     [OrderId] INT REFERENCES [Order]([OrderId]),
     [DateFulfilled] DATE
-);
-Create TABLE [Product] (
-    [ProductId] INT IDENTITY(1, 1) PRIMARY KEY,
-    [IngredientId] INT REFERENCES [Ingredient]([IngredientId]),
-    [PotionId] INT REFERENCES [Potion]([PotionId]),
-    [Price] INT,
-    [Cost] INT,
-    [CurrentStock] INT,
-    [DateAdded] DATE,
-    [Active] BIT
 );
 CREATE TABLE [OrderPotion] (
     [OrderPotionId] INT IDENTITY(1, 1) PRIMARY KEY,

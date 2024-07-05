@@ -31,9 +31,9 @@ public partial class IngredientDto : IDto<Ingredient>
             && other.IngredientId == IngredientId
             && other.Name == Name
             && other.Description == Description
-            && other.Products.First().Price == Price
-            && other.Products.First().Cost == Cost
-            && other.Products.First().CurrentStock == CurrentStock
+            && other.Product.Price == Price
+            && other.Product.Cost == Cost
+            && other.Product.CurrentStock == CurrentStock
             && other.Image == Image
             && other.EffectId == EffectId
             && other.IngredientCategoryId == IngredientCategoryId;
@@ -44,9 +44,9 @@ public partial class IngredientDto : IDto<Ingredient>
         dest.IngredientId = IngredientId ?? dest.IngredientId;
         dest.Name = Name ?? dest.Name;
         dest.Description = Description ?? dest.Description;
-        dest.Products.First().Price = Price ?? dest.Products.First().Price;
-        dest.Products.First().Cost = Cost ?? dest.Products.First().Cost;
-        dest.Products.First().CurrentStock = CurrentStock ?? dest.Products.First().CurrentStock;
+        dest.Product.Price = Price ?? dest.Product.Price;
+        dest.Product.Cost = Cost ?? dest.Product.Cost;
+        dest.Product.CurrentStock = CurrentStock ?? dest.Product.CurrentStock;
         dest.Image = Image ?? dest.Image;
         dest.EffectId = EffectId ?? dest.EffectId;
         dest.IngredientCategoryId = IngredientCategoryId ?? dest.IngredientCategoryId;

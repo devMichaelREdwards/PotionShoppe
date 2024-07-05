@@ -7,10 +7,6 @@ public partial class Product
 {
     public int ProductId { get; set; }
 
-    public int? IngredientId { get; set; }
-
-    public int? PotionId { get; set; }
-
     public int? Price { get; set; }
 
     public int? Cost { get; set; }
@@ -21,9 +17,9 @@ public partial class Product
 
     public bool? Active { get; set; }
 
-    public virtual Ingredient? Ingredient { get; set; }
+    public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
     public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 
-    public virtual Potion? Potion { get; set; }
+    public virtual ICollection<Potion> Potions { get; set; } = new List<Potion>();
 }

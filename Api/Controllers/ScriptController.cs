@@ -3,6 +3,7 @@ using Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers;
 
@@ -57,6 +58,23 @@ public class ScriptController : ControllerBase
             p.Active = true;
             _products.Update(p);
         }
+        return Ok();
+    }
+
+    [HttpGet("remove-orphan-products")]
+    public IActionResult RemoveOrphanProducts()
+    {
+        var orphans = _products.Get();
+        var potions = _potions.Get();
+        var ingredients = _ingredients.Get();
+        foreach (Product orphan in orphans)
+        {
+            if (potions.Where(p => p.ProductId == orphan.ProductId).IsNullOrEmpty() && ingredients.Where(p => p.ProductId == orphan.ProductId).IsNullOrEmpty())
+            {
+                _products.Delete(orphan.ProductId);
+            }
+        }
+
         return Ok();
     }
 }
