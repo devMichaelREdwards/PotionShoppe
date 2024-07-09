@@ -18,10 +18,7 @@ public class OrderRepository : IListingRepository<Order>, IDisposable
         return [.. context.Orders
                     .Include(o => o.Customer)
                     .ThenInclude(c => c.CustomerStatus)
-                    .Include(o => o.OrderPotions)
-                    .ThenInclude(op => op.Potion)
-                    .Include(o => o.OrderIngredients)
-                    .ThenInclude(oi => oi.Ingredient)
+                    .Include(o => o.OrderProducts)
                     .Include(o => o.OrderStatus)
                 ];
     }

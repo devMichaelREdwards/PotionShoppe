@@ -17,7 +17,7 @@ public class PotionControllerTest
         // Setup
         potions = new TestPotionRepository();
         mapper = MapperFaker.MockMapper();
-        controller = new PotionController(potions, mapper);
+        controller = new PotionController(potions, null, mapper);
     }
 
     [Fact]

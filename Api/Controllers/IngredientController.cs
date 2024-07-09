@@ -62,7 +62,19 @@ public class IngredientController : ControllerBase
     {
         ErrorCollection errors = SetErrors(ingredient);
         if (errors.Error) return BadRequest(errors);
-        _ingredients.Insert(_mapper.Map<Ingredient>(ingredient));
+        Ingredient newIngredient = _mapper.Map<Ingredient>(ingredient);
+        newIngredient.Product = new Product()
+        {
+            Name = ingredient.Name,
+            Description = ingredient.Description,
+            Image = ingredient.Image,
+            Cost = ingredient.Cost,
+            Price = ingredient.Price,
+            CurrentStock = ingredient.CurrentStock,
+            DateAdded = DateOnly.FromDateTime(DateTime.Now),
+            Active = true
+        };
+        _ingredients.Insert(newIngredient);
         return Ok();
     }
 
@@ -112,7 +124,7 @@ public class IngredientController : ControllerBase
         if (ingredient is null)
             return BadRequest();
 
-        ingredient.Products.First().Active = !ingredient.Products.First().Active;
+        ingredient.Product.Active = !ingredient.Product.Active;
         _ingredients.Update(ingredient);
         return Ok();
     }

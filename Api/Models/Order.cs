@@ -19,10 +19,6 @@ public partial class Order
 
     public virtual Customer? Customer { get; set; }
 
-    public virtual ICollection<OrderIngredient> OrderIngredients { get; set; } = new List<OrderIngredient>();
-
-    public virtual ICollection<OrderPotion> OrderPotions { get; set; } = new List<OrderPotion>();
-
     public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 
     public virtual OrderStatus? OrderStatus { get; set; }

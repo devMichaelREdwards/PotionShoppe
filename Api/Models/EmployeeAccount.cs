@@ -14,6 +14,7 @@ public partial class EmployeeAccount
     public string? RefreshToken { get; set; }
 
     public DateOnly? TokenExpire { get; set; }
+
     public string? Email { get; set; }
 
     public virtual Employee? Employee { get; set; }

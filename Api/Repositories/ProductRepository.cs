@@ -15,13 +15,13 @@ public class ProductRepository : IRepository<Product>, IDisposable
 
     public IEnumerable<Product> Get()
     {
-        var Products = _context.Products.Include(p => p.Ingredient).Include(p => p.Potion);
+        var Products = _context.Products;
         return [.. Products];
     }
 
     public Product? GetById(int id)
     {
-        return _context.Products.Include(p => p.Ingredient).Include(p => p.Potion).Where(i => i.ProductId == id).First();
+        return _context.Products.Where(i => i.ProductId == id).First();
     }
 
     public Product Insert(Product entity)
