@@ -147,9 +147,6 @@ public static class DataFaker
                     IngredientId = i,
                     Name = $"Ingredient {i}",
                     Description = $"Ingredient {i}",
-                    Price = i * 10,
-                    Cost = i * 5,
-                    CurrentStock = i,
                     Image = $"Image-{i}",
                     Effect = fakeEffect
                 }
@@ -184,9 +181,6 @@ public static class DataFaker
                     PotionId = i,
                     Name = $"Ingredient {i}",
                     Description = $"Ingredient {i}",
-                    Price = i * 10,
-                    Cost = i * 5,
-                    CurrentStock = i,
                     Image = $"Image-{i}"
                 }
             );
@@ -271,9 +265,6 @@ public static class DataFaker
             PotionId = 1,
             Name = $"Ingredient {1}",
             Description = $"Ingredient {1}",
-            Price = 1 * 10,
-            Cost = 1 * 5,
-            CurrentStock = 1,
             Image = $"Image-{1}"
         };
         Effect[] fakeEffects = [
@@ -299,105 +290,5 @@ public static class DataFaker
         return potionEffects;
     }
 
-    public static List<OrderIngredient> FakeOrderIngredients()
-    {
-        Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40 };
-        Ingredient fakeIngredient = new()
-        {
-            IngredientId = 1,
-            Name = $"Ingredient {1}",
-            Description = $"Ingredient {1}",
-            Price = 10,
-            Cost = 5,
-            CurrentStock = 1,
-            Image = $"Image-{1}",
-            Effect = fakeEffect
-        };
 
-        CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
-        Customer fakeCustomer = new()
-        {
-            CustomerId = 1,
-            FirstName = $"FirstName{1}",
-            LastName = $"LastName{1}",
-            CustomerStatus = fakeStatus
-        };
-        Order fakeOrder = new()
-        {
-            OrderId = 1,
-            OrderNumber = $"Order {1}",
-            CustomerId = fakeCustomer.CustomerId,
-            OrderStatusId = 1,
-            Total = 10,
-            Customer = fakeCustomer
-        };
-
-        List<OrderIngredient> orderIngredients = [];
-        for (int i = 1; i <= 10; i++)
-        {
-            orderIngredients.Add(
-                new()
-                {
-                    OrderIngredientId = i,
-                    OrderId = fakeOrder.OrderId,
-                    IngredientId = fakeIngredient.IngredientId,
-                    Order = fakeOrder,
-                    Ingredient = fakeIngredient,
-                    Quantity = i
-                }
-            );
-        }
-
-        return orderIngredients;
-    }
-
-    public static List<OrderPotion> FakeOrderPotions()
-    {
-        Potion fakePotion = new()
-        {
-            PotionId = 1,
-            Name = $"Ingredient {1}",
-            Description = $"Ingredient {1}",
-            Price = 1 * 10,
-            Cost = 1 * 5,
-            CurrentStock = 1,
-            Image = $"Image-{1}"
-        };
-
-        CustomerStatus fakeStatus = new() { CustomerStatusId = 1, Title = "Fake" };
-        Customer fakeCustomer = new()
-        {
-            CustomerId = 1,
-            FirstName = $"FirstName{1}",
-            LastName = $"LastName{1}",
-            CustomerStatus = fakeStatus
-        };
-        Order fakeOrder = new()
-        {
-            OrderId = 1,
-            OrderNumber = $"Order {1}",
-            CustomerId = fakeCustomer.CustomerId,
-            OrderStatusId = 1,
-            Total = 10,
-            Customer = fakeCustomer
-        };
-
-        List<OrderPotion> orderPotions = [];
-        for (int i = 1; i <= 10; i++)
-        {
-            orderPotions.Add(
-                new()
-                {
-                    OrderPotionId = i,
-                    OrderId = fakeOrder.OrderId,
-                    PotionId = fakePotion.PotionId,
-                    Order = fakeOrder,
-                    Potion = fakePotion,
-                    Quantity = i
-                }
-            );
-        }
-
-        return orderPotions;
-    }
 }

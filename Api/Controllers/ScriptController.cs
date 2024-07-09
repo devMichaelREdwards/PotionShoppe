@@ -77,4 +77,36 @@ public class ScriptController : ControllerBase
 
         return Ok();
     }
+
+    [HttpGet("move-product-data")]
+    public IActionResult NameDescriptionImage()
+    {
+        var products = _products.Get();
+        var potions = _potions.Get();
+        var ingredients = _ingredients.Get();
+        Potion? potion;
+        Ingredient? ingredient;
+        foreach (Product product in products)
+        {
+            potion = potions.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
+            if (potion != null)
+            {
+                //product.Name = potion.Name;
+                //product.Description = potion.Description;
+                //product.Image = potion.Image;
+            }
+
+            ingredient = ingredients.Where(i => i.ProductId == product.ProductId)?.FirstOrDefault();
+            if (ingredient != null)
+            {
+                //product.Name = ingredient.Name;
+                //product.Description = ingredient.Description;
+                //product.Image = ingredient.Image;
+            }
+
+            _products.Update(product);
+        }
+
+        return Ok();
+    }
 }

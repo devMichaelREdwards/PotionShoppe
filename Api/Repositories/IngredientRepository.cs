@@ -26,7 +26,7 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
         string? name = filter?.GetValue("name");
         if (name != null)
         {
-            ingredients = ingredients.Where(i => i.Name!.ToLower().Contains(name.ToLower()));
+            ingredients = ingredients.Where(i => i.Product.Name!.ToLower().Contains(name.ToLower()));
         }
 
         List<int>? categories = filter?.GetValue("category");
@@ -146,9 +146,7 @@ public class IngredientRepository : IListingRepository<Ingredient>, IDisposable
     public void Update(Ingredient entity)
     {
         Ingredient ingredient = _context.Ingredients.Where(p => p.IngredientId == entity.IngredientId).First();
-        ingredient.Name = entity.Name;
-        ingredient.Description = entity.Description;
-        ingredient.Image = entity.Image;
+        ingredient.Product = entity.Product;
         ingredient.EffectId = entity.EffectId;
         ingredient.ProductId = entity.ProductId;
         Save();

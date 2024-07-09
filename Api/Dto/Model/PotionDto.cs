@@ -30,23 +30,23 @@ public partial class PotionDto : IDto<Potion>
     {
         return other != null
             && other.PotionId == PotionId
-            && other.Name == Name
-            && other.Description == Description
+            && other.Product.Name == Name
+            && other.Product.Description == Description
             && other.Product.Price == Price
             && other.Product.Cost == Cost
             && other.Product.CurrentStock == CurrentStock
-            && other.Image == Image
+            && other.Product.Image == Image
             && other.EmployeeId == EmployeeId;
     }
 
     public void Update(Potion dest)
     {
-        dest.Name = Name ?? dest.Name;
-        dest.Description = Description ?? dest.Description;
+        dest.Product.Name = Name ?? dest.Product.Name;
+        dest.Product.Description = Description ?? dest.Product.Description;
         dest.Product.Price = Price ?? dest.Product.Price;
         dest.Product.Cost = Cost ?? dest.Product.Cost;
         dest.Product.CurrentStock = CurrentStock ?? dest.Product.CurrentStock;
-        dest.Image = Image ?? dest.Image;
+        dest.Product.Image = Image ?? dest.Product.Image;
         dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
         dest.PotionEffects = UpdatePotionEffects(PotionEffects) ?? dest.PotionEffects;
     }

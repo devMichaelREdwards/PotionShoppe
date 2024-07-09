@@ -65,6 +65,9 @@ public class IngredientController : ControllerBase
         Ingredient newIngredient = _mapper.Map<Ingredient>(ingredient);
         newIngredient.Product = new Product()
         {
+            Name = ingredient.Name,
+            Description = ingredient.Description,
+            Image = ingredient.Image,
             Cost = ingredient.Cost,
             Price = ingredient.Price,
             CurrentStock = ingredient.CurrentStock,

@@ -25,7 +25,7 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
         string? name = filter?.GetValue("name");
         if (name != null)
         {
-            potions = potions.Where(i => i.Name!.ToLower().Contains(name.ToLower()));
+            potions = potions.Where(i => i.Product.Name!.ToLower().Contains(name.ToLower()));
         }
 
         List<int>? effects = filter?.GetValue("effect");
@@ -139,9 +139,9 @@ public class PotionRepository : IListingRepository<Potion>, IDisposable
     public void Update(Potion entity)
     {
         Potion potion = _context.Potions.Where(p => p.PotionId == entity.PotionId).First();
-        potion.Name = entity.Name;
-        potion.Description = entity.Description;
-        potion.Image = entity.Image;
+        potion.Product.Name = entity.Product.Name;
+        potion.Product.Description = entity.Product.Description;
+        potion.Product.Image = entity.Product.Image;
         potion.PotionEffects = entity.PotionEffects;
         potion.ProductId = entity.ProductId;
         Save();

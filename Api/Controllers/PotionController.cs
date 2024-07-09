@@ -72,6 +72,9 @@ public class PotionController : ControllerBase
         Potion newPotion = _mapper.Map<Potion>(potion);
         newPotion.Product = new Product()
         {
+            Name = potion.Name,
+            Description = potion.Description,
+            Image = potion.Image,
             Cost = potion.Cost,
             Price = potion.Price,
             CurrentStock = potion.CurrentStock,

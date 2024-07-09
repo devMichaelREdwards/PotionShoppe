@@ -96,7 +96,7 @@ public class MappingProfile : Profile
     private void CreatePotionMappings()
     {
         Map<Potion, PotionDto>();
-        CreateMap<Potion, string>().ConvertUsing(p => p.Name);
+        CreateMap<Potion, string>().ConvertUsing(p => p.Product.Name);
         CreateMap<PotionDto, string>().ConvertUsing(p => p.Name);
         Map<PotionEffect, PotionEffectDto>();
         CreateMap<PotionEffectDto, string>().ConvertUsing(pe => pe.Effect);
@@ -106,12 +106,12 @@ public class MappingProfile : Profile
                     new()
                     {
                         PotionId = p.PotionId,
-                        Name = p.Name,
-                        Description = p.Description,
+                        Name = p.Product.Name,
+                        Description = p.Product.Description,
                         Price = p.Product.Price,
                         Cost = p.Product.Cost,
                         CurrentStock = p.Product.CurrentStock,
-                        Image = p.Image,
+                        Image = p.Product.Image,
                         Active = p.Product.Active,
                         PotionEffects = PotionListing.BuildEffectsList(p)
                     }
@@ -129,12 +129,12 @@ public class MappingProfile : Profile
                     new()
                     {
                         IngredientId = i.IngredientId,
-                        Name = i.Name,
-                        Description = i.Description,
+                        Name = i.Product.Name,
+                        Description = i.Product.Description,
                         Price = i.Product.Price,
                         Cost = i.Product.Cost,
                         CurrentStock = i.Product.CurrentStock,
-                        Image = i.Image,
+                        Image = i.Product.Image,
                         Active = i.Product.Active,
                         EffectId = i.EffectId, // used for form
                         Effect = IngredientListing.BuildIngredientEffect(i),
@@ -148,8 +148,6 @@ public class MappingProfile : Profile
     {
         Map<OrderStatus, OrderStatusDto>();
         Map<Order, OrderDto>();
-        Map<OrderPotion, OrderPotionDto>();
-        Map<OrderIngredient, OrderIngredientDto>();
         CreateMap<Order, string>().ConvertUsing(o => o.OrderNumber);
         CreateMap<OrderDto, string>().ConvertUsing(o => o.OrderNumber);
         CreateMap<Order, OrderListing>()
