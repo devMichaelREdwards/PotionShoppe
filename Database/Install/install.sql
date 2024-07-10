@@ -85,7 +85,6 @@ CREATE TABLE [Receipt] (
     [OrderId] INT REFERENCES [Order]([OrderId]),
     [DateFulfilled] DATE
 );
-;
 CREATE TABLE [OrderProduct] (
     [OrderProductId] INT IDENTITY(1, 1) PRIMARY KEY,
     [ProductId] INT REFERENCES [Product]([ProductId]),
