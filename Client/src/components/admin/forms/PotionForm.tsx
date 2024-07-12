@@ -179,15 +179,12 @@ const PotionForm = ({ editId, toggleEdit }: IProps) => {
             </Form.Group>
 
             <ActionButton
-                appearance='ghost'
                 label='Back to list'
-                color='violet'
                 action={() => {
                     toggleEdit(false);
                 }}
             />
             <ActionButton
-                appearance='ghost'
                 label='Submit'
                 color='green'
                 action={() => {

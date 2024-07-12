@@ -3,6 +3,7 @@ import { IActionButton } from '../../../types/IListing';
 import ActionButton, { ActionToggle } from './ActionButton';
 import { nanoid } from 'nanoid';
 import { IData } from '../../../types/IData';
+import { TrashIcon } from '../image/Icon';
 
 interface IProps {
     colspan?: number;
@@ -37,7 +38,7 @@ const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, re
                     />
                 );
             })}
-            {remove && <ActionButton key={nanoid()} color={'red'} appearance={'ghost'} label={'Delete'} action={remove} />}
+            {remove && <ActionButton key={nanoid()} color={'red'} icon={<TrashIcon />} action={remove} />}
         </FlexboxGrid.Item>
     );
 };

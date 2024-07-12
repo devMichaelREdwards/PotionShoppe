@@ -1,6 +1,7 @@
 import useAuth from '../../../hooks/useAuth';
 import { IAccountFilters } from '../../../types/IFilter';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
+import { QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 
 interface IProps {
@@ -52,7 +53,7 @@ const EmployeeListing = ({ filters }: IProps) => {
     const rowButtons: IActionButton[] = [];
 
     if (user?.roles.includes('Owner')) {
-        rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'customerId' });
+        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), argKey: 'customerId' });
     }
 
     const buildFilterString = (filters: IAccountFilters) => {
@@ -108,10 +109,6 @@ const EmployeeListing = ({ filters }: IProps) => {
 
         return addFilters ? filterString : '';
     };
-
-    if (user?.roles.includes('Owner')) {
-        rowButtons.push({ label: 'Edit', appearance: 'primary', action: (id) => console.log(id), argKey: 'employeeId' });
-    }
 
     return <Listing id='employeeId' columns={columns} route={'employee/listing'} rowButtons={rowButtons} filterString={buildFilterString(filters)} />;
 };

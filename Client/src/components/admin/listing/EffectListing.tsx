@@ -2,7 +2,7 @@ import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IEffectFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { PotionIcon } from '../../common/image/Icon';
+import { EffectIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
@@ -52,9 +52,8 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
 
     const headerButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'Add',
-            color: 'violet',
+            color: 'green',
+            icon: <EffectIcon />,
             action: () => {
                 toggleEdit(true);
             },
@@ -63,10 +62,8 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
 
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
+            color: 'blue',
+            icon: <QuillIcon />,
             argKey: 'effectId',
             action: (id) => {
                 toggleEdit(true, id as number);

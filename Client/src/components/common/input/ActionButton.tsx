@@ -5,7 +5,7 @@ import { ActiveIcon, InactiveIcon } from '../image/Icon';
 
 const ActionButton = ({ appearance, color, label, icon, action, arg }: IActionButton) => {
     return (
-        <Button appearance={appearance} color={color} onClick={() => action?.(arg)}>
+        <Button className={`action-button ${color}`} appearance={appearance} color={color} onClick={() => action?.(arg)}>
             {icon}
             {label}
         </Button>

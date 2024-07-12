@@ -3,7 +3,7 @@ import useAuth from '../../../hooks/useAuth';
 import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { PotionIcon } from '../../common/image/Icon';
+import { PotionIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
@@ -69,9 +69,8 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
 
     const headerButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'Add',
-            color: 'violet',
+            icon: <PotionIcon />,
+            color: 'green',
             action: () => {
                 toggleEdit(true);
             },
@@ -80,12 +79,8 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
 
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
+            label: 'toggle',
             argKey: 'potionId',
-
             isToggle: true,
             action: async (data) => {
                 const collected = data as IData;
@@ -99,10 +94,8 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
             },
         },
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
+            color: 'blue',
+            icon: <QuillIcon />,
             argKey: 'potionId',
             action: (id) => {
                 toggleEdit(true, id as number);
