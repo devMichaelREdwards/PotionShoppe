@@ -76,6 +76,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     const headerButtons: IActionButton[] = [
         {
             color: 'green',
+            tooltip: 'Add Ingredient',
             icon: <IngredientIcon />,
             action: () => {
                 toggleEdit(true);
@@ -87,6 +88,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
         {
             argKey: 'ingredientId',
             isToggle: true,
+            tooltip: 'Toggle Ingredient',
             action: async (data) => {
                 const collected = data as IData;
                 const post = {
@@ -102,6 +104,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             color: 'blue',
             icon: <QuillIcon />,
             argKey: 'ingredientId',
+            tooltip: 'Edit Ingredient',
             action: (id) => {
                 toggleEdit(true, id as number);
             },
@@ -188,6 +191,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             remove={remove}
             headerButtons={headerButtons}
             rowButtons={rowButtons}
+            removeTooltip='Delete Ingredients'
             filterString={buildFilterString(filters)}
         />
     );

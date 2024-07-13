@@ -48,7 +48,7 @@ const CustomerListing = ({ filters }: IProps) => {
 
     if (user?.roles.includes('Owner')) {
         // Add edit button;
-        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), argKey: 'customerId' });
+        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), tooltip: 'Add Customer', argKey: 'customerId' });
     }
 
     const buildFilterString = (filters: IAccountFilters) => {

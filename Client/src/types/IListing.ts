@@ -18,6 +18,8 @@ export interface IActionButton {
     argKey?: string;
     currentValue?: unknown;
     isToggle?: boolean;
+    tooltip?: string;
+    placement?: TypeAttributes.Placement;
     [arg: string]: unknown;
     action?: (arg: unknown) => void;
     refresh?: () => void;

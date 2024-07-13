@@ -71,6 +71,8 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
         {
             icon: <PotionIcon />,
             color: 'green',
+            tooltip: 'Add Potion',
+            placement: 'top',
             action: () => {
                 toggleEdit(true);
             },
@@ -82,6 +84,7 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
             label: 'toggle',
             argKey: 'potionId',
             isToggle: true,
+            tooltip: 'Toggle Potion',
             action: async (data) => {
                 const collected = data as IData;
                 const post = {
@@ -97,6 +100,7 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
             color: 'blue',
             icon: <QuillIcon />,
             argKey: 'potionId',
+            tooltip: 'Edit Potion',
             action: (id) => {
                 toggleEdit(true, id as number);
             },
@@ -167,6 +171,7 @@ const PotionListing = ({ filters, toggleEdit }: IProps) => {
             columns={columns}
             route={'potion/listing'}
             remove={remove}
+            removeTooltip='Delete Potion' // Probably a better way to do this. Just include it in header buttons?
             headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}

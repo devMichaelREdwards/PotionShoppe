@@ -8,7 +8,7 @@ interface IProps {
 const ClearFilterButton = ({ clearFiltersClick }: IProps) => {
     return (
         <div className='clear-filters-button'>
-            <ActionButton icon={<BroomIcon />} color='purple' action={clearFiltersClick} />
+            <ActionButton icon={<BroomIcon />} color='purple' tooltip='Clear filters' action={clearFiltersClick} />
         </div>
     );
 };

@@ -53,7 +53,7 @@ const EmployeeListing = ({ filters }: IProps) => {
     const rowButtons: IActionButton[] = [];
 
     if (user?.roles.includes('Owner')) {
-        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), argKey: 'customerId' });
+        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), argKey: 'customerId', tooltip: 'Edit Employee' });
     }
 
     const buildFilterString = (filters: IAccountFilters) => {

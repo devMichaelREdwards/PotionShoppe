@@ -43,6 +43,7 @@ const OrderListing = () => {
     const rowButtons: IActionButton[] = [
         {
             color: 'blue',
+            tooltip: 'Edit Order',
             icon: <QuillIcon />,
             argKey: 'orderId',
             action: (id) => {
@@ -61,6 +62,7 @@ const OrderListing = () => {
             columns={columns}
             route={'order/listing'}
             remove={user?.roles.includes('Owner') ? remove : undefined}
+            removeTooltip='Delete Orders'
             rowButtons={rowButtons}
         />
     );

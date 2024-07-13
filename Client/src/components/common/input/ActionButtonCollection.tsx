@@ -10,11 +10,12 @@ interface IProps {
     className?: string;
     buttons?: IActionButton[];
     data?: IData;
+    removeTooltip?: string;
     refresh?: () => void;
     remove?: () => void;
 }
 
-const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, remove }: IProps) => {
+const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, remove, removeTooltip }: IProps) => {
     return (
         <FlexboxGrid.Item className={`${className} button-group`} key='buttons' colspan={colspan ?? 24}>
             {buttons?.map((b) => {
@@ -25,6 +26,8 @@ const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, re
                         action={b.action}
                         arg={b.argKey ? data?.[b.argKey] : undefined}
                         refresh={refresh}
+                        tooltip={b.tooltip}
+                        placement={b.placement}
                     />
                 ) : (
                     <ActionButton
@@ -35,10 +38,12 @@ const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, re
                         icon={b.icon}
                         action={b.action}
                         arg={b.argKey ? data?.[b.argKey] : undefined}
+                        tooltip={b.tooltip}
+                        placement={b.placement}
                     />
                 );
             })}
-            {remove && <ActionButton key={nanoid()} color={'red'} icon={<TrashIcon />} action={remove} />}
+            {remove && <ActionButton key={nanoid()} color={'red'} icon={<TrashIcon />} action={remove} tooltip={removeTooltip} placement='top' />}
         </FlexboxGrid.Item>
     );
 };

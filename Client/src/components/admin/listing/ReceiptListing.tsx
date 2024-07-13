@@ -49,7 +49,8 @@ const OrderListing = () => {
     const rowButtons: IActionButton[] = [
         {
             color: 'blue',
-            icon: <QuillIcon />,
+            tooltip: 'View Receipt',
+            icon: <QuillIcon />, // Maybe a different icon?
             argKey: 'receiptId',
             action: (id) => {
                 console.log(id);

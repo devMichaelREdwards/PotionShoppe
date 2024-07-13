@@ -53,6 +53,7 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
     const headerButtons: IActionButton[] = [
         {
             color: 'green',
+            tooltip: 'New Effect',
             icon: <EffectIcon />,
             action: () => {
                 toggleEdit(true);
@@ -63,6 +64,7 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
     const rowButtons: IActionButton[] = [
         {
             color: 'blue',
+            tooltip: 'Edit Effect',
             icon: <QuillIcon />,
             argKey: 'effectId',
             action: (id) => {
@@ -116,6 +118,7 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
             columns={columns}
             route={`effect/listing`}
             remove={remove}
+            removeTooltip='Delete Effects'
             headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}

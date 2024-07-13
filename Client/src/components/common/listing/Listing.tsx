@@ -16,6 +16,7 @@ interface IProps {
     headerButtons?: IActionButton[];
     rowButtons?: IActionButton[];
     filterString?: string;
+    removeTooltip?: string;
     remove?: (selected: number[]) => void;
 }
 
@@ -25,7 +26,7 @@ export enum SortOrder {
     default = '',
 }
 
-const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove }: IProps) => {
+const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove, removeTooltip }: IProps) => {
     const idKey = id ?? route + 'Id';
     const [selected, setSelected] = useState<number[]>([]);
     const [draw, setDraw] = useState(0);
@@ -126,6 +127,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                     sortOrder={sortOrder}
                     sort={handleSortClick}
                     remove={remove ? handleRemoveClick : undefined}
+                    removeTooltip={removeTooltip}
                 />
                 {data.map((row: IData) => {
                     return (
