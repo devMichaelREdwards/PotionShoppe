@@ -14,3 +14,12 @@
 .action-button.purple {
     background: #d970ff;
 }
+
+.admin-dashboard-link {
+    display: flex;
+    justify-content: center;
+    a img {
+        max-width: 100%;
+        height: 200px;
+    }
+}

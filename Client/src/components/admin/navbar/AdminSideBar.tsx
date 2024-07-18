@@ -8,22 +8,11 @@ import AdminNavButton from './AdminNavButton';
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 
-const headerStyles = {
-    // Put this into actual CSS when you do styling
-    padding: 18,
-    fontSize: 16,
-    height: 56,
-    color: ' #000',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textAlign: 'center' as const,
-};
-
 const AdminDashboardLink = () => {
     return (
-        <div style={headerStyles}>
+        <div className='admin-dashboard-link'>
             <Link to='/admin'>
-                <span>Potion Shoppe</span>
+                <img src='/assets/general/Potion_Shoppe_Logo_Transparent.png' />
             </Link>
         </div>
     );
