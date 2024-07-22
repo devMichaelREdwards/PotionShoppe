@@ -64,4 +64,6 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p Password
     uncomment out the command in docker-compose.yml
     stop and remove the container then rebuild it
 
-        Everything works now
+            Everything works now
+
+    Test Commit
