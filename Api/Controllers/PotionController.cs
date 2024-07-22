@@ -65,10 +65,13 @@ public class PotionController : ControllerBase
     [Authorize(Roles = "Employee,Owner")]
     public IActionResult PostPotion(PotionDto potion)
     {
-        potion.EmployeeId = (_employeeAccounts as EmployeeAccountRepository)
-            .GetByUserName(potion.Employee)
-            .EmployeeId;
-        potion.Employee = null;
+        if (potion.EmployeeId == null)
+        {
+            potion.EmployeeId = (_employeeAccounts as EmployeeAccountRepository)
+                .GetByUserName(potion.Employee)
+                .EmployeeId;
+            potion.Employee = null;
+        }
         Potion newPotion = _mapper.Map<Potion>(potion);
         newPotion.Product = new Product()
         {

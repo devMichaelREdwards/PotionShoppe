@@ -36,7 +36,8 @@ public class TestIngredientRepository : IListingRepository<Ingredient>, IDisposa
         );
         if (selected != null)
         {
-            selected.Name = entity.Name;
+            selected.EffectId = entity.EffectId;
+            selected.Product = entity.Product;
         }
     }
 
