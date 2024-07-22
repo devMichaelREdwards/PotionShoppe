@@ -1,3 +1,4 @@
+![Potion_Shoppe_Logo_Beige](https://github.com/user-attachments/assets/acd7e1d8-ce50-4ea1-b181-5be689031413)
 # Potion Shoppe
 
 Potion Shoppe is a fantasy magic shop Point of Sale (POS) platform that includes a user system managing both employees and customers, an inventory system supporting multiple product schemas, and an ordering system that allows customers and employees to place orders and tracks inventory cost. This project brings quality of life to any alchemist's store by automating their point of sale.
