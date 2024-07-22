@@ -2,3 +2,5 @@ obj
 bin
 .vs
 Api/Assets/Images/*
+appsettings.json
+api.ts
