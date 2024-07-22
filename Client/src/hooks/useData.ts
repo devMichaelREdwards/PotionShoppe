@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import useAuth from './useAuth';
 import { IData } from '../types/IData';
+import { API_URL } from '../api/api';
 
 export const useData = (source: string) => {
     const [data, setData] = useState<IData[]>([]);
@@ -14,7 +15,7 @@ export const useData = (source: string) => {
         const getData = async () => {
             if (source.length) {
                 try {
-                    const result = await axios.get(`https://localhost:7211/api/${source}`, user?.authConfig);
+                    const result = await axios.get(`${API_URL}/${source}`, user?.authConfig);
                     setData(result.data);
                 } catch (e) {
                     setError('Unknown Error occurred');
@@ -44,7 +45,7 @@ export const useID = (source: string) => {
         const getData = async () => {
             if (source.length) {
                 try {
-                    const result = await axios.get(`https://localhost:7211/api/${source}`, user?.authConfig);
+                    const result = await axios.get(`${API_URL}/${source}`, user?.authConfig);
                     setData(result.data);
                 } catch (e) {
                     setError('Unknown Error occurred');
