@@ -4,7 +4,7 @@ using Faker;
 
 namespace Api.Tests;
 
-public class TestEffectRepository : IRepository<Effect>, IDisposable
+public class TestEffectRepository : IListingRepository<Effect>, IDisposable
 {
     private List<Effect> effects = new();
 
@@ -66,6 +66,16 @@ public class TestEffectRepository : IRepository<Effect>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Effect> GetFilterData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
+    {
+        return effects;
     }
 
     #endregion

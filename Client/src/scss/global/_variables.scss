@@ -1,4 +1,6 @@
 // Images
+$BackgroundParchmentPaperNoRepeat: url(/assets/general/Parchment_Background.png);
+$BackgroundParchmentPaperNoRepeat: url(/assets/general/Parchment_Background.png);
 $BackgroundParchmentPaperImage: url(/assets/general/Parchment_Background.png) no-repeat center center fixed;
 $AdminLoginButton: url(/assets/employee/Burned_Parchment.png);
 
@@ -8,6 +10,9 @@ $AdminLoginButtonFontColor: #392412;
 $AdminNavBarMenuColor: #ab7d45;
 $AdminNavBarMenuHoverColor: #601c77;
 $SeparatorColor: #555;
+$InkColor: #373a3d;
+$ErrorColor: #b5553e;
+$LightFontColor: white;
 
 // Layout
 $AdminSidebarWidth: 300px;

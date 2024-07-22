@@ -77,3 +77,30 @@
         font-family: 'fantasy';
     }
 }
+
+.pagination {
+    gap: 20px;
+    color: $InkColor;
+    .label {
+        font-size: $FontSmall !important;
+        margin: auto;
+    }
+}
+
+.page-selection,
+.limit-selection {
+    display: flex;
+    border-radius: 0;
+    width: auto;
+
+    input {
+        color: $InkColor;
+        text-align: center;
+        width: 100px;
+        border-bottom: 1px solid $InkColor !important;
+    }
+
+    button {
+        background: none;
+    }
+}

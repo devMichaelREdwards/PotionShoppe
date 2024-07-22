@@ -1,7 +1,7 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
-import { PotionIcon } from '../../common/image/Icon';
+import { QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 
 const OrderListing = () => {
@@ -42,10 +42,9 @@ const OrderListing = () => {
 
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
+            color: 'blue',
+            tooltip: 'Edit Order',
+            icon: <QuillIcon />,
             argKey: 'orderId',
             action: (id) => {
                 console.log(id);
@@ -63,6 +62,7 @@ const OrderListing = () => {
             columns={columns}
             route={'order/listing'}
             remove={user?.roles.includes('Owner') ? remove : undefined}
+            removeTooltip='Delete Orders'
             rowButtons={rowButtons}
         />
     );

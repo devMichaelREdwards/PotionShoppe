@@ -1,0 +1,121 @@
+@use '../global/variables' as *;
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-bottom: 0;
+    padding: 5px;
+
+    .filter-icon {
+        display: flex;
+        width: 200px;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        font-size: $FontLarge;
+    }
+
+    .filter-form {
+    }
+
+    .filter-toggles {
+        .form-control-label {
+            flex-basis: 70%;
+            padding-right: 10px;
+        }
+    }
+
+    .filter-group.rs-form-group {
+        display: flex;
+        min-width: 100%;
+        justify-content: center;
+        gap: 50px;
+
+        margin-bottom: 10px;
+        .form-control {
+            width: 300px;
+            min-height: 100px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .form-control-label {
+                margin: 0;
+                padding: 0;
+            }
+            .form-control-input {
+                width: 300px;
+                margin: 0;
+                padding: 0;
+                font-size: $FontSmall;
+
+                input {
+                    font-size: $FontSmall;
+                }
+            }
+        }
+    }
+
+    .clear-filters-button {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+}
+
+.form-control-tags {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding-top: 5px;
+}
+
+.tag {
+    padding: 10px;
+    width: 80%;
+    height: 10px;
+    border-radius: 16px;
+    font-size: $FontTiny;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .tag-title {
+        font-size: $FontTiny;
+    }
+
+    .tag-close,
+    .tag-space {
+        width: 50px;
+    }
+}
+
+.tag.light {
+    color: black;
+
+    svg {
+        color: black;
+    }
+}
+
+.tag.dark {
+    color: white;
+
+    svg {
+        color: white;
+    }
+}
+
+.tag.error {
+    span {
+        color: red;
+        font-size: 44px;
+        font-weight: bolder;
+        margin-left: 10px;
+        font-family: 'fantasy';
+    }
+}

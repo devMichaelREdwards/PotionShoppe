@@ -1,9 +1,10 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace Api.Data;
 
-public class OrderRepository : IRepository<Order>, IDisposable
+public class OrderRepository : IListingRepository<Order>, IDisposable
 {
     private PotionShoppeContext context;
 
@@ -17,24 +18,22 @@ public class OrderRepository : IRepository<Order>, IDisposable
         return [.. context.Orders
                     .Include(o => o.Customer)
                     .ThenInclude(c => c.CustomerStatus)
-                    .Include(o => o.OrderPotions)
-                    .ThenInclude(op => op.Potion)
-                    .Include(o => o.OrderIngredients)
-                    .ThenInclude(oi => oi.Ingredient)
+                    .Include(o => o.OrderProducts)
                     .Include(o => o.OrderStatus)
                 ];
     }
 
-    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null)
+    public IEnumerable<Order> GetListing(IFilter<Order>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        return [.. context.Orders
+        var orders = context.Orders
                     .Include(o => o.Customer)
                     .ThenInclude(c => c.CustomerStatus)
                     .Include(o => o.OrderStatus)
-                ];
+                    .AsQueryable();
+        return orders.ToPagedList(page?.Page ?? 1, page?.Limit ?? 20);
     }
 
-    public Order GetById(int id)
+    public Order? GetById(int id)
     {
         return context.Orders.Find(id);
     }
@@ -82,6 +81,11 @@ public class OrderRepository : IRepository<Order>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IFilter<Order> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

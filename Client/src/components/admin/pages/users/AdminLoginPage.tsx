@@ -1,16 +1,18 @@
-import { Container, Content, Header, Panel } from 'rsuite';
+import { Container, Content, Footer, Header, Panel } from 'rsuite';
 import AdminLoginForm from '../../forms/AdminLoginForm';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { refreshEmployee } from '../../../../helpers/authenticate';
 import { IAdminUser } from '../../../../types/IUser';
 import useTitle from '../../../../hooks/useTitle';
+import CopyrightText from '../../../common/information/CopyrightText';
 
 const AdminLoginPage = () => {
     const { user, setUser } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const from = location.state?.from?.pathname || '/admin';
     useTitle('Employee Login');
     useEffect(() => {
@@ -29,13 +31,14 @@ const AdminLoginPage = () => {
                     roles: res.roles,
                 };
                 setUser(user);
-                navigate(from, { replace: true });
+                navigate(from, { replace: true }); // Effectively a return
             }
+            setLoading(false);
         };
 
         checkRefresh();
     });
-
+    if (loading) return <>Loading Screen...</>;
     if (user) return <Navigate to='/admin' />;
     return (
         <Container className='admin-login-page'>
@@ -47,6 +50,9 @@ const AdminLoginPage = () => {
                     <AdminLoginForm />
                 </Panel>
             </Content>
+            <Footer>
+                <CopyrightText />
+            </Footer>
         </Container>
     );
 };

@@ -17,13 +17,7 @@ public class CustomerStatusRepository : IRepository<CustomerStatus>, IDisposable
         return [.. context.CustomerStatuses];
     }
 
-    public IEnumerable<CustomerStatus> GetListing(IFilter<CustomerStatus>? filter = null)
-    {
-        throw new NotImplementedException();
-    }
-
-
-    public CustomerStatus GetById(int id)
+    public CustomerStatus? GetById(int id)
     {
         return context.CustomerStatuses.Find(id)!;
     }

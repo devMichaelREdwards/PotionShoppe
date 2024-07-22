@@ -1,4 +1,4 @@
-using System.Net;
+using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +14,43 @@ public class ImageController : ControllerBase
         _env = env;
     }
 
+    [HttpGet]
+    public IActionResult GetNoImage()
+    {
+        string filePath = Path.Combine(_env.ContentRootPath, "Assets", "Images", "Image_Not_Found.png");
+        var png = PhysicalFile(filePath, "image/png");
+        return png;
+    }
+
+    [HttpGet("listing")]
+    public IActionResult GetAllImagePaths()
+    {
+        var path = Path.Combine(_env.ContentRootPath, "Assets", "Images");
+        string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+        for (int i = 0; i < files.Length; i++)
+        {
+            files[i] = files[i].Split('/').Last();
+        }
+        return Ok(files);
+    }
+
     [HttpGet("{image}")]
     public IActionResult GetImage(string image)
     {
         string fileName = image.Split('/').Last().ToLower();
-        var filePath = Path.Combine(_env.ContentRootPath, "Assets", "Images", fileName);
-        return PhysicalFile(filePath, "image/jpeg");
+        string filePath = Path.Combine(_env.ContentRootPath, "Assets", "Images", fileName);
+        if (System.IO.File.Exists(filePath))
+        {
+            var png = PhysicalFile(filePath, "image/png");
+            return png;
+        }
+        else
+        {
+            filePath = Path.Combine(_env.ContentRootPath, "Assets", "Images", "Image_Not_Found.png");
+            var png = PhysicalFile(filePath, "image/png");
+            return png;
+        }
+
     }
 
     [HttpPost]

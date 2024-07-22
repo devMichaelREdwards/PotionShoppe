@@ -17,7 +17,7 @@ public class PotionControllerTest
         // Setup
         potions = new TestPotionRepository();
         mapper = MapperFaker.MockMapper();
-        controller = new PotionController(potions, mapper);
+        controller = new PotionController(potions, null, mapper);
     }
 
     [Fact]
@@ -39,7 +39,8 @@ public class PotionControllerTest
             new()
             {
                 PotionId = testId,
-                Name = "Test"
+                Name = "Test",
+                EmployeeId = 1
             };
         // Execute
         controller.PostPotion(test);
@@ -57,7 +58,7 @@ public class PotionControllerTest
         controller.PutPotion(gotten);
         Potion updated = potions.GetById((int)gotten.PotionId);
         // Assert
-        Assert.True(gotten.Equals(updated));
+        Assert.True(gotten.Name == updated.Product.Name);
     }
 
     [Fact]

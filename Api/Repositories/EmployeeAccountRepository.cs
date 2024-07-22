@@ -19,12 +19,7 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         return [.. context.EmployeeAccounts.Include(e => e.Employee).ThenInclude(e => e.EmployeeStatus)];
     }
 
-    public IEnumerable<EmployeeAccount> GetListing(IFilter<EmployeeAccount>? filter = null)
-    {
-        throw new NotImplementedException();
-    }
-
-    public EmployeeAccount GetById(int id)
+    public EmployeeAccount? GetById(int id)
     {
         return context.EmployeeAccounts.Find(id);
     }
@@ -68,6 +63,15 @@ public class EmployeeAccountRepository : IRepository<EmployeeAccount>, IDisposab
         EmployeeAccount entity = GetByUserName(userName);
         entity.RefreshToken = token;
         entity.TokenExpire = expire;
+        context.Entry(entity).State = EntityState.Modified;
+        Save();
+    }
+
+    public void ClearRefreshToken(string userName)
+    {
+        EmployeeAccount entity = GetByUserName(userName);
+        entity.RefreshToken = null;
+        entity.TokenExpire = null;
         context.Entry(entity).State = EntityState.Modified;
         Save();
     }

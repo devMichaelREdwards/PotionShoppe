@@ -4,7 +4,7 @@ using Faker;
 
 namespace Api.Tests;
 
-public class TestIngredientRepository : IRepository<Ingredient>, IDisposable
+public class TestIngredientRepository : IListingRepository<Ingredient>, IDisposable
 {
     private List<Ingredient> ingredients = new();
 
@@ -36,7 +36,8 @@ public class TestIngredientRepository : IRepository<Ingredient>, IDisposable
         );
         if (selected != null)
         {
-            selected.Name = entity.Name;
+            selected.EffectId = entity.EffectId;
+            selected.Product = entity.Product;
         }
     }
 
@@ -65,6 +66,16 @@ public class TestIngredientRepository : IRepository<Ingredient>, IDisposable
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public IEnumerable<Ingredient> GetListing(IFilter<Ingredient>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
+    {
+        return ingredients;
+    }
+
+    public IFilter<Ingredient> GetFilterData()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

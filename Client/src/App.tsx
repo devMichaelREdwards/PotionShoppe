@@ -1,11 +1,11 @@
 import AdminRoutes from './components/routes/AdminRoutes';
+import StoreRoutes from './components/routes/StoreRoutes';
 
 const App = () => {
-    // At some point, replace /admin with something loaded from an environment file
     return (
         <>
             <AdminRoutes />
-            {/*<HomeRoutes />*/}
+            <StoreRoutes />
         </>
     );
 };

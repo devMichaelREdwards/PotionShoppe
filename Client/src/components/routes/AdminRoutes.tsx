@@ -3,19 +3,16 @@ import EmployeeLoginPage from '../admin/pages/users/AdminLoginPage';
 import AdminDashboardPage from '../admin/pages/general/DashboardPage';
 import AdminRedirect from '../admin/redirect/AdminRedirect';
 import { AuthProvider } from '../../context/AuthContext';
-import CustomerListingPage from '../admin/pages/users/customers/CustomerListingPage';
-import EmployeeListingPage from '../admin/pages/users/employees/EmployeeListingPage';
-import IngredientListingPage from '../admin/pages/inventory/ingredients/IngredientListingPage';
-import PotionListingPage from '../admin/pages/inventory/potions/PotionListingPage';
-import IngredientFormPage from '../admin/pages/inventory/ingredients/IngredientFormPage';
-import PotionFormPage from '../admin/pages/inventory/potions/PotionFormPage';
-import OrderFormPage from '../admin/pages/orders/orders/OrderFormPage';
-import ReceiptFormPage from '../admin/pages/orders/receipts/ReceiptFormPage';
-import EffectListingPage from '../admin/pages/inventory/effects/EffectListingPage';
-import EffectFormPage from '../admin/pages/inventory/effects/EffectFormPage';
-import CustomerFormPage from '../admin/pages/users/customers/CustomerFormPage';
+import CustomerPage from '../admin/pages/users/CustomerPage';
+
+import IngredientPage from '../admin/pages/inventory/IngredientPage';
+import PotionPage from '../admin/pages/inventory/PotionPage';
+import EffectPage from '../admin/pages/inventory/EffectPage';
+
 import ReceiptListingPage from '../admin/pages/orders/receipts/ReceiptListingPage';
 import OrderListingPage from '../admin/pages/orders/orders/OrderListingPage';
+import EmployeeListingPage from '../admin/pages/users/EmployeePage';
+import CustomerFormPage from '../admin/pages/users/customers/CustomerFormPage';
 import EmployeeFormPage from '../admin/pages/users/employees/EmployeeForm';
 
 const AdminRoutes = () => {
@@ -29,18 +26,13 @@ const AdminRoutes = () => {
                     {/* These roles should probably not be plain strings, just to make the JS harder to determine?
                         Loaded from where? */}
                     <Route path='' element={<AdminDashboardPage />} />
-                    <Route path='customers' element={<CustomerListingPage />} />
+                    <Route path='customers' element={<CustomerPage />} />
                     <Route path='employees' element={<EmployeeListingPage />} />
-                    <Route path='potions' element={<PotionListingPage />} />
-                    <Route path='potions/*' element={<PotionFormPage />} />
-                    <Route path='ingredients' element={<IngredientListingPage />} />
-                    <Route path='ingredients/*' element={<IngredientFormPage />} />
-                    <Route path='effects' element={<EffectListingPage />} />
-                    <Route path='effects/*' element={<EffectFormPage />} />
+                    <Route path='potions' element={<PotionPage />} />
+                    <Route path='ingredients' element={<IngredientPage />} />
+                    <Route path='effects' element={<EffectPage />} />
                     <Route path='orders' element={<OrderListingPage />} />
-                    <Route path='orders/*' element={<OrderFormPage />} />
                     <Route path='receipts' element={<ReceiptListingPage />} />
-                    <Route path='receipts/*' element={<ReceiptFormPage />} />
                 </Route>
                 <Route path='admin' element={<AdminRedirect allowedRoles={['Owner']} />}>
                     <Route path='' element={<AdminDashboardPage />} />

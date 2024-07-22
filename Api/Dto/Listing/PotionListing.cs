@@ -15,6 +15,7 @@ public partial class PotionListing
     public int? CurrentStock { get; set; }
 
     public string? Image { get; set; }
+    public bool? Active { get; set; }
 
     public List<EffectDisplayListing>? PotionEffects { get; set; } = [];
 
@@ -25,7 +26,9 @@ public partial class PotionListing
         {
             effects.Add(new EffectDisplayListing()
             {
+                EffectId = effect.EffectId,
                 Title = effect?.Effect?.Name!,
+                Description = EffectDto.BuildDescription(effect?.Effect!),
                 Color = effect?.Effect?.Color!
             });
         }

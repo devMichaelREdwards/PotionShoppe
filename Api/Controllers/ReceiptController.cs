@@ -10,10 +10,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class ReceiptController : ControllerBase
 {
-    private readonly IRepository<Receipt> _receipts;
+    private readonly IListingRepository<Receipt> _receipts;
     private readonly IMapper _mapper;
 
-    public ReceiptController(IRepository<Receipt> receipts, IMapper mapper)
+    public ReceiptController(IListingRepository<Receipt> receipts, IMapper mapper)
     {
         _receipts = receipts;
         _mapper = mapper;
@@ -31,7 +31,8 @@ public class ReceiptController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetReceiptsListing()
     {
-        var result = _receipts.GetListing();
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = _receipts.GetListing(null, page);
         return Ok(_mapper.Map<List<ReceiptListing>>(result));
     }
 

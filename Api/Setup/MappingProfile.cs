@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using Api.Models;
 using AutoMapper;
 
@@ -23,6 +24,7 @@ public class MappingProfile : Profile
 
     private void CreateCustomerMappings()
     {
+        Map<Customer, CustomerDto>();
         CreateMap<CustomerStatus, string>().ConvertUsing(p => p.Title);
         CreateMap<string, CustomerStatus>().ConvertUsing(p => null);
         Map<CustomerStatus, CustomerStatusDto>();
@@ -37,7 +39,8 @@ public class MappingProfile : Profile
                         FirstName = e.FirstName,
                         LastName = e.LastName,
                         CustomerStatus = e.CustomerStatus.Title,
-                        UserName = e.CustomerAccounts.First().UserName
+                        UserName = e.CustomerAccounts.First().UserName,
+                        Email = e.CustomerAccounts.First().Email
                     }
             );
     }
@@ -63,7 +66,8 @@ public class MappingProfile : Profile
                         LastName = e.LastName,
                         EmployeePosition = e.EmployeePosition.Title,
                         EmployeeStatus = e.EmployeeStatus.Title,
-                        UserName = e.EmployeeAccounts.First().UserName
+                        UserName = e.EmployeeAccounts.First().UserName,
+                        Email = e.EmployeeAccounts.First().Email
                     }
             );
     }
@@ -92,7 +96,7 @@ public class MappingProfile : Profile
     private void CreatePotionMappings()
     {
         Map<Potion, PotionDto>();
-        CreateMap<Potion, string>().ConvertUsing(p => p.Name);
+        CreateMap<Potion, string>().ConvertUsing(p => p.Product.Name);
         CreateMap<PotionDto, string>().ConvertUsing(p => p.Name);
         Map<PotionEffect, PotionEffectDto>();
         CreateMap<PotionEffectDto, string>().ConvertUsing(pe => pe.Effect);
@@ -102,12 +106,13 @@ public class MappingProfile : Profile
                     new()
                     {
                         PotionId = p.PotionId,
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        Cost = p.Cost,
-                        CurrentStock = p.CurrentStock,
-                        Image = p.Image,
+                        Name = p.Product.Name,
+                        Description = p.Product.Description,
+                        Price = p.Product.Price,
+                        Cost = p.Product.Cost,
+                        CurrentStock = p.Product.CurrentStock,
+                        Image = p.Product.Image,
+                        Active = p.Product.Active,
                         PotionEffects = PotionListing.BuildEffectsList(p)
                     }
             );
@@ -124,13 +129,16 @@ public class MappingProfile : Profile
                     new()
                     {
                         IngredientId = i.IngredientId,
-                        Name = i.Name,
-                        Description = i.Description,
-                        Price = i.Price,
-                        Cost = i.Cost,
-                        CurrentStock = i.CurrentStock,
-                        Image = i.Image,
+                        Name = i.Product.Name,
+                        Description = i.Product.Description,
+                        Price = i.Product.Price,
+                        Cost = i.Product.Cost,
+                        CurrentStock = i.Product.CurrentStock,
+                        Image = i.Product.Image,
+                        Active = i.Product.Active,
+                        EffectId = i.EffectId, // used for form
                         Effect = IngredientListing.BuildIngredientEffect(i),
+                        IngredientCategoryId = i.IngredientCategoryId, // used for form
                         IngredientCategory = i.IngredientCategory.Title
                     }
             );
@@ -140,33 +148,39 @@ public class MappingProfile : Profile
     {
         Map<OrderStatus, OrderStatusDto>();
         Map<Order, OrderDto>();
-        Map<OrderPotion, OrderPotionDto>();
-        Map<OrderIngredient, OrderIngredientDto>();
         CreateMap<Order, string>().ConvertUsing(o => o.OrderNumber);
         CreateMap<OrderDto, string>().ConvertUsing(o => o.OrderNumber);
-        CreateMap<Order, OrderListing>().ConvertUsing(o => new()
-        {
-            OrderId = o.OrderId,
-            OrderNumber = o.OrderNumber,
-            Total = o.Total,
-            DatePlaced = o.DatePlaced,
-            Customer = $"{o.Customer.FirstName} {o.Customer.LastName}",
-            OrderStatus = o.OrderStatus.Title
-        });
+        CreateMap<Order, OrderListing>()
+            .ConvertUsing(
+                o =>
+                    new()
+                    {
+                        OrderId = o.OrderId,
+                        OrderNumber = o.OrderNumber,
+                        Total = o.Total,
+                        DatePlaced = o.DatePlaced,
+                        Customer = $"{o.Customer.FirstName} {o.Customer.LastName}",
+                        OrderStatus = o.OrderStatus.Title
+                    }
+            );
     }
 
     private void CreateReceiptMappings()
     {
         Map<Receipt, ReceiptDto>();
-        CreateMap<Receipt, ReceiptListing>().ConvertUsing(r => new()
-        {
-            ReceiptId = r.ReceiptId,
-            ReceiptNumber = r.ReceiptNumber,
-            Order = r.Order.OrderNumber,
-            DateFulfilled = r.DateFulfilled,
-            Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
-            Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}",
-            Total = r.Order.Total
-        });
+        CreateMap<Receipt, ReceiptListing>()
+            .ConvertUsing(
+                r =>
+                    new()
+                    {
+                        ReceiptId = r.ReceiptId,
+                        ReceiptNumber = r.ReceiptNumber,
+                        Order = r.Order.OrderNumber,
+                        DateFulfilled = r.DateFulfilled,
+                        Employee = $"{r.Employee.FirstName} {r.Employee.LastName}",
+                        Customer = $"{r.Order.Customer.FirstName} {r.Order.Customer.LastName}",
+                        Total = r.Order.Total
+                    }
+            );
     }
 }

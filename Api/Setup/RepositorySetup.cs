@@ -9,20 +9,19 @@ public static class RepositorySetup
     {
         services.AddScoped<IRepository<EmployeeStatus>, EmployeeStatusRepository>();
         services.AddScoped<IRepository<EmployeePosition>, EmployeePositionRepository>();
-        services.AddScoped<IRepository<Employee>, EmployeeRepository>();
-        services.AddScoped<IRepository<Effect>, EffectRepository>();
+        services.AddScoped<IListingRepository<Employee>, EmployeeRepository>();
+        services.AddScoped<IListingRepository<Effect>, EffectRepository>();
         services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
+        services.AddScoped<IListingRepository<Customer>, CustomerRepository>();
         services.AddScoped<IRepository<CustomerStatus>, CustomerStatusRepository>();
-        services.AddScoped<IRepository<Customer>, CustomerRepository>();
-        services.AddScoped<IRepository<Ingredient>, IngredientRepository>();
-        services.AddScoped<IRepository<Potion>, PotionRepository>();
-        services.AddScoped<IRepository<Order>, OrderRepository>();
-        services.AddScoped<IRepository<Receipt>, ReceiptRepository>();
+        services.AddScoped<IListingRepository<Ingredient>, IngredientRepository>();
+        services.AddScoped<IListingRepository<Potion>, PotionRepository>();
+        services.AddScoped<IListingRepository<Order>, OrderRepository>();
+        services.AddScoped<IListingRepository<Receipt>, ReceiptRepository>();
         services.AddScoped<IRepository<PotionEffect>, PotionEffectRepository>();
-        services.AddScoped<IRepository<OrderIngredient>, OrderIngredientRepository>();
-        services.AddScoped<IRepository<OrderPotion>, OrderPotionRepository>();
         services.AddScoped<IRepository<CustomerAccount>, CustomerAccountRepository>();
         services.AddScoped<IRepository<EmployeeAccount>, EmployeeAccountRepository>();
         services.AddScoped<IRepository<IngredientCategory>, IngredientCategoryRepository>();
+        services.AddScoped<IRepository<Product>, ProductRepository>();
     }
 }

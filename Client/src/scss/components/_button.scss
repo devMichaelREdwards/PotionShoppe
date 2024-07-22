@@ -1,0 +1,25 @@
+@use '../global/variables' as *;
+.action-button.blue {
+    background: #83acef;
+}
+
+.action-button.red {
+    background: #f7274b;
+}
+
+.action-button.green {
+    background: #5bd95b;
+}
+
+.action-button.purple {
+    background: #d970ff;
+}
+
+.admin-dashboard-link {
+    display: flex;
+    justify-content: center;
+    a img {
+        max-width: 100%;
+        height: 200px;
+    }
+}

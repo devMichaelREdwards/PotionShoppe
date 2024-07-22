@@ -1,7 +1,9 @@
+@use '../global/variables' as *;
 .button-group {
     align-self: center;
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 .form-control {
@@ -19,6 +21,43 @@
 .form-control-input {
     border-bottom: 1px solid #000000 !important;
     font-size: 18px;
+    width: 100%;
+}
+
+.collection-control {
+    .form-control-tags {
+        width: 80%;
+        margin-left: 20%;
+    }
+}
+
+.form-control-input.rs-slider {
+    width: 100%;
+    border: none !important;
+
+    .rs-slider-bar {
+        height: 1px;
+        background-color: $InkColor;
+
+        .rs-slider-progress-bar {
+            height: 3px;
+            background-color: $InkColor;
+        }
+    }
+
+    .rs-slider-handle {
+        &::before {
+            background-color: $InkColor;
+            border: 1px solid $InkColor;
+            border-radius: 0;
+            rotate: 45deg;
+            margin: -4px 0 0 -5.5px;
+        }
+    }
+}
+
+.form-control .rs-input-group {
+    margin: 0;
 }
 
 .image-button {
@@ -37,4 +76,108 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.textarea-input {
+    display: inline-block;
+    width: 100%;
+    background: none;
+    resize: vertical;
+}
+
+.color-picker-input {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .color-display {
+        flex-basis: 5%;
+        .color-display-outline {
+            border: 1px solid $InkColor;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .color-display-inner {
+            height: 80%;
+            width: 80%;
+        }
+    }
+
+    .color-picker-slider {
+        flex-basis: 65%;
+        margin: 0 10px;
+    }
+
+    .rs-form-control {
+        flex-basis: 30%;
+    }
+}
+
+.autocomplete-input,
+.image-selector-input {
+    width: 100%;
+
+    .image-button-wrapper {
+        border: 1px solid $InkColor;
+        width: 250px;
+        padding: 15px;
+    }
+}
+
+.image-selector-collection {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    gap: 3px;
+}
+
+.image-selection {
+    width: 23.5%;
+    height: 25vh;
+    padding: 3px;
+    border: 1px solid transparent;
+    &:hover,
+    &.active {
+        border: 1px solid $InkColor;
+    }
+}
+
+.image-button-wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    background: none !important;
+}
+
+.modal .rs-modal-content {
+    background-image: url(/assets/general/Parchment_Background.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.image-selector-input {
+    max-height: 200px;
+}
+
+.confirmation-modal-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .confirmation-buttons {
+        width: auto;
+    }
+}
+
+.action-toggle,
+.action-toggle:active,
+.action-toggle:hover,
+.action-toggle:focus {
+    background-color: transparent;
 }

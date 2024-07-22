@@ -15,5 +15,7 @@ public partial class CustomerAccount
 
     public DateOnly? TokenExpire { get; set; }
 
+    public string? Email { get; set; }
+
     public virtual Customer? Customer { get; set; }
 }

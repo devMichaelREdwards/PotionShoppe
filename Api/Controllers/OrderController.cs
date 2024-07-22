@@ -12,10 +12,10 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class OrderController : ControllerBase
 {
-    private readonly IRepository<Order> orders;
+    private readonly IListingRepository<Order> orders;
     private readonly IMapper mapper;
 
-    public OrderController(IRepository<Order> _orders, IMapper _mapper, IAuthService _authService)
+    public OrderController(IListingRepository<Order> _orders, IMapper _mapper, IAuthService _authService)
     {
         orders = _orders;
         mapper = _mapper;
@@ -33,7 +33,8 @@ public class OrderController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetOrderListing()
     {
-        var result = orders.GetListing();
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = orders.GetListing(null, page);
         return Ok(mapper.Map<List<OrderListing>>(result));
     }
 

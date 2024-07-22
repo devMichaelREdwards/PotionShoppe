@@ -22,6 +22,7 @@ public partial class PotionDto : IDto<Potion>
     public int? EmployeeId { get; set; }
 
     public string? Employee { get; set; }
+    public bool? Active { get; set; }
 
     public ICollection<PotionEffectDto>? PotionEffects { get; set; } = new List<PotionEffectDto>();
 
@@ -29,23 +30,38 @@ public partial class PotionDto : IDto<Potion>
     {
         return other != null
             && other.PotionId == PotionId
-            && other.Name == Name
-            && other.Description == Description
-            && other.Price == Price
-            && other.Cost == Cost
-            && other.CurrentStock == CurrentStock
-            && other.Image == Image
+            && other.Product.Name == Name
+            && other.Product.Description == Description
+            && other.Product.Price == Price
+            && other.Product.Cost == Cost
+            && other.Product.CurrentStock == CurrentStock
+            && other.Product.Image == Image
             && other.EmployeeId == EmployeeId;
     }
 
     public void Update(Potion dest)
     {
-        dest.Name = Name ?? dest.Name;
-        dest.Description = Description ?? dest.Description;
-        dest.Price = Price ?? dest.Price;
-        dest.Cost = Cost ?? dest.Cost;
-        dest.CurrentStock = CurrentStock ?? dest.CurrentStock;
-        dest.Image = Image ?? dest.Image;
+        dest.Product.Name = Name ?? dest.Product.Name;
+        dest.Product.Description = Description ?? dest.Product.Description;
+        dest.Product.Price = Price ?? dest.Product.Price;
+        dest.Product.Cost = Cost ?? dest.Product.Cost;
+        dest.Product.CurrentStock = CurrentStock ?? dest.Product.CurrentStock;
+        dest.Product.Image = Image ?? dest.Product.Image;
         dest.EmployeeId = EmployeeId ?? dest.EmployeeId;
+        dest.PotionEffects = UpdatePotionEffects(PotionEffects) ?? dest.PotionEffects;
+    }
+
+    private ICollection<PotionEffect>? UpdatePotionEffects(ICollection<PotionEffectDto>? effects)
+    {
+        if (effects is null)
+            return null;
+        ICollection<PotionEffect> newEffects = new List<PotionEffect>();
+        foreach (PotionEffectDto effectDto in effects)
+        {
+            newEffects.Add(
+                new PotionEffect() { PotionId = effectDto.PotionId, EffectId = effectDto.EffectId, }
+            );
+        }
+        return newEffects;
     }
 }

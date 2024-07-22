@@ -10,17 +10,17 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class CustomerController : ControllerBase
 {
-    private readonly IRepository<Customer> customers;
+    private readonly IListingRepository<Customer> customers;
     private readonly IMapper mapper;
 
-    public CustomerController(IRepository<Customer> _customers, IMapper _mapper)
+    public CustomerController(IListingRepository<Customer> _customers, IMapper _mapper)
     {
         customers = _customers;
         mapper = _mapper;
     }
 
     [HttpGet]
-    [Authorize(Roles = "Employee,Owner")]
+    [Authorize(Roles = "Owner")]
     public IActionResult GetCustomers()
     {
         var result = customers.Get();
@@ -31,7 +31,9 @@ public class CustomerController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetCustomerListing()
     {
-        var result = customers.GetListing();
+        CustomerFilter? filter = CustomerFilter.BuildFilter(Request.Query);
+        Pagination? page = Pagination.BuildFilter(Request.Query);
+        var result = customers.GetListing(filter, page);
         return Ok(mapper.Map<List<CustomerListing>>(result));
     }
 
