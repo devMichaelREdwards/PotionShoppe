@@ -1,6 +1,5 @@
-![Potion_Shoppe_Logo_Beige]()
 <p align="center">
-  <img width="460" height="300" src="https://github.com/user-attachments/assets/acd7e1d8-ce50-4ea1-b181-5be689031413">
+  <img src="https://github.com/user-attachments/assets/acd7e1d8-ce50-4ea1-b181-5be689031413">
 </p>
 # Potion Shoppe
 
