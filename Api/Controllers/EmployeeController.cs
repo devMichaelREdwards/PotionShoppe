@@ -31,8 +31,9 @@ public class EmployeeController : ControllerBase
     [Authorize(Roles = "Employee")]
     public IActionResult GetEmployeeListing()
     {
+        EmployeeFilter? filter = EmployeeFilter.BuildFilter(Request.Query);
         Pagination? page = Pagination.BuildFilter(Request.Query);
-        var result = employees.GetListing(null, page);
+        var result = employees.GetListing(filter, page);
         return Ok(mapper.Map<List<EmployeeListing>>(result));
     }
 

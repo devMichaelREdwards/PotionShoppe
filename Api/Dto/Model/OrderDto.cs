@@ -19,12 +19,6 @@ public partial class OrderDto : IDto<Order>
 
     public string? Customer { get; set; }
 
-    public ICollection<OrderIngredientDto> OrderIngredients { get; set; } =
-        new List<OrderIngredientDto>();
-
-    public ICollection<OrderPotionDto> OrderPotions { get; set; } =
-        new List<OrderPotionDto>();
-
     public OrderStatusDto? OrderStatus { get; set; }
 
     public bool Equals(Order? other)

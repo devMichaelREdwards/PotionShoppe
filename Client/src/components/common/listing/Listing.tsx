@@ -7,6 +7,7 @@ import { IData } from '../../../types/IData';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
 import ListingHeaderRow from './ListingHeaderRow';
 import Pagination from '../input/Pagination';
+import ConfirmationModal from '../../admin/modal/ConfirmationModal';
 
 interface IProps {
     id?: string;
@@ -15,6 +16,7 @@ interface IProps {
     headerButtons?: IActionButton[];
     rowButtons?: IActionButton[];
     filterString?: string;
+    removeTooltip?: string;
     remove?: (selected: number[]) => void;
 }
 
@@ -24,7 +26,7 @@ export enum SortOrder {
     default = '',
 }
 
-const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove }: IProps) => {
+const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove, removeTooltip }: IProps) => {
     const idKey = id ?? route + 'Id';
     const [selected, setSelected] = useState<number[]>([]);
     const [draw, setDraw] = useState(0);
@@ -35,6 +37,13 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     const { data, loading, error, refresh, setLoading } = useData(
         route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`
     );
+    const [open, setOpen] = useState(false);
+    const openModal = () => {
+        setOpen(true);
+    };
+    const closeModal = () => {
+        setOpen(false);
+    };
     const handleCheckboxClick = (id: number) => {
         if (selected.includes(id)) {
             const newSelected = selected.filter((inArr) => {
@@ -47,7 +56,11 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
         }
     };
 
-    const handleRemoveClick = async () => {
+    const handleRemoveClick = () => {
+        openModal();
+    };
+
+    const handleRemoveConfirmed = async () => {
         await remove?.(selected);
         setSelected([]);
         setDraw(draw + 1);
@@ -91,6 +104,10 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
         }
     };
 
+    const refreshList = () => {
+        setDraw(draw + 1);
+    };
+
     useEffect(() => {
         refresh();
     }, [draw]);
@@ -110,6 +127,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                     sortOrder={sortOrder}
                     sort={handleSortClick}
                     remove={remove ? handleRemoveClick : undefined}
+                    removeTooltip={removeTooltip}
                 />
                 {data.map((row: IData) => {
                     return (
@@ -121,10 +139,12 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                             checked={selected.includes(row[idKey] as number)}
                             handleCheckboxClick={handleCheckboxClick}
                             rowButtons={rowButtons}
+                            refresh={refreshList}
                         />
                     );
                 })}
             </List>
+            <ConfirmationModal open={open} closeModal={closeModal} confirmationCallback={handleRemoveConfirmed} />
             <Pagination page={page} limit={limit} onPageChange={handlePageChange} onLimitChange={handleLimitChange} />
         </>
     );

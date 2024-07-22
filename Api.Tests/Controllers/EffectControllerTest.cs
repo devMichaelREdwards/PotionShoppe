@@ -39,8 +39,11 @@ public class EffectControllerTest
             new()
             {
                 EffectId = testId,
+                Name = "Test",
                 Duration = 50,
-                Description = "Test"
+                Description = "Test Desc",
+                Value = 50,
+                Color = "blue"
             };
         // Execute
         controller.PostEffect(testStatus);

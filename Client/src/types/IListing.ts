@@ -1,4 +1,5 @@
 import { TypeAttributes } from 'rsuite/esm/@types/common';
+import { ActionButtonColor } from './UI';
 
 export interface IListingColumn {
     align: 'left' | 'center' | 'right';
@@ -10,13 +11,18 @@ export interface IListingColumn {
 }
 
 export interface IActionButton {
-    appearance: TypeAttributes.Appearance;
+    appearance?: TypeAttributes.Appearance;
     label?: string;
-    color?: TypeAttributes.Color;
+    color?: ActionButtonColor;
     icon?: JSX.Element;
     argKey?: string;
+    currentValue?: unknown;
+    isToggle?: boolean;
+    tooltip?: string;
+    placement?: TypeAttributes.Placement;
     [arg: string]: unknown;
-    action: (arg: unknown) => void;
+    action?: (arg: unknown) => void;
+    refresh?: () => void;
 }
 
 export interface ICollectionObject {

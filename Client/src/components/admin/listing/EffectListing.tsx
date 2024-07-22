@@ -2,7 +2,7 @@ import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IEffectFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { PotionIcon } from '../../common/image/Icon';
+import { EffectIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 
@@ -52,9 +52,9 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
 
     const headerButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'Add',
-            color: 'violet',
+            color: 'green',
+            tooltip: 'New Effect',
+            icon: <EffectIcon />,
             action: () => {
                 toggleEdit(true);
             },
@@ -63,10 +63,9 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
 
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
+            color: 'blue',
+            tooltip: 'Edit Effect',
+            icon: <QuillIcon />,
             argKey: 'effectId',
             action: (id) => {
                 toggleEdit(true, id as number);
@@ -119,6 +118,7 @@ const EffectListing = ({ filters, toggleEdit }: IProps) => {
             columns={columns}
             route={`effect/listing`}
             remove={remove}
+            removeTooltip='Delete Effects'
             headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}

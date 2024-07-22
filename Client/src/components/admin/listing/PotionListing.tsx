@@ -1,17 +1,19 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { PotionIcon } from '../../common/image/Icon';
+import { PotionIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
 
 interface IProps {
     filters: IIngredientFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
-const PotionListing = ({ filters }: IProps) => {
+const PotionListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -65,15 +67,42 @@ const PotionListing = ({ filters }: IProps) => {
         },
     ];
 
+    const headerButtons: IActionButton[] = [
+        {
+            icon: <PotionIcon />,
+            color: 'green',
+            tooltip: 'Add Potion',
+            placement: 'top',
+            action: () => {
+                toggleEdit(true);
+            },
+        },
+    ];
+
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
-            argKey: 'PotionId',
+            label: 'toggle',
+            argKey: 'potionId',
+            isToggle: true,
+            tooltip: 'Toggle Potion',
+            action: async (data) => {
+                const collected = data as IData;
+                const post = {
+                    potionId: collected.id,
+                    active: !collected.currentValue,
+                };
+                // Add confirmation to this later...
+
+                await axios.post('potion/toggle', post, user?.authConfig);
+            },
+        },
+        {
+            color: 'blue',
+            icon: <QuillIcon />,
+            argKey: 'potionId',
+            tooltip: 'Edit Potion',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
@@ -142,6 +171,8 @@ const PotionListing = ({ filters }: IProps) => {
             columns={columns}
             route={'potion/listing'}
             remove={remove}
+            removeTooltip='Delete Potion' // Probably a better way to do this. Just include it in header buttons?
+            headerButtons={headerButtons}
             rowButtons={rowButtons}
             filterString={buildFilterString(filters)}
         />

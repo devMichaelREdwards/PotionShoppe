@@ -19,10 +19,9 @@ public static class RepositorySetup
         services.AddScoped<IListingRepository<Order>, OrderRepository>();
         services.AddScoped<IListingRepository<Receipt>, ReceiptRepository>();
         services.AddScoped<IRepository<PotionEffect>, PotionEffectRepository>();
-        services.AddScoped<IRepository<OrderIngredient>, OrderIngredientRepository>();
-        services.AddScoped<IRepository<OrderPotion>, OrderPotionRepository>();
         services.AddScoped<IRepository<CustomerAccount>, CustomerAccountRepository>();
         services.AddScoped<IRepository<EmployeeAccount>, EmployeeAccountRepository>();
         services.AddScoped<IRepository<IngredientCategory>, IngredientCategoryRepository>();
+        services.AddScoped<IRepository<Product>, ProductRepository>();
     }
 }

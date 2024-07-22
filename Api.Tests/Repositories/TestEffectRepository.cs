@@ -75,7 +75,7 @@ public class TestEffectRepository : IListingRepository<Effect>, IDisposable
 
     public IEnumerable<Effect> GetListing(IFilter<Effect>? filter = null, Pagination? page = null, SortOrder? sortOrder = null)
     {
-        throw new NotImplementedException();
+        return effects;
     }
 
     #endregion

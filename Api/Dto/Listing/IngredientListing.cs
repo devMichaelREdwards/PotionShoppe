@@ -15,9 +15,11 @@ public partial class IngredientListing
     public int? CurrentStock { get; set; }
 
     public string? Image { get; set; }
-
+    public bool? Active { get; set; }
+    public int? IngredientCategoryId { get; set; }
     public string? IngredientCategory { get; set; }
 
+    public int? EffectId { get; set; }
     public EffectDisplayListing? Effect { get; set; }
 
     public static EffectDisplayListing BuildIngredientEffect(Ingredient ingredient)

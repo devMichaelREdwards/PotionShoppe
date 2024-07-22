@@ -6,6 +6,8 @@ import { ICollectionObject } from '../../../types/IListing';
 import Color from 'color';
 import CloseIcon from '@rsuite/icons/Close';
 import { SliderPicker } from 'react-color';
+import ImageButton from './ImageButton';
+import ImageSelectorModal from '../../admin/modal/ImageSelectorModal';
 
 interface IInput {
     value: string | number | readonly string[] | undefined;
@@ -241,6 +243,39 @@ export const RangeSliderControl = ({ value, label, min, max, id, onRangeChange }
     );
 };
 
+interface IImageSelectorControl {
+    value: string;
+    api: string;
+    label: string;
+    onImageChange: (value: string) => void;
+}
+
+export const ImageSelectorControl = ({ value, api, label, onImageChange }: IImageSelectorControl) => {
+    const [open, setOpen] = useState(false);
+
+    const openModal = () => {
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    };
+
+    const selectImage = (src: string) => {
+        onImageChange(src);
+        setOpen(false);
+    };
+    return (
+        <span className='form-control'>
+            <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+            <span className='image-selector-input'>
+                <ImageButton src={`${value}`} onClick={openModal} />
+            </span>
+            <ImageSelectorModal open={open} api={api} closeModal={closeModal} selectImage={selectImage} />
+        </span>
+    );
+};
+
 interface IStringSearchInput {
     value: string;
     label?: string;
@@ -248,6 +283,7 @@ interface IStringSearchInput {
     route: string;
     idKey: string;
     dataKey: string;
+    error?: string;
     onSelect: (data: ICollectionObject) => void;
     setValue: (value: string) => void;
 }
@@ -258,7 +294,7 @@ export const StringSearchInput = ({ value, label, placeholder, route, idKey, dat
         <span className='form-control'>
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
-                className='form-control-input'
+                className='form-control-input autocomplete-input'
                 placeholder={placeholder}
                 value={value}
                 data={data.map((item) => {
@@ -301,8 +337,6 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
     const { data } = useData(route);
 
     useEffect(() => {
-        // This is the only way that the input clears after onSelect due to onChange being called after onSelect
-        // Maybe just rewrite this component? Rsuite failed me here
         if (dirty) {
             setValue('');
             setDirty(false);
@@ -314,6 +348,7 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
             <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
             <AutoComplete
                 className='form-control-input'
+                menuClassName='autocomplete-popup'
                 placeholder={placeholder}
                 data={data.map((item) => {
                     return item[dataKey] as string;
@@ -371,6 +406,97 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
                                             appearance='subtle'
                                             onClick={() => {
                                                 removeTag(tag.id ?? 0);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
+            )}
+        </span>
+    );
+};
+
+export const CollectionSearchInput = ({ value, label, placeholder, tags, route, idKey, dataKey, addTag, removeTag, setValue }: ITagSearchInput) => {
+    const [dirty, setDirty] = useState(false);
+    const { data } = useData(route);
+
+    useEffect(() => {
+        if (dirty) {
+            setValue('');
+            setDirty(false);
+        }
+    }, [dirty, setValue]);
+
+    return (
+        <span className='collection-control'>
+            <span className='form-control'>
+                <Form.ControlLabel className='form-control-label'>{label}</Form.ControlLabel>
+                <AutoComplete
+                    className='form-control-input'
+                    menuClassName='autocomplete-popup'
+                    placeholder={placeholder}
+                    data={data.map((item) => {
+                        return item[dataKey] as string;
+                    })}
+                    name={dataKey}
+                    value={value}
+                    onChange={(e) => {
+                        setValue(e);
+                    }}
+                    onSelect={(v: IData) => {
+                        const selected = data.find((d) => {
+                            return d[dataKey] == v;
+                        });
+                        if (!selected) return;
+                        const color = selected['color'] ? ((selected['color'] as { color: string })['color'] as string) : 'grey';
+                        const collectionObj = {
+                            id: selected[idKey] as number,
+                            title: selected[dataKey] as string,
+                            color: color,
+                        };
+                        addTag(collectionObj);
+                        setDirty(true);
+                    }}
+                />
+            </span>
+            {tags.length > 0 && (
+                <div className='form-control-tags'>
+                    {tags.map((tag, i) => {
+                        const colorString: string = tag.color ? tag.color : 'grey';
+                        try {
+                            const colorData = Color(colorString);
+                            return (
+                                <div className={`tag ${colorData.isLight() ? 'light' : 'dark'}`} style={{ backgroundColor: `${colorString}` }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(i);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </Button>
+                                    </span>
+                                </div>
+                            );
+                        } catch (e) {
+                            // If the color string cannot be parsed
+                            return (
+                                <div className={`tag light`} style={{ backgroundColor: 'grey' }}>
+                                    <span className='tag-space'></span>
+                                    <span className='tag-title'>{tag.title}</span>
+                                    <span className='tag-close'>
+                                        <Button
+                                            appearance='subtle'
+                                            onClick={() => {
+                                                removeTag(i);
                                             }}
                                         >
                                             <CloseIcon />

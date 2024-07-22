@@ -16,6 +16,11 @@ import MagicWand from '/assets/icon/Magic_Wand.svg';
 import Sort from '/assets/icon/Sort.svg';
 import SortUp from '/assets/icon/Sort_Up.svg';
 import SortDown from '/assets/icon/Sort_Down.svg';
+import Active from '/assets/icon/Active.svg';
+import Inactive from '/assets/icon/Inactive.svg';
+import RecycleBag from '/assets/icon/Recycle_Bag.svg';
+import QuillPen from '/assets/icon/Quill_Pen.svg';
+import Broom from '/assets/icon/Broom.svg';
 import { SortOrder } from '../listing/Listing';
 
 interface IIcon {
@@ -89,6 +94,46 @@ export const MagicWandIcon = () => {
     return (
         <div className='icon'>
             <img src={MagicWand} />
+        </div>
+    );
+};
+
+export const ActiveIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={Active} />
+        </div>
+    );
+};
+
+export const InactiveIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={Inactive} />
+        </div>
+    );
+};
+
+export const TrashIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={RecycleBag} />
+        </div>
+    );
+};
+
+export const QuillIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={QuillPen} />
+        </div>
+    );
+};
+
+export const BroomIcon = () => {
+    return (
+        <div className='icon'>
+            <img src={Broom} />
         </div>
     );
 };

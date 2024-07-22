@@ -1,26 +1,18 @@
 import { Sidebar, Sidenav, Nav } from 'rsuite';
 import AdminNavItem from './AdminNavItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CustomerIcon, EffectIcon, EmployeeIcon, IngredientIcon, OrderIcon, ReceiptIcon, PotionIcon } from '../../common/image/Icon';
 import { useState } from 'react';
 import CopyrightText from '../../common/information/CopyrightText';
-
-const headerStyles = {
-    // Put this into actual CSS when you do styling
-    padding: 18,
-    fontSize: 16,
-    height: 56,
-    color: ' #000',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textAlign: 'center' as const,
-};
+import AdminNavButton from './AdminNavButton';
+import axios from '../../../api/axios';
+import useAuth from '../../../hooks/useAuth';
 
 const AdminDashboardLink = () => {
     return (
-        <div style={headerStyles}>
+        <div className='admin-dashboard-link'>
             <Link to='/admin'>
-                <span>Potion Shoppe</span>
+                <img src='/assets/general/Potion_Shoppe_Logo_Transparent.png' />
             </Link>
         </div>
     );
@@ -28,12 +20,20 @@ const AdminDashboardLink = () => {
 
 const AdminSideBar = () => {
     const [active, setActive] = useState('');
+    const { user, setUser } = useAuth();
+    const navigate = useNavigate();
+    const logout = async (eventKey?: string) => {
+        await axios.post('user/employee/logout', { username: user?.userName, key: eventKey }).then(() => {
+            setUser(undefined);
+            navigate('login', { replace: true });
+        });
+    };
     return (
         <Sidebar className='admin-sidebar'>
-            <Sidenav.Header>
-                <AdminDashboardLink />
-            </Sidenav.Header>
             <Sidenav>
+                <Sidenav.Header>
+                    <AdminDashboardLink />
+                </Sidenav.Header>
                 <Sidenav.Body>
                     <Nav>
                         <Nav.Menu className='admin-nav-menu' eventKey='1' title='Users'>
@@ -94,8 +94,12 @@ const AdminSideBar = () => {
                     </Nav>
                 </Sidenav.Body>
             </Sidenav>
-            <div className='admin-copyright'>
-                <CopyrightText />
+            <div className='admin-bottom-nav'>
+                <AdminNavButton title={'My Account'} action={logout} />
+                <AdminNavButton title={'Logout'} action={logout} />
+                <div className='admin-copyright'>
+                    <CopyrightText />
+                </div>
             </div>
         </Sidebar>
     );

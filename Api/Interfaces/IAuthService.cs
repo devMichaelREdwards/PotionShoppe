@@ -10,6 +10,7 @@ public interface IAuthService
     Task<bool> Login(UserLoginDto user);
     Jwt GenerateJwt(string userName, string role);
     string UpdateRefreshToken(UserLoginDto user);
+    void ClearRefreshToken(UserLogoutDto user);
     CustomerUser GetCustomerUser(ClaimsPrincipal userClaims);
     string GetEmployeePositionString(string userName);
     bool CheckEmployeeRefreshToken(string userName, string refreshToken);

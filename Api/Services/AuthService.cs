@@ -45,6 +45,73 @@ public class AuthService : IAuthService
         mapper = _mapper;
     }
 
+    #region Access Control
+    public async Task<bool> Login(UserLoginDto user)
+    {
+        var userAccount = await userManager.FindByNameAsync(user.UserName);
+        if (userAccount is null)
+            return false;
+
+        return await userManager.CheckPasswordAsync(userAccount, user.Password);
+    }
+
+    public void Logout(UserLogoutDto user)
+    {
+        ClearRefreshToken(user);
+    }
+
+    public Jwt GenerateJwt(string userName, string role)
+    {
+        IEnumerable<Claim>? claims = GetEmployeeClaims(userName, role);
+        SymmetricSecurityKey securityKey = new(
+            Encoding.ASCII.GetBytes(config.GetSection("Jwt:SecretKey").Value!)
+        );
+        SigningCredentials signingCred = new(
+            securityKey,
+            SecurityAlgorithms.HmacSha512Signature
+        );
+        SecurityToken securityToken = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(60),
+            issuer: config.GetSection("Jwt:Issuer").Value,
+            audience: config.GetSection("Jwt:Audience").Value,
+            signingCredentials: signingCred
+        )
+        {
+        };
+
+        string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
+        Jwt token = new()
+        {
+            Success = tokenString != null,
+            Token = tokenString ?? "",
+            UserName = userName,
+            Roles = GetEmployeeRoles(userName)
+        };
+        return token;
+    }
+
+    public string UpdateRefreshToken(UserLoginDto user)
+    {
+        DateTime expire = DateTime.Now.AddMinutes(1440);
+        SecurityToken refreshToken = new JwtSecurityToken(
+            expires: expire,
+            issuer: config.GetSection("Jwt:Issuer").Value,
+            audience: config.GetSection("Jwt:Audience").Value
+        )
+        {
+        };
+        string refreshString = new JwtSecurityTokenHandler().WriteToken(refreshToken);
+        (employeeAccounts as EmployeeAccountRepository)!.UpdateRefreshToken(user.UserName, refreshString, DateOnly.FromDateTime(expire));
+        return refreshString;
+    }
+
+    public void ClearRefreshToken(UserLogoutDto user)
+    {
+        (employeeAccounts as EmployeeAccountRepository)!.ClearRefreshToken(user.UserName);
+    }
+    #endregion
+
     #region Customer
 
     public async Task<bool> RegisterCustomer(CustomerRegistrationDto userRegistration)
@@ -89,7 +156,7 @@ public class AuthService : IAuthService
             Customer createdCustomer = customers.Insert(newCustomer);
 
             CustomerAccount newCustomerAccount =
-                new() { UserName = valid?.UserName, CustomerId = createdCustomer.CustomerId };
+                new() { UserName = valid?.UserName, Email = valid?.Email, CustomerId = createdCustomer.CustomerId };
 
             customerAccounts.Insert(newCustomerAccount);
         }
@@ -97,13 +164,27 @@ public class AuthService : IAuthService
         return true;
     }
 
-    public async Task<bool> Login(UserLoginDto user)
+    public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims)
     {
-        var userAccount = await userManager.FindByNameAsync(user.UserName);
-        if (userAccount is null)
-            return false;
+        string userName = userClaims.FindFirst(ClaimTypes.Email)!.Value;
 
-        return await userManager.CheckPasswordAsync(userAccount, user.Password);
+        CustomerAccount account = (customerAccounts as CustomerAccountRepository)!.GetByUserName(
+            userName
+        );
+
+        if (account?.CustomerId is null)
+            return null;
+
+        int customerId = (int)account.CustomerId;
+        Customer customerData = customers.GetById(customerId);
+
+        CustomerUser user = new CustomerUser()
+        {
+            UserName = userName,
+            Customer = mapper.Map<CustomerDto>(customerData)
+        };
+
+        return user;
     }
 
     #endregion
@@ -206,7 +287,6 @@ public class AuthService : IAuthService
 
         return true;
     }
-    #endregion
 
     private IEnumerable<Claim>? GetEmployeeClaims(string userName, string role)
     {
@@ -217,59 +297,11 @@ public class AuthService : IAuthService
         ];
 
         if (role == "Employee") return [
-
             new(ClaimTypes.Email, userName),
             new(ClaimTypes.Role, role)
-
         ];
 
         return null;
-    }
-
-    public Jwt GenerateJwt(string userName, string role)
-    {
-        IEnumerable<Claim>? claims = GetEmployeeClaims(userName, role);
-        SymmetricSecurityKey securityKey = new(
-            Encoding.ASCII.GetBytes(config.GetSection("Jwt:SecretKey").Value!)
-        );
-        SigningCredentials signingCred = new(
-            securityKey,
-            SecurityAlgorithms.HmacSha512Signature
-        );
-        SecurityToken securityToken = new JwtSecurityToken(
-            claims: claims,
-            expires: DateTime.Now.AddMinutes(60),
-            issuer: config.GetSection("Jwt:Issuer").Value,
-            audience: config.GetSection("Jwt:Audience").Value,
-            signingCredentials: signingCred
-        )
-        {
-        };
-
-        string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
-        Jwt token = new()
-        {
-            Success = tokenString != null,
-            Token = tokenString ?? "",
-            UserName = userName,
-            Roles = GetEmployeeRoles(userName)
-        };
-        return token;
-    }
-
-    public string UpdateRefreshToken(UserLoginDto user)
-    {
-        DateTime expire = DateTime.Now.AddMinutes(1440);
-        SecurityToken refreshToken = new JwtSecurityToken(
-            expires: expire,
-            issuer: config.GetSection("Jwt:Issuer").Value,
-            audience: config.GetSection("Jwt:Audience").Value
-        )
-        {
-        };
-        string refreshString = new JwtSecurityTokenHandler().WriteToken(refreshToken);
-        (employeeAccounts as EmployeeAccountRepository)!.UpdateRefreshToken(user.UserName, refreshString, DateOnly.FromDateTime(expire));
-        return refreshString;
     }
 
     public string GetEmployeePositionString(string userName)
@@ -288,29 +320,6 @@ public class AuthService : IAuthService
 
     }
 
-    public CustomerUser GetCustomerUser(ClaimsPrincipal userClaims)
-    {
-        string userName = userClaims.FindFirst(ClaimTypes.Email)!.Value;
-
-        CustomerAccount account = (customerAccounts as CustomerAccountRepository)!.GetByUserName(
-            userName
-        );
-
-        if (account?.CustomerId is null)
-            return null;
-
-        int customerId = (int)account.CustomerId;
-        Customer customerData = customers.GetById(customerId);
-
-        CustomerUser user = new CustomerUser()
-        {
-            UserName = userName,
-            Customer = mapper.Map<CustomerDto>(customerData)
-        };
-
-        return user;
-    }
-
     public bool CheckEmployeeRefreshToken(string userName, string refreshToken)
     {
         RefreshToken? token = (employeeAccounts as EmployeeAccountRepository)!.GetRefreshTokenForUser(userName);
@@ -327,4 +336,6 @@ public class AuthService : IAuthService
 
         return true;
     }
+
+    #endregion
 }

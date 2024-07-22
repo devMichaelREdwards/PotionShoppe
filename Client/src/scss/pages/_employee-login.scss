@@ -28,6 +28,10 @@
     align-items: center;
 }
 
+.admin-login-button-wrapper {
+    display: flex;
+}
+
 .admin-login-button {
     height: 50px;
     width: 300px;
@@ -36,10 +40,7 @@
     font-weight: 600 !important;
 
     img {
-        position: relative;
-        margin-top: -50px;
-        margin-left: -50px;
-        width: 500px;
+        margin-top: -100px;
     }
 }
 

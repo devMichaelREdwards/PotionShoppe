@@ -1,17 +1,19 @@
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { IngredientIcon } from '../../common/image/Icon';
+import { IngredientIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
 
 interface IProps {
     filters: IIngredientFilters;
+    toggleEdit: (active: boolean, editId?: number) => void;
 }
 
-const IngredientListing = ({ filters }: IProps) => {
+const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
     // Set filters here
     const columns: IListingColumn[] = [
@@ -39,7 +41,7 @@ const IngredientListing = ({ filters }: IProps) => {
             align: 'center',
             label: 'Description',
             dataKey: 'description',
-            colspan: 4,
+            colspan: 3,
         },
         {
             align: 'center',
@@ -71,15 +73,40 @@ const IngredientListing = ({ filters }: IProps) => {
         },
     ];
 
+    const headerButtons: IActionButton[] = [
+        {
+            color: 'green',
+            tooltip: 'Add Ingredient',
+            icon: <IngredientIcon />,
+            action: () => {
+                toggleEdit(true);
+            },
+        },
+    ];
+
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <IngredientIcon />,
-            argKey: 'IngredientId',
+            argKey: 'ingredientId',
+            isToggle: true,
+            tooltip: 'Toggle Ingredient',
+            action: async (data) => {
+                const collected = data as IData;
+                const post = {
+                    ingredientId: collected.id,
+                    active: !collected.currentValue,
+                };
+                // Add confirmation to this later...
+
+                await axios.post('ingredient/toggle', post, user?.authConfig);
+            },
+        },
+        {
+            color: 'blue',
+            icon: <QuillIcon />,
+            argKey: 'ingredientId',
+            tooltip: 'Edit Ingredient',
             action: (id) => {
-                console.log(id);
+                toggleEdit(true, id as number);
             },
         },
     ];
@@ -162,7 +189,9 @@ const IngredientListing = ({ filters }: IProps) => {
             columns={columns}
             route={'ingredient/listing'}
             remove={remove}
+            headerButtons={headerButtons}
             rowButtons={rowButtons}
+            removeTooltip='Delete Ingredients'
             filterString={buildFilterString(filters)}
         />
     );

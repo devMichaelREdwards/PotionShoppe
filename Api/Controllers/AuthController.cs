@@ -72,6 +72,17 @@ public class AuthController : ControllerBase
         return BadRequest("Login Failed");
     }
 
+    [HttpPost("employee/logout")]
+    public IActionResult EmployeeLogout(UserLogoutDto userLogout)
+    {
+        // Clear user JWT
+        authService.ClearRefreshToken(userLogout);
+        // Delete cookie from user
+        Response.Cookies.Delete("potionShoppeUserName");
+        Response.Cookies.Delete("potionShoppe");
+        return Ok();
+    }
+
     [HttpGet("employee/refresh")]
     public IActionResult EmployeeRefresh()
     {

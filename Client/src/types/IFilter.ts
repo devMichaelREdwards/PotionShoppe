@@ -26,3 +26,13 @@ export interface IPotionFilters {
     pmax?: number;
     instock?: boolean;
 }
+
+export interface IAccountFilters {
+    firstName?: string;
+    lastName?: string;
+    userName?: string;
+    email?: string;
+    active?: boolean;
+    banned?: boolean;
+    positions?: number[];
+}

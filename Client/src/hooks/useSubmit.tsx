@@ -5,7 +5,7 @@ import useAuth from './useAuth';
 import { useState } from 'react';
 
 interface IErrorState {
-    name?: string;
+    [key: string]: string;
 }
 
 export const useSubmit = (route: string, successMessage: string, errorMessage: string) => {
@@ -16,7 +16,7 @@ export const useSubmit = (route: string, successMessage: string, errorMessage: s
     let request;
 
     const submitForm = async (data: IPostData, successCallback?: () => void, errorCallback?: () => void) => {
-        if (data.effectId && (data.effectId as number) > 0) {
+        if (data.editId && (data.editId as number) > 0) {
             request = axios.put(route, data, user?.authConfig);
         } else {
             request = axios.post(route, data, user?.authConfig);

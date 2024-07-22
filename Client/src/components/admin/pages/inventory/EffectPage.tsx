@@ -39,7 +39,6 @@ const EffectPage = () => {
             });
             setLoading(false);
         };
-
         getFilterData();
     }, [draw]);
 
