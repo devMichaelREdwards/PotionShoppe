@@ -139,15 +139,21 @@ public static class DataFaker
     {
         Effect fakeEffect = new() { EffectId = 1, Description = "Fake", Duration = 60, Value = 40 };
         List<Ingredient> ingredients = [];
+        Product product;
         for (int i = 1; i <= 10; i++)
         {
+            product = new()
+            {
+                ProductId = i,
+                Name = $"Ingredient {i}",
+                Description = $"Ingredient {i}",
+                Image = $"Image-{i}",
+            };
             ingredients.Add(
                 new()
                 {
                     IngredientId = i,
-                    Name = $"Ingredient {i}",
-                    Description = $"Ingredient {i}",
-                    Image = $"Image-{i}",
+                    Product = product,
                     Effect = fakeEffect
                 }
             );
@@ -173,15 +179,21 @@ public static class DataFaker
     public static List<Potion> FakePotions()
     {
         List<Potion> potions = [];
+        Product product;
         for (int i = 1; i <= 10; i++)
         {
+            product = new()
+            {
+                ProductId = i,
+                Name = $"Potion {i}",
+                Description = $"Potion {i}",
+                Image = $"Image-{i}",
+            };
             potions.Add(
                 new()
                 {
                     PotionId = i,
-                    Name = $"Ingredient {i}",
-                    Description = $"Ingredient {i}",
-                    Image = $"Image-{i}"
+                    Product = product
                 }
             );
         }
@@ -260,12 +272,17 @@ public static class DataFaker
     public static List<PotionEffect> FakePotionEffects()
     {
         List<PotionEffect> potionEffects = new();
+        Product product = new()
+        {
+            ProductId = 1,
+            Name = $"Potion {1}",
+            Description = $"Potion {1}",
+            Image = $"Image-{1}",
+        };
         Potion fakePotion = new()
         {
             PotionId = 1,
-            Name = $"Ingredient {1}",
-            Description = $"Ingredient {1}",
-            Image = $"Image-{1}"
+            Product = product
         };
         Effect[] fakeEffects = [
             new(){ EffectId = 1, Description = "Fake", Duration = 60, Value = 40 },

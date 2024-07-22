@@ -36,7 +36,7 @@ public class TestPotionRepository : IListingRepository<Potion>, IDisposable
         );
         if (selected != null)
         {
-            selected.Name = entity.Name;
+            selected.Product.Name = entity.Product.Name;
         }
     }
 
