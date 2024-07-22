@@ -5,7 +5,7 @@ import { ImageSelectorControl, NumberControl, StringSearchInput, TextAreaControl
 import { useID } from '../../../hooks/useData';
 import { useSubmit } from '../../../hooks/useSubmit';
 import { ICollectionObject } from '../../../types/IListing';
-import { API_URL } from '../../../api/axios';
+import { API_URL } from '../../../api/api';
 import { IPostData } from '../../../types/IData';
 
 interface IProps {
@@ -174,7 +174,7 @@ const IngredientForm = ({ editId, toggleEdit }: IProps) => {
             <ActionButton
                 appearance='ghost'
                 label='Back to list'
-                color='violet'
+                color='purple'
                 action={() => {
                     toggleEdit(false);
                 }}
