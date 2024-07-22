@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form, Message, useToaster } from 'rsuite';
 import { useID } from '../../../hooks/useData';
 import { useSubmit } from '../../../hooks/useSubmit';
-import { API_URL } from '../../../api/axios';
+import { API_URL } from '../../../api/api';
 import { IData, IPostData } from '../../../types/IData';
 import { CollectionSearchInput, ImageSelectorControl, NumberControl, TextAreaControl, TextControl } from '../../common/input/FormControl';
 import { ICollectionObject } from '../../../types/IListing';
