@@ -11,11 +11,12 @@ interface IListingHeaderRowProps {
     headerButtons?: IActionButton[];
     sortCol?: string;
     sortOrder?: SortOrder;
+    removeTooltip?: string;
     sort?: (col: string) => void;
     remove?: () => void;
 }
 
-const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, remove }: IListingHeaderRowProps) => {
+const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, remove, removeTooltip }: IListingHeaderRowProps) => {
     let colsLeft = 23; //24 - 1 for checkbox col
     return (
         <List.Item className='listing-row listing-header'>
@@ -38,7 +39,13 @@ const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, re
                     );
                 })}
 
-                <ActionButtonCollection colspan={colsLeft} className='listing-item' buttons={headerButtons} remove={remove} />
+                <ActionButtonCollection
+                    colspan={colsLeft}
+                    className='listing-item'
+                    buttons={headerButtons}
+                    remove={remove}
+                    removeTooltip={removeTooltip}
+                />
             </FlexboxGrid>
         </List.Item>
     );

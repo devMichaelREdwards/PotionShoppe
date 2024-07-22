@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Form } from 'rsuite';
 import { IAccountFilters } from '../../../types/IFilter';
 import { CheckboxControl, TextControl } from '../../common/input/FormControl';
-import { MagicWandIcon } from '../../common/image/Icon';
-import ActionButton from '../../common/input/ActionButton';
+import FilterTitle from './FilterTitle';
+import ClearFilterButton from './ClearFilterButton';
 
 interface IProps {
     filters: IAccountFilters;
@@ -45,10 +45,7 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
     };
     return (
         <div className='filters'>
-            <div className='filter-icon'>
-                <MagicWandIcon />
-                Filters
-            </div>
+            <FilterTitle />
             <Form className='filter-form'>
                 <Form.Group className='filter-group'>
                     <TextControl
@@ -113,9 +110,7 @@ const CustomerFilters = ({ filters, setFilters, onClearCallback }: IProps) => {
                     }}
                 />
             </Form.Group>
-            <div className='clear-filters-button'>
-                <ActionButton color={'red'} appearance={'ghost'} label={'Clear Filters'} action={clearFiltersClick} />
-            </div>
+            <ClearFilterButton clearFiltersClick={clearFiltersClick} />
         </div>
     );
 };

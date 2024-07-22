@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { IPotionFilters } from '../../../types/IFilter';
 import { debounce } from '../../../helpers/timing';
-import { MagicWandIcon } from '../../common/image/Icon';
 import { Form } from 'rsuite';
-import ActionButton from '../../common/input/ActionButton';
 import { TextControl, RangeSliderControl, CheckboxControl, TagSearchInput } from '../../common/input/FormControl';
 import { ICollectionObject } from '../../../types/IListing';
+import ClearFilterButton from './ClearFilterButton';
+import FilterTitle from './FilterTitle';
 
 interface IProps {
     filters: IPotionFilters;
@@ -71,10 +71,7 @@ const PotionFilters = ({ filters, filterLimits, setFilters, onClearCallback }: I
     };
     return (
         <div className='filters'>
-            <div className='filter-icon'>
-                <MagicWandIcon />
-                Filters
-            </div>
+            <FilterTitle />
             <Form className='filter-form'>
                 <Form.Group className='filter-group'>
                     <TextControl
@@ -134,9 +131,7 @@ const PotionFilters = ({ filters, filterLimits, setFilters, onClearCallback }: I
                     }}
                 />
             </Form.Group>
-            <div className='clear-filters-button'>
-                <ActionButton color={'red'} appearance={'ghost'} label={'Clear Filters'} action={clearFiltersClick} />
-            </div>
+            <ClearFilterButton clearFiltersClick={clearFiltersClick} />
         </div>
     );
 };

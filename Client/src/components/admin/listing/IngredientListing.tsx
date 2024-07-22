@@ -3,7 +3,7 @@ import useAuth from '../../../hooks/useAuth';
 import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { IngredientIcon, PotionIcon } from '../../common/image/Icon';
+import { IngredientIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
@@ -75,9 +75,9 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
 
     const headerButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'Add',
-            color: 'violet',
+            color: 'green',
+            tooltip: 'Add Ingredient',
+            icon: <IngredientIcon />,
             action: () => {
                 toggleEdit(true);
             },
@@ -86,12 +86,9 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
 
     const rowButtons: IActionButton[] = [
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <PotionIcon />,
             argKey: 'ingredientId',
             isToggle: true,
+            tooltip: 'Toggle Ingredient',
             action: async (data) => {
                 const collected = data as IData;
                 const post = {
@@ -104,11 +101,10 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             },
         },
         {
-            appearance: 'ghost',
-            label: 'edit',
-            color: 'violet',
-            icon: <IngredientIcon />,
+            color: 'blue',
+            icon: <QuillIcon />,
             argKey: 'ingredientId',
+            tooltip: 'Edit Ingredient',
             action: (id) => {
                 toggleEdit(true, id as number);
             },
@@ -195,6 +191,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             remove={remove}
             headerButtons={headerButtons}
             rowButtons={rowButtons}
+            removeTooltip='Delete Ingredients'
             filterString={buildFilterString(filters)}
         />
     );
