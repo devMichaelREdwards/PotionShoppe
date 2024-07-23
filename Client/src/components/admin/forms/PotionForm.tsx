@@ -39,7 +39,7 @@ const PotionForm = ({ editId, toggleEdit }: IProps) => {
     };
 
     const removeEffect = (index: number) => {
-        const newEffects = [...effects.filter((e, i) => i !== index)];
+        const newEffects = [...effects.filter((_e, i) => i !== index)];
         setEffects(newEffects);
     };
 
