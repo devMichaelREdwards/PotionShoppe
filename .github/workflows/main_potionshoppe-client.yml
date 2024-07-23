@@ -21,6 +21,12 @@ jobs:
               with:
                   node-version: '20.x'
 
+            - name: Create Emtpy Server Configuration File
+              uses: canastro/copy-file-action@master
+              with:
+                  source: 'Client/src/api/api.empty.ts'
+                  target: 'Client/src/api/api.ts'
+
             - name: npm install, build, and test
               run: |
                   cd Client
