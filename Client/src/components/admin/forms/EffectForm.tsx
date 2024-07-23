@@ -109,7 +109,7 @@ const EffectForm = ({ editId, toggleEdit }: IProps) => {
             <ActionButton
                 appearance='ghost'
                 label='Back to list'
-                color='violet'
+                color='purple'
                 action={() => {
                     toggleEdit(false);
                 }}
