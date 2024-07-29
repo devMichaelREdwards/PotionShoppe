@@ -40,7 +40,8 @@ public class MappingProfile : Profile
                         LastName = e.LastName,
                         CustomerStatus = e.CustomerStatus.Title,
                         UserName = e.CustomerAccounts.First().UserName,
-                        Email = e.CustomerAccounts.First().Email
+                        Email = e.CustomerAccounts.First().Email,
+                        Active = e.CustomerStatusId == 1 // ACTIVE, can you get this otherwise?
                     }
             );
     }
