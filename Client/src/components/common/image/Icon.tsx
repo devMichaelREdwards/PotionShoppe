@@ -21,6 +21,7 @@ import Inactive from '/assets/icon/Inactive.svg';
 import RecycleBag from '/assets/icon/Recycle_Bag.svg';
 import QuillPen from '/assets/icon/Quill_Pen.svg';
 import Broom from '/assets/icon/Broom.svg';
+import Categories from '/assets/icon/Categories.svg';
 import { SortOrder } from '../listing/Listing';
 
 interface IIcon {
@@ -134,6 +135,14 @@ export const BroomIcon = () => {
     return (
         <div className='icon'>
             <img src={Broom} />
+        </div>
+    );
+};
+
+export const CategoriesIcon = () => {
+    return (
+        <div className='icon small-icon'>
+            <img src={Categories} />
         </div>
     );
 };

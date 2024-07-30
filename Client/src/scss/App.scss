@@ -18,6 +18,13 @@ html {
     }
 }
 
+.icon.small-icon {
+    img {
+        height: 30px;
+        margin: 2.5px;
+    }
+}
+
 .sort-icon {
     position: absolute;
     right: 0;

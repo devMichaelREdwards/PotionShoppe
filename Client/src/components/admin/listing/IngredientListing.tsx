@@ -3,7 +3,7 @@ import useAuth from '../../../hooks/useAuth';
 import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { IngredientIcon, QuillIcon } from '../../common/image/Icon';
+import { CategoriesIcon, IngredientIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
@@ -74,6 +74,14 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     ];
 
     const headerButtons: IActionButton[] = [
+        {
+            color: 'blue',
+            tooltip: 'Categories',
+            icon: <CategoriesIcon />,
+            action: () => {
+                // Open categories modal?
+            },
+        },
         {
             color: 'green',
             tooltip: 'Add Ingredient',
