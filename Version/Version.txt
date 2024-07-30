@@ -1,1 +1,3 @@
-0.1.0
+0.1.1
+- Changed favicon to new potion logo
+- Added status toggles to customer listing page

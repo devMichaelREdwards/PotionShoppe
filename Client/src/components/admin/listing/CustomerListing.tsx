@@ -1,4 +1,6 @@
+import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
+import { IData } from '../../../types/IData';
 import { IAccountFilters } from '../../../types/IFilter';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
 import { QuillIcon } from '../../common/image/Icon';
@@ -47,8 +49,29 @@ const CustomerListing = ({ filters }: IProps) => {
     const rowButtons: IActionButton[] = [];
 
     if (user?.roles.includes('Owner')) {
-        // Add edit button;
-        rowButtons.push({ color: 'blue', icon: <QuillIcon />, action: (id) => console.log(id), tooltip: 'Add Customer', argKey: 'customerId' });
+        rowButtons.push({
+            argKey: 'customerId',
+            isToggle: true,
+            tooltip: 'Toggle Customer',
+            currentValue: false,
+            action: async (data) => {
+                const collected = data as IData;
+                const post = {
+                    customerId: collected.id,
+                    active: !collected.currentValue,
+                };
+                // Add confirmation to this later...
+
+                await axios.post('customer/toggle', post, user?.authConfig);
+            },
+        });
+        rowButtons.push({
+            color: 'blue',
+            icon: <QuillIcon />,
+            action: (id) => console.log(id),
+            tooltip: 'Add Customer',
+            argKey: 'customerId',
+        });
     }
 
     const buildFilterString = (filters: IAccountFilters) => {
