@@ -9,6 +9,7 @@ namespace Api.Tests;
 public class CustomerControllerTest
 {
     TestCustomerRepository customers;
+    TestCustomerStatusRepository customerStatuses;
     IMapper mapper;
     CustomerController controller;
 
@@ -16,8 +17,9 @@ public class CustomerControllerTest
     {
         // Setup
         customers = new TestCustomerRepository();
+        customerStatuses = new TestCustomerStatusRepository();
         mapper = MapperFaker.MockMapper();
-        controller = new CustomerController(customers, mapper);
+        controller = new CustomerController(customers, customerStatuses, mapper);
     }
 
     [Fact]
