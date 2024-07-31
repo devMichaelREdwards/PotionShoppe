@@ -5,6 +5,7 @@ const StoreRoutes = () => {
     return (
         <AuthProvider>
             <Routes>
+                <Route path={'/*'} element={null} />
                 <Route
                     path='/'
                     element={
