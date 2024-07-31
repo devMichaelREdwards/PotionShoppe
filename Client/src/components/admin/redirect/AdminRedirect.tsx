@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { refreshEmployee } from '../../../helpers/authenticate';
 import AdminLayout from '../layout/AdminLayout';
 import useAuth from '../../../hooks/useAuth';
@@ -10,10 +10,9 @@ interface IRedirectProps {
 }
 
 const AdminRedirect: React.FC<IRedirectProps> = ({ allowedRoles }: IRedirectProps) => {
-    const { user, setUser } = useAuth();
+    const { setUser } = useAuth();
     const [authorized, setAuthorized] = useState(false);
     const [loading, setLoading] = useState(true);
-    const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
         const askServer = async () => {
@@ -30,18 +29,23 @@ const AdminRedirect: React.FC<IRedirectProps> = ({ allowedRoles }: IRedirectProp
                     },
                     roles: res.roles,
                 };
-                setAuthorized(true);
-                setUser(refreshedUser);
+
+                if (refreshedUser.roles.find((role) => allowedRoles?.includes(role))) {
+                    setAuthorized(true);
+                    setUser(refreshedUser);
+                } else {
+                    navigate(''); // Send back to dashboard
+                }
                 setLoading(false);
             } else {
                 navigate('login');
             }
         };
         askServer();
-    }, [user, loading, authorized, allowedRoles, location]);
+    }, [allowedRoles, navigate, setUser]);
 
     if (loading) return <>Authorization Loading Page</>;
-    return <AdminLayout />;
+    return authorized && <AdminLayout />;
 };
 
 export default AdminRedirect;
