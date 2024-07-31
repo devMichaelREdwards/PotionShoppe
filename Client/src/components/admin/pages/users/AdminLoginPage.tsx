@@ -32,6 +32,8 @@ const AdminLoginPage = () => {
                 };
                 setUser(user);
                 navigate(from, { replace: true }); // Effectively a return
+            } else {
+                setUser(undefined);
             }
             setLoading(false);
         };

@@ -1,3 +1,4 @@
 0.1.1
 - Changed favicon to new potion logo
 - Added status toggles to customer listing page
+- Rewrote page refresh logic allowing direct navigation to routes
