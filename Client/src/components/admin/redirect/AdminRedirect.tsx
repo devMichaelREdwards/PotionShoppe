@@ -31,7 +31,7 @@ const AdminRedirect: React.FC<IRedirectProps> = ({ allowedRoles }: IRedirectProp
                     roles: res.roles,
                 };
                 setAuthorized(true);
-                if (!user) setUser(refreshedUser);
+                setUser(refreshedUser);
                 setLoading(false);
             } else {
                 navigate('login');
