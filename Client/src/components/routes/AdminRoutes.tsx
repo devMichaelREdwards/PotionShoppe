@@ -36,8 +36,8 @@ const AdminRoutes = () => {
                 </Route>
                 <Route path='admin' element={<AdminRedirect allowedRoles={['Owner']} />}>
                     <Route path='' element={<AdminDashboardPage />} />
-                    <Route path='customers/*' element={<CustomerFormPage />} />
-                    <Route path='employees/*' element={<EmployeeFormPage />} />
+                    <Route path='customers/create' element={<CustomerFormPage />} />
+                    <Route path='employees/create' element={<EmployeeFormPage />} />
                 </Route>
             </Routes>
         </AuthProvider>
