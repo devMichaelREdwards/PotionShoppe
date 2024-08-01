@@ -3,10 +3,17 @@ import { IActionButton } from '../../../types/IListing';
 import { IData } from '../../../types/IData';
 import { ActiveIcon, InactiveIcon } from '../image/Icon';
 
-const ActionButton = ({ appearance, color, label, tooltip, placement, icon, action, arg }: IActionButton) => {
+const ActionButton = ({ appearance, color, label, tooltip, placement, icon, action, refresh, arg }: IActionButton) => {
     return (
         <Whisper placement={placement ?? 'top'} speaker={<Tooltip>{tooltip}</Tooltip>} disabled={!tooltip}>
-            <Button className={`action-button ${color}`} appearance={appearance} onClick={() => action?.(arg)}>
+            <Button
+                className={`action-button ${color}`}
+                appearance={appearance}
+                onClick={async () => {
+                    await action?.(arg);
+                    refresh?.();
+                }}
+            >
                 {icon}
                 {label}
             </Button>

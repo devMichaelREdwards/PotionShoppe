@@ -49,23 +49,23 @@ const IngredientPage = () => {
     return (
         <Panel className='admin-page'>
             <AdminHeader title='Ingredients' />
-            {edit ? (
-                <Content>
+            <Content>
+                {edit ? (
                     <IngredientForm editId={editId} toggleEdit={toggleEdit} />
-                </Content>
-            ) : (
-                <Content>
-                    <IngredientFilters
-                        filters={{ ...filters }}
-                        filterLimits={filterLimits}
-                        setFilters={setFilters}
-                        onClearCallback={() => {
-                            setDraw(draw + 1);
-                        }}
-                    />
-                    <IngredientListing filters={{ ...filters }} toggleEdit={toggleEdit} />
-                </Content>
-            )}
+                ) : (
+                    <>
+                        <IngredientFilters
+                            filters={{ ...filters }}
+                            filterLimits={filterLimits}
+                            setFilters={setFilters}
+                            onClearCallback={() => {
+                                setDraw(draw + 1);
+                            }}
+                        />
+                        <IngredientListing filters={{ ...filters }} toggleEdit={toggleEdit} />
+                    </>
+                )}
+            </Content>
         </Panel>
     );
 };

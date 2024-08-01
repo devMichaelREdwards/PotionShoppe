@@ -10,48 +10,70 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class IngredientCategoryController : ControllerBase
 {
-    private readonly IRepository<IngredientCategory> ingredientCategory;
-    private readonly IMapper mapper;
+    private readonly ICategoryRepository<IngredientCategory> _ingredientCategories;
+    private readonly IMapper _mapper;
 
-    public IngredientCategoryController(IRepository<IngredientCategory> _ingredientCategory, IMapper _mapper)
+    public IngredientCategoryController(ICategoryRepository<IngredientCategory> ingredientCategories, IMapper mapper)
     {
-        ingredientCategory = _ingredientCategory;
-        mapper = _mapper;
+        _ingredientCategories = ingredientCategories;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult GetIngredientCategories()
     {
-        var result = ingredientCategory.Get();
-        return Ok(mapper.Map<List<IngredientCategoryDto>>(result));
+        var result = _ingredientCategories.Get();
+        return Ok(_mapper.Map<List<IngredientCategoryDto>>(result));
     }
 
     [HttpPost]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult PostIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult PostIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        ingredientCategory.Insert(mapper.Map<IngredientCategory>(customerStatus));
+        _ingredientCategories.Insert(_mapper.Map<IngredientCategory>(ingredientCategory));
         return Ok();
     }
 
     [HttpPut]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult PutIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult PutIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        if (customerStatus.IngredientCategoryId == null)
+        if (ingredientCategory.IngredientCategoryId == null)
             return Ok();
-        IngredientCategory existing = ingredientCategory.GetById((int)customerStatus.IngredientCategoryId);
-        customerStatus.Update(existing);
+        IngredientCategory existing = _ingredientCategories.GetById((int)ingredientCategory.IngredientCategoryId);
         ingredientCategory.Update(existing);
+        _ingredientCategories.Update(existing);
         return Ok();
     }
 
     [HttpDelete]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult DeleteIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult DeleteIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        if (customerStatus.IngredientCategoryId != null)
-            ingredientCategory.Delete((int)customerStatus.IngredientCategoryId);
+        if (ingredientCategory.IngredientCategoryId != null)
+            _ingredientCategories.Delete((int)ingredientCategory.IngredientCategoryId);
         return Ok();
+    }
+
+    [HttpPost("remove")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult RemoveIngredients(IngredientCategoryDto ingredientCategory)
+    {
+
+        if (ingredientCategory.IngredientCategoryId is null)
+        {
+            return BadRequest();
+        }
+
+        int id = (int)ingredientCategory.IngredientCategoryId;
+        bool categoryIsEmpty = _ingredientCategories.IsEmpty(id);
+        if (!categoryIsEmpty)
+        {
+            return BadRequest();
+        }
+
+        _ingredientCategories.Delete(id);
+        bool success = true;
+        return Ok(success);
     }
 }

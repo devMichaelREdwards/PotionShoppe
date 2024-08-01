@@ -37,6 +37,7 @@ const ActionButtonCollection = ({ colspan, className, buttons, data, refresh, re
                         label={b.label}
                         icon={b.icon}
                         action={b.action}
+                        refresh={refresh}
                         arg={b.argKey ? data?.[b.argKey] : undefined}
                         tooltip={b.tooltip}
                         placement={b.placement}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IData } from '../../../types/IData';
@@ -7,6 +8,7 @@ import { CategoriesIcon, IngredientIcon, QuillIcon } from '../../common/image/Ic
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
+import IngredientCategoryModal from '../modal/IngredientCategoryModal';
 
 interface IProps {
     filters: IIngredientFilters;
@@ -15,6 +17,7 @@ interface IProps {
 
 const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     const { user } = useAuth();
+    const [modalOpen, setModalOpen] = useState(false);
     // Set filters here
     const columns: IListingColumn[] = [
         // 21
@@ -79,7 +82,7 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             tooltip: 'Categories',
             icon: <CategoriesIcon />,
             action: () => {
-                // Open categories modal?
+                openModal();
             },
         },
         {
@@ -118,6 +121,14 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             },
         },
     ];
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
     const remove = async (selected: number[]) => {
         await axios.post('Ingredient/remove', selected, user?.authConfig);
@@ -192,16 +203,20 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     };
 
     return (
-        <Listing
-            id='ingredientId'
-            columns={columns}
-            route={'ingredient/listing'}
-            remove={remove}
-            headerButtons={headerButtons}
-            rowButtons={rowButtons}
-            removeTooltip='Delete Ingredients'
-            filterString={buildFilterString(filters)}
-        />
+        <>
+            <Listing
+                id='ingredientId'
+                columns={columns}
+                route={'ingredient/listing'}
+                remove={remove}
+                headerButtons={headerButtons}
+                rowButtons={rowButtons}
+                removeTooltip='Delete Ingredients'
+                filterString={buildFilterString(filters)}
+            />
+
+            <IngredientCategoryModal open={modalOpen} closeModal={closeModal} />
+        </>
     );
 };
 

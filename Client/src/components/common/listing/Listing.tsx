@@ -105,7 +105,9 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     };
 
     const refreshList = () => {
+        console.log('before set draw');
         setDraw(draw + 1);
+        console.log('after set draw');
     };
 
     useEffect(() => {
