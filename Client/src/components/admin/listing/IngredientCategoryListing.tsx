@@ -45,7 +45,16 @@ const IngredientCategoryListing = () => {
         await axios.post(`ingredientcategory/remove/`, post, user?.authConfig);
     };
 
-    return <Listing id='ingredientCategoryId' columns={columns} route={'ingredientcategory'} headerButtons={headerButtons} rowButtons={rowButtons} />;
+    return (
+        <Listing
+            id='ingredientCategoryId'
+            columns={columns}
+            route={'ingredientcategory'}
+            headerButtons={headerButtons}
+            rowButtons={rowButtons}
+            ignoreCheckbox
+        />
+    );
 };
 
 export default IngredientCategoryListing;

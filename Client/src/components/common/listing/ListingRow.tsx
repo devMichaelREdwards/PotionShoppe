@@ -11,19 +11,23 @@ interface IProps {
     checked: boolean;
     columns: IListingColumn[];
     rowButtons?: IActionButton[];
+    ignoreCheckbox?: boolean;
     refresh?: () => void;
     handleCheckboxClick: (id: number) => void;
 }
 
-const ListingRow = ({ id, data, checked, columns, rowButtons, refresh, handleCheckboxClick }: IProps) => {
+const ListingRow = ({ id, data, checked, columns, rowButtons, refresh, handleCheckboxClick, ignoreCheckbox }: IProps) => {
     if (!id) return null;
     let colsLeft = 23; //24 - 1 for checkbox col
     return (
         <List.Item key={nanoid()} className='listing-row'>
             <FlexboxGrid>
-                <FlexboxGrid.Item className='listing-item' key='id' colspan={1}>
-                    <IDCheckBox id={id} checked={checked} handleCheckboxClick={handleCheckboxClick} />
-                </FlexboxGrid.Item>
+                {!ignoreCheckbox && (
+                    <FlexboxGrid.Item className='listing-item' key='id' colspan={1}>
+                        <IDCheckBox id={id} checked={checked} handleCheckboxClick={handleCheckboxClick} />
+                    </FlexboxGrid.Item>
+                )}
+
                 {columns.map((col) => {
                     colsLeft -= col.colspan;
 
