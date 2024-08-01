@@ -18,6 +18,7 @@ interface IProps {
     filterString?: string;
     removeTooltip?: string;
     ignoreCheckbox?: boolean;
+    ignorePagination?: boolean;
     remove?: (selected: number[]) => void;
 }
 
@@ -27,7 +28,18 @@ export enum SortOrder {
     default = '',
 }
 
-const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, remove, removeTooltip, ignoreCheckbox }: IProps) => {
+const Listing = ({
+    id,
+    route,
+    columns,
+    headerButtons,
+    rowButtons,
+    filterString,
+    remove,
+    removeTooltip,
+    ignoreCheckbox,
+    ignorePagination,
+}: IProps) => {
     const idKey = id ?? route + 'Id';
     const [selected, setSelected] = useState<number[]>([]);
     const [draw, setDraw] = useState(0);
@@ -36,7 +48,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
     const [sort, setSort] = useState('');
     const [sortOrder, setSortOrder] = useState(SortOrder.default);
     const { data, loading, error, refresh, setLoading } = useData(
-        route + `?page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&${filterString ?? ''}`
+        route + `?${ignorePagination ? '' : `page=${page}&limit=${limit}&sort=${sort}&order=${sortOrder}&`}${filterString ?? ''}`
     );
     const [open, setOpen] = useState(false);
     const openModal = () => {
@@ -150,7 +162,7 @@ const Listing = ({ id, route, columns, headerButtons, rowButtons, filterString, 
                 })}
             </List>
             <ConfirmationModal open={open} closeModal={closeModal} confirmationCallback={handleRemoveConfirmed} />
-            <Pagination page={page} limit={limit} onPageChange={handlePageChange} onLimitChange={handleLimitChange} />
+            {!ignorePagination && <Pagination page={page} limit={limit} onPageChange={handlePageChange} onLimitChange={handleLimitChange} />}
         </>
     );
 };

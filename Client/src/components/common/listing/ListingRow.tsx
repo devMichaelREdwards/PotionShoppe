@@ -18,7 +18,7 @@ interface IProps {
 
 const ListingRow = ({ id, data, checked, columns, rowButtons, refresh, handleCheckboxClick, ignoreCheckbox }: IProps) => {
     if (!id) return null;
-    let colsLeft = 23; //24 - 1 for checkbox col
+    let colsLeft = 24 - (ignoreCheckbox ? 0 : 1);
     return (
         <List.Item key={nanoid()} className='listing-row'>
             <FlexboxGrid>

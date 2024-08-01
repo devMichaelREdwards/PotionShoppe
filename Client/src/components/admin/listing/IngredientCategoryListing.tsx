@@ -1,3 +1,4 @@
+import { Message, toaster } from 'rsuite';
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IActionButton, IListingColumn } from '../../../types/IListing';
@@ -42,7 +43,13 @@ const IngredientCategoryListing = () => {
             ingredientCategoryId: id,
         };
 
-        await axios.post(`ingredientcategory/remove/`, post, user?.authConfig);
+        const response = await axios.post(`ingredientcategory/remove/`, post, user?.authConfig);
+        console.log(response);
+        if (response.data) {
+            toaster.push(<Message type='success'>Removed Category</Message>, { duration: 5000 });
+        } else {
+            toaster.push(<Message type='error'>Something went wrong!</Message>, { duration: 5000 });
+        }
     };
 
     return (
@@ -53,6 +60,7 @@ const IngredientCategoryListing = () => {
             headerButtons={headerButtons}
             rowButtons={rowButtons}
             ignoreCheckbox
+            ignorePagination
         />
     );
 };

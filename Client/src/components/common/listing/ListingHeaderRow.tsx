@@ -18,7 +18,7 @@ interface IListingHeaderRowProps {
 }
 
 const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, remove, removeTooltip, ignoreCheckbox }: IListingHeaderRowProps) => {
-    let colsLeft = 23; //24 - 1 for checkbox col
+    let colsLeft = 24 - (ignoreCheckbox ? 0 : 1);
     return (
         <List.Item className='listing-row listing-header'>
             <FlexboxGrid>
