@@ -7,7 +7,8 @@ export interface IListingColumn {
     dataKey: string;
     colspan: number;
     sortable?: boolean;
-    component?: (data: unknown) => JSX.Element;
+    retrieveAllData?: boolean;
+    component?: (data: unknown, refresh?: () => void) => JSX.Element;
 }
 
 export interface IActionButton {
@@ -23,6 +24,8 @@ export interface IActionButton {
     [arg: string]: unknown;
     action?: (arg: unknown) => void;
     refresh?: () => void;
+    noRefresh?: boolean;
+    disabled?: boolean;
 }
 
 export interface ICollectionObject {

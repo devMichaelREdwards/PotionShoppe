@@ -12,10 +12,12 @@ import IngredientCategoryModal from '../modal/IngredientCategoryModal';
 
 interface IProps {
     filters: IIngredientFilters;
+    draw: number;
     toggleEdit: (active: boolean, editId?: number) => void;
+    refresher: () => void;
 }
 
-const IngredientListing = ({ filters, toggleEdit }: IProps) => {
+const IngredientListing = ({ filters, toggleEdit, draw, refresher }: IProps) => {
     const { user } = useAuth();
     const [modalOpen, setModalOpen] = useState(false);
     // Set filters here
@@ -213,9 +215,10 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
                 rowButtons={rowButtons}
                 removeTooltip='Delete Ingredients'
                 filterString={buildFilterString(filters)}
+                refresher={draw}
             />
 
-            <IngredientCategoryModal open={modalOpen} closeModal={closeModal} />
+            <IngredientCategoryModal open={modalOpen} closeModal={closeModal} refresher={refresher} />
         </>
     );
 };

@@ -1,19 +1,19 @@
 import { Modal } from 'rsuite';
 import IngredientCategoryListing from '../listing/IngredientCategoryListing';
+import ModalHeader from '../../common/header/ModalHeader';
 
 interface IIngredientCategoryModal {
     open: boolean;
     closeModal: () => void;
+    refresher: () => void;
 }
 
-const IngredientCategoryModal = ({ open, closeModal }: IIngredientCategoryModal) => {
+const IngredientCategoryModal = ({ open, closeModal, refresher }: IIngredientCategoryModal) => {
     return (
         <Modal className='modal' size={'lg'} open={open} onClose={() => closeModal()}>
-            <Modal.Header>
-                <Modal.Title>Ingredient Categories</Modal.Title>
-            </Modal.Header>
+            <ModalHeader title='Ingredient Categories' />
             <Modal.Body>
-                <IngredientCategoryListing />
+                <IngredientCategoryListing refresher={refresher} />
             </Modal.Body>
             <Modal.Footer></Modal.Footer>
         </Modal>

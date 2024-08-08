@@ -4,50 +4,54 @@ import { IActionButton, IListingColumn } from '../../../types/IListing';
 import { nanoid } from 'nanoid';
 import IDCheckBox from './IdCheckBox';
 import ActionButtonCollection from '../input/ActionButtonCollection';
+import EditColumn from './columns/EditColumn';
 
 interface IProps {
-    id: number;
-    data: IData;
-    checked: boolean;
     columns: IListingColumn[];
     rowButtons?: IActionButton[];
     ignoreCheckbox?: boolean;
-    refresh?: () => void;
-    handleCheckboxClick: (id: number) => void;
+    onSubmit: (newValue: string) => Promise<void>;
 }
 
-const ListingRow = ({ id, data, checked, columns, rowButtons, refresh, handleCheckboxClick, ignoreCheckbox }: IProps) => {
-    if (!id) return null;
+const AddRow = ({ columns, rowButtons, onSubmit, ignoreCheckbox }: IProps) => {
     let colsLeft = 24 - (ignoreCheckbox ? 0 : 1);
+    const data = {} as IData;
     return (
         <List.Item key={nanoid()} className='listing-row'>
             <FlexboxGrid>
                 {!ignoreCheckbox && (
                     <FlexboxGrid.Item className='listing-item' key='id' colspan={1}>
-                        <IDCheckBox id={id} checked={checked} handleCheckboxClick={handleCheckboxClick} />
+                        <IDCheckBox
+                            id={0}
+                            checked={false}
+                            handleCheckboxClick={() => {
+                                // Do nothing, maybe disable?
+                            }}
+                        />
                     </FlexboxGrid.Item>
                 )}
 
                 {columns.map((col) => {
                     colsLeft -= col.colspan;
 
-                    if (col.component) {
-                        return (
-                            <FlexboxGrid.Item className='listing-item' key={col.dataKey} colspan={col.colspan}>
-                                {col.component(col.retrieveAllData ? data : data[col.dataKey], refresh)}
-                            </FlexboxGrid.Item>
-                        );
-                    }
                     return (
                         <FlexboxGrid.Item className='listing-item' key={col.dataKey} colspan={col.colspan}>
-                            <>{data[col.dataKey] ?? ''}</>
+                            <EditColumn
+                                edit={true}
+                                data={data}
+                                name={'new-row-input'}
+                                submitting={false}
+                                submitCallback={async (newValue) => {
+                                    await onSubmit(newValue);
+                                }}
+                            />
                         </FlexboxGrid.Item>
                     );
                 })}
-                <ActionButtonCollection className={'listing-item'} data={data} colspan={colsLeft} buttons={rowButtons} refresh={refresh} />
+                <ActionButtonCollection className={'listing-item'} data={data} colspan={colsLeft} buttons={rowButtons} disabled />
             </FlexboxGrid>
         </List.Item>
     );
 };
 
-export default ListingRow;
+export default AddRow;

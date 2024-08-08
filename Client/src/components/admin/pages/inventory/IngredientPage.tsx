@@ -58,11 +58,12 @@ const IngredientPage = () => {
                             filters={{ ...filters }}
                             filterLimits={filterLimits}
                             setFilters={setFilters}
+                            draw={draw}
                             onClearCallback={() => {
                                 setDraw(draw + 1);
                             }}
                         />
-                        <IngredientListing filters={{ ...filters }} toggleEdit={toggleEdit} />
+                        <IngredientListing filters={{ ...filters }} draw={draw} toggleEdit={toggleEdit} refresher={() => setDraw(draw + 1)} />
                     </>
                 )}
             </Content>

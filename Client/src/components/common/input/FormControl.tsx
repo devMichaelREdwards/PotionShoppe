@@ -327,14 +327,15 @@ interface ITagSearchInput {
     route: string;
     idKey: string;
     dataKey: string;
+    draw?: number;
     addTag: (tags: ICollectionObject) => void;
     setValue: (value: string) => void;
     removeTag: (id: number) => void;
 }
 
-export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, dataKey, addTag, removeTag, setValue }: ITagSearchInput) => {
+export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, dataKey, addTag, removeTag, setValue, draw }: ITagSearchInput) => {
     const [dirty, setDirty] = useState(false);
-    const { data } = useData(route);
+    const { data, refresh } = useData(route);
 
     useEffect(() => {
         if (dirty) {
@@ -342,6 +343,10 @@ export const TagSearchInput = ({ value, label, placeholder, tags, route, idKey, 
             setDirty(false);
         }
     }, [dirty, setValue]);
+
+    useEffect(() => {
+        refresh();
+    }, [draw]);
 
     return (
         <span className='form-control'>

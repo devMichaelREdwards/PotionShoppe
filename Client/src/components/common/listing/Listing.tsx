@@ -19,6 +19,7 @@ interface IProps {
     removeTooltip?: string;
     ignoreCheckbox?: boolean;
     ignorePagination?: boolean;
+    refresher?: number;
     remove?: (selected: number[]) => void;
 }
 
@@ -39,6 +40,7 @@ const Listing = ({
     removeTooltip,
     ignoreCheckbox,
     ignorePagination,
+    refresher,
 }: IProps) => {
     const idKey = id ?? route + 'Id';
     const [selected, setSelected] = useState<number[]>([]);
@@ -118,14 +120,12 @@ const Listing = ({
     };
 
     const refreshList = () => {
-        console.log('before set draw');
         setDraw(draw + 1);
-        console.log('after set draw');
     };
 
     useEffect(() => {
         refresh();
-    }, [draw]);
+    }, [draw, refresher]);
 
     if (loading) return <>Loading Screen</>;
 
