@@ -11,10 +11,11 @@ interface IProps {
     filters: IIngredientFilters;
     filterLimits: IIngredientFilters;
     setFilters: React.Dispatch<React.SetStateAction<IIngredientFilters>>;
+    draw: number;
     onClearCallback?: () => void;
 }
 
-const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback }: IProps) => {
+const IngredientFilters = ({ filters, filterLimits, setFilters, draw, onClearCallback }: IProps) => {
     const [name, setName] = useState('');
     const [categoryQuery, setCategoryQuery] = useState('');
     const [categories, setCategories] = useState<ICollectionObject[]>([]);
@@ -135,6 +136,7 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
                         addTag={addEffect}
                         removeTag={removeEffect}
                         setValue={(newValue) => setEffectQuery(newValue)}
+                        draw={draw}
                     />
                     <TagSearchInput
                         value={categoryQuery}
@@ -146,6 +148,7 @@ const IngredientFilters = ({ filters, filterLimits, setFilters, onClearCallback 
                         addTag={addCategory}
                         removeTag={removeCategory}
                         setValue={(newValue) => setCategoryQuery(newValue)}
+                        draw={draw}
                     />
                 </Form.Group>
             </Form>

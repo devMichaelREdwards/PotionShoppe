@@ -21,5 +21,9 @@ public interface IListingRepository<T> : IRepository<T>
 {
     IEnumerable<T> GetListing(IFilter<T>? filter = null, Pagination? page = null, SortOrder? sortOrder = null);
     IFilter<T> GetFilterData();
+}
 
+public interface ICategoryRepository<T> : IRepository<T>
+{
+    bool IsEmpty(int id);
 }

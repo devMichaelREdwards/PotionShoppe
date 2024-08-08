@@ -1,20 +1,25 @@
+import { useState } from 'react';
 import axios from '../../../api/axios';
 import useAuth from '../../../hooks/useAuth';
 import { IData } from '../../../types/IData';
 import { IIngredientFilters } from '../../../types/IFilter';
 import { IActionButton, ICollectionObject, IListingColumn } from '../../../types/IListing';
-import { IngredientIcon, QuillIcon } from '../../common/image/Icon';
+import { CategoriesIcon, IngredientIcon, QuillIcon } from '../../common/image/Icon';
 import Listing from '../../common/listing/Listing';
 import CollectionColumn from '../../common/listing/columns/CollectionColumn';
 import ImageColumn from '../../common/listing/columns/ImageColumn';
+import IngredientCategoryModal from '../modal/IngredientCategoryModal';
 
 interface IProps {
     filters: IIngredientFilters;
+    draw: number;
     toggleEdit: (active: boolean, editId?: number) => void;
+    refresher: () => void;
 }
 
-const IngredientListing = ({ filters, toggleEdit }: IProps) => {
+const IngredientListing = ({ filters, toggleEdit, draw, refresher }: IProps) => {
     const { user } = useAuth();
+    const [modalOpen, setModalOpen] = useState(false);
     // Set filters here
     const columns: IListingColumn[] = [
         // 21
@@ -75,6 +80,14 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
 
     const headerButtons: IActionButton[] = [
         {
+            color: 'blue',
+            tooltip: 'Categories',
+            icon: <CategoriesIcon />,
+            action: () => {
+                openModal();
+            },
+        },
+        {
             color: 'green',
             tooltip: 'Add Ingredient',
             icon: <IngredientIcon />,
@@ -110,6 +123,14 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
             },
         },
     ];
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
     const remove = async (selected: number[]) => {
         await axios.post('Ingredient/remove', selected, user?.authConfig);
@@ -184,16 +205,21 @@ const IngredientListing = ({ filters, toggleEdit }: IProps) => {
     };
 
     return (
-        <Listing
-            id='ingredientId'
-            columns={columns}
-            route={'ingredient/listing'}
-            remove={remove}
-            headerButtons={headerButtons}
-            rowButtons={rowButtons}
-            removeTooltip='Delete Ingredients'
-            filterString={buildFilterString(filters)}
-        />
+        <>
+            <Listing
+                id='ingredientId'
+                columns={columns}
+                route={'ingredient/listing'}
+                remove={remove}
+                headerButtons={headerButtons}
+                rowButtons={rowButtons}
+                removeTooltip='Delete Ingredients'
+                filterString={buildFilterString(filters)}
+                refresher={draw}
+            />
+
+            <IngredientCategoryModal open={modalOpen} closeModal={closeModal} refresher={refresher} />
+        </>
     );
 };
 

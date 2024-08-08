@@ -12,16 +12,17 @@ interface IListingHeaderRowProps {
     sortCol?: string;
     sortOrder?: SortOrder;
     removeTooltip?: string;
+    ignoreCheckbox?: boolean;
     sort?: (col: string) => void;
     remove?: () => void;
 }
 
-const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, remove, removeTooltip }: IListingHeaderRowProps) => {
-    let colsLeft = 23; //24 - 1 for checkbox col
+const ListingHeaderRow = ({ columns, headerButtons, sortCol, sortOrder, sort, remove, removeTooltip, ignoreCheckbox }: IListingHeaderRowProps) => {
+    let colsLeft = 24 - (ignoreCheckbox ? 0 : 1);
     return (
         <List.Item className='listing-row listing-header'>
             <FlexboxGrid>
-                <EmptyColumns key={nanoid()} columns={1} />
+                {!ignoreCheckbox && <EmptyColumns key={nanoid()} columns={1} />}
                 {columns.map((col) => {
                     colsLeft -= col.colspan;
                     return (

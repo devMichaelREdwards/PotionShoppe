@@ -1,3 +1,4 @@
+using Api.Classes;
 using Api.Data;
 using Api.Models;
 using AutoMapper;
@@ -10,48 +11,94 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class IngredientCategoryController : ControllerBase
 {
-    private readonly IRepository<IngredientCategory> ingredientCategory;
-    private readonly IMapper mapper;
+    private readonly ICategoryRepository<IngredientCategory> _ingredientCategories;
+    private readonly IMapper _mapper;
 
-    public IngredientCategoryController(IRepository<IngredientCategory> _ingredientCategory, IMapper _mapper)
+    public IngredientCategoryController(ICategoryRepository<IngredientCategory> ingredientCategories, IMapper mapper)
     {
-        ingredientCategory = _ingredientCategory;
-        mapper = _mapper;
+        _ingredientCategories = ingredientCategories;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult GetIngredientCategories()
     {
-        var result = ingredientCategory.Get();
-        return Ok(mapper.Map<List<IngredientCategoryDto>>(result));
+        var result = _ingredientCategories.Get();
+        return Ok(_mapper.Map<List<IngredientCategoryDto>>(result));
     }
 
     [HttpPost]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult PostIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult PostIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        ingredientCategory.Insert(mapper.Map<IngredientCategory>(customerStatus));
+        _ingredientCategories.Insert(_mapper.Map<IngredientCategory>(ingredientCategory));
         return Ok();
     }
 
     [HttpPut]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult PutIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult PutIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        if (customerStatus.IngredientCategoryId == null)
+        ErrorCollection errors = SetErrors(ingredientCategory, true);
+        if (ingredientCategory.IngredientCategoryId == null)
             return Ok();
-        IngredientCategory existing = ingredientCategory.GetById((int)customerStatus.IngredientCategoryId);
-        customerStatus.Update(existing);
+        IngredientCategory existing = _ingredientCategories.GetById((int)ingredientCategory.IngredientCategoryId);
+        if (existing is null)
+        {
+            errors.Add("exist", "This ingredient was not found. Please refresh the listing.");
+        }
         ingredientCategory.Update(existing);
-        return Ok();
+        _ingredientCategories.Update(existing);
+
+        if (errors.Error) return Ok(errors);
+        return Ok(true);
     }
 
     [HttpDelete]
     [Authorize(Roles = "Employee,Owner")]
-    public IActionResult DeleteIngredientCategory(IngredientCategoryDto customerStatus)
+    public IActionResult DeleteIngredientCategory(IngredientCategoryDto ingredientCategory)
     {
-        if (customerStatus.IngredientCategoryId != null)
-            ingredientCategory.Delete((int)customerStatus.IngredientCategoryId);
+        if (ingredientCategory.IngredientCategoryId != null)
+            _ingredientCategories.Delete((int)ingredientCategory.IngredientCategoryId);
         return Ok();
+    }
+
+    [HttpPost("remove")]
+    [Authorize(Roles = "Employee")]
+    public IActionResult RemoveIngredients(IngredientCategoryDto ingredientCategory)
+    {
+        ErrorCollection errors = new();
+        if (ingredientCategory.IngredientCategoryId is null)
+        {
+            errors.Add("error", "No category Id found.");
+            return Ok();
+        }
+
+        int id = (int)ingredientCategory.IngredientCategoryId;
+        bool categoryIsEmpty = _ingredientCategories.IsEmpty(id);
+        if (!categoryIsEmpty)
+        {
+            errors.Add("error", "Category is not empty");
+            return Ok(errors);
+        }
+
+        _ingredientCategories.Delete(id);
+        bool success = true;
+        return Ok(success);
+    }
+
+    private ErrorCollection SetErrors(IngredientCategoryDto ingredientCategory, bool withId = false)
+    {
+        ErrorCollection errors = new();
+        if (withId && ingredientCategory.IngredientCategoryId == null)
+        {
+            errors.Add("id", "Invalid Ingredient ID sent with request.");
+        }
+        if (ingredientCategory.Title.Length < 1)
+        {
+            errors.Add("name", "Name must be at least 1 character.");
+        }
+
+        return errors;
     }
 }

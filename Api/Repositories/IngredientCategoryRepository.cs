@@ -3,49 +3,54 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data;
 
-public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDisposable
+public class IngredientCategoryRepository : ICategoryRepository<IngredientCategory>, IDisposable
 {
-    private PotionShoppeContext context;
+    private PotionShoppeContext _context;
 
-    public IngredientCategoryRepository(PotionShoppeContext _context)
+    public IngredientCategoryRepository(PotionShoppeContext context)
     {
-        context = _context;
+        _context = context;
     }
 
     public IEnumerable<IngredientCategory> Get()
     {
-        return [.. context.IngredientCategories];
+        return [.. _context.IngredientCategories];
     }
 
 
     public IngredientCategory? GetById(int id)
     {
-        return context.IngredientCategories.Find(id)!;
+        return _context.IngredientCategories.Find(id)!;
     }
 
     public IngredientCategory Insert(IngredientCategory entity)
     {
-        context.IngredientCategories.Add(entity);
+        _context.IngredientCategories.Add(entity);
         Save();
         return entity;
     }
 
     public void Update(IngredientCategory entity)
     {
-        context.Entry(entity).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
         Save();
     }
 
     public void Delete(int id)
     {
-        IngredientCategory ingredientCategory = context.IngredientCategories.Find(id);
-        context.IngredientCategories.Remove(ingredientCategory);
+        IngredientCategory ingredientCategory = _context.IngredientCategories.Find(id);
+        _context.IngredientCategories.Remove(ingredientCategory);
         Save();
+    }
+
+    public bool IsEmpty(int id)
+    {
+        return _context.Ingredients.Where(i => i.IngredientCategoryId == id).Count() == 0;
     }
 
     public void Save()
     {
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     #region Dispose
@@ -57,7 +62,7 @@ public class IngredientCategoryRepository : IRepository<IngredientCategory>, IDi
         {
             if (disposing)
             {
-                context.Dispose();
+                _context.Dispose();
             }
         }
         this.disposed = true;
